@@ -27,7 +27,7 @@
             </el-row>
             <el-form-item label="主体类型" prop="issueType">
                 <el-radio-group v-model="entity.issueType" :disabled="isDisabled">
-                    <el-radio :label="0">享位平台</el-radio>
+                    <el-radio :label="0">东兴旺平台</el-radio>
                     <br>
                     <el-radio :label="1">
                         <span class="title-text">子公司</span>
@@ -66,7 +66,7 @@
             </el-form-item>
             <el-form-item label="使用主体" prop="issueType">
                 <el-radio-group v-model="entity.issueType" :disabled="isDisabled">
-                    <el-radio :label="0">享位平台</el-radio>
+                    <el-radio :label="0">东兴旺平台</el-radio>
                     <br>
                     <el-radio :label="1">
                         <span class="title-text">子公司</span>

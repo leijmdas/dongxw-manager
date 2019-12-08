@@ -95,7 +95,7 @@
             </el-form-item>
             <el-form-item label="派发单位" required>
                 <el-radio-group v-model="resource">
-                    <el-radio :label="3">享位平台</el-radio>
+                    <el-radio :label="3">东兴旺平台</el-radio>
                     <br>
                     <el-radio :label="4"><span class="title-text">子公司</span>
                         <el-select v-model="value" filterable placeholder="请选择">

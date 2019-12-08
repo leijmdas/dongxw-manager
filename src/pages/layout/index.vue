@@ -5,7 +5,7 @@
                 <div class="logo">
                     <img src="../../assets/images/login/logo.png" style="height: 40px;">
                     <p>
-                        <span style="font-size: 18px;">享位云管理系统</span>
+                        <span style="font-size: 18px;">东兴旺管理系统</span>
                         <span style="font-size: 12px;">SHAREWELL SYSTEM</span>
                     </p>
                 </div>

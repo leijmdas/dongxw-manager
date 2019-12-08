@@ -24,7 +24,7 @@ let Dict = {
         PUBLISH_STATUS: [[0, '禁用'], [1, '启用'], [2, '预发布']],
         PLATFORM: [[0, 'Ios'], [1, 'Android']],
         ISFORCE: [[false, '否'], [true, '是']],
-        APPVERSION: [[0, '享位']],
+        APPVERSION: [[0, '东兴旺']],
         STATUSSSS: [[1, '开启'], [0, '关闭']],
         ONSTATUSS: [[1, '有车'], [0, '无车']],
         LOCKERDEVICESTATUS: [[0, '运行正常'], [1, '断线异常']],

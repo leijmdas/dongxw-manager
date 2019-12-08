@@ -3,8 +3,8 @@
         <div class="login" v-show="show==='account'" v-loading="loading" element-loading-text="loading ..."
              element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
             <div class="login_logo">
-                <img src="../../assets/images/login/logo.png" alt="">
-                <span>享位停车管理系统</span>
+                <img src="../../assets/logo.png" alt="">
+                <span>东兴旺ERP管理系统</span>
             </div>
             <div class="login_container">
                 <div class="login_container--png">
@@ -13,6 +13,7 @@
                     <img src="../../assets/images/login/park-manage.png" alt="" style="left: 130px; top: 300px;">
                     <img src="../../assets/images/login/charge-manage.png" alt="" style="left: 260px; top: 180px;">
                     <img src="../../assets/images/login/travel-manage.png" alt="" style="left: 390px; top: 60px;">
+                    <img src="../../assets/images/login/pay.png" alt="" style="left: 390px; top: 300px;">
                 </div>
                 <div class="login_container--box" @keydown.enter.stop="login">
                     <p>请输入您的认证信息</p>

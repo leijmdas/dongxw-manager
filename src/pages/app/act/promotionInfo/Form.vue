@@ -174,7 +174,7 @@
             </el-row>
             <el-form-item label="发放主体" required>
                 <el-radio-group v-model="entity.subjectType" :disabled="isDisabled">
-                    <el-radio :label="0">享位平台</el-radio>
+                    <el-radio :label="0">东兴旺平台</el-radio>
                     <br>
                     <el-radio :label="1">
                         <span class="group-text">子公司</span>
@@ -221,7 +221,7 @@
 
             <el-form-item label="使用主体" required>
                 <el-radio-group v-model="entity.useType" :disabled="isDisabled">
-                    <el-radio :label="0">享位平台</el-radio>
+                    <el-radio :label="0">东兴旺平台</el-radio>
                     <br>
                     <el-radio :label="1">
                         <span class="group-text">子公司</span>
