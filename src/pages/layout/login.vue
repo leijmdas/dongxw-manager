@@ -4,7 +4,7 @@
              element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
             <div class="login_logo">
                 <img src="../../assets/logo.png" alt="">
-                <span>东兴旺ERP管理系统</span>
+                <span>东兴旺ERP系统</span>
             </div>
             <div class="login_container">
                 <div class="login_container--png">
