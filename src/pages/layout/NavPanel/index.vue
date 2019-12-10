@@ -4,12 +4,14 @@
         <el-menu mode="horizontal" background-color="#00438A" text-color="#fff" active-text-color="#fff"
                  :default-active="domainIndex" @select="onDomainSelected">
             <!-- <el-menu-item index="domain_crm"><span class="ele-icon el-icon-ippie"></span><span>视图</span></el-menu-item> -->
+            <el-menu-item index="domain_dongxw"><span class="ele-icon el-icon-ipyunyingguanli"></span><span>ERP</span>
+            </el-menu-item>
             <el-menu-item index="domain_parking"><span class="ele-icon el-icon-ipyunyingguanli"></span><span>运营</span>
             </el-menu-item>
             <el-menu-item index="domain_maintenance"><span
                 class="ele-icon el-icon-ipyunweiguanli"></span><span>运维</span></el-menu-item>
             <!-- <el-menu-item index="domain_gl" :v-show="false">地锁</el-menu-item> -->
-            <!-- <el-menu-item index="domain_report"><span class="ele-icon el-icon-ipyunyingbaobiao"></span><span>报表</span> 
+            <!-- <el-menu-item index="domain_report"><span class="ele-icon el-icon-ipyunyingbaobiao"></span><span>报表</span>
             </el-menu-item>-->
             <el-menu-item index="domain_sys"><span class="ele-icon el-icon-ipshezhi"></span><span>设置</span>
             </el-menu-item>

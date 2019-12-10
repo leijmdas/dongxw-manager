@@ -6,10 +6,11 @@ import sysRouter from './domain-sys'
 import parkingRouter from './domain-parking'
 import maintenanceRouter from './domain-maintenance'
 import reportRouter from './domain-report'
+import dongxwRouter from './domain-dongxw'
 
 Vue.use(Router)
 
-export const routers = constantRouter.concat(crmRouter).concat(sysRouter).concat(parkingRouter).concat(maintenanceRouter).concat(reportRouter);
+export const routers = constantRouter.concat(crmRouter).concat(sysRouter).concat(parkingRouter).concat(maintenanceRouter).concat(reportRouter).concat(dongxwRouter);
 
 let router = new Router({
   // mode: 'history', // require service support
