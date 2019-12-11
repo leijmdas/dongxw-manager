@@ -114,8 +114,10 @@
             login() {
                 const {account: loginName, password} = this.account;
                 this.loading = true;
-                let pwd=this.$md5(password)
-                this.$api.AppService.login({username: this.$md5(loginName),pwd})
+                //let pwd=this.$md5(password)
+                //this.$api.AppService.login({username: this.$md5(loginName),pwd})
+                let pwd = this.$md5(password)
+                this.$api.AppService.login({username: loginName, password})
                     .then(data => {
                         this.loading = false;
                         auth.setToken({access_token: data.token, expires_in: data.expiresIn});
