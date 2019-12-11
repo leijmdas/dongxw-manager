@@ -26,8 +26,8 @@ let router0 = [{
     component: Layout,
     meta: {title: '活动及营销', icon: 'promotion', group: 'crm'},
     children: [{
-        path: 'promotionInfo/manage',
-        component: require('@/pages/app/act/promotionInfo/Manage.vue'),
+        path: 'product/manage',
+        component: require('@/pages/app/act/product/Manage.vue'),
         name: 'promotion:manage',
         meta: {title: '优惠管理'}
     }, {

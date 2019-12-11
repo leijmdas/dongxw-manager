@@ -5,8 +5,8 @@
                 <div class="logo">
                     <img src="../../assets/images/login/logo.png" style="height: 40px;">
                     <p>
-                        <span style="font-size: 18px;">东兴旺管理系统</span>
-                        <span style="font-size: 12px;">SHAREWELL SYSTEM</span>
+                        <span style="font-size: 18px;">东兴旺ERP系统</span>
+                        <span style="font-size: 12px;">DXW ERP SYSTEM</span>
                     </p>
                 </div>
             </router-link>

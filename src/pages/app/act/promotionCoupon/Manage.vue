@@ -155,7 +155,7 @@
 
             <!--<el-table-column prop="name" label="优惠编码" width="100" show-overflow-tooltip>-->
                 <!--<template slot-scope="{row}">-->
-                    <!--{{row.promotionInfo.code}}-->
+                    <!--{{row.product.code}}-->
                 <!--</template>-->
             <!--</el-table-column>-->
 

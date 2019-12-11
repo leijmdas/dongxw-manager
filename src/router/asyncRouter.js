@@ -62,7 +62,7 @@ let router0=[{
     meta: { title:'商户管理' }
   },*/{
     path: 'promotion/manage',
-    component: require('@/pages/app/act/promotionInfo/Manage.vue'),
+    component: require('@/pages/app/act/product/Manage.vue'),
     name: 'promotion:manage',
     meta: { title:'优惠管理' }
   },{
