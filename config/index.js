@@ -39,7 +39,6 @@ module.exports = {
         }
       },
       '/api': {
-        // target: 'http://192.192.2.101:8085', // 接口的域名
           //target: 'http://localhost:8085',
           target: 'http://localhost:10080',
           pathRewrite: {
