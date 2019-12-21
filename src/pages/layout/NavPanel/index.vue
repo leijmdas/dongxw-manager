@@ -6,12 +6,10 @@
             <!-- <el-menu-item index="domain_crm"><span class="ele-icon el-icon-ippie"></span><span>视图</span></el-menu-item> -->
             <el-menu-item index="domain_dongxw"><span class="ele-icon el-icon-ipyunyingguanli"></span><span>ERP</span>
             </el-menu-item>
-            <el-menu-item index="domain_parking"><span class="ele-icon el-icon-ipyunyingguanli"></span><span>运营</span>
+            <el-menu-item v-show="isadmin=='true'" index="domain_parking"><span class="ele-icon el-icon-ipyunyingguanli"></span><span>运营</span>
             </el-menu-item>
-            <!--<el-menu-item index="domain_maintenance"><span-->
-                <!--class="ele-icon el-icon-ipyunweiguanli"></span><span>运维</span></el-menu-item>-->
-            <!---->
-            <el-menu-item index="domain_sys"><span class="ele-icon el-icon-ipshezhi"></span><span>设置</span>
+
+            <el-menu-item v-show="isadmin=='true'" index="domain_sys"><span class="ele-icon el-icon-ipshezhi"></span><span>设置</span>
             </el-menu-item>
         </el-menu>
         <el-menu mode="horizontal" :default-active="activeIndex" background-color="#00438A" text-color="#fff"
@@ -147,6 +145,7 @@
         components: {ModifyPwdPanel, PersonalInfo},
         data() {
             return {
+                isadmin: 'true',
                 activeIndex: '0-3',
                 domainIndex: 'domain_parking',
                 permRouters: [],
@@ -162,6 +161,7 @@
         },
         watch: {
             '$router.app.user': function (val) {
+                this.isadmin = window.localStorage.getItem('isadmin')
                 this.user = val;
             }
         },
@@ -232,6 +232,7 @@
                     self.loadMsg();
                 }, 10000);
             }
+
         }
     };
 </script>

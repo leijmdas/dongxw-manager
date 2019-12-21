@@ -113,6 +113,8 @@
             // 登录，登录成功后获取厂牌
             login() {
                 const {account: loginName, password} = this.account;
+
+                window.localStorage.setItem('isadmin',loginName==='admin')
                 this.loading = true;
                 //let pwd=this.$md5(password)
                 //this.$api.AppService.login({username: this.$md5(loginName),pwd})

@@ -23,7 +23,7 @@ let sysRouter = [{
     meta: {
       title: '组织结构管理',
       perm:'sysOrg:manage'
-      
+
     }
   }, {
     path: 'user/manage',
@@ -71,6 +71,15 @@ let sysRouter = [{
       component: require('@/pages/app/appVersion/Manage.vue'),
       name: 'appVersion:manage',
       meta: {title: 'APP版本升级',perm: 'appVersion:manage'}
-  }]
+  },
+      {
+          path: 'datadict/manage',
+          component: require('@/pages/datadict/Manage.vue'),
+          name: 'datadict:manage',
+          meta: {title: '元数据管理',perm: 'sysRole:manage'}
+      }
+
+
+  ]
 }]
 export default sysRouter;
