@@ -4,11 +4,12 @@ import {constantRouter} from './constRouter'
 import sysRouter from './domain-sys'
 import maintenanceRouter from './domain-maintenance'
 import reportRouter from './domain-report'
-import dxwRouter from './domain-dxw'
+import dxwRouter from './domain-dongxw'
 
+import parkingRouter from './domain-parking'
 Vue.use(Router)
 
-export const routers = constantRouter.concat(sysRouter).concat(dxwRouter).concat(reportRouter);
+export const routers = constantRouter.concat(sysRouter).concat(dxwRouter).concat(reportRouter).concat(parkingRouter);
 
 let router = new Router({
   // mode: 'history', // require service support

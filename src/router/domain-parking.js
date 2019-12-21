@@ -81,7 +81,7 @@ let router0 = [
       meta: { title: '活动优惠', icon: 'promotion', group: 'parking' },
       children: [{
         path: 'promotion/manage',
-        component: require('@/pages/app/act/product/Manage.vue'),
+        component: require('@/pages/app/act/promotionInfo/Manage.vue'),
         name: 'promotion:manage',
         meta: { title: '券类型管理' }
       }, {
@@ -133,7 +133,12 @@ let router0 = [
             component: require('@/pages/app/act/activityRules/Manage.vue'),
             name: 'activityRules:manage',
             meta: {title: '活动规则', perm: 'activityRules:manage' }
-        },  {
+        }, {
+            path: 'promotion/manage',
+            component: require('@/pages/app/act/promotionInfo/Manage.vue'),
+            name: 'promotion:manage',
+            meta: {title: '优惠券模板', perm: 'promotion:manage'}
+        }, {
             path: 'couponBatch/manage',
             component: require('@/pages/app/act/promotionCouponBatch/Manage.vue'),
             name: 'couponBatch:manage',

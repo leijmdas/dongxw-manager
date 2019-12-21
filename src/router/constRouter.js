@@ -41,7 +41,7 @@ export const constantRouter = [
       path: '/index',
       component: require('@/pages/index.vue'),
       name: 'index',
-      meta: {icon: 'dashboard', noCache: true, title: '仪表盘', closable: false}
+      meta: {icon: 'dashboard', noCache: true, title: '东兴旺', closable: false}
     }]
   }, {
     path: '*',
