@@ -9,7 +9,7 @@ import dxwRouter from './domain-dongxw'
 import parkingRouter from './domain-parking'
 Vue.use(Router)
 
-export const routers = constantRouter.concat(sysRouter).concat(dxwRouter).concat(reportRouter).concat(parkingRouter);
+export const routers = constantRouter.concat(maintenanceRouter).concat(sysRouter).concat(dxwRouter).concat(reportRouter).concat(parkingRouter);
 
 let router = new Router({
   // mode: 'history', // require service support

@@ -1,13 +1,13 @@
 <template>
     <div >
-        <div class="login_container--png">
-            <img src="../assets/images/login/park-shared.png" alt="" style="left: 0px; top: 180px;">
-            <img src="../assets/images/login/GPS.png" alt="" style="left: 130px; top: 60px;">
-            <img src="../assets/images/login/park-manage.png" alt="" style="left: 130px; top: 300px;">
-            <img src="../assets/images/login/charge-manage.png" alt="" style="left: 260px; top: 180px;">
-            <img src="../assets/images/login/travel-manage.png" alt="" style="left: 390px; top: 60px;">
-            <img src="../assets/images/login/pay.png" alt="" style="left: 390px; top: 300px;">
-        </div>
+        <!--<div class="login_container&#45;&#45;png">-->
+            <!--<img src="../assets/images/login/park-shared.png" alt="" style="left: 0px; top: 180px;">-->
+            <!--<img src="../assets/images/login/GPS.png" alt="" style="left: 130px; top: 60px;">-->
+            <!--<img src="../assets/images/login/park-manage.png" alt="" style="left: 130px; top: 300px;">-->
+            <!--<img src="../assets/images/login/charge-manage.png" alt="" style="left: 260px; top: 180px;">-->
+            <!--<img src="../assets/images/login/travel-manage.png" alt="" style="left: 390px; top: 60px;">-->
+            <!--<img src="../assets/images/login/pay.png" alt="" style="left: 390px; top: 300px;">-->
+        <!--</div>-->
         <!--<img block="center" style="width:100%;height:100%" src="../assets/dxw.png"/>-->
         <img block="center" style="width:100%;height:100%" src="../assets/images/main_bg.png"/>
 

@@ -3,7 +3,7 @@
         <el-header class="header" style="height: 70px;">
             <router-link :to="{path:'/dashboard'}">
                 <div class="logo">
-                    <img src="../../assets/images/login/logo.png" style="height: 40px;">
+                    <img src="../../assets/logo.png" style="height: 40px;">
                     <p>
                         <span style="font-size: 18px;">东兴旺ERP系统</span>
                         <span style="font-size: 12px;">DXW ERP SYSTEM</span>
@@ -46,7 +46,7 @@
                     <!--</keep-alive>-->
                     <router-view id="mainView" v-if="!$route.meta.keepAlive" ref="defaultRootView"></router-view>
                 </el-main>
-                <div class="copyright">Copyright © 冠凯科技, All Rights Reserved.</div>
+                <div class="copyright">Copyright © 昆龙信息服务公司, All Rights Reserved.</div>
             </el-container>
         </el-container>
     </el-container>
@@ -413,7 +413,7 @@
             this.$bus.$on('app:goback', this.goback);
             this.$bus.$on('app:flush', this.flush);
 
-            bus.$emit('app:domain:selected', 'parking');
+            bus.$emit('app:domain:selected', 'dongxw');
             window.onresize = () => {
                 resizeMainView();
             };

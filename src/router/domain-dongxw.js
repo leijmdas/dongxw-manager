@@ -8,23 +8,32 @@ let router0 = [
         meta: {title: '客户订单', icon: 'finance', group: 'dongxw'},
         children: [
             {
-                path: 'businessInfo/manage',
-                component: require('@/pages/app/businessInfo/Manage.vue'),
-                name: 'businessInfo:manage',
+                path: 'dongxw/customer/manage',
+                component: require('@/pages/dongxw/customer/Manage.vue'),
+                name: 'customer:manage',
                 meta: {title: '客户信息', perm: 'customer:manage'}
             },
             {
-                path: 'checkMerchant/manage',
-                component: require('@/pages/app/checkMerchant/Manage.vue'),
-                name: 'checkMerchant:manage',
+                path: 'dongxw/product/manage',
+                component: require('@/pages/dongxw/product/Manage.vue'),
+                name: 'product:manage',
                 meta: {title: '产品', perm: 'product:manage'}
             },
             {
-                path: 'merchantOrder/manage',
-                component: require('@/pages/app/merchantOrder/Manage.vue'),
-                name: 'merchantOrder:manage',
+                path: 'dongxw/order/manage',
+                component: require('@/pages/dongxw/order/Manage.vue'),
+                name: 'order:manage',
                 meta: {title: '客户订单', perm: 'order:manage'}
-            }]
+            },
+            {
+                path: 'dongxw/productType/manage',
+                component: require('@/pages/dongxw/product/Manage.vue'),
+                name: 'productType:manage',
+                meta: {title: '产品类型', perm: 'productType:manage'}
+            }
+
+
+            ]
     },
     {
         path: '/make',
