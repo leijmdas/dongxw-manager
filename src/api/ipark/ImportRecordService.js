@@ -6,21 +6,21 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/excel/query',
+      url: '/ipark/excel/query',
       method: 'POST',
       data
     })
   },
   queryImportRecordDetail(data) {
     return request({
-      url: '/api/ipark/excel/queryImportRecordDetail',
+      url: '/ipark/excel/queryImportRecordDetail',
       method: 'POST',
       data
     })
   },
   downloadParkPort(data){
     return request({
-        url: '/api/ipark/excel/downloadParkPortModel',
+        url: '/ipark/excel/downloadParkPortModel',
         method: 'GET',
         responseType: 'blob',
         params:data

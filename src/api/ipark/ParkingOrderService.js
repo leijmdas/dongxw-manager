@@ -9,14 +9,14 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/parking_order/query',
+      url: '/ipark/parking_order/query',
       method: 'POST',
       data
     })
   },
   export(data) {
     return request({
-      url: '/api/ipark/parking_order/export',
+      url: '/ipark/parking_order/export',
       method: 'POST',
       data,
       responseType: 'blob'

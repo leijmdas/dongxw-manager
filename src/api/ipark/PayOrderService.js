@@ -6,17 +6,17 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/pay_order/query',
+      url: '/ipark/pay_order/query',
       method: 'POST',
       data
     })
   },
-  
+
   get(id) {
     return request({
-      url: '/api/ipark/pay_order/get/'+id,
+      url: '/ipark/pay_order/get/'+id,
       method: 'GET'
     })
   },
-  
+
 }

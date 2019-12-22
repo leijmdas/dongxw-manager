@@ -6,7 +6,7 @@ export default {
      */
     queryLeft(data) {
         return request({
-            url: '/api/ipark/park_port/queryLeft',
+            url: '/ipark/park_port/queryLeft',
             method: 'POST',
             data
         });
@@ -16,53 +16,53 @@ export default {
      */
     query(data) {
         return request({
-            url: '/api/ipark/park_port/query',
+            url: '/ipark/park_port/query',
             method: 'POST',
             data
         });
     },
     queryLeft(data) {
     return request({
-      url: '/api/ipark/park_port/queryLeft',
+      url: '/ipark/park_port/queryLeft',
       method: 'POST',
       data
     });
   },
   querylockorder(data) {
     return request({
-      url: '/api/ipark/park_port/querylockorder',
+      url: '/ipark/park_port/querylockorder',
       method: 'POST',
       data
     });
   },
   save(data) {
     return request({
-      url: '/api/ipark/park_port/save',
+      url: '/ipark/park_port/save',
       method: 'POST',
       data
     });
   },
   get(id) {
     return request({
-      url: '/api/ipark/park_port/get/'+id,
+      url: '/ipark/park_port/get/'+id,
       method: 'GET'
     });
   },
   delete(id) {
     return request({
-      url: '/api/ipark/park_port/delete/'+id,
+      url: '/ipark/park_port/delete/'+id,
       method: 'POST'
     });
   },
   scanQr(id) { //扫码支付二维码
     return request({
-      url: '/api/ipark/park_port/scanQr/'+id,
+      url: '/ipark/park_port/scanQr/'+id,
       method: 'POST'
     });
   },
   bindCorp(id,params){ //绑定企业关系
     return request({
-      url: '/api/ipark/park_port/bindCorp/'+id,
+      url: '/ipark/park_port/bindCorp/'+id,
       method: 'POST',
       data:params
     });

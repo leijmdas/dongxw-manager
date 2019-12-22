@@ -6,14 +6,14 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/promotion_coupon/query',
+      url: '/ipark/promotion_coupon/query',
       method: 'POST',
       data
     })
   },
   queryGroup(data) {
     return request({
-      url: '/api/ipark/promotion_coupon/queryGroup',
+      url: '/ipark/promotion_coupon/queryGroup',
       method: 'POST',
       data
     })
@@ -21,33 +21,33 @@ export default {
   export(data) {
     return request({
       responseType: 'blob',
-      url: '/api/ipark/promotion_coupon/export',
+      url: '/ipark/promotion_coupon/export',
       method: 'POST',
       data
     })
   },
   save(data) {
     return request({
-      url: '/api/ipark/promotion_coupon/save',
+      url: '/ipark/promotion_coupon/save',
       method: 'POST',
       data
     })
   },
   get(id) {
     return request({
-      url: '/api/ipark/promotion_coupon/get/'+id,
+      url: '/ipark/promotion_coupon/get/'+id,
       method: 'GET'
     })
   },
   delete(id) {
     return request({
-      url: '/api/ipark/promotion_coupon/delete/'+id,
+      url: '/ipark/promotion_coupon/delete/'+id,
       method: 'POST'
     })
   },
   dispatch2User(data){
     return request({
-      url: '/api/ipark/promotion_coupon/dispatch2User',
+      url: '/ipark/promotion_coupon/dispatch2User',
       method: 'POST',
       data
     })

@@ -6,28 +6,28 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/invoice_order/query',
+      url: '/ipark/invoice_order/query',
       method: 'POST',
       data
     })
   },
   queryInvoice(data) {
     return request({
-      url: '/api/ipark/invoice_configuration/queryInvoice',
+      url: '/ipark/invoice_configuration/queryInvoice',
       method: 'POST',
       data
     })
   },
   save(data) {
     return request({
-      url: '/api/ipark/invoice_configuration/save',
+      url: '/ipark/invoice_configuration/save',
       method: 'POST',
       data
     })
   },
   get(id) {
     return request({
-      url: '/api/ipark/invoice_configuration/get/'+id,
+      url: '/ipark/invoice_configuration/get/'+id,
       method: 'GET'
     })
   },
@@ -37,13 +37,13 @@ export default {
         id,
         status
       },
-      url: '/api/ipark/invoice_configuration/changeS/',
+      url: '/ipark/invoice_configuration/changeS/',
       method: 'POST'
     })
   },
   delete(id) {
     return request({
-      url: '/api/ipark/invoice_configuration/delete/'+id,
+      url: '/ipark/invoice_configuration/delete/'+id,
       method: 'POST'
     })
   }

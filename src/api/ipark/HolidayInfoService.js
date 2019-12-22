@@ -6,39 +6,39 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/holidy_info/query',
+      url: '/ipark/holidy_info/query',
       method: 'POST',
       data
     })
   },
   save(data) {
     return request({
-      url: '/api/ipark/holidy_info/save',
+      url: '/ipark/holidy_info/save',
       method: 'POST',
       data
     })
   },
   get(id) {
     return request({
-      url: '/api/ipark/holidy_info/get/'+id,
+      url: '/ipark/holidy_info/get/'+id,
       method: 'GET'
     })
   },
   delete(id) {
     return request({
-      url: '/api/ipark/holidy_info/delete/'+id,
+      url: '/ipark/holidy_info/delete/'+id,
       method: 'POST'
     })
   },
   scanQr(id) { //扫码支付二维码
     return request({
-      url: '/api/ipark/holidy_info/scanQr/'+id,
+      url: '/ipark/holidy_info/scanQr/'+id,
       method: 'POST'
     })
   },
   bindCorp(id,params){ //绑定企业关系
     return request({
-      url: '/api/ipark/holidy_info/bindCorp/'+id,
+      url: '/ipark/holidy_info/bindCorp/'+id,
       method: 'POST',
       data:params
     })

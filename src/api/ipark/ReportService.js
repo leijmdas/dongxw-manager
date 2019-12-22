@@ -6,25 +6,25 @@ export default {
    */
   findCouponReport(data) {
     return request({
-      url: '/api/ipark/report/findCouponReport',
+      url: '/ipark/report/findCouponReport',
       method: 'POST',
       data
     })
   },
   /**
    * 查询停车报表
-   * @param {*} data 
+   * @param {*} data
    */
   findParkingReport(data) {
     return request({
-      url: '/api/ipark/report/findParkingReport',
+      url: '/ipark/report/findParkingReport',
       method: 'POST',
       data
     })
   },
   findCurrentDayParkingReport() {
     return request({
-      url: '/api/ipark/report/findCurrentDayParkingReport',
+      url: '/ipark/report/findCurrentDayParkingReport',
       method: 'POST'
     })
   }

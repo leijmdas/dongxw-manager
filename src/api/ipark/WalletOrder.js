@@ -6,14 +6,14 @@ export default {
    */
   queryWAndUser(data) {
     return request({
-      url: '/api/ipark/wallet_order/queryWAndUser',
+      url: '/ipark/wallet_order/queryWAndUser',
       method: 'POST',
       data
     })
   },
   giveAmount(data) {
     return request({
-      url: '/api/ipark/wallet/giveAmount',
+      url: '/ipark/wallet/giveAmount',
       method: 'POST',
       data
     })

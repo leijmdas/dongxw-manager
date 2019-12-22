@@ -10,17 +10,23 @@ export default {
      */
     query(data) {
         return request({
-            url: '/api/dongxw/customer/query',
+            url: '/dongxw/customer/query',
             method: 'POST',
             data
         })
     },
-    queryAccess(data) {
+
+    findById(id) {
         return request({
-            url: '/api/ipark/access_info/queryAccess',
-            method: 'POST',
-            data
+            url: '/dongxw/customer/findById/'+id,
+            method: 'POST'
         })
     },
+    // hld() {
+    //     return request({
+    //         url: '/hongld/select',
+    //         method: 'POST'
+    //     })
+    // },
 
 }

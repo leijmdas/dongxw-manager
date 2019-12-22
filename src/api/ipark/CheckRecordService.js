@@ -6,39 +6,39 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/check_record/query',
+      url: '/ipark/check_record/query',
       method: 'POST',
       data
     })
   },
   save(data) {
     return request({
-      url: '/api/ipark/check_record/save',
+      url: '/ipark/check_record/save',
       method: 'POST',
       data
     })
   },
   get(id) {
     return request({
-      url: '/api/ipark/check_record/get/'+id,
+      url: '/ipark/check_record/get/'+id,
       method: 'GET'
     })
   },
   delete(id) {
     return request({
-      url: '/api/ipark/check_record/delete/'+id,
+      url: '/ipark/check_record/delete/'+id,
       method: 'POST'
     })
   },
   scanQr(id) { //扫码支付二维码
     return request({
-      url: '/api/ipark/check_record/scanQr/'+id,
+      url: '/ipark/check_record/scanQr/'+id,
       method: 'POST'
     })
   },
   bindCorp(id,params){ //绑定企业关系
     return request({
-      url: '/api/ipark/park_area/bindCorp/'+id,
+      url: '/ipark/park_area/bindCorp/'+id,
       method: 'POST',
       data:params
     })

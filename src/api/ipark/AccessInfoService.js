@@ -10,27 +10,27 @@ export default {
      */
     query(data) {
         return request({
-            url: '/api/ipark/access_info/query',
+            url: '/ipark/access_info/query',
             method: 'POST',
             data
         })
     },
     queryAccess(data) {
         return request({
-            url: '/api/ipark/access_info/queryAccess',
+            url: '/ipark/access_info/queryAccess',
             method: 'POST',
             data
         })
     },
     getEchartsOut(parkId, date) {
         return request({
-            url: '/api/ipark/access_info/getChu?parkId=' + parkId + '&leaveOn=' + date,
+            url: '/ipark/access_info/getChu?parkId=' + parkId + '&leaveOn=' + date,
             method: 'GET'
         })
     },
     getEchartsIn(parkId, date) {
         return request({
-            url: '/api/ipark/access_info/getRu?parkId=' + parkId + '&entryOn=' + date,
+            url: '/ipark/access_info/getRu?parkId=' + parkId + '&entryOn=' + date,
             method: 'GET'
         })
     }

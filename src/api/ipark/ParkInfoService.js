@@ -6,52 +6,52 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/park_info/query',
+      url: '/ipark/park_info/query',
       method: 'POST',
       data
     })
   },
   save(data) {
     return request({
-      url: '/api/ipark/park_info/save',
+      url: '/ipark/park_info/save',
       method: 'POST',
       data
     })
   },
   get(id) {
     return request({
-      url: '/api/ipark/park_info/get/'+id,
+      url: '/ipark/park_info/get/'+id,
       method: 'GET'
     })
   },
   delete(id) {
     return request({
-      url: '/api/ipark/park_info/delete/'+id,
+      url: '/ipark/park_info/delete/'+id,
       method: 'POST'
     })
   },
   scanQr(id) { //扫码支付二维码
     return request({
-      url: '/api/ipark/park_info/scanQr/'+id,
+      url: '/ipark/park_info/scanQr/'+id,
       method: 'POST'
     })
   },
   bindCorp(id,params){ //绑定企业关系
     return request({
-      url: '/api/ipark/park_info/bindCorp/'+id,
+      url: '/ipark/park_info/bindCorp/'+id,
       method: 'POST',
       data:params
     })
   },
   syncToBase(code){ //同步至中间库
     return request({
-      url: '/api/ipark/park_info/syncToBase/'+code,
+      url: '/ipark/park_info/syncToBase/'+code,
       method: 'POST',
     })
   },
   syncToCBase(code){ //同步中间库到厂库
     return request({
-      url: '/api/ipark/park_info/syncToCBase/'+code,
+      url: '/ipark/park_info/syncToCBase/'+code,
       method: 'POST',
     })
   },

@@ -10,7 +10,7 @@ export default {
      */
     query(data) {
         return request({
-            url: '/api/ipark/act_master/query',
+            url: '/ipark/act_master/query',
             method: 'POST',
             data
         })
@@ -20,7 +20,7 @@ export default {
      */
     save(data) {
         return request({
-            url: '/api/ipark/act_master/save',
+            url: '/ipark/act_master/save',
             method: 'POST',
             data
         })
@@ -31,7 +31,7 @@ export default {
      */
     updateImg(data) {
         return request({
-            url: '/api/ipark/act_master/updateImg',
+            url: '/ipark/act_master/updateImg',
             method: 'POST',
             data
         })
@@ -41,7 +41,7 @@ export default {
      */
     get(id) {
         return request({
-            url: `/api/ipark/act_master/get/${id}`,
+            url: `/ipark/act_master/get/${id}`,
             method: 'GET'
         })
     },
@@ -50,7 +50,7 @@ export default {
      */
     delete(id) {
         return request({
-            url: `/api/ipark/act_master/delete/${id}`,
+            url: `/ipark/act_master/delete/${id}`,
             method: 'POST'
         })
     },
@@ -59,7 +59,7 @@ export default {
      */
     queryLeft(data) {
         return request({
-            url: '/api/ipark/ticket/queryLeft',
+            url: '/ipark/ticket/queryLeft',
             method: 'POST',
             data
         })
@@ -69,7 +69,7 @@ export default {
      */
     saveCoupon(data) {
         return request({
-            url: '/api/ipark/ticket/save',
+            url: '/ipark/ticket/save',
             method: 'POST',
             data
         })

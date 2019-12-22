@@ -7,7 +7,7 @@ export default {
      */
     queryBalanceLog(data) {
         return request({
-            url: '/api/ipark/settlement_period/queryBalanceLog',
+            url: '/ipark/settlement_period/queryBalanceLog',
             method: 'POST',
             data
         })
@@ -17,7 +17,7 @@ export default {
      */
     execMerchantTask(periodId, merchantId) {
         return request({
-            url: '/api/ipark/settlement_period/execMerchantTask?periodId=' + periodId + "&merchantId=" + merchantId,
+            url: '/ipark/settlement_period/execMerchantTask?periodId=' + periodId + "&merchantId=" + merchantId,
             method: 'GET'
         })
     },
@@ -26,7 +26,7 @@ export default {
      */
     execTask(periodId) {
         return request({
-            url: '/api/ipark/settlement_period/execTask?periodId=' + periodId,
+            url: '/ipark/settlement_period/execTask?periodId=' + periodId,
             method: 'GET'
         })
     },
@@ -36,14 +36,14 @@ export default {
      */
     query(data) {
         return request({
-            url: '/api/ipark/settlement_period/query',
+            url: '/ipark/settlement_period/query',
             method: 'POST',
             data
         })
     },
     flushAll() {
         return request({
-            url: '/api/ipark/settlement_period/flushAll',
+            url: '/ipark/settlement_period/flushAll',
             method: 'POST'
         })
     },
@@ -52,7 +52,7 @@ export default {
      */
     queryPeriod() {
         return request({
-            url: '/api/ipark/takeout_apply/queryPeriod',
+            url: '/ipark/takeout_apply/queryPeriod',
             method: 'POST'
         })
     },
@@ -61,7 +61,7 @@ export default {
      */
     queryTakeout(data) {
         return request({
-            url: '/api/ipark/takeout_apply/query',
+            url: '/ipark/takeout_apply/query',
             method: 'POST',
             data
         })
@@ -71,7 +71,7 @@ export default {
      */
     updateTakeout(data) {
         return request({
-            url: '/api/ipark/takeout_apply/update',
+            url: '/ipark/takeout_apply/update',
             method: 'POST',
             data
         })
@@ -82,7 +82,7 @@ export default {
      */
     updateStatusById(id,status) {
         return request({
-            url: '/api/ipark/takeout_apply/updateStatusById?id='+id+"&status="+status,
+            url: '/ipark/takeout_apply/updateStatusById?id='+id+"&status="+status,
             method: 'POST'
         })
     }

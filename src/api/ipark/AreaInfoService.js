@@ -9,7 +9,7 @@ export default {
    */
   microList(data) {
     return request({
-      url: '/api/ipark/area_info/query',
+      url: '/ipark/area_info/query',
       method: 'POST',
       data
     })

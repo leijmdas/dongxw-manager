@@ -161,8 +161,10 @@
                             isDeleted: false
                         }
                     },
-                    getData: this.$api.ipark.PromotionInfoService.query
-                },
+                    getData:   this.$api.ipark.PromotionInfoService.query
+                    // getData : this.$api.dongxw.CustomerService.findById(1)
+
+        },
                 tableActions: [
                     {
                         name: "编辑",
@@ -248,6 +250,10 @@
         },
         mounted() {
             this.$on("init", this.init);
+            // let r=this.$api.dongxw.CustomerService.hld();
+            // console.log(JSON.stringify(r));
+            let ret=this.$api.dongxw.CustomerService.findById(1);
+            console.log(JSON.stringify(ret));
         }
     };
 </script>

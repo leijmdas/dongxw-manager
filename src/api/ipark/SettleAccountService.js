@@ -6,33 +6,33 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/settle_account/query',
+      url: '/ipark/settle_account/query',
       method: 'POST',
       data
     })
   },
   save(data) {
     return request({
-      url: '/api/ipark/settle_account/save',
+      url: '/ipark/settle_account/save',
       method: 'POST',
       data
     })
   },
   get(id) {
     return request({
-      url: '/api/ipark/settle_account/get/'+id,
+      url: '/ipark/settle_account/get/'+id,
       method: 'GET'
     })
   },
   delete(id) {
     return request({
-      url: '/api/ipark/settle_account/delete/'+id,
+      url: '/ipark/settle_account/delete/'+id,
       method: 'POST'
     })
   },
   alipayAuthScanQr(id) {
     return request({
-      url: '/api/ipark/settle_account/alipayAuthScanQr/' + id,
+      url: '/ipark/settle_account/alipayAuthScanQr/' + id,
       method: 'GET'
     })
   }

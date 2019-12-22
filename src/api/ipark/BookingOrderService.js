@@ -9,27 +9,27 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/booking_order/query',
+      url: '/ipark/booking_order/query',
       method: 'POST',
       data
     })
   },
   queryorder(data) {
     return request({
-      url: '/api/ipark/booking_order/queryorder',
+      url: '/ipark/booking_order/queryorder',
       method: 'POST',
       data
     })
   },
   findOrderNo(orderNo) {
     return request({
-      url: '/api/ipark/booking_order/findOrderNo/'+orderNo,
+      url: '/ipark/booking_order/findOrderNo/'+orderNo,
       method: 'GET'
     })
   },
   export(data) {
     return request({
-      url: '/api/ipark/booking_order/export',
+      url: '/ipark/booking_order/export',
       method: 'POST',
       data,
       responseType: 'blob'

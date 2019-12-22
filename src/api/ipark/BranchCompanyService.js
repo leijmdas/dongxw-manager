@@ -6,27 +6,27 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/branch_company/query',
+      url: '/ipark/branch_company/query',
       method: 'POST',
       data
     })
   },
   save(data) {
     return request({
-      url: '/api/ipark/branch_company/save',
+      url: '/ipark/branch_company/save',
       method: 'POST',
       data
     })
   },
   get(id) {
     return request({
-      url: '/api/ipark/branch_company/get/'+id,
+      url: '/ipark/branch_company/get/'+id,
       method: 'GET'
     })
   },
   delete(id) {
     return request({
-      url: '/api/ipark/branch_company/delete/'+id,
+      url: '/ipark/branch_company/delete/'+id,
       method: 'POST'
     })
   },

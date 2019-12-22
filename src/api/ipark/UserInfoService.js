@@ -6,27 +6,27 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/user_info/query',
+      url: '/ipark/user_info/query',
       method: 'POST',
       data
     })
   },
   save(data) {
     return request({
-      url: '/api/ipark/user_info/save',
+      url: '/ipark/user_info/save',
       method: 'POST',
       data
     })
   },
   get(id) {
     return request({
-      url: '/api/ipark/user_info/get/'+id,
+      url: '/ipark/user_info/get/'+id,
       method: 'GET'
     })
   },
   findCarInfo(data) {
     return request({
-      url: '/api/ipark/user_info/findCarInfo',
+      url: '/ipark/user_info/findCarInfo',
       method: 'POST',
       data
     })

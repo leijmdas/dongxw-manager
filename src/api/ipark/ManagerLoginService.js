@@ -6,27 +6,27 @@ export default {
    */
   query(data) {
     return request({
-      url: '/api/ipark/manager_login/query',
+      url: '/ipark/manager_login/query',
       method: 'POST',
       data
     })
   },
   save(data) {
     return request({
-      url: '/api/ipark/manager_login/save',
+      url: '/ipark/manager_login/save',
       method: 'POST',
       data
     })
   },
   get(id) {
     return request({
-      url: '/api/ipark/manager_login/get/'+id,
+      url: '/ipark/manager_login/get/'+id,
       method: 'GET'
     })
   },
   delete(id) {
     return request({
-      url: '/api/ipark/manager_login/delete/'+id,
+      url: '/ipark/manager_login/delete/'+id,
       method: 'POST'
     })
   }
