@@ -33,7 +33,7 @@ let router0 = [
             }
 
 
-            ]
+        ]
     },
     {
         path: '/make',
@@ -88,17 +88,25 @@ let router0 = [
         path: '/purchase',
         component: Layout,
         meta: {title: '采购订单', icon: 'user', group: 'dongxw'},
-        children: [{
-            path: 'userInfo/manage',
-            component: require('@/pages/app/userInfo/Manage.vue'),
-            name: 'userInfo:manage',
-            meta: {title: '原料清单', perm: 'user:manage'}
-        }, {
-            path: 'userInfo/userGrade',
-            component: require('@/pages/app/userGrade/Manage.vue'),
-            name: 'userGrade:manage',
-            meta: {title: 'BOM树', perm: 'userGrade:manage'}
-        },
+        children: [
+            {
+                path: 'userInfo/manage',
+                component: require('@/pages/app/userInfo/Manage.vue'),
+                name: 'userInfo:manage',
+                meta: {title: '供应商', perm: 'user:manage'}
+            },
+            {
+                path: 'userInfo/manage',
+                component: require('@/pages/app/userInfo/Manage.vue'),
+                name: 'userInfo:manage',
+                meta: {title: '原料清单', perm: 'user:manage'}
+            },
+            {
+                path: 'userInfo/userGrade',
+                component: require('@/pages/app/userGrade/Manage.vue'),
+                name: 'userGrade:manage',
+                meta: {title: 'BOM树', perm: 'userGrade:manage'}
+            },
 
             {
                 path: 'userInfo/recharge',
