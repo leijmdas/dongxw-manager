@@ -14,8 +14,12 @@
             <el-menu-item v-show="isadmin=='true'" index="domain_sys"><span class="ele-icon el-icon-ipshezhi"></span><span>设置</span>
             </el-menu-item>
         </el-menu>
+
         <el-menu mode="horizontal" :default-active="activeIndex" background-color="#00438A" text-color="#fff"
                  active-text-color="#ffd04b">
+            <el-menu-item index="2">
+                <a href="http://120.79.98.67/" target="_blank" class="go-to">宏利达海棉</a>
+            </el-menu-item>
             <el-menu-item index="0">
                 <el-popover placement="bottom" width="300" trigger="hover">
                     <ul class="msgUL">
@@ -28,7 +32,10 @@
                     <router-link to="/msg">
                         <el-button type="text">更多</el-button>
                     </router-link>
+
                     <div slot="reference">
+
+
                         <el-badge>
                             <span class="ele-icon el-icon-ipe-mail_icon info-icon"></span>
                             <span class="info-icon-text">消息中心</span>
