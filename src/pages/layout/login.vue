@@ -17,14 +17,21 @@
                 </div>
                 <div class="login_container--box" @keydown.enter.stop="login">
                     <p>请输入您的认证信息</p>
+
                     <el-input placeholder="请输入用户名" autocomplete="off"
                               v-model="account.account" maxlength="32">
                         <i slot="prefix" class="el-input__icon ele-icon el-icon-ipuser"></i>
                     </el-input>
+
                     <el-input placeholder="请输入密码" type="password" autocomplete="off" v-model="account.password"
                               maxlength="32">
                         <i slot="prefix" class="el-input__icon ele-icon el-icon-iplock"></i>
                     </el-input>
+                    <el-input class="newinput" placeholder="图形验证码" v-model="account.verifyCode" name="inputPicCode" id="inputPicCode" maxlength="6"/>
+
+                    <img id=imgCode height="45" width="130" class="col-md-6"
+                    src='/api/rest/context/getPicCode' alt="" style="margin-left:25px"/>
+
                     <el-button type="primary" @click="login">登录</el-button>
                 </div>
             </div>
@@ -76,7 +83,8 @@
                 account: {
                     show: true,
                     account: '',
-                    password: ''
+                    password: '',
+                    verifyCode: ''
                 },
                 factoryBrand: {
                     show: false,
@@ -202,7 +210,7 @@
             &--box {
                 margin-left: 37%;
                 width: 340px;
-                height: 308px;
+                height: 360px;
                 background: #fff;
                 border-radius: 4px;
 
@@ -216,6 +224,7 @@
                     font-weight: bolder;
                 }
 
+
                 input {
                     height: 42px !important;
                     padding-left: 30px !important;
@@ -227,7 +236,17 @@
                     width: 280px;
                     height: 42px;
                 }
+                input {
+                    height: 42px !important;
+                    padding-left: 30px !important;
+                }
 
+                .newinput {
+                    margin-left: 30px;
+                    margin-bottom: 20px;
+                    width: 120px;
+                    height: 42px;
+                }
                 button {
                     width: 280px;
                     height: 42px;
