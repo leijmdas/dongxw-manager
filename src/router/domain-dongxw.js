@@ -100,6 +100,11 @@ let router0 = [
                 component: require('@/pages/app/userInfo/Manage.vue'),
                 name: 'userInfo:manage',
                 meta: {title: '原料清单', perm: 'user:manage'}
+            },{
+                path: 'userInfo/manage',
+                component: require('@/pages/app/userInfo/Manage.vue'),
+                name: 'userInfo:manage',
+                meta: {title: '原料分类', perm: 'user:manage'}
             },
             {
                 path: 'userInfo/userGrade',
@@ -156,6 +161,29 @@ let router0 = [
             component: require('@/pages/app/userGrade/Manage.vue'),
             name: 'userGrade:manage',
             meta: {title: '应付款', perm: 'userGrade:manage'}
+        },
+        ]
+    },
+
+    {
+        path: '/qry',
+        component: Layout,
+        meta: {title: '查询', icon: 'user', group: 'dongxw'},
+        children: [{
+            path: 'userInfo/manage',
+            component: require('@/pages/app/userInfo/Manage.vue'),
+            name: 'userInfo:manage',
+            meta: {title: '查询客户订单', perm: 'user:manage'}
+        }, {
+            path: 'userInfo/userGrade',
+            component: require('@/pages/app/userGrade/Manage.vue'),
+            name: 'userGrade:manage',
+            meta: {title: '查询采购订单', perm: 'userGrade:manage'}
+        }, {
+            path: 'userInfo/userGrade',
+            component: require('@/pages/app/userGrade/Manage.vue'),
+            name: 'userGrade:manage',
+            meta: {title: '查询库存', perm: 'userGrade:manage'}
         },
         ]
     },
