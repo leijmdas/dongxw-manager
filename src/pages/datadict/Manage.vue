@@ -1,15 +1,20 @@
 <template>
-  <div>
+    <div>
 
-      <a href="http://120.78.136.63:88/v/login.html" target="_blank" class="go-to">元数据字典</a>
-  </div>
+        <p></p>
+
+        <a style="margin-left: 80px;margin-top:100px" href="http://120.78.136.63:88/v/login.html" target="_blank"
+           class="go-to">  <font size="3" color="red">元数据字典</font></a>
+
+
+    </div>
 </template>
 <style lang="less" scoped>
     .el-upload-dragger {
 
-    img {
-        width: 300px;
-        height: 300px;
+        img {
+            width: 300px;
+            height: 300px;
   }
 }
 </style>

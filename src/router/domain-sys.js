@@ -21,7 +21,7 @@ let sysRouter = [{
     name: 'sys:org:manage',
     component: require('@/pages/sys/org/ManagePanel.vue'),
     meta: {
-      title: '组织结构管理',
+      title: '组织结构',
       perm:'sysOrg:manage'
 
     }

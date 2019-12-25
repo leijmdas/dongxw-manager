@@ -50,7 +50,7 @@
         default: '/api/file/upload'
       },
       accept: {
-        tyoe: String,
+        type: String,
         default: 'image/*'
       },
       formData: {
@@ -99,7 +99,7 @@
     },
     methods: {
       beforeUpload (file) {
-        
+
         Object.assign(this.formData,{"access-token":getToken()})
         console.log(this.formData)
         this.objectUrl = URL.createObjectURL(file)

@@ -51,10 +51,10 @@
       },
       refresh () {
         this.loading = true
-        this.$api.ipark.CorpInfoService.query({param: {isDeleted:false}}).then(rsp => {
-          this.options = rsp.data
-          this.loading = false
-        })
+        // this.$api.ipark.CorpInfoService.query({param: {isDeleted:false}}).then(rsp => {
+        //   this.options = rsp.data
+        //   this.loading = false
+        // })
       }
     },
     created () {

@@ -6,7 +6,7 @@
           </el-form-item>
       </div>
         <div style="margin:10px" class="merchantLogo">
-            <v-image-uploader :form-data="{}" v-model="ppp">
+            <v-image-uploader :form-data="{}" :multiple=true v-model="ppp">
 
             </v-image-uploader>
             <div style="text-align:center">

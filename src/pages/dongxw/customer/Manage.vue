@@ -11,6 +11,7 @@
                 <el-form-item label="客户名称" prop="custName">
                     <el-input v-model="page.query.param.custName" clearable></el-input>
                 </el-form-item>
+
                 <el-form-item label="结算币种" prop="moneyType">
                     <el-select :clearable="true" v-model="page.query.param.moneyType" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]" :value="item[0]"
@@ -38,20 +39,20 @@
             </el-table-column>
             <el-table-column prop="custNo" label="编号" width="120"></el-table-column>
             <el-table-column prop="custName" label="客户名称" width="120"></el-table-column>
-            <el-table-column prop="custSname" label="客户详细名称" width="245">
 
-            </el-table-column>
-            <el-table-column prop="country" label="客户国家" width="200">
+            <el-table-column prop="custSname" label="客户详细名称" width="245">      </el-table-column>
 
-            </el-table-column>
-            <el-table-column prop="moneyType" label="结算币种" width="100">
+            <el-table-column prop="country" label="客户国家" width="120">            </el-table-column>
+            <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
+
+            <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
                 </template>
             </el-table-column>
             <el-table-column prop="contact" label="联系人" width="150">
             </el-table-column>
-            <el-table-column prop="tel" label="联系人电话" width="150">
+            <el-table-column prop="tel" label="联系人电话" width="180">
             </el-table-column>
 
 
