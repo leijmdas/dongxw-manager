@@ -25,7 +25,7 @@
         <!--</el-form-item>-->
         <el-form-item label="状态" prop="status">
           <el-radio-group v-model="entity.status">
-            <el-radio v-for="item in $dict.store.STATUS" :key="item[0]" :label="item[0]">{{item[1]}}</el-radio>
+            <el-radio v-for="item in $dict.store.STATUSS" :key="item[0]" :label="item[0]">{{item[1]}}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
@@ -94,7 +94,7 @@
             this.$api.sys.User.save(this.entity).then((rsp)=>{
               this.$emit('saved',rsp)
             })
-          } 
+          }
         });
       },
       resetForm() {

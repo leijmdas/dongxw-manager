@@ -36,7 +36,7 @@
             </el-table-column>
             <el-table-column prop="status" label="状态" header-align="center" width="80">
               <template slot-scope="scope">
-                {{$dict.getText(scope.row.status,$dict.store.STATUS)}}
+                {{$dict.getText(scope.row.status,$dict.store.STATUSS)}}
               </template>
             </el-table-column>
 
