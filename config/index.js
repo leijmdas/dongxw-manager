@@ -48,7 +48,7 @@ module.exports = {
                 }
             },
             '/api': {
-                target: 'http://120.78.136.63:10080',
+                target: 'http://localhost:10080',
                 //target: 'http://localhost:10080',
                 //target: 'http://localhost:8085',
                 pathRewrite: {
