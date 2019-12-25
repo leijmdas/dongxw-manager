@@ -26,6 +26,7 @@
         </div>
         <v-toolbar title="数据列表" type="alert">
             <el-button type="primary" plain @click="create">新增</el-button>
+            <el-button plain @click="exportRecords">导出 XLS</el-button>
         </v-toolbar>
 
 
@@ -130,6 +131,24 @@
                 //         this.summaryMap[r.promotionId] = r;
                 //     })
                 // })
+            },
+            /*
+            导出
+             */
+            exportRecords() {
+                let params = this.getSearchParams();
+                console.log(params);
+                this.$api.dongxw.CustomerService.export(params);
+            },
+            getSearchParams() {
+                this.page.query.dateRanges = {};
+                if (this.dateRangeType != null && this.dateRange&&this.dateRange.length > 0) {
+                    this.page.query.dateRanges[this.dateRangeType] = {
+                        startDate: this.dateRange[0],
+                        endDate: this.dateRange.length > 1 ? this.dateRange[1] : null
+                    };
+                }
+                return this.page.query;
             },
             create() {
                 this.$refs.formDiag.show();

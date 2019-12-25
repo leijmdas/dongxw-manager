@@ -15,7 +15,17 @@ export default {
             data
         })
     },
-
+    /**
+     * 导出xlsx
+     */
+    export(data) {
+        return request({
+            url: '/dongxw/customer/export',
+            method: 'POST',
+            data,
+            responseType: 'blob'
+        })
+    },
     findById(id) {
         return request({
             url: '/dongxw/customer/findById/'+id,
