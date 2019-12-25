@@ -31,7 +31,11 @@
 
 
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
+            <el-table-column prop="seq" label="序号" width="60">
 
+                <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+
+            </el-table-column>
             <el-table-column prop="custNo" label="编号" width="120"></el-table-column>
             <el-table-column prop="custName" label="客户名称" width="120"></el-table-column>
             <el-table-column prop="custSname" label="客户详细名称" width="245">
