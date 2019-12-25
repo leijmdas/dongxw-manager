@@ -1,5 +1,18 @@
 <template>
     <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
+      <div>
+          <el-form-item label="名称" prop="name">
+              <el-input v-model="ppp" :disabled="isDisabled"></el-input>
+          </el-form-item>
+      </div>
+        <div style="margin:10px" class="merchantLogo">
+            <v-image-uploader :form-data="{}" v-model="ppp">
+
+            </v-image-uploader>
+            <div style="text-align:center">
+                LOGO
+            </div>
+        </div>
         <fieldset align="bottom">
             <el-row>
                 <el-col :span="14">
@@ -70,8 +83,6 @@
 <script>
 
     //import BranchCompanySelect from '@/components/widgets/BranchCompanySelect.vue';
-
-
     const defaultEntity = {
         id: null,
         type: 2, //优惠券
@@ -104,9 +115,11 @@
 
     };
     export default {
-        components: {  },
+        components: {},
         data() {
             return {
+                ppp: "",
+
                 ruleTpl: {when: null, then: null},
                 entity: _.cloneDeep(defaultEntity),
                 dateRange: [],
