@@ -9,7 +9,7 @@
             <!--<img src="../assets/images/login/pay.png" alt="" style="left: 390px; top: 300px;">-->
         <!--</div>-->
         <!--<img block="center" style="width:100%;height:100%" src="../assets/dxw.png"/>-->
-        <img block="center" style="width:100%;height:100%" src="../assets/images/main_bg.png"/>
+        <img block="center" style="width:100%;height:100%" src="../assets/images/main-bg.jpg"/>
 
     </div>
 
