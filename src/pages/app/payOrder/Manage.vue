@@ -135,8 +135,8 @@
 </template>
 <style rel="stylesheet/less" scoped lang="less">
     .status_1 {
-        color: gray;
-    }
+         color: gray;
+     }
 
     .status_2 {
         color: blue;

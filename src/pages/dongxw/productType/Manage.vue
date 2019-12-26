@@ -1,32 +1,21 @@
 <!--cust管理-->
 <template>
     <div>
-        <div class="panel panel-default panel-search">
-            <el-form :inline="true">
+        <!--<div class="panel panel-default panel-search">-->
+            <!--<el-form :inline="true">-->
+                <!--<el-form-item label="客户编号" prop="custNo">-->
+                    <!--<el-input v-model="page.query.param.custNo" clearable></el-input>-->
+                <!--</el-form-item>-->
 
+                <!--<el-form-item>-->
+                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+                    <!--<el-button @click="cancel">取消</el-button>-->
 
-                <el-form-item label="客户编号" prop="custNo">
-                    <el-input v-model="page.query.param.custNo" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="客户名称" prop="custName">
-                    <el-input v-model="page.query.param.custName" clearable></el-input>
-                </el-form-item>
-
-                <el-form-item label="结算币种" prop="moneyType">
-                    <el-select :clearable="true" v-model="page.query.param.moneyType" style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                    <el-button @click="cancel">取消</el-button>
-
-                </el-form-item>
-            </el-form>
-        </div>
+                <!--</el-form-item>-->
+            <!--</el-form>-->
+        <!--</div>-->
         <v-toolbar title="数据列表" type="alert">
-            <el-button plain @click="exportRecords">导出 XLS</el-button>
+            <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
             <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
 
@@ -37,43 +26,22 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column :class="status_green" prop="custNo" label="编号" width="80"></el-table-column>
-            <el-table-column prop="custName" label="客户名称" width="120"></el-table-column>
+            <el-table-column  prop="code" label="编码" width="100"></el-table-column>
+            <el-table-column  prop="name" label="产品类型" width="200"></el-table-column>
 
-            <el-table-column prop="custSname" label="客户详细名称" width="245">      </el-table-column>
-
-            <el-table-column prop="country" label="客户国家" width="80">            </el-table-column>
-            <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
-
-            <el-table-column prop="moneyType" label="结算币种" width="80">
-                <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="email" label="公司电子邮箱" width="150">
-            </el-table-column>
-            <el-table-column prop="contact" label="联系人" width="150">
-            </el-table-column>
-            <el-table-column prop="tel" label="联系人电话" width="180">
-            </el-table-column>
-
-
-            <el-table-column prop="createDate"  label="建档时间" width="100">
-                <template slot-scope="{row}">
-                    {{row.createDate.substr(0,10)}}
-                </template>
-            </el-table-column>
-            <el-table-column width="100" label="操作" :fixed="'right'">
+            <el-table-column width="100" label="操作"  >
+                <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
                 <template slot-scope="scope">
 
                     <el-button type="text" title="编辑" @click="edit(scope.row)"  >
                         <i class="el-icon-edit"></i>
                     </el-button>
-                     <!--<el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">-->
-                      <!--<i class="el-icon-delete red"></i>-->
+                    <!--<el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">-->
+                    <!--<i class="el-icon-delete red"></i>-->
                     <!--</el-button>-->
                 </template>
             </el-table-column>
+
         </v-table>
         <v-dialog ref="formDiag" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
@@ -92,7 +60,7 @@
 </style>
 
 <script>
-    //import MerchantSelect from '@/components/widgets/MerchantSelect.vue';
+
     import FormPanel from './Form';
 
     export default {
@@ -110,7 +78,7 @@
                             isDeleted: false
                         }
                     },
-                    getData : this.$api.dongxw.CustomerService.query
+                    getData : this.$api.dongxw.ProductTypeService.query
 
         },
                 tableActions: [
@@ -146,7 +114,7 @@
             exportRecords() {
                 let params = this.getSearchParams();
                 console.log(params);
-                this.$api.dongxw.CustomerService.export(params);
+                // this.$api.dongxw.CustomerService.export(params);
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};
@@ -216,8 +184,7 @@
         },
         mounted() {
             this.$on("init", this.init);
-            //let ret=this.$api.dongxw.CustomerService.findById(1);
-            //console.log(JSON.stringify(ret));
+
         }
     };
 </script>

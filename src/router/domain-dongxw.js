@@ -15,19 +15,19 @@ let router0 = [
             },
             {
                 path: 'dongxw/product/manage',
-                component: require('@/pages/dongxw/product/Manage.vue'),
+                component: require('@/pages/dongxw/customer/Manage.vue'),
                 name: 'product:manage',
                 meta: {title: '产品', perm: 'product:manage'}
             },
             {
                 path: 'dongxw/order/manage',
-                component: require('@/pages/dongxw/order/Manage.vue'),
+                component: require('@/pages/dongxw/customer/Manage.vue'),
                 name: 'order:manage',
                 meta: {title: '客户订单', perm: 'order:manage'}
             },
             {
                 path: 'dongxw/productType/manage',
-                component: require('@/pages/dongxw/product/Manage.vue'),
+                component: require('@/pages/dongxw/productType/Manage.vue'),
                 name: 'productType:manage',
                 meta: {title: '产品类型', perm: 'productType:manage'}
             }
