@@ -113,13 +113,21 @@
                 isDisabled: false,
                 limitTotal: false,
                 rules: {
-
+                    custNo: [
+                        {required: true, message: "编号不能为空", trigger: "blur"},
+                        {
+                            min: 1,
+                            max: 6,
+                            message: "长度在 1 到 6 个字符",
+                            trigger: "blur"
+                        }
+                    ],
                     custName: [
                         {required: true, message: "名称不能为空", trigger: "blur"},
                         {
                             min: 1,
-                            max: 32,
-                            message: "长度在 1 到 32 个字符",
+                            max: 64,
+                            message: "长度在 1 到 64 个字符",
                             trigger: "blur"
                         }
                     ],
@@ -152,46 +160,6 @@
                         }
                     ],
 
-                    limitDays: [
-                        {
-                            required: false
-                        }
-                    ],
-                    limitTotalNum: [
-                        {
-                            required: false
-                        }
-                    ],
-                    isMerchant: [
-                        {
-                            required: true
-                        }
-                    ],
-                    tip: [
-                        {
-                            required: true,
-                            message: "活动提示不能为空",
-                            trigger: "blur"
-                        }
-                    ],
-                    limitPermanTimes: [
-                        {
-                            required: true,
-                            message: "限次不能为空",
-                        }
-                    ],
-                    visibility: [
-                        {
-                            required: false,
-                        }
-                    ],
-
-                    effectRange: [
-                        {
-                            required: true,
-                            message: "请选择活动时间"
-                        }
-                    ]
                 }
             };
         },
