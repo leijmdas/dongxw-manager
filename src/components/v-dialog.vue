@@ -1,5 +1,7 @@
 <template>
-    <el-dialog ref="elDialog" :title="title" :visible.sync="dialogVisible" :append-to-body="appendToBody" :width="width" v-dialog-drag="dragable" @closed="closed">
+    <el-dialog ref="elDialog" :title="title" :visible.sync="dialogVisible" :append-to-body="appendToBody"
+               :width="width" :height="height"
+               v-dialog-drag="dragable" @closed="closed">
         <slot></slot>
         <div slot="footer" class="dialog-footer">
             <slot name="footer"></slot>
@@ -7,9 +9,10 @@
     </el-dialog>
 </template>
 <script>
-import Vue from 'vue';
-export default {
-    name: 'vDialog',
+    import Vue from 'vue';
+
+    export default {
+        name: 'vDialog',
     props: {
         appendToBody: {
             type: Boolean,
@@ -22,6 +25,11 @@ export default {
             required: false
         },
         width: {
+            type: String,
+            required: false,
+            defult: "50%"
+        },
+        height: {
             type: String,
             required: false,
             defult: "50%"

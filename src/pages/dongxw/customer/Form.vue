@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
+        <el-form :model="entity" :rules="rules" ref="form"   label-width="120px" class="dialog-form">
             <!--<div>-->
             <!--<el-form-item label="名称" prop="name">-->
             <!--<el-input v-model="ppp" :disabled="isDisabled"></el-input>-->

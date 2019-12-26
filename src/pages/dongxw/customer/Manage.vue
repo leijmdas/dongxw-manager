@@ -75,7 +75,7 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'600px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
