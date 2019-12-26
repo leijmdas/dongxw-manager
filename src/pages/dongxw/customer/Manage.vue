@@ -32,17 +32,17 @@
 
 
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
-            <el-table-column prop="seq" label="序号" width="60">
+            <el-table-column prop="seq" label="序号" width="50">
 
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column prop="custNo" label="编号" width="120"></el-table-column>
+            <el-table-column prop="custNo" label="编号" width="80"></el-table-column>
             <el-table-column prop="custName" label="客户名称" width="120"></el-table-column>
 
             <el-table-column prop="custSname" label="客户详细名称" width="245">      </el-table-column>
 
-            <el-table-column prop="country" label="客户国家" width="120">            </el-table-column>
+            <el-table-column prop="country" label="客户国家" width="80">            </el-table-column>
             <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
 
             <el-table-column prop="moneyType" label="结算币种" width="80">
@@ -50,15 +50,17 @@
                     {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
                 </template>
             </el-table-column>
+            <el-table-column prop="email" label="公司电子邮箱" width="150">
+            </el-table-column>
             <el-table-column prop="contact" label="联系人" width="150">
             </el-table-column>
             <el-table-column prop="tel" label="联系人电话" width="180">
             </el-table-column>
 
 
-            <el-table-column prop="createDate"  label="建档时间">
+            <el-table-column prop="createDate"  label="建档时间" width="100">
                 <template slot-scope="{row}">
-                    {{row.createDate}}
+                    {{row.createDate.substr(0,10)}}
                 </template>
             </el-table-column>
             <el-table-column width="100" label="操作" :fixed="'right'">

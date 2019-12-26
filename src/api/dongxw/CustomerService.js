@@ -4,7 +4,16 @@
 import request from '@/utils/request'
 
 export default {
-
+    /**
+     * 保存
+     */
+    save(data) {
+        return request({
+            url: '/dongxw/customer/save',
+            method: 'POST',
+            data
+        })
+    },
     /**
      * 查询
      */

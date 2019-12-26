@@ -101,8 +101,8 @@ export default {
           { required: true, message: "中文名称不能为空", trigger: "blur" },
           {
             min: 1,
-            max: 128,
-            message: "长度在 1 到 128 个字符",
+            max: 32,
+            message: "长度在 1 到 3 个字符",
             trigger: "blur"
           }
         ],
