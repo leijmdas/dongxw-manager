@@ -25,13 +25,13 @@
 
 
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
-            <el-table-column prop="seq" label="序号" width="50">
+            <el-table-column prop="seq" label="序号" width="100">
 
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  prop="code" label="产品类型" width="100"></el-table-column>
-            <el-table-column  prop="name" label="产品类型说明" width="200"></el-table-column>
+            <el-table-column  prop="code" label="产品类型" width="200"></el-table-column>
+            <el-table-column  prop="name" label="产品类型说明" width="400"></el-table-column>
 
             <el-table-column width="100" label="操作"  >
                 <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
@@ -47,7 +47,7 @@
             </el-table-column>
 
         </v-table>
-        <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'500px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
