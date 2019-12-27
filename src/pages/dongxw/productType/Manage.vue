@@ -1,19 +1,22 @@
 <!--cust管理-->
 <template>
     <div>
-        <!--<div class="panel panel-default panel-search">-->
-            <!--<el-form :inline="true">-->
-                <!--<el-form-item label="客户编号" prop="custNo">-->
-                    <!--<el-input v-model="page.query.param.custNo" clearable></el-input>-->
-                <!--</el-form-item>-->
+        <div class="panel panel-default panel-search">
+            <el-form :inline="true">
+                <el-form-item label="编码" prop="code">
+                    <el-input v-model="page.query.param.code" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="产品类型" prop="name">
+                    <el-input v-model="page.query.param.name" clearable></el-input>
+                </el-form-item>
 
-                <!--<el-form-item>-->
-                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
-                    <!--<el-button @click="cancel">取消</el-button>-->
+                <el-form-item>
+                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                    <el-button @click="cancel">取消</el-button>
 
-                <!--</el-form-item>-->
-            <!--</el-form>-->
-        <!--</div>-->
+                </el-form-item>
+            </el-form>
+        </div>
         <v-toolbar title="数据列表" type="alert">
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
             <el-button type="primary" plain @click="create">新增</el-button>

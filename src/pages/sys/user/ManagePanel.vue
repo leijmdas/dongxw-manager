@@ -20,12 +20,12 @@
     </div>
     <div class="main-table">
       <el-row>
-        <el-col :span="16">
-          <v-table ref="table" :page="page" :actions="tableActions" :auto-select="true" @dataloaded="onDataloaded" @row-dblclick="edit" :table-minheight="400" action-width="100px">
-
-            <el-table-column prop="username" label="用户名" header-align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="realname" label="姓名" header-align="center" width="120">
+          <el-col :span="16">
+              <v-table ref="table" :page="page" :actions="tableActions" :auto-select="true" @dataloaded="onDataloaded"
+                       @row-click="edit"    @row-dblclick="edit" :table-minheight="400" action-width="100px">
+                  <el-table-column prop="username" label="用户名" header-align="center" width="100">
+                  </el-table-column>
+                  <el-table-column prop="realname" label="姓名" header-align="center" width="120">
               <!--<template slot-scope="{row}">-->
                 <!--{{row.sysAccount && row.sysAccount.realName}}-->
               <!--</template>-->
@@ -147,6 +147,7 @@ export default {
       this.$refs.formPanel.setValues(row);
       // this.$refs.formPanel.init(row);
     },
+
     del(row) {
       this.$confirm("确定删除此条记录吗?", "提示", {type: "warning"}).then(() => {
         this.$api.sys.User.delete(row.id).then(rsp => {
