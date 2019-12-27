@@ -27,7 +27,8 @@
         </div>
         <v-toolbar title="数据列表" type="alert">
             <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button type="primary" plain @click="create">新增</el-button>
+            <el-button type="primary" plain @click="create">新增单品</el-button>
+            <el-button type="primary" plain @click="create">按订单新增</el-button>
         </v-toolbar>
 
 
@@ -37,44 +38,69 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  prop="custNo" label="客户编号" width="120"></el-table-column>
-            <el-table-column prop="custName" label="客户名称" width="120"></el-table-column>
+            <el-table-column  prop="custId" label="客户编号" width="120"></el-table-column>
+            <el-table-column prop="orderId" label="订单号" width="120"></el-table-column>
 
-            <el-table-column prop="custSname" label="客户详细名称" width="245">      </el-table-column>
+            <el-table-column prop="productId" label="款号" width="245">      </el-table-column>
 
-            <el-table-column prop="country" label="客户国家" width="80">            </el-table-column>
-            <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
+            <el-table-column prop="qty" label="数量" width="80">            </el-table-column>
+            <el-table-column prop="color" label="颜色" width="60">            </el-table-column>
 
-            <el-table-column prop="moneyType" label="结算币种" width="80">
+            <!--<el-table-column prop="custId" label="结算币种" width="80">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
+            <el-table-column prop="orderDate" label="接单日期" width="100">
                 <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                {{row.orderDate.substr(0,10)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="email" label="公司电子邮箱" width="150">
-            </el-table-column>
-            <el-table-column prop="contact" label="联系人" width="150">
-            </el-table-column>
-            <el-table-column prop="tel" label="联系人电话" width="120">
-            </el-table-column>
-
-            <el-table-column prop="createDate" label="状态" width="120">
-            </el-table-column>
-
-
-            <el-table-column prop="createDate"  label="建档时间" width="100">
+            <el-table-column prop="issueDate" label="要求交期" width="100">
                 <template slot-scope="{row}">
-                    {{row.createDate.substr(0,10)}}
+                    {{row.issueDate.substr(0,10)}}
                 </template>
             </el-table-column>
+            <el-table-column prop="preItemDate" label="物料到位日期" width="100">
+                <template slot-scope="{row}">
+                    {{row.preItemDate.substr(0,10)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="prePackageDate" label="包装到位日期" width="100">
+                <template slot-scope="{row}">
+                    {{row.prePackageDate.substr(0,10)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="planOnlineDate" label="计划上线" width="100">
+                <template slot-scope="{row}">
+                    {{row.planOnlineDate.substr(0,10)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="planFinishDate" label="计划完成" width="100">
+                <template slot-scope="{row}">
+                    {{row.planFinishDate.substr(0,10)}}
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="status" label="状态" width="80">
+            </el-table-column>
+            <el-table-column prop="remark" label="备注"  >
+            </el-table-column>
+
+
+
+            <!--<el-table-column prop="create_by"  label="建档时间" width="100">-->
+
+            <!--</el-table-column>-->
             <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
                     <el-button type="text" title="编辑" @click="edit(scope.row)"  >
                         <i class="el-icon-edit"></i>
                     </el-button>
-                     <!--<el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">-->
-                      <!--<i class="el-icon-delete red"></i>-->
-                    <!--</el-button>-->
+                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
+                      <i class="el-icon-delete red"></i>
+                    </el-button>
                 </template>
             </el-table-column>
         </v-table>
@@ -113,7 +139,7 @@
                             isDeleted: false
                         }
                     },
-                    getData : this.$api.dongxw.CustomerService.query
+                    getData : this.$api.dongxw.MakePlan.query
 
         },
                 tableActions: [
@@ -148,8 +174,7 @@
              */
             exportRecords() {
                 let params = this.getSearchParams();
-                console.log(params);
-                this.$api.dongxw.CustomerService.export(params);
+                this.$api.dongxw.MakePlan.export(params);
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};
@@ -219,8 +244,6 @@
         },
         mounted() {
             this.$on("init", this.init);
-            //let ret=this.$api.dongxw.CustomerService.findById(1);
-            //console.log(JSON.stringify(ret));
         }
     };
 </script>

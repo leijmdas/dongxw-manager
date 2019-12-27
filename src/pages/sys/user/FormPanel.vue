@@ -3,7 +3,8 @@
     <legend :action-type="entity.id ? 2 : 1">信息编辑</legend>
       <el-form :model="entity" :rules="rules" ref="form" label-width="100px" >
          <el-form-item label="用户名" prop="username">
-          <el-input v-model="entity.username" placeholder="不可修改" :readonly="!!entity.id"></el-input>
+             <!--:readonly="!!entity.id"-->
+          <el-input v-model="entity.username" placeholder="不可修改" ></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="realname">
           <el-input v-model="entity.realname"></el-input>

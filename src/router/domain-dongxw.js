@@ -7,18 +7,7 @@ let router0 = [
         component: Layout,
         meta: {title: '客户订单', icon: 'finance', group: 'dongxw'},
         children: [
-            {
-                path: 'dongxw/customer/manage',
-                component: require('@/pages/dongxw/customer/Manage.vue'),
-                name: 'customer:manage',
-                meta: {title: '客户信息', perm: 'customer:manage'}
-            },
-            {
-                path: 'dongxw/product/manage',
-                component: require('@/pages/dongxw/customer/Manage.vue'),
-                name: 'product:manage',
-                meta: {title: '产品', perm: 'product:manage'}
-            },
+
             {
                 path: 'dongxw/order/manage',
                 component: require('@/pages/dongxw/customer/Manage.vue'),
@@ -30,15 +19,26 @@ let router0 = [
                 component: require('@/pages/dongxw/productType/Manage.vue'),
                 name: 'productType:manage',
                 meta: {title: '产品类型', perm: 'productType:manage'}
-            }
-
+            },
+            {
+                path: 'dongxw/product/manage',
+                component: require('@/pages/dongxw/customer/Manage.vue'),
+                name: 'product:manage',
+                meta: {title: '产品', perm: 'product:manage'}
+            },
+            {
+                path: 'dongxw/customer/manage',
+                component: require('@/pages/dongxw/customer/Manage.vue'),
+                name: 'customer:manage',
+                meta: {title: '客户信息', perm: 'customer:manage'}
+            },
 
         ]
     },
     {
-        path: '/make',
+        path: '/makeplan',
         component: Layout,
-        meta: {title: '生产制造单', icon: 'user', group: 'dongxw'},
+        meta: {title: '生产计划表', icon: 'user', group: 'dongxw'},
         children: [{
             path: 'userInfo/manage',
             component: require('@/pages/app/userInfo/Manage.vue'),
@@ -52,10 +52,10 @@ let router0 = [
         },
 
             {
-                path: 'userInfo/recharge',
-                component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'recharge:manage',
-                meta: {title: '采购订单', perm: 'userGrade:manage'}
+                path: 'makePlan/manage',
+                component: require('@/pages/dongxw/makeplan/Manage.vue'),
+                name: 'makePlan:manage',
+                meta: {title: '生产计划表', perm: 'makeplan:manage'}
             }
 
         ]
