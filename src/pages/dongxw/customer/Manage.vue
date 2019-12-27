@@ -94,11 +94,11 @@
 </style>
 
 <script>
-    import ProductTypeSelect from '@/components/widgets/ProductTypeSelect.vue';
+    //import ProductTypeSelect from '@/components/widgets/ProductTypeSelect.vue';
     import FormPanel from './Form';
 
     export default {
-        components: { FormPanel, ProductTypeSelect },
+        components: { FormPanel },
         data() {
             return {
                 formStatus: 1,

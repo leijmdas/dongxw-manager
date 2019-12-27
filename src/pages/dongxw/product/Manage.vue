@@ -6,6 +6,7 @@
                 <el-form-item label="产品类型">
                     <product-type-select v-model="page.query.param.id" :clearable="true"></product-type-select>
                 </el-form-item>
+
                 <el-form-item label="客户编号" prop="custNo">
                     <el-input v-model="page.query.param.custNo" clearable></el-input>
                 </el-form-item>
@@ -93,7 +94,7 @@
 </style>
 
 <script>
-    import ProductTypeSelect from '@/components/widgets/ProductTypeSelect.vue';
+    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import FormPanel from './Form';
 
     export default {

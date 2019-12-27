@@ -24,7 +24,7 @@ let router0 = [
                 path: 'dongxw/product/manage',
                 component: require('@/pages/dongxw/product/Manage.vue'),
                 name: 'product:manage',
-                meta: {title: '产品', perm: 'product:manage'}
+                meta: {title: '产品列表', perm: 'product:manage'}
             },
             {
                 path: 'dongxw/customer/manage',
@@ -39,17 +39,19 @@ let router0 = [
         path: '/makeplan',
         component: Layout,
         meta: {title: '生产计划表', icon: 'user', group: 'dongxw'},
-        children: [{
-            path: 'userInfo/manage',
-            component: require('@/pages/app/userInfo/Manage.vue'),
-            name: 'userInfo:manage',
-            meta: {title: '原料清单', perm: 'user:manage'}
-        }, {
-            path: 'userInfo/userGrade',
-            component: require('@/pages/app/userGrade/Manage.vue'),
-            name: 'userGrade:manage',
-            meta: {title: 'BOM树', perm: 'userGrade:manage'}
-        },
+        children: [
+
+        //     {
+        //     path: 'userInfo/manage',
+        //     component: require('@/pages/app/userInfo/Manage.vue'),
+        //     name: 'userInfo:manage',
+        //     meta: {title: '原料清单', perm: 'user:manage'}
+        // }, {
+        //     path: 'userInfo/userGrade',
+        //     component: require('@/pages/app/userGrade/Manage.vue'),
+        //     name: 'userGrade:manage',
+        //     meta: {title: 'BOM树', perm: 'userGrade:manage'}
+        // },
 
             {
                 path: 'makePlan/manage',

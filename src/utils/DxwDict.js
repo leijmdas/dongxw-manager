@@ -4,7 +4,8 @@ let DongxwDict = {
 
     store: {
 
-        MONEY_TYPE: [ [100, '人民币'], [200, '美元'], [300, '港币'] ]
+        MONEY_TYPE: [ [100, '人民币'], [200, '美元'], [300, '港币'] ],
+        PLAN_STATUS: [ [0, '草稿'], [10, '进行中'], [20, '完成'], [30, '取消'] ]
 
     },
     getEntry: function (key, storeArr) {
