@@ -1,25 +1,25 @@
-<!--cust管理-->
 <template>
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <el-form-item label="编码" prop="code">
+                <el-form-item label="产品类型" prop="custNo">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="产品类型" prop="name">
+                <el-form-item label="产品类型说明" prop="custNo">
                     <el-input v-model="page.query.param.name" clearable></el-input>
                 </el-form-item>
 
                 <el-form-item>
                     <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                     <el-button @click="cancel">取消</el-button>
+                    <el-button type="primary" plain @click="create">新增</el-button>
 
                 </el-form-item>
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
-            <el-button type="primary" plain @click="create">新增</el-button>
+            <!--<el-button type="primary" plain @click="create">新增</el-button>-->
         </v-toolbar>
 
 
@@ -29,8 +29,8 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  prop="code" label="编码" width="100"></el-table-column>
-            <el-table-column  prop="name" label="产品类型" width="200"></el-table-column>
+            <el-table-column  prop="code" label="产品类型" width="100"></el-table-column>
+            <el-table-column  prop="name" label="产品类型说明" width="200"></el-table-column>
 
             <el-table-column width="100" label="操作"  >
                 <!--<el-table-column width="100" label="操作" :fixed="'right'">-->

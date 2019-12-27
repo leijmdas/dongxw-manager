@@ -4,7 +4,7 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
                 <el-form-item label="产品类型">
-                <product-type-select v-model="page.query.param.id" :clearable="true"></product-type-select>
+                    <product-type-select v-model="page.query.param.id" :clearable="true"></product-type-select>
                 </el-form-item>
                 <el-form-item label="客户编号" prop="custNo">
                     <el-input v-model="page.query.param.custNo" clearable></el-input>
