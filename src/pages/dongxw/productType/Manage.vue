@@ -3,10 +3,10 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <el-form-item label="编码" prop="custNo">
+                <el-form-item label="产品类型" prop="custNo">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="产品类型" prop="custNo">
+                <el-form-item label="产品类型说明" prop="custNo">
                     <el-input v-model="page.query.param.name" clearable></el-input>
                 </el-form-item>
 
@@ -30,8 +30,8 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  prop="code" label="编码" width="100"></el-table-column>
-            <el-table-column  prop="name" label="产品类型" width="200"></el-table-column>
+            <el-table-column  prop="code" label="产品类型" width="100"></el-table-column>
+            <el-table-column  prop="name" label="产品类型说明" width="200"></el-table-column>
 
             <el-table-column width="100" label="操作"  >
                 <!--<el-table-column width="100" label="操作" :fixed="'right'">-->

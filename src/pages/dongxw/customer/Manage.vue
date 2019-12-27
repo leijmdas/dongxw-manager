@@ -4,7 +4,6 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
 
-
                 <el-form-item label="客户编号" prop="custNo">
                     <el-input v-model="page.query.param.custNo" clearable></el-input>
                 </el-form-item>
@@ -92,11 +91,11 @@
 </style>
 
 <script>
-    //import MerchantSelect from '@/components/widgets/MerchantSelect.vue';
+    import ProductTypeSelect from '@/components/widgets/ProductTypeSelect.vue';
     import FormPanel from './Form';
 
     export default {
-        components: {FormPanel },
+        components: { FormPanel, ProductTypeSelect },
         data() {
             return {
                 formStatus: 1,

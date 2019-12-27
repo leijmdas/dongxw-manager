@@ -1,43 +1,21 @@
-<!--停车场管理-->
+<!--cust管理-->
 <template>
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <!-- <el-form-item label="商户">
-                  <merchant-select v-model="page.query.param.merchantId" :clearable="true"></merchant-select>
-                </el-form-item> -->
-                <el-form-item label="业务类型" prop="bizType">
-                    <el-select v-model="page.query.param.bizType" @change="page.query.param.subjectId = undefined"
-                               clearable>
-                        <el-option v-for="item in $dict.store.BUSINESSTYPE" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
+                <el-form-item label="产品类型">
+                <product-type-select v-model="page.query.param.id" :clearable="true"></product-type-select>
+                </el-form-item>
+                <el-form-item label="客户编号" prop="custNo">
+                    <el-input v-model="page.query.param.custNo" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="客户名称" prop="custName">
+                    <el-input v-model="page.query.param.custName" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="主体类型" prop="subjectType">
-                    <el-select v-model="page.query.param.subjectType" @change="page.query.param.subjectId = undefined"
-                               clearable>
-                        <el-option v-for="item in $dict.store.ACCOUNT_SUBJECT_TYPE" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
-
-                <el-form-item label="子公司" prop="merchantId" v-if="page.query.param.subjectType == 1">
-                    <branch-company-select v-model="page.query.param.subjectId" clearable></branch-company-select>
-                </el-form-item>
-                <el-form-item label="物业" prop="merchantId" v-if="page.query.param.subjectType == 2">
-                    <merchant-select v-model="page.query.param.subjectId" clearable></merchant-select>
-                </el-form-item>
-
-                <el-form-item label="编码" prop="code">
-                    <el-input v-model="page.query.param.code" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="名称" prop="name">
-                    <el-input v-model="page.query.param.name" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
-                        <el-option v-for="item in $dict.store.PROMOTION_STATUS" :key="item[0]" :value="item[0]"
+                <el-form-item label="结算币种" prop="moneyType">
+                    <el-select :clearable="true" v-model="page.query.param.moneyType" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
@@ -46,91 +24,59 @@
                     <el-button @click="cancel">取消</el-button>
 
                 </el-form-item>
-                <!--<el-form-item>-->
-                    <!--<div style="color:red;margin-left:30px">一旦上线，优惠规则不可改变！</div>-->
-                <!--</el-form-item>-->
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-
+            <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
+
+
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
-            <el-table-column prop="bizType" label="业务类型" width="100">
+            <el-table-column prop="seq" label="序号" width="50">
+
+                <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+
+            </el-table-column>
+            <el-table-column :class="status_green" prop="custNo" label="编号" width="80"></el-table-column>
+            <el-table-column prop="custName" label="客户名称" width="120"></el-table-column>
+
+            <el-table-column prop="custSname" label="客户详细名称" width="245">      </el-table-column>
+
+            <el-table-column prop="country" label="客户国家" width="80">            </el-table-column>
+            <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
+
+            <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">
-                    {{$dict.getText(row.bizType,$dict.store.BUSINESSTYPE)}}
+                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="code" label="编码" width="120"></el-table-column>
-            <el-table-column prop="name" label="名称" width="200"></el-table-column>
-            <el-table-column prop="subjectType" label="主体类型" width="120">
+            <el-table-column prop="email" label="公司电子邮箱" width="150">
+            </el-table-column>
+            <el-table-column prop="contact" label="联系人" width="150">
+            </el-table-column>
+            <el-table-column prop="tel" label="联系人电话" width="180">
+            </el-table-column>
+
+
+            <el-table-column prop="createDate"  label="建档时间" width="100">
                 <template slot-scope="{row}">
-                    {{$dict.getText(row.subjectType,$dict.store.ACCOUNT_SUBJECT_TYPE)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="name" label="主体名称" width="200">
-                <template slot-scope="{row}">
-                    {{([,row.branchCompany, row.merchantInfo][row.subjectType]||{name:'-'}).name}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="useType" label="使用主体" width="100">
-                <template slot-scope="{row}">
-                    {{$dict.getText(row.useType,$dict.store.ACCOUNT_SUBJECT_TYPE)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="startOn" label="开始时间" width="150">
-            </el-table-column>
-            <el-table-column prop="endOn" label="结束时间" width="150">
-            </el-table-column>
-            <el-table-column prop="effectDays" label="有效期" width="80">
-                <template slot-scope="{row}">
-                    {{row.effectTimes !=0 ? row.effectTimes: '不限'}} {{row.effectTimes !=0?
-                    $dict.getText(row.effectTimeUnit,$dict.store.PROMOTION_EFFECT_TIMEUNIT): ''}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="visibility" label="可见性" width="80">
-                <template slot-scope="{row}">
-                    {{$dict.getText(row.visibility,$dict.store.PROMOTION_VISIBILITY)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="tip" label="优惠">
-                <template slot-scope="{row}">
-                    {{row.discountValue}} <span v-show="row.discountType==1">元</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="tip" label="总量/发放/使用" width="100">
-                <template slot-scope="{row}">
-                    {{row.limitTotalNum != -1?row.limitTotalNum:'不限'}} / {{
-                    (summaryMap[row.id]||{instanceNum:0}).instanceNum}} / {{ (summaryMap[row.id]||{usedNum:0}).usedNum}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="status" label="状态" width="80">
-                <template slot-scope="{row}">
-                    {{$dict.getText(row.status,$dict.store.PROMOTION_STATUS)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="createOn" width="140" label="创建时间">
-                <template slot-scope="{row}">
-                    {{row.createOn}}
+                    {{row.createDate.substr(0,10)}}
                 </template>
             </el-table-column>
             <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
-                    <!-- 主体类型为商户时不暂时任何操作按钮 -->
-                    <el-button type="text" title="上/下架" @click="toggleStatus(scope.row)" >
-                        <i class="el-icon-upload2" v-show="scope.row.status==0||scope.row.status==2"></i>
-                        <i class="el-icon-download" v-show="scope.row.status==1"></i>
-                    </el-button>
+
                     <el-button type="text" title="编辑" @click="edit(scope.row)"  >
                         <i class="el-icon-edit"></i>
                     </el-button>
-                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
-                      <i class="el-icon-delete red"></i>
-                    </el-button>
+                     <!--<el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">-->
+                      <!--<i class="el-icon-delete red"></i>-->
+                    <!--</el-button>-->
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'600px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
@@ -140,14 +86,18 @@
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
+
+    .status_green {
+        color: green;
+    }
 </style>
+
 <script>
-    import MerchantSelect from '@/components/widgets/MerchantSelect.vue';
-    import BranchCompanySelect from '@/components/widgets/BranchCompanySelect.vue';
+    import ProductTypeSelect from '@/components/widgets/ProductTypeSelect.vue';
     import FormPanel from './Form';
 
     export default {
-        components: {FormPanel, MerchantSelect, BranchCompanySelect},
+        components: { FormPanel, ProductTypeSelect },
         data() {
             return {
                 formStatus: 1,
@@ -161,8 +111,9 @@
                             isDeleted: false
                         }
                     },
-                    getData: this.$api.ipark.PromotionInfoService.query
-                },
+                    getData : this.$api.dongxw.CustomerService.query
+
+        },
                 tableActions: [
                     {
                         name: "编辑",
@@ -180,15 +131,33 @@
 
         methods: {
             onDataloaded(rsp) {
-                if (rsp.total < 1) return;
-                let promotionIds = rsp.data.map(r => r.id);
-                this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
-                    let _rs = rs || [];
-                    this.summaryMap = {}
-                    _rs.forEach(r => {
-                        this.summaryMap[r.promotionId] = r;
-                    })
-                })
+                // if (rsp.total < 1) return;
+                // let promotionIds = rsp.data.map(r => r.id);
+                // this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
+                //     let _rs = rs || [];
+                //     this.summaryMap = {}
+                //     _rs.forEach(r => {
+                //         this.summaryMap[r.promotionId] = r;
+                //     })
+                // })
+            },
+            /*
+            导出
+             */
+            exportRecords() {
+                let params = this.getSearchParams();
+                console.log(params);
+                this.$api.dongxw.CustomerService.export(params);
+            },
+            getSearchParams() {
+                this.page.query.dateRanges = {};
+                if (this.dateRangeType != null && this.dateRange&&this.dateRange.length > 0) {
+                    this.page.query.dateRanges[this.dateRangeType] = {
+                        startDate: this.dateRange[0],
+                        endDate: this.dateRange.length > 1 ? this.dateRange[1] : null
+                    };
+                }
+                return this.page.query;
             },
             create() {
                 this.$refs.formDiag.show();
@@ -248,6 +217,8 @@
         },
         mounted() {
             this.$on("init", this.init);
+            //let ret=this.$api.dongxw.CustomerService.findById(1);
+            //console.log(JSON.stringify(ret));
         }
     };
 </script>
