@@ -4,11 +4,11 @@
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
 
 
-            <el-form-item label="编码" prop="code">
-                <el-input placeholder="编码" v-model="entity.code"></el-input>
+            <el-form-item label="产品类型" prop="code" >
+                <el-input placeholder="产品类型" v-model="entity.code"></el-input>
             </el-form-item>
-            <el-form-item label="产品类型" prop="name">
-                <el-input placeholder="产品类型" v-model="entity.name"></el-input>
+            <el-form-item label="产品类型说明" prop="name">
+                <el-input placeholder="产品类型说明" v-model="entity.name"></el-input>
             </el-form-item>
 
 
@@ -50,9 +50,9 @@
     const defaultEntity = {
         id: null,
         code: '',
-        name: ''
+        name: '',
+        active: 1
     };
-
 
     export default {
         components: {},
