@@ -8,10 +8,10 @@ let router0 = [
         meta: {title: '客户订单', icon: 'finance', group: 'dongxw'},
         children: [
             {
-                path: 'dongxw/customer/manage',
-                component: require('@/pages/dongxw/customer/Manage.vue'),
-                name: 'customer:manage',
-                meta: {title: '客户信息', perm: 'customer:manage'}
+                path: 'dongxw/productType/manage',
+                component: require('@/pages/dongxw/productType/Manage.vue'),
+                name: 'productType:manage',
+                meta: {title: '产品类型', perm: 'productType:manage'}
             },
             {
                 path: 'dongxw/product/manage',
@@ -19,19 +19,20 @@ let router0 = [
                 name: 'product:manage',
                 meta: {title: '产品', perm: 'product:manage'}
             },
+
+            {
+                path: 'dongxw/customer/manage',
+                component: require('@/pages/dongxw/customer/Manage.vue'),
+                name: 'customer:manage',
+                meta: {title: '客户信息', perm: 'customer:manage'}
+            },
+
             {
                 path: 'dongxw/order/manage',
                 component: require('@/pages/dongxw/customer/Manage.vue'),
                 name: 'order:manage',
                 meta: {title: '客户订单', perm: 'order:manage'}
-            },
-            {
-                path: 'dongxw/productType/manage',
-                component: require('@/pages/dongxw/productType/Manage.vue'),
-                name: 'productType:manage',
-                meta: {title: '产品类型', perm: 'productType:manage'}
             }
-
 
         ]
     },
