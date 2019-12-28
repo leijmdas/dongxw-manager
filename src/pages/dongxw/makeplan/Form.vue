@@ -1,19 +1,7 @@
 <template>
     <div>
         <el-form :model="entity" :rules="rules" ref="form"   label-width="120px" class="dialog-form">
-            <!--<div>-->
-            <!--<el-form-item label="名称" prop="name">-->
-            <!--<el-input v-model="ppp" :disabled="isDisabled"></el-input>-->
-            <!--</el-form-item>-->
-            <!--</div>-->
-            <!--<div style="margin:10px" class="merchantLogo">-->
-            <!--<v-image-uploader :form-data="{}" :multiple=true v-model="ppp">-->
 
-            <!--</v-image-uploader>-->
-            <!--<div style="text-align:center">-->
-            <!--LOGO-->
-            <!--</div>-->
-            <!--</div>-->
 
         <el-form-item label="客户编号" prop="custNo">
             <el-input placeholder="客户编号" v-model="entity.custNo"></el-input>

@@ -16,7 +16,7 @@
                     <img src="../../assets/images/login/pay.png" alt="" style="left: 390px; top: 300px;">
                 </div>
                 <div class="login_container--box" @keydown.enter.stop="login">
-                    <p>请输入您的认证信息</p>
+                    <p>请输入您的身份信息</p>
 
                     <el-input placeholder="请输入用户名" autocomplete="off"
                               v-model="account.account" maxlength="32">

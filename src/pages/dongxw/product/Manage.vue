@@ -71,6 +71,9 @@
                     <el-button type="text" title="编辑" @click="edit(scope.row)"  >
                         <i class="el-icon-edit"></i>
                     </el-button>
+                    <el-button type="text" title="品类" @click="edit(scope.row)"  >
+
+                    </el-button>
                      <!--<el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">-->
                       <!--<i class="el-icon-delete red"></i>-->
                     <!--</el-button>-->

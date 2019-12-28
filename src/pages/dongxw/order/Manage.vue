@@ -1,136 +1,134 @@
-<!--停车场管理-->
+<!--订单管理-->
 <template>
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <!-- <el-form-item label="商户">
-                  <merchant-select v-model="page.query.param.merchantId" :clearable="true"></merchant-select>
-                </el-form-item> -->
-                <el-form-item label="业务类型" prop="bizType">
-                    <el-select v-model="page.query.param.bizType" @change="page.query.param.subjectId = undefined"
-                               clearable>
-                        <el-option v-for="item in $dict.store.BUSINESSTYPE" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
 
-                <el-form-item label="主体类型" prop="subjectType">
-                    <el-select v-model="page.query.param.subjectType" @change="page.query.param.subjectId = undefined"
-                               clearable>
-                        <el-option v-for="item in $dict.store.ACCOUNT_SUBJECT_TYPE" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
+                <el-form-item label="日期">
 
-                <el-form-item label="子公司" prop="merchantId" v-if="page.query.param.subjectType == 1">
-                    <branch-company-select v-model="page.query.param.subjectId" clearable></branch-company-select>
-                </el-form-item>
-                <el-form-item label="物业" prop="merchantId" v-if="page.query.param.subjectType == 2">
-                    <merchant-select v-model="page.query.param.subjectId" clearable></merchant-select>
-                </el-form-item>
+                    <div slot="label">
+                        <el-select v-model="dateRangeType" filterable clearable style="width:120px" class="formitem-label">
+                            <el-option value="orderDate" label="下单日期"></el-option>
+                            <el-option value="customerIssueDate" label="客户交货日期"></el-option>
+                            <el-option value="checkDate" label="验货日期"></el-option>
+                            <el-option value="factroyIssueDate" label="工厂交货日期"></el-option>
+                        </el-select>
+                    </div>
 
-                <el-form-item label="编码" prop="code">
-                    <el-input v-model="page.query.param.code" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="名称" prop="name">
-                    <el-input v-model="page.query.param.name" clearable></el-input>
+                    <el-date-picker v-model="dateRange" type="daterange" range-separator="至"
+                                    start-placeholder="开始日期" end-placeholder="结束日期"
+                                    value-format="yyyy-MM-dd">
+
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
-                        <el-option v-for="item in $dict.store.PROMOTION_STATUS" :key="item[0]" :value="item[0]"
+                        <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
+
+
+                <el-form-item label="客户" prop="subjectType">
+                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
+
+                </el-form-item>
+
+
+                <el-form-item label="客户订单号" prop="customerOrderCode">
+                    <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="EP订单号" prop="epOrderCode">
+                    <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
+                </el-form-item>
+
+                <el-form-item label="业务员" prop="businessBy"  >
+                    <el-input v-model="page.query.param.businessBy" clearable></el-input>
+                </el-form-item>
+
                 <el-form-item>
                     <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                     <el-button @click="cancel">取消</el-button>
 
                 </el-form-item>
-                <!--<el-form-item>-->
-                    <!--<div style="color:red;margin-left:30px">一旦上线，优惠规则不可改变！</div>-->
-                <!--</el-form-item>-->
+
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
 
+            <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
-            <el-table-column prop="bizType" label="业务类型" width="100">
+
+            <el-table-column prop="customerId" label="客户" width="120">
                 <template slot-scope="{row}">
-                    {{$dict.getText(row.bizType,$dict.store.BUSINESSTYPE)}}
+                    {{ row.customer?row.customer.custName:'-'}}
+                 </template>
+            </el-table-column>
+
+            <!--0-草稿1-下单2-在生产-3-生产完成4&#45;&#45;发货完成5-收款完成',-->
+            <el-table-column prop="status" label="订单状态" width="80">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="code" label="编码" width="120"></el-table-column>
-            <el-table-column prop="name" label="名称" width="200"></el-table-column>
-            <el-table-column prop="subjectType" label="主体类型" width="120">
+
+            <el-table-column prop="customerOrderCode" label="客户订单号" width="120"></el-table-column>
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
+
+
+            <el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>
+
+            <el-table-column prop="orderDate" label="下单日期" width="100">
                 <template slot-scope="{row}">
-                    {{$dict.getText(row.subjectType,$dict.store.ACCOUNT_SUBJECT_TYPE)}}
+                {{ $dongxwDict.viewDate(row.orderDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="主体名称" width="200">
+            <el-table-column prop="customerIssueDate" label="客户交货日期" width="100">
                 <template slot-scope="{row}">
-                    {{([,row.branchCompany, row.merchantInfo][row.subjectType]||{name:'-'}).name}}
+                    {{ $dongxwDict.viewDate(row.customerIssueDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="useType" label="使用主体" width="100">
+            <el-table-column prop="checkDate" label="验货日期" width="100">
                 <template slot-scope="{row}">
-                    {{$dict.getText(row.useType,$dict.store.ACCOUNT_SUBJECT_TYPE)}}
+                    {{ $dongxwDict.viewDate(row.checkDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="startOn" label="开始时间" width="150">
-            </el-table-column>
-            <el-table-column prop="endOn" label="结束时间" width="150">
-            </el-table-column>
-            <el-table-column prop="effectDays" label="有效期" width="80">
+            <el-table-column prop="factroyIssuseDate" label="工厂交货日期" width="100">
                 <template slot-scope="{row}">
-                    {{row.effectTimes !=0 ? row.effectTimes: '不限'}} {{row.effectTimes !=0?
-                    $dict.getText(row.effectTimeUnit,$dict.store.PROMOTION_EFFECT_TIMEUNIT): ''}}
+                    {{ $dongxwDict.viewDate(row.factroyIssuseDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="visibility" label="可见性" width="80">
-                <template slot-scope="{row}">
-                    {{$dict.getText(row.visibility,$dict.store.PROMOTION_VISIBILITY)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="tip" label="优惠">
-                <template slot-scope="{row}">
-                    {{row.discountValue}} <span v-show="row.discountType==1">元</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="tip" label="总量/发放/使用" width="100">
-                <template slot-scope="{row}">
-                    {{row.limitTotalNum != -1?row.limitTotalNum:'不限'}} / {{
-                    (summaryMap[row.id]||{instanceNum:0}).instanceNum}} / {{ (summaryMap[row.id]||{usedNum:0}).usedNum}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="status" label="状态" width="80">
-                <template slot-scope="{row}">
-                    {{$dict.getText(row.status,$dict.store.PROMOTION_STATUS)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="createOn" width="140" label="创建时间">
-                <template slot-scope="{row}">
-                    {{row.createOn}}
-                </template>
-            </el-table-column>
-            <el-table-column width="100" label="操作" :fixed="'right'">
+
+            <!--material_remark      '主料描述 ',-->
+            <el-table-column  prop="customerOrderImg" label="订单文本" width="80">
                 <template slot-scope="scope">
-                    <!-- 主体类型为商户时不暂时任何操作按钮 -->
-                    <el-button type="text" title="上/下架" @click="toggleStatus(scope.row)" >
-                        <i class="el-icon-upload2" v-show="scope.row.status==0||scope.row.status==2"></i>
-                        <i class="el-icon-download" v-show="scope.row.status==1"></i>
-                    </el-button>
-                    <el-button type="text" title="编辑" @click="edit(scope.row)"  >
+                    <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg">下载</a>-->
+                    <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
+                </template>
+            </el-table-column>
+            <el-table-column prop="invoiceNo" label="发票编号" width="120"></el-table-column>
+            <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
+            <el-table-column prop="remark" label="备注"></el-table-column>
+
+            <el-table-column width="130" label="操作" :fixed="'right'">
+                <template slot-scope="scope">
+
+                    <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
                     </el-button>
-                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
-                      <i class="el-icon-delete red"></i>
+                    <el-button type="success" @click="edit(scope.row)" round size="mini">品类</el-button>
+
+                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
+                        <i class="el-icon-delete red"></i>
                     </el-button>
+
                 </template>
             </el-table-column>
+
         </v-table>
-        <v-dialog ref="formDiag" title="信息编辑">
+        <v-dialog ref="formDiag" title="信息编辑" :width="'600px'">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
@@ -142,26 +140,26 @@
 <style rel="stylesheet/less" scoped lang="less">
 </style>
 <script>
-    import MerchantSelect from '@/components/widgets/MerchantSelect.vue';
-    import BranchCompanySelect from '@/components/widgets/BranchCompanySelect.vue';
+    import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import FormPanel from './Form';
 
     export default {
-        components: {FormPanel, MerchantSelect, BranchCompanySelect},
+        components: {FormPanel, CustomerSelect   },
         data() {
             return {
+                dateRangeType: null,
                 formStatus: 1,
-                orderDateRange: [],
+                dateRange: [],
                 summaryMap: {},
                 page: {
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            subjectId: undefined,
+                            customerId: undefined,
                             isDeleted: false
                         }
                     },
-                    getData: this.$api.ipark.PromotionInfoService.query
+                    getData: this.$api.dongxw.OrderMaster.query
                 },
                 tableActions: [
                     {
@@ -180,15 +178,33 @@
 
         methods: {
             onDataloaded(rsp) {
-                if (rsp.total < 1) return;
-                let promotionIds = rsp.data.map(r => r.id);
-                this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
-                    let _rs = rs || [];
-                    this.summaryMap = {}
-                    _rs.forEach(r => {
-                        this.summaryMap[r.promotionId] = r;
-                    })
-                })
+                // if (rsp.total < 1) return;
+                // let promotionIds = rsp.data.map(r => r.id);
+                // this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
+                //     let _rs = rs || [];
+                //     this.summaryMap = {}
+                //     _rs.forEach(r => {
+                //         this.summaryMap[r.promotionId] = r;
+                //     })
+                // })
+            },
+            getSearchParams() {
+                this.page.query.dateRanges = {};
+                if (this.dateRangeType != null && this.dateRange&&this.dateRange.length > 0) {
+                    this.page.query.dateRanges[this.dateRangeType] = {
+                        startDate: this.dateRange[0],
+                        endDate: this.dateRange.length > 1 ? this.dateRange[1] : null
+                    };
+                }
+                return this.page.query;
+            },
+            /*
+            导出
+            */
+            exportRecords() {
+                let params = this.getSearchParams();
+                console.log(params);
+                this.$api.dongxw.OrderMaster.export(params);
             },
             create() {
                 this.$refs.formDiag.show();
@@ -219,7 +235,7 @@
                 this.$confirm("确定删除此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    this.$api.ipark.PromotionInfoService.delete(row.id).then(rsp => {
+                    this.$api.dongxw.OrderMaster.deleteById(row.id).then(rsp => {
                         this.search();
                         this.$message({
                             type: "success",
@@ -239,6 +255,7 @@
                 this.$refs.table.load();
             },
             cancel() {
+                this.dateRangeType=null;
                 this.dateRange = [];
                 this.page.query.param = {};
                 this.search();

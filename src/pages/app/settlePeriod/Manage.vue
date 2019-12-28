@@ -73,6 +73,7 @@
                     {{$dict.getText(row.status,$dict.store.BILL_APPLY_STATUS)}}
                 </template>
             </el-table-column>
+
             <el-table-column prop="totalAmount" label="总金额" width="120">
                 <template slot-scope="{row}">
                     {{row.totalAmount}}
