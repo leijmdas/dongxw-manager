@@ -10,6 +10,12 @@
                 <el-form-item label="客户名称" prop="custName">
                     <el-input v-model="page.query.param.custName" clearable></el-input>
                 </el-form-item>
+                <el-form-item label="状态" prop="moneyType">
+                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
 
                 <el-form-item label="结算币种" prop="moneyType">
                     <el-select :clearable="true" v-model="page.query.param.moneyType" style="width:100px">
@@ -17,6 +23,7 @@
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
+
                 <el-form-item>
                     <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                     <el-button @click="cancel">取消</el-button>
@@ -56,7 +63,10 @@
             <el-table-column prop="tel" label="联系人电话" width="120">
             </el-table-column>
 
-            <el-table-column prop="createDate" label="状态" width="120">
+            <el-table-column prop="createDate" label="状态" width="60">
+                <template slot-scope="{row}">
+                    {{'启用'}}
+                </template>
             </el-table-column>
 
 

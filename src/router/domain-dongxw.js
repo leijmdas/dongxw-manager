@@ -46,19 +46,21 @@ let router0 = [
         //     component: require('@/pages/app/userInfo/Manage.vue'),
         //     name: 'userInfo:manage',
         //     meta: {title: '原料清单', perm: 'user:manage'}
-        // }, {
-        //     path: 'userInfo/userGrade',
-        //     component: require('@/pages/app/userGrade/Manage.vue'),
-        //     name: 'userGrade:manage',
-        //     meta: {title: 'BOM树', perm: 'userGrade:manage'}
         // },
+
 
             {
                 path: 'makePlan/manage',
                 component: require('@/pages/dongxw/makeplan/Manage.vue'),
                 name: 'makePlan:manage',
                 meta: {title: '生产计划表', perm: 'makeplan:manage'}
-            }
+            },
+            {
+                path: 'makesheet/manage',
+                component: require('@/pages/dongxw/makeplan/Manage.vue'),
+                name: 'makesheet:manage',
+                meta: {title: '生产制造单', perm: 'makeplan:manage'}
+            },
 
         ]
     }, {
