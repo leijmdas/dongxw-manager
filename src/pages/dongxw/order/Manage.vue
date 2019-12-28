@@ -118,7 +118,7 @@
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
                     </el-button>
-                    <el-button type="success" @click="edit(scope.row)" round size="mini">品类</el-button>
+                    <el-button type="success" @click="edit(scope.row)" round size="mini">产品</el-button>
 
                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
                         <i class="el-icon-delete red"></i>

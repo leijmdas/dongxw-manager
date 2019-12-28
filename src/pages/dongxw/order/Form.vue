@@ -94,7 +94,7 @@
             <el-tab-pane label="订单图片" name="orderPic">
 
                 <div style="margin:10px" class="merchantLogo">
-                    <v-image-uploader :form-data="{}" :multiple=true v-model="entity.customerOrderImg">
+                    <v-image-uploader :form-data="{}"   :multiple=true v-model="entity.customerOrderImg">
 
                     </v-image-uploader>
                     <div style="text-align:center">
