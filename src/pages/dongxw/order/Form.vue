@@ -25,7 +25,9 @@
                     <el-form-item label="EP订单号" prop="epOrderCode">
                         <el-input placeholder="EP订单号" v-model="entity.epOrderCode"></el-input>
                     </el-form-item>
-
+                    <el-form-item label="发票编号" prop="invoiceNo">
+                        <el-input placeholder="发票编号" v-model="entity.invoiceNo"></el-input>
+                    </el-form-item>
                     <el-form-item label="业务员" prop="businessBy">
                         <el-input placeholder="业务员" v-model="entity.businessBy"></el-input>
                     </el-form-item>
@@ -74,19 +76,17 @@
                         </el-date-picker>
                     </el-form-item>
 
-                    <el-form-item label="发票编号" prop="invoiceNo">
-                        <el-input placeholder="发票编号" v-model="entity.invoiceNo"></el-input>
-                    </el-form-item>
+
                     <el-form-item label="备注" prop="remark">
                         <el-input placeholder="备注" v-model="entity.remark"></el-input>
                     </el-form-item>
-                    <el-form-item label="主料描述" prop="materialRemark">
-                        <el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>
-                    </el-form-item>
-                     <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
-                    <el-form-item label="供应商" prop="supplyId">
-                        <el-input placeholder="供应商" v-model="entity.supplyId"></el-input>
-                    </el-form-item>
+                    <!--<el-form-item label="主料描述" prop="materialRemark">-->
+                        <!--<el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>-->
+                    <!--</el-form-item>-->
+                     <!--&lt;!&ndash;<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>&ndash;&gt;-->
+                    <!--<el-form-item label="供应商" prop="supplyId">-->
+                        <!--<el-input placeholder="供应商" v-model="entity.supplyId"></el-input>-->
+                    <!--</el-form-item>-->
 
                 </fieldset>
 
@@ -101,8 +101,8 @@
                         LOGO
                     </div>
                 </div>
-                <el-form-item label="订单文本" prop="customerOrderImg">
-                    <el-input placeholder="订单文本" v-model="entity.customerOrderImg" disabled></el-input>
+                <el-form-item label="订单图片" prop="customerOrderImg">
+                    <el-input placeholder="订单图片" v-model="entity.customerOrderImg" disabled></el-input>
                 </el-form-item>
 
             </el-tab-pane>

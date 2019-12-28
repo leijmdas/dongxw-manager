@@ -62,6 +62,8 @@
             </el-table-column>
             <el-table-column prop="tel" label="联系人电话" width="180">
             </el-table-column>
+            <el-table-column prop="fax" label="传真" width="180">
+            </el-table-column>
 
 
             <el-table-column prop="createDate"  label="建档时间" width="100">

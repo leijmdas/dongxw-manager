@@ -76,6 +76,7 @@
 
             <el-table-column prop="customerOrderCode" label="客户订单号" width="120"></el-table-column>
             <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
+            <el-table-column prop="invoiceNo" label="发票编号" width="120"></el-table-column>
 
 
             <el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>
@@ -102,13 +103,12 @@
             </el-table-column>
 
             <!--material_remark      '主料描述 ',-->
-            <el-table-column  prop="customerOrderImg" label="订单文本" width="80">
+            <el-table-column  prop="customerOrderImg" label="订单图片" width="80">
                 <template slot-scope="scope">
                     <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg">下载</a>-->
                     <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
                 </template>
             </el-table-column>
-            <el-table-column prop="invoiceNo" label="发票编号" width="120"></el-table-column>
             <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
             <el-table-column prop="remark" label="备注"></el-table-column>
 
