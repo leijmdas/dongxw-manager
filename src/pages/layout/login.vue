@@ -161,7 +161,8 @@
 
     .loginPanel {
         height: 100%;
-        background-image: url("../../assets/images/login/login-bg.png");
+          background-image: url("../../assets/images/login/login-bg.jpg")  ;
+        //background-repeat: repeat;
         background-size: 100% 100%;
     }
 
@@ -187,7 +188,7 @@
 
             span {
                 font-size: 36px;
-                color: #208BEF;
+                color: blue;
                 letter-spacing: 0;
             }
         }
