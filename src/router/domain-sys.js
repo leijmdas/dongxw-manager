@@ -74,7 +74,7 @@ let sysRouter = [{
   },
       {
           path: 'datadict/manage',
-          component: require('@/pages/datadict/Manage.vue'),
+          component: require('@/pages/common/datadict/Manage.vue'),
           name: 'datadict:manage',
           meta: {title: '元数据管理',perm: 'sysRole:manage'}
       }

@@ -16,7 +16,7 @@
 
 
 </template>
-
+<!--http://127.0.0.1:10080/sys/metadata/queryFieldsByTable?tableName=dict_area-->
 <style rel="stylesheet/less" lang='less'>
     .loginPanel {
         //height: 100%;

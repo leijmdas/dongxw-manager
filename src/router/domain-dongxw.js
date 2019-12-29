@@ -47,12 +47,12 @@ let router0 = [
         meta: {title: '生产计划表', icon: 'user', group: 'dongxw'},
         children: [
 
-        //     {
-        //     path: 'userInfo/manage',
-        //     component: require('@/pages/app/userInfo/Manage.vue'),
-        //     name: 'userInfo:manage',
-        //     meta: {title: '原料清单', perm: 'user:manage'}
-        // },
+            //     {
+            //     path: 'userInfo/manage',
+            //     component: require('@/pages/app/userInfo/Manage.vue'),
+            //     name: 'userInfo:manage',
+            //     meta: {title: '原料清单', perm: 'user:manage'}
+            // },
 
 
             {
@@ -110,7 +110,7 @@ let router0 = [
                 component: require('@/pages/app/userInfo/Manage.vue'),
                 name: 'userInfo:manage',
                 meta: {title: '原料清单', perm: 'user:manage'}
-            },{
+            }, {
                 path: 'userInfo/manage',
                 component: require('@/pages/app/userInfo/Manage.vue'),
                 name: 'userInfo:manage',
@@ -194,6 +194,11 @@ let router0 = [
             component: require('@/pages/app/userGrade/Manage.vue'),
             name: 'userGrade:manage',
             meta: {title: '查询库存', perm: 'userGrade:manage'}
+        }, {
+            path: 'common/query',
+            component: require('@/pages/common/queryByMetadata/Manage.vue'),
+            name: 'common:query',
+            meta: {title: '通用查询', perm: 'order:manage'}
         },
         ]
     },
