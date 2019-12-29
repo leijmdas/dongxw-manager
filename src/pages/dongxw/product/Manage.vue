@@ -33,15 +33,21 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                    <el-button @click="cancel">取消</el-button>
-
+                    <el-button-group>
+                        <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                        <el-button @click="cancel">取消</el-button>
+                        <el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>
+                        <el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>
+                    </el-button-group>
                 </el-form-item>
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-            <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button type="primary" plain @click="create">新增</el-button>
+            <el-button-group>
+                <el-button plain @click="exportRecords">导出 XLS</el-button>
+                <el-button type="primary" plain @click="create">新增</el-button>
+
+            </el-button-group>
         </v-toolbar>
 
 
