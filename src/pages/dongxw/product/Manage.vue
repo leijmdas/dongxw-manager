@@ -4,22 +4,34 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
                 <el-form-item label="产品类型">
-                    <product-type-select v-model="page.query.param.id" :clearable="true"></product-type-select>
+                    <product-type-select v-model="page.query.param.productTypeId" :clearable="true"></product-type-select>
                 </el-form-item>
 
-                <el-form-item label="客户编号" prop="custNo">
-                    <el-input v-model="page.query.param.custNo" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="客户名称" prop="custName">
-                    <el-input v-model="page.query.param.custName" clearable></el-input>
+                <el-form-item label="EP款号" prop="epCode">
+                    <el-input v-model="page.query.param.epCode" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="结算币种" prop="moneyType">
-                    <el-select :clearable="true" v-model="page.query.param.moneyType" style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]" :value="item[0]"
+                <el-form-item label="客款号" prop="code">
+                    <el-input v-model="page.query.param.code" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="产品描述" prop="remark">
+                    <el-input v-model="page.query.param.remark" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="颜色" prop="color">
+                    <el-input v-model="page.query.param.color" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="条码" prop="barCode">
+                    <el-input v-model="page.query.param.barCode" clearable></el-input>
+                </el-form-item>
+
+
+                <el-form-item label="状态" prop="status">
+                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
+
                 <el-form-item>
                     <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                     <el-button @click="cancel">取消</el-button>
@@ -39,44 +51,49 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column :class="status_green" prop="custNo" label="编号" width="80"></el-table-column>
-            <el-table-column prop="custName" label="客户名称" width="120"></el-table-column>
-
-            <el-table-column prop="custSname" label="客户详细名称" width="245">      </el-table-column>
-
-            <el-table-column prop="country" label="客户国家" width="80">            </el-table-column>
-            <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
-
-            <el-table-column prop="moneyType" label="结算币种" width="80">
+            <el-table-column prop="productType" label="产品类型" width="120">
                 <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                    {{ row.productType? row.productType.code+' '+row.productType.name:'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="email" label="公司电子邮箱" width="150">
-            </el-table-column>
-            <el-table-column prop="contact" label="联系人" width="150">
-            </el-table-column>
-            <el-table-column prop="tel" label="联系人电话" width="180">
-            </el-table-column>
+
+            <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
 
 
-            <el-table-column prop="createDate"  label="建档时间" width="100">
+            <el-table-column prop="code" label="客款号" width="120"></el-table-column>
+
+            <el-table-column prop="remark" label="产品描述" width="245">      </el-table-column>
+
+
+            <el-table-column prop="color" label="颜色" width="150">
+            </el-table-column>
+            <el-table-column prop="size" label="尺寸" width="150">
+            </el-table-column>
+            <el-table-column prop="barCode" label="条码" width="150">
+            </el-table-column>
+            <el-table-column prop="picUrl" label="图片" width="150">
+            </el-table-column>
+            <el-table-column prop="upcA" label="UPC-A" width="150">
+            </el-table-column>
+            <el-table-column prop="status" label="状态" width="60">
                 <template slot-scope="{row}">
-                    {{row.createDate.substr(0,10)}}
+                    {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
                 </template>
             </el-table-column>
+            <el-table-column prop="memo" label="备注"  >
+            </el-table-column>
+
+
             <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
-                    <el-button type="text" title="编辑" @click="edit(scope.row)"  >
+                    <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
                     </el-button>
-                    <el-button type="text" title="品类" @click="edit(scope.row)"  >
 
+                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除"  >
+                        <i class="el-icon-delete red"></i>
                     </el-button>
-                     <!--<el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">-->
-                      <!--<i class="el-icon-delete red"></i>-->
-                    <!--</el-button>-->
                 </template>
             </el-table-column>
         </v-table>
@@ -115,7 +132,7 @@
                             isDeleted: false
                         }
                     },
-                    getData : this.$api.dongxw.CustomerService.query
+                    getData : this.$api.dongxw.ProductService.query
 
         },
                 tableActions: [
@@ -151,7 +168,7 @@
             exportRecords() {
                 let params = this.getSearchParams();
                 console.log(params);
-                this.$api.dongxw.CustomerService.export(params);
+                this.$api.dongxw.ProductService.export(params);
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};
@@ -192,7 +209,7 @@
                 this.$confirm("确定删除此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    this.$api.ipark.PromotionInfoService.delete(row.id).then(rsp => {
+                    this.$api.dongxw.ProductService.deleteById(row.id).then(rsp => {
                         this.search();
                         this.$message({
                             type: "success",

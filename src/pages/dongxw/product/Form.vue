@@ -1,53 +1,65 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form"   label-width="120px" class="dialog-form">
-            <!--<div>-->
-            <!--<el-form-item label="名称" prop="name">-->
-            <!--<el-input v-model="ppp" :disabled="isDisabled"></el-input>-->
-            <!--</el-form-item>-->
-            <!--</div>-->
+        <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
             <!--<div style="margin:10px" class="merchantLogo">-->
-            <!--<v-image-uploader :form-data="{}" :multiple=true v-model="ppp">-->
+                <!--<v-image-uploader :form-data="{}" :multiple=true v-model="ppp">-->
 
-            <!--</v-image-uploader>-->
-            <!--<div style="text-align:center">-->
-            <!--LOGO-->
+                <!--</v-image-uploader>-->
+                <!--<div style="text-align:center">-->
+                    <!--LOGO-->
+                <!--</div>-->
             <!--</div>-->
-            <!--</div>-->
+            <el-row :span="24" style="margin-top: 10px" >
+                <el-col :span="12">
+                <el-form-item label="产品类型" prop="productTypeId" :rules="[{ required: true}]">
+                    <product-type-select v-model="entity.productTypeId" :clearable="true"></product-type-select>
+                </el-form-item>
+                </el-col>
+                <el-col :span="12">
 
-        <el-form-item label="编号" prop="custNo">
-            <el-input placeholder="编号" v-model="entity.custNo"></el-input>
-        </el-form-item>
-        <el-form-item label="客户名称" prop="custName">
-            <el-input placeholder="客户名称" v-model="entity.custName"></el-input>
-        </el-form-item>
-        <el-form-item label="客户详细名称" prop="custSname">
-            <el-input placeholder="客户详细名称" v-model="entity.custSname"></el-input>
-        </el-form-item>
-        <el-form-item label="国家" prop="country">
-            <el-input placeholder="国家" v-model="entity.country"></el-input>
-        </el-form-item>
-        <el-form-item label="地址" prop="addr">
-            <el-input placeholder="地址" v-model="entity.addr"></el-input>
-        </el-form-item>
-        <el-form-item label="结算币种" prop="moneyType">
-            <el-select v-model="entity.moneyType" :disabled="isDisabled">
-                <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
-                           :value="item[0]" :label="item[1]"></el-option>
-            </el-select>
-        </el-form-item>
-            <el-form-item label="公司电子邮箱" prop="email">
-                <el-input placeholder="公司电子邮箱" v-model="entity.email"></el-input>
+                    <el-form-item label="状态" prop="moneyType">
+                        <el-select v-model="entity.status" :disabled="isDisabled">
+                            <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
+                                       :value="item[0]" :label="item[1]"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-form-item label="EP款号" prop="epCode">
+                <el-input placeholder="EP款号" v-model="entity.epCode"></el-input>
             </el-form-item>
-            <el-form-item label="联系人" prop="contact">
-            <el-input placeholder="联系人" v-model="entity.contact"></el-input>
-        </el-form-item>
-        <el-form-item label="联系人电话" prop="tel">
-            <el-input placeholder="联系人电话" v-model="entity.tel"></el-input>
-        </el-form-item>
+            <el-form-item label="客款号" prop="code">
+                <el-input placeholder="客款号" v-model="entity.code"></el-input>
+            </el-form-item>
+
+            <el-form-item label="产品描述" prop="remark">
+                <el-input placeholder="产品描述" v-model="entity.remark"></el-input>
+            </el-form-item>
+            <el-form-item label="颜色" prop="color">
+                <el-input placeholder="颜色" v-model="entity.color"></el-input>
+            </el-form-item>
+            <el-form-item label="尺寸" prop="size">
+                <el-input placeholder="尺寸" v-model="entity.size"></el-input>
+            </el-form-item>
+
+            <el-form-item label="条码" prop="barCode">
+                <el-input placeholder="条码" v-model="entity.barCode"></el-input>
+            </el-form-item>
+
+            <!--<el-form-item label="图片" prop="picUrl">-->
+                <!--<el-input placeholder="图片" v-model="entity.picUrl"></el-input>-->
+            <!--</el-form-item>-->
+
+            <el-form-item label="UPC-A" prop="upcA">
+                <el-input placeholder="UPC-A" v-model="entity.upcA"></el-input>
+            </el-form-item>
+
+            <el-form-item label="备注" prop="memo">
+                <el-input placeholder="备注" v-model="entity.memo"></el-input>
+            </el-form-item>
 
 
-    </el-form>
+        </el-form>
     </div>
 </template>
 <style lang="less" scoped>
@@ -82,25 +94,25 @@
 
 <script>
 
-    //import BranchCompanySelect from '@/components/widgets/BranchCompanySelect.vue';
+    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     const defaultEntity = {
         id: null,
-        custNo: null,
-        custName: '',
-        custSname: '',
-        addr: '',
-        tel: '',
-        email: '',
-        moneyType: 100,
-        createDate: '',
-        contact: '',
-        country: '',
+        epCode: null,
+        code: null,
+        status : 1,
+        remark : '',
+        color : '',
+        size : '',
+        barCode : '',
+        picUrl : null ,
+        upcA : '',
+        memo : '',
         createBy: 0
     };
 
 
     export default {
-        components: {},
+        components: {ProductTypeSelect},
         data() {
             return {
                 ppp: '',
@@ -113,24 +125,25 @@
                 isDisabled: false,
                 limitTotal: false,
                 rules: {
-                    custNo: [
+                    epCode: [
                         {required: true, message: "编号不能为空", trigger: "blur"},
                         {
                             min: 1,
-                            max: 6,
-                            message: "长度在 1 到 6 个字符",
+                            max: 32,
+                            message: "长度在 1 到 32 个字符",
                             trigger: "blur"
                         }
                     ],
-                    custName: [
-                        {required: true, message: "名称不能为空", trigger: "blur"},
+                    code: [
+                        {required: true, message: "编号不能为空", trigger: "blur"},
                         {
                             min: 1,
-                            max: 64,
-                            message: "长度在 1 到 64 个字符",
+                            max: 32,
+                            message: "长度在 1 到 32 个字符",
                             trigger: "blur"
                         }
                     ],
+
                     startOn: [
                         {
                             required: true,
@@ -190,7 +203,7 @@
                     if (valid) {
                         let params = Object.assign({}, this.entity);
 
-                        this.$api.dongxw.CustomerService.save(params).then(rsp => {
+                        this.$api.dongxw.ProductService.save(params).then(rsp => {
                             this.$emit("saved", rsp);
                         });
                     }
@@ -210,7 +223,7 @@
                     console.log(JSON.stringify(this.entity));
                     //this.isDisabled = true;//this.entity.status > 0;
 
-                    this.$api.dongxw.CustomerService.findById(options.id).then(r => {
+                    this.$api.dongxw.ProductService.findById(options.id).then(r => {
                         console.log(JSON.stringify(r))
                         this.entity = r.data;
                     });
