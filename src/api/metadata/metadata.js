@@ -2,6 +2,12 @@
 import request from '@/utils/request'
 
 export default {
+    querySubsys() {
+        return request({
+            url: '/api/sys/metadata/subsysdict/query',
+            method: 'POST'
+        })
+    },
     queryFieldsByTable(tableName) {
         return request({
             url: '/api/sys/metadata/queryFieldsByTable?tableName=' + tableName,
@@ -26,24 +32,6 @@ export default {
         })
     },
 
-    save(item) {
-        return request({
-            url: '/api/sys/httpjob/save',
-            method: 'POST',
-            data: item
-    })
-  },
-  pause (id) {
-    return request({
-      url: '/api/sys/httpjob/pause/' + id,
-      method: 'POST'
-    })
-  },
-  resume (id) {
-    return request({
-      url: '/api/sys/httpjob/resume/' + id,
-      method: 'POST'
-    })
-  }
+
 
 }

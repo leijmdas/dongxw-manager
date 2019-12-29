@@ -1,24 +1,29 @@
 <template>
     <div>
         <div class="panel panel-default panel-search">
+
             <el-form :inline="true">
-                <el-form-item label="产品类型" prop="custNo">
-                    <el-input v-model="page.query.param.code" clearable></el-input>
+                <el-form-item label="表名" prop="fieldName">
+                    <el-input v-model="page.query.param.metadataId" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="产品类型说明" prop="custNo">
-                    <el-input v-model="page.query.param.name" clearable></el-input>
+                <el-form-item label="英文名称" prop="fieldName">
+                    <el-input v-model="page.query.param.fieldName" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="中文名称" prop="fieldMemo">
+                    <el-input v-model="page.query.param.fieldMemo" clearable></el-input>
                 </el-form-item>
 
                 <el-form-item>
                     <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                     <el-button @click="cancel">取消</el-button>
-                    <el-button type="primary" plain @click="create">新增</el-button>
+                    <!--<el-button type="primary" plain @click="create">新增</el-button>-->
 
                 </el-form-item>
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-              <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
+            <!--<el-button plain @click="loadDict">load dict</el-button>-->
+            <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
             <!--<el-button type="primary" plain @click="create">新增</el-button>-->
         </v-toolbar>
 
@@ -28,8 +33,12 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  prop="code" label="产品类型" width="100"></el-table-column>
-            <el-table-column  prop="name" label="产品类型说明" width="200"></el-table-column>
+            <el-table-column  :prop="pp" :label="ll" width="120"></el-table-column>
+            <el-table-column  prop="fieldName" label="英文名称" width="120"></el-table-column>
+            <el-table-column  prop="fieldMemo" label="中文名称" width="160"></el-table-column>
+            <el-table-column  prop="fieldType" label="字段类型" width="100"></el-table-column>
+            <el-table-column  prop="fieldSize" label="长度" width="80"></el-table-column>
+            <el-table-column  prop="fieldDisplaysize" label="显示长度" width="80"></el-table-column>
 
             <el-table-column width="100" label="操作"  >
                 <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
@@ -45,13 +54,13 @@
             </el-table-column>
 
         </v-table>
-        <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
-            <form-panel @saved="onFormSaved"></form-panel>
-            <div slot="footer">
-                <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
-                <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
-            </div>
-        </v-dialog>
+        <!--<v-dialog ref="formDiag" :width="'400px'" title="信息编辑">-->
+            <!--<form-panel @saved="onFormSaved"></form-panel>-->
+            <!--<div slot="footer">-->
+                <!--<el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>-->
+                <!--<el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>-->
+            <!--</div>-->
+        <!--</v-dialog>-->
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
@@ -63,13 +72,14 @@
 
 <script>
 
-      import FormPanel from './Form';
 
     export default {
-        components: {FormPanel },
+        components: {  },
         data() {
             return {
                 metafields : [],
+                pp:"fieldName",
+                ll:"英文名称",
 
                 formStatus: 1,
                 orderDateRange: [],
@@ -82,7 +92,7 @@
                             isDeleted: false
                         }
                     },
-                    getData : this.$api.dongxw.ProductService.query
+                    getData : this.$api.metadata.MetaData.queryFields
 
         },
                 tableActions: [
@@ -183,19 +193,19 @@
                 this.page.query.param = {};
                 this.search();
             }  ,
-            // loadDict(){
-            //     console.log('load');
-            //     this.$api.metadata.MetaData.queryFieldsByTable('dict_area').then(rsp => {
-            //         this.metafields = rsp;
-            //     });
-            // },
+            loadDict(){
+                console.log('load');
+                this.$api.metadata.MetaData.queryFieldsByTable('dict_area').then(rsp => {
+                    this.metafields = rsp;
+                });
+            },
         },
 
         created() {
         },
         mounted() {
             this.$on("init", this.init);
-
+           // this.loadDict();
         }
     };
 </script>

@@ -3,6 +3,9 @@
         <div class="panel panel-default panel-search">
 
             <el-form :inline="true">
+                <el-form-item label="子系统" prop="subsys">
+                    <sub-sys-delect v-model="page.query.param.subsysId" clearable></sub-sys-delect>
+                </el-form-item>
                 <el-form-item label="表名" prop="fieldName">
                     <el-input v-model="page.query.param.metadataId" clearable></el-input>
                 </el-form-item>
@@ -21,6 +24,7 @@
                 </el-form-item>
             </el-form>
         </div>
+
         <v-toolbar title="数据列表" type="alert">
             <!--<el-button plain @click="loadDict">load dict</el-button>-->
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
@@ -72,9 +76,10 @@
 
 <script>
 
+    import SubSysSelect from '@/components/widgets/dongxw/SubSysSelect.vue';
 
     export default {
-        components: {  },
+        components: { SubSysSelect },
         data() {
             return {
                 metafields : [],
