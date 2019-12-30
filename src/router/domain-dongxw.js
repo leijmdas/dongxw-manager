@@ -36,13 +36,13 @@ let router0 = [
                 path: 'dongxw/customer/manage',
                 component: require('@/pages/dongxw/customer/Manage.vue'),
                 name: 'customer:manage',
-                meta: {title: '客户信息', perm: 'customer:manage'}
+                meta: {title: '客户名单', perm: 'customer:manage'}
             },
             {
-                path: 'dongxw/customer/manage',
+                path: 'dongxw/supplier/manage',
                 component: require('@/pages/dongxw/customer/Manage.vue'),
-                name: 'customer:manage',
-                meta: {title: '供应商', perm: 'customer:manage'}
+                name: 'supplier:manage',
+                meta: {title: '供应商名单', perm: 'customer:manage'}
             },
 
         ]
@@ -142,42 +142,72 @@ let router0 = [
         path: '/inv',
         component: Layout,
         meta: {title: '库存管理', icon: 'user', group: 'dongxw'},
-        children: [{
+        children: [
+        {
             path: 'userInfo/manage',
             component: require('@/pages/app/userInfo/Manage.vue'),
             name: 'userInfo:manage',
-            meta: {title: '库存', perm: 'user:manage'}
+            meta: {title: '原料库存', perm: 'user:manage'}
         }, {
             path: 'userInfo/userGrade',
             component: require('@/pages/app/userGrade/Manage.vue'),
             name: 'userGrade:manage',
-            meta: {title: '入库单', perm: 'userGrade:manage'}
+            meta: {title: '原料入库单', perm: 'userGrade:manage'}
         },
 
             {
                 path: 'userInfo/recharge',
                 component: require('@/pages/app/userInfo/Manage.vue'),
                 name: 'recharge:manage',
-                meta: {title: '出库单', perm: 'userGrade:manage'}
-            }
+                meta: {title: '原料出库单', perm: 'userGrade:manage'}
+            },
+            {
+                path: 'userInfo/manage',
+                component: require('@/pages/app/userInfo/Manage.vue'),
+                name: 'userInfo:manage',
+                meta: {title: '成品库存', perm: 'user:manage'}
+            }, {
+                path: 'userInfo/userGrade',
+                component: require('@/pages/app/userGrade/Manage.vue'),
+                name: 'userGrade:manage',
+                meta: {title: '成品入库单', perm: 'userGrade:manage'}
+            },
 
+            {
+                path: 'userInfo/recharge',
+                component: require('@/pages/app/userInfo/Manage.vue'),
+                name: 'recharge:manage',
+                meta: {title: '成品出库单', perm: 'userGrade:manage'}
+            }
         ]
     },
     {
         path: '/ac',
         component: Layout,
         meta: {title: '应收应付款', icon: 'user', group: 'dongxw'},
-        children: [{
-            path: 'userInfo/manage',
-            component: require('@/pages/app/userInfo/Manage.vue'),
-            name: 'userInfo:manage',
-            meta: {title: '应收款', perm: 'user:manage'}
-        }, {
-            path: 'userInfo/userGrade',
-            component: require('@/pages/app/userGrade/Manage.vue'),
-            name: 'userGrade:manage',
-            meta: {title: '应付款', perm: 'userGrade:manage'}
-        },
+        children: [
+            {
+                path: 'userInfo/manage',
+                component: require('@/pages/app/userInfo/Manage.vue'),
+                name: 'userInfo:manage',
+                meta: {title: '产品应收款', perm: 'user:manage'}
+            }, {
+                path: 'userInfo/userGrade',
+                component: require('@/pages/app/userGrade/Manage.vue'),
+                name: 'userGrade:manage',
+                meta: {title: '原料应付款', perm: 'userGrade:manage'}
+            },
+            {
+                path: 'userInfo/manage',
+                component: require('@/pages/app/userInfo/Manage.vue'),
+                name: 'userInfo:manage',
+                meta: {title: '产品收款发票', perm: 'user:manage'}
+            }, {
+                path: 'userInfo/userGrade',
+                component: require('@/pages/app/userGrade/Manage.vue'),
+                name: 'userGrade:manage',
+                meta: {title: '原料付款发票', perm: 'userGrade:manage'}
+            },
         ]
     },
 
