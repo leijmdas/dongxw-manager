@@ -15,8 +15,8 @@
             <!--</div>-->
             <!--</div>-->
 
-        <el-form-item label="客户编号" prop="custNo">
-            <el-input placeholder="客户编号" v-model="entity.custNo"></el-input>
+        <el-form-item label="客户编码" prop="custNo">
+            <el-input placeholder="客户编码" v-model="entity.custNo"></el-input>
         </el-form-item>
         <el-form-item label="客户名称" prop="custName">
             <el-input placeholder="客户名称" v-model="entity.custName"></el-input>

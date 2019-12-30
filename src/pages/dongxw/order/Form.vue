@@ -83,10 +83,9 @@
                     <!--<el-form-item label="主料描述" prop="materialRemark">-->
                         <!--<el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>-->
                     <!--</el-form-item>-->
-                     <!--&lt;!&ndash;<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>&ndash;&gt;-->
-                    <!--<el-form-item label="供应商" prop="supplyId">-->
-                        <!--<el-input placeholder="供应商" v-model="entity.supplyId"></el-input>-->
-                    <!--</el-form-item>-->
+                    <el-form-item label="供应商" prop="supplyId">
+                        <el-input placeholder="供应商" v-model="entity.supplyId"></el-input>
+                    </el-form-item>
 
                 </fieldset>
 

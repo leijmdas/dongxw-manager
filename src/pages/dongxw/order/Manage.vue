@@ -114,8 +114,8 @@
                     <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
             <el-table-column prop="remark" label="备注"></el-table-column>
+            <<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>
 
             <el-table-column width="140" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
