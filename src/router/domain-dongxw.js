@@ -160,7 +160,7 @@ let router0 = [
     {
         path: '/ac',
         component: Layout,
-        meta: {title: '应收应付', icon: 'user', group: 'dongxw'},
+        meta: {title: '应收应付款', icon: 'user', group: 'dongxw'},
         children: [{
             path: 'userInfo/manage',
             component: require('@/pages/app/userInfo/Manage.vue'),
