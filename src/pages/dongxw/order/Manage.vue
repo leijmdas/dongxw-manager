@@ -115,8 +115,8 @@
                 </template>
             </el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
-            <<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>
-
+            <el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>
+            <!--总数量，总金额-->
             <el-table-column width="140" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
