@@ -3,10 +3,13 @@
         <div class="panel panel-default panel-search">
 
             <el-form :inline="true">
-                <el-form-item label="子系统" prop="subsys">
-                    <sub-sys-delect v-model="page.query.param.subsysId" clearable></sub-sys-delect>
+
+                <el-form-item label="子系统">
+                    <sub-sys-select v-model="page.query.param.subsysId" :clearable="true"></sub-sys-select>
                 </el-form-item>
-                <el-form-item label="表名" prop="fieldName">
+
+
+                <el-form-item label="表名" prop="metadataId">
                     <el-input v-model="page.query.param.metadataId" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="英文名称" prop="fieldName">

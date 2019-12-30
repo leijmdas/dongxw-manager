@@ -117,7 +117,7 @@
             <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column width="130" label="操作" :fixed="'right'">
+            <el-table-column width="140" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
