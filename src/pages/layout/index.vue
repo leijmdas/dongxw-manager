@@ -200,7 +200,7 @@
       color: #333;
     } */
     .copyright {
-        height: 30px;
+        height: 40px;
         background: #f4f8fb;
         color: gray;
         text-align: center;
