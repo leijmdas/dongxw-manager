@@ -39,7 +39,7 @@
                 <el-input placeholder="条码" v-model="entity.barCode"></el-input>
             </el-form-item>
 
-            <div width="100px" style="margin:10px" class="merchantLogo">
+            <div  style="margin:10px" class="merchantLogo">
                 <v-image-uploader :form-data="{}"   v-model="entity.picUrl">
 
                 </v-image-uploader>

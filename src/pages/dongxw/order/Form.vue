@@ -36,7 +36,7 @@
                         <el-date-picker
                             :disabled="disables"
                             v-model="entity.orderDate"
-                            format="yyyy-MM-dd HH:mm:ss"
+                            format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd HH:mm:ss"
                             type="date"
                             placeholder="选择日期">
@@ -47,7 +47,7 @@
                         <el-date-picker
                             :disabled="disables"
                             v-model="entity.customerIssueDate"
-                            format="yyyy-MM-dd HH:mm:ss"
+                            format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd HH:mm:ss"
                             type="date"
                             placeholder="选择日期">
@@ -59,7 +59,7 @@
                         <el-date-picker
                             :disabled="disables"
                             v-model="entity.checkDate"
-                            format="yyyy-MM-dd HH:mm:ss"
+                            format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd HH:mm:ss"
                             type="date"
                             placeholder="选择日期">
@@ -68,13 +68,14 @@
                     <el-form-item label="工厂交货日期" prop="">
                         <el-date-picker
                             :disabled="disables"
-                            v-model="entity.factroyIssuseDate"
-                            format="yyyy-MM-dd HH:mm:ss"
+                            v-model="entity.factroyIssueDate"
+                             format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd HH:mm:ss"
                             type="date"
                             placeholder="选择日期">
                         </el-date-picker>
                     </el-form-item>
+                    <!--format="yyyy-MM-dd HH:mm:ss"-->
 
 
                     <el-form-item label="备注" prop="remark">
@@ -92,7 +93,7 @@
 
 
             </el-tab-pane>
-            <el-tab-pane label="订单图片" name="orderPic">
+            <el-tab-pane height="400px" label="订单原件" name="orderPic">
 
                 <div style="margin:10px" class="merchantLogo">
                     <v-image-uploader :form-data="{}"   :multiple=true v-model="entity.customerOrderImg">
@@ -102,9 +103,9 @@
                         订单原件
                     </div>
                 </div>
-                <el-form-item label="订单图片" prop="customerOrderImg">
-                    <el-input placeholder="订单图片" v-model="entity.customerOrderImg" disabled></el-input>
-                </el-form-item>
+                <!--<el-form-item label="订单原件" prop="customerOrderImg">-->
+                    <!--<el-input placeholder="订单原件" v-model="entity.customerOrderImg" disabled></el-input>-->
+                <!--</el-form-item>-->
 
             </el-tab-pane>
 

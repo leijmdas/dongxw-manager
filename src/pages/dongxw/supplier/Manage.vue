@@ -43,7 +43,11 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column class="status_green" prop="code" label="供应商编码" width="100"></el-table-column>
+            <el-table-column  prop="code" label="供应商编码" width="100">
+                <template slot-scope="{row}">
+                    <span :style="'color: blue'"  >{{ row.code }}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="name" label="供应商名称" width="120"></el-table-column>
 
             <el-table-column prop="sname" label="供应商详细名称" width="245">      </el-table-column>
@@ -99,7 +103,7 @@
 <style rel="stylesheet/less" scoped lang="less">
 
     .status_green {
-        color: green;
+        color: red;
     }
 </style>
 

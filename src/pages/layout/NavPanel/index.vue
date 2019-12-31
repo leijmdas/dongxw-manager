@@ -61,7 +61,8 @@
                 <el-menu-item-group>
                     <template slot="title">--- 系统设置 ---</template>
                     <el-menu-item index="2-3" @click="onModifyPwd">修改密码</el-menu-item>
-                    <el-menu-item index="2-4" @click="logout">退出登录</el-menu-item>
+                    <el-menu-item index="2-4" @click="logout">重新登录</el-menu-item>
+                    <el-menu-item index="2-5" @click="logout">退出登录</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>

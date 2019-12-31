@@ -17,9 +17,11 @@
 
                     <el-date-picker v-model="dateRange" type="daterange" range-separator="至"
                                     start-placeholder="开始日期" end-placeholder="结束日期"
-                                    value-format="yyyy-MM-dd">
-
+                                    format="yyyy-MM-dd"
+                                    value-format="yyyy-MM-dd HH:mm:ss">
                     </el-date-picker>
+
+
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
@@ -66,16 +68,20 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column prop="customerId" label="客户" width="120">
+            <el-table-column prop="customerId" label="客户编码" width="80">
                 <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custName:'-'}}
+                    {{ row.customer?row.customer.custNo:'-'}}
                  </template>
             </el-table-column>
-
-            <!--0-草稿1-下单2-在生产-3-生产完成4&#45;&#45;发货完成5-收款完成',-->
-            <el-table-column prop="status" label="订单状态" width="80">
+            <el-table-column prop="customerId" label="客户名称" width="120">
                 <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}
+                    {{ row.customer?row.customer.custName:'-'}}
+                </template>
+            </el-table-column>
+
+            <el-table-column  prop="status" label="订单状态" width="80">
+                <template slot-scope="{row}">
+                    <span :style="'style:red'"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
                 </template>
             </el-table-column>
 
@@ -101,14 +107,13 @@
                     {{ $dongxwDict.viewDate(row.checkDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="factroyIssuseDate" label="工厂交货日期" width="100">
+            <el-table-column prop="factroyIssueDate" label="工厂交货日期" width="100">
                 <template slot-scope="{row}">
-                    {{ $dongxwDict.viewDate(row.factroyIssuseDate)}}
+                    {{ $dongxwDict.viewDate(row.factroyIssueDate)}}
                 </template>
             </el-table-column>
 
-            <!--material_remark      '主料描述 ',-->
-            <el-table-column  prop="customerOrderImg" label="订单图片" width="80">
+            <el-table-column  prop="customerOrderImg" label="订单原件" width="100">
                 <template slot-scope="scope">
                     <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg">下载</a>-->
                     <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
@@ -124,7 +129,7 @@
 
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
-                        
+
                     </el-button>
 
                     <el-button type="success" @click="edit(scope.row)" round size="mini">产品</el-button>
@@ -153,7 +158,7 @@
     import FormPanel from './Form';
 
     export default {
-        components: {FormPanel, CustomerSelect   },
+        components: {FormPanel, CustomerSelect},
         data() {
             return {
                 dateRangeType: null,
@@ -199,7 +204,7 @@
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};
-                if (this.dateRangeType != null && this.dateRange&&this.dateRange.length > 0) {
+                if (this.dateRangeType != null && this.dateRange && this.dateRange.length > 0) {
                     this.page.query.dateRanges[this.dateRangeType] = {
                         startDate: this.dateRange[0],
                         endDate: this.dateRange.length > 1 ? this.dateRange[1] : null
@@ -261,6 +266,7 @@
                 this.search();
             },
             search() {
+                this.getSearchParams();
                 this.$refs.table.load();
             },
             cancel() {
