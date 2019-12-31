@@ -85,9 +85,9 @@
                         <!--<el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>-->
                     <!--</el-form-item>-->
 
-                    <el-form-item label="供应商"   prop="supplyId"  >
-                        <supplier-select  v-model="entity.supplyId" :clearable="true"></supplier-select>
-                    </el-form-item>
+                    <!--<el-form-item label="供应商"   prop="supplyId"  >-->
+                        <!--<supplier-select  v-model="entity.supplyId" :clearable="true"></supplier-select>-->
+                    <!--</el-form-item>-->
 
                 </fieldset>
 
