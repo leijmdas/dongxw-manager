@@ -161,7 +161,7 @@
         components: {FormPanel, CustomerSelect},
         data() {
             return {
-                dateRangeType: null,
+                dateRangeType: 'orderDate',
                 formStatus: 1,
                 dateRange: [],
                 summaryMap: {},
