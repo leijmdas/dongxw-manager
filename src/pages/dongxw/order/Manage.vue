@@ -14,10 +14,9 @@
                             <el-option value="factroyIssueDate" label="工厂交货日期"></el-option>
                         </el-select>
                     </div>
-
-                    <el-date-picker v-model="dateRange" type="daterange" range-separator="至"
+                    <el-date-picker style="width:270px" v-model="dateRange" type="daterange" range-separator="至"
                                     start-placeholder="开始日期" end-placeholder="结束日期"
-                                    format="yyyy-MM-dd"
+                                    format="yyyy年MM月dd日"
                                     value-format="yyyy-MM-dd HH:mm:ss">
                     </el-date-picker>
 
@@ -44,20 +43,22 @@
                     <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="业务员" prop="businessBy"  >
+                <el-form-item label="业务员" prop="businessBy" >
                     <el-input v-model="page.query.param.businessBy" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item>
-                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                    <el-button @click="cancel">取消</el-button>
+                <!--<el-form-item>-->
+                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+                    <!--<el-button @click="cancel">取消</el-button>-->
 
-                </el-form-item>
+                <!--</el-form-item>-->
 
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-            <span style="color :red">只有草稿状态才可以删除!</span>
+            <span slot="tip" style="margin-left:60px;color :red">只有草稿状态才可以删除!</span>
+            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+            <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
@@ -80,15 +81,25 @@
                 </template>
             </el-table-column>
 
+
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
+            <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号" width="120">
+                <template slot-scope="scope">
+                    <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
+                    <span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column  prop="customerOrderImg" label="订单原件" width="78">
+                <template slot-scope="scope">
+                    <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
+                    <!--<el-button type="text" @click="view(scope.row)" plain >View</el-button>-->
+                </template>
+            </el-table-column>
             <el-table-column  prop="status" label="订单状态" width="80">
                 <template slot-scope="{row}">
                     <span :style="'style:red'"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
                 </template>
             </el-table-column>
-
-            <el-table-column prop="customerOrderCode" label="客户订单号" width="120"></el-table-column>
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
-            <el-table-column prop="invoiceNo" label="发票编号" width="120"></el-table-column>
 
 
             <el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>
@@ -114,12 +125,8 @@
                 </template>
             </el-table-column>
 
-            <el-table-column  prop="customerOrderImg" label="订单原件" width="100">
-                <template slot-scope="scope">
-                    <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg">下载</a>-->
-                    <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
-                </template>
-            </el-table-column>
+            <el-table-column prop="invoiceNo" label="发票编号" width="120"></el-table-column>
+
             <el-table-column prop="remark" label="备注"></el-table-column>
 
             <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
@@ -143,23 +150,35 @@
             </el-table-column>
 
         </v-table>
-        <v-dialog ref="formDiag" title="信息编辑" :width="'600px'">
+        <v-dialog ref="formDiag" title="信息编辑" >
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
+        <v-dialog ref="formDiagView" title="订单原件">
+            <form-view-panel @saved="onFormSaved"></form-view-panel>
+            <div slot="footer">
+                <!--<el-button type="primary" @click="$refs.formDiagView.dispatch('submit')">保存</el-button>-->
+                <el-button type="default" @click="()=>{$refs.formDiagView.hide()}">关闭</el-button>
+            </div>
+        </v-dialog>
+
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
+    .el-input{
+        width: 160px;
+    }
 </style>
 <script>
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import FormPanel from './Form';
+    import FormViewPanel from './FormViewPic';
 
     export default {
-        components: {FormPanel, CustomerSelect},
+        components: {FormPanel, FormViewPanel, CustomerSelect},
         data() {
             return {
                 dateRangeType: 'orderDate',
@@ -226,6 +245,9 @@
             },
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});
+            },
+            view(row) {
+                this.$refs.formDiagView.show({id: row.id});
             },
             toggleStatus(row) {
                 let status = row.status;

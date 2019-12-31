@@ -3,17 +3,16 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <el-form-item label="产品类型">
-                    <product-type-select v-model="page.query.param.productTypeId" :clearable="true"></product-type-select>
+                <el-form-item label="编码" prop="code">
+                    <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
-
                 <el-form-item label="EP款号" prop="epCode">
                     <el-input v-model="page.query.param.epCode" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="客款号" prop="code">
-                    <el-input v-model="page.query.param.code" clearable></el-input>
-                </el-form-item>
+                <!--<el-form-item label="客款号" prop="code">-->
+                    <!--<el-input v-model="page.query.param.code" clearable></el-input>-->
+                <!--</el-form-item>-->
                 <el-form-item label="产品描述" prop="remark">
                     <el-input v-model="page.query.param.remark" clearable></el-input>
                 </el-form-item>
@@ -22,6 +21,9 @@
                 </el-form-item>
                 <el-form-item label="条码" prop="barCode">
                     <el-input v-model="page.query.param.barCode" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="产品类型">
+                    <product-type-select v-model="page.query.param.productTypeId" :clearable="true"></product-type-select>
                 </el-form-item>
 
 
@@ -33,25 +35,29 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button-group>
-                        <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                        <el-button @click="cancel">取消</el-button>
-                        <el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>
-                        <el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>
-                    </el-button-group>
+                    <!--<el-button-group></el-button-group>-->
+                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+                    <!--<el-button @click="cancel">取消</el-button>-->
+
+                    <!--<el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>-->
+                    <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
+
                 </el-form-item>
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-
-            <el-switch
-                v-model="showPrdPic"
-                active-text="显示产品图片"
-                inactive-text="不显示">
-            </el-switch>
+            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+            <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
-                <el-button type="primary" plain @click="create">新增</el-button>
+            <el-button type="primary" plain @click="create">新增</el-button>
+
+
+            <el-switch style="margin-left:20px; margin-right: 20px"
+                       v-model="showPrdPic"
+                       active-text="显示产品图片"
+                       inactive-text="不显示">
+            </el-switch>
 
 
         </v-toolbar>
@@ -63,16 +69,15 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column prop="productType" label="产品类型" width="120">
+
+            <el-table-column prop="code" label="编码" width="120">
                 <template slot-scope="{row}">
-                    {{ row.productType? row.productType.code+' '+row.productType.name:'-' }}
+                   <span :class="'color_red'"  > {{row.code }} </span>
                 </template>
             </el-table-column>
 
             <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
-
-
-            <el-table-column prop="code" label="客款号" width="120"></el-table-column>
+             <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
 
             <el-table-column prop="remark" label="产品描述" width="245">      </el-table-column>
 
@@ -97,7 +102,11 @@
             </el-table-column>
             <el-table-column prop="memo" label="备注"  >
             </el-table-column>
-
+            <el-table-column prop="productType" label="产品类型" width="120">
+                <template slot-scope="{row}">
+                    {{ row.productType? row.productType.code+' '+row.productType.name:'-' }}
+                </template>
+            </el-table-column>
 
             <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
@@ -122,7 +131,9 @@
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
-
+    .el-input{
+        width: 160px;
+    }
     .status_green {
         color: green;
     }

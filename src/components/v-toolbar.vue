@@ -37,21 +37,22 @@
 }
 </style>
 <template>
-  <div class="toolbar" :type="type">
-    <div class="toolbar-title">
-      <span >{{title}}</span>
-    </div>
-    <div style="float:left">
-      <slot name="tip">
+    <div class="toolbar" :type="type">
+        <div class="toolbar-title">
+            <span>{{title}}</span>
+        </div>
+        <div style="float:left">
+            <slot name="tip">
 
-      </slot>
-    </div>
-    <div style="float:right">
-      <slot>
+            </slot>
+        </div>
 
-      </slot>
+        <div style="float:right">
+            <slot>
+
+            </slot>
+        </div>
     </div>
-  </div>
 </template>
 <script>
 export default {

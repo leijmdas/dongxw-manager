@@ -1,8 +1,8 @@
 <!--模板名称选择-->
 
 <template>
-    <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
-        <el-option v-for="item in options" :key="item.id" :label="item.custName" :value="item.id" :disabled="item.disabled">
+    <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
+        <el-option  v-for="item in options" :key="item.id" :label="item.custName" :value="item.id" :disabled="item.disabled">
         </el-option>
     </el-select>
 </template>
@@ -21,6 +21,11 @@
         props: {
             value: {
                 required: true
+            },
+            width: {
+                type: String,
+                required: false,
+                defult: "50%"
             },
             clearable: {
                 type: Boolean

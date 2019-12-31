@@ -72,8 +72,8 @@
 </template>
 <style rel="stylesheet/less" scoped lang="less">
 
-    .status_green {
-        color: green;
+    .color_red {
+        color: red;
     }
 </style>
 

@@ -1,116 +1,9 @@
 <template>
     <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
-        <el-tabs v-model="activeName" :stretch="true" @tab-click="handleClick">
-            <el-tab-pane label="订单信息" name="orderInfo">
 
+            <div label="订单原件" name="orderPic">
 
-                <fieldset align="bottom">
-                    <el-row :span="24"  style="margin-top: 10px">
-                        <el-col :span="14">
-                            <el-form-item  label="客户" prop="customerId"
-                                          :rules="[{ required: true}]">
-                                <customer-select :width="'200px'" v-model="entity.customerId" :clearable="true"></customer-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10">
-                            <el-form-item label="状态" prop="status">
-
-                                <el-select v-model="entity.status">
-                                    <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]"
-                                               :value="item[0]" :label="item[1]"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-
-                    <el-form-item label="EP订单号" prop="epOrderCode">
-                        <el-input placeholder="EP订单号" v-model="entity.epOrderCode"></el-input>
-                    </el-form-item>
-
-                    <el-form-item label="客户订单号" prop="customerOrderCode">
-                        <el-input placeholder="客户订单号" v-model="entity.customerOrderCode"></el-input>
-
-                    </el-form-item>
-
-                    <el-form-item label="发票编号" prop="invoiceNo">
-                        <el-input placeholder="发票编号" v-model="entity.invoiceNo"></el-input>
-                    </el-form-item>
-                    <el-form-item label="业务员" prop="businessBy">
-                        <el-input placeholder="业务员" v-model="entity.businessBy"></el-input>
-                    </el-form-item>
-                    <el-row :span="24"  style="margin-top: 10px;margin-right: 16px">
-                        <el-col :span="12">
-                            <el-form-item label="下单日期" prop="" :rules="[{ required: true}]">
-                                <el-date-picker :disabled="disables"
-                                                v-model="entity.orderDate"
-                                                format="yyyy 年 MM 月 dd 日"
-                                                value-format="yyyy-MM-dd HH:mm:ss"
-                                                type="date"
-                                                placeholder="选择日期">
-                                </el-date-picker>
-                            </el-form-item>
-                            <!--format="yyyy-MM-dd"-->
-                        </el-col>
-
-                        <el-col :span="12">
-                            <el-form-item label="客户交货日期" prop="" :rules="[{ required: true}]">
-                                <el-date-picker   :disabled="disables"
-                                    v-model="entity.customerIssueDate"
-                                                  format="yyyy 年 MM 月 dd 日"
-                                                  value-format="yyyy-MM-dd HH:mm:ss"
-                                    type="date"
-                                    placeholder="选择日期">
-                                </el-date-picker>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :span="24" style="margin-top: 10px;margin-right: 16px">
-                        <el-col :span="12">
-                            <el-form-item label="验货日期" prop="">
-                                <el-date-picker
-                                    :disabled="disables"
-                                    v-model="entity.checkDate"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd HH:mm:ss"
-                                    type="date"
-                                    placeholder="选择日期">
-                                </el-date-picker>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-
-                            <el-form-item label="工厂交货日期" prop="">
-                                <el-date-picker
-                                    :disabled="disables"
-                                    v-model="entity.factroyIssueDate"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd HH:mm:ss"
-                                    type="date"
-                                    placeholder="选择日期">
-                                </el-date-picker>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-
-
-                    <el-form-item label="备注"  style="margin-top: 10px" prop="remark">
-                        <el-input placeholder="备注" v-model="entity.remark"></el-input>
-                    </el-form-item>
-                    <!--<el-form-item label="主料描述" prop="materialRemark">-->
-                        <!--<el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>-->
-                    <!--</el-form-item>-->
-
-                    <!--<el-form-item label="供应商"   prop="supplyId"  >-->
-                        <!--<supplier-select  v-model="entity.supplyId" :clearable="true"></supplier-select>-->
-                    <!--</el-form-item>-->
-
-                </fieldset>
-
-
-            </el-tab-pane>
-            <el-tab-pane height="400px" label="订单原件" name="orderPic">
-
-                <div style="margin:10px" class="orderLogo">
+                <div style="margin:10px" class="orderLogoView">
                     <v-image-uploader :form-data="{}" :multiple=true v-model="entity.customerOrderImg">
 
                     </v-image-uploader>
@@ -119,24 +12,18 @@
                 <!--<el-form-item label="订单原件" prop="customerOrderImg">-->
                 <!--<el-input placeholder="订单原件" v-model="entity.customerOrderImg" disabled></el-input>-->
                 <!--</el-form-item>-->
+            </div>
 
-            </el-tab-pane>
-
-        </el-tabs>
     </el-form>
 </template>
 <style lang="less" scoped>
-    .orderLogo .el-upload-dragger {
+    .orderLogoView .el-upload-dragger {
         img {
             width: 400px;
-            height: 300px;
-            // height: 60% !important;
+            height: 300px !important;
         }
     }
-    .input-class{
-        width: 500px;
-        height: 40px;
-    }
+
     .dialog-form {
         .el-radio-group {
             .el-radio {
@@ -200,24 +87,6 @@
                     }],
                     name: [
                         {required: true, message: "名称不能为空", trigger: "blur"},
-                        {
-                            min: 1,
-                            max: 128,
-                            message: "长度在 1 到 128 个字符",
-                            trigger: "blur"
-                        }
-                    ],
-                    epOrderCode: [
-                        {required: true, message: "EP订单号", trigger: "blur"},
-                        {
-                            min: 1,
-                            max: 128,
-                            message: "长度在 1 到 128 个字符",
-                            trigger: "blur"
-                        }
-                    ],
-                    customerOrderCode: [
-                        {required: true, message: "客户订单号", trigger: "blur"},
                         {
                             min: 1,
                             max: 128,
