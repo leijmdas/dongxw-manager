@@ -79,7 +79,7 @@
         width: ~"calc(100% - 308px)";
         display: flex;
         justify-content: space-between;
-        margin-left: 108px;
+        margin-left: 28px;
 
         .el-menu-item {
             width: 104px;

@@ -1,6 +1,7 @@
 <template>
     <el-container style="height:100%">
         <el-header class="header" style="height: 70px;">
+
             <router-link :to="{path:'/dashboard'}">
                 <div class="logo">
                     <img src="../../assets/logo.png" style="height: 40px;">
@@ -10,16 +11,16 @@
                     </p>
                 </div>
             </router-link>
-            <!--<div class="navLocation">-->
-            <!--&lt;!&ndash;<hamburger :isActive="!collapse" :toggleClick="onToggle" title="展开或折叠菜单"></hamburger>&ndash;&gt;-->
-            <!--<el-breadcrumb>-->
-            <!--<el-breadcrumb-item-->
-            <!--v-for="item in currentNodePaths"-->
-            <!--:key="item.name"-->
-            <!--&gt;{{(item.meta||{}).title}}-->
-            <!--</el-breadcrumb-item>-->
-            <!--</el-breadcrumb>-->
-            <!--</div>-->
+            <div class="navLocation">
+                <hamburger :isActive="!collapse" :toggleClick="onToggle" title="展开或折叠菜单"></hamburger>
+                <!--<el-breadcrumb>-->
+                <!--<el-breadcrumb-item-->
+                <!--v-for="item in currentNodePaths"-->
+                <!--:key="item.name"-->
+                <!--&gt;{{(item.meta||{}).title}}-->
+                <!--</el-breadcrumb-item>-->
+                <!--</el-breadcrumb>-->
+            </div>
             <nav-panel></nav-panel>
         </el-header>
         <el-container>
@@ -52,7 +53,7 @@
     </el-container>
 </template>
 
-<style lang="less" rel="stylesheet/less">
+<style lang="less" rel="stylesheet/less"  >
     .header {
         display: flex;
         align-items: center;
@@ -91,7 +92,7 @@
             align-items: center;
             margin-left: 18px;
             color: #FFFFFF;
-
+            width: 129px;
             span {
                 line-height: 1;
             }
@@ -123,10 +124,10 @@
     }
 
     .navLocation {
-        float: left;
+        float: right;
         color: white;
-        margin-left: 50px;
-        margin-top: 5px;
+        margin-left: 20px;
+        margin-top: 30px;
         line-height: 35px;
 
         .hamburger {
