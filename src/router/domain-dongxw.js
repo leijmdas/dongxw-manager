@@ -40,7 +40,7 @@ let router0 = [
             },
             {
                 path: 'dongxw/supplier/manage',
-                component: require('@/pages/dongxw/customer/Manage.vue'),
+                component: require('@/pages/dongxw/supplier/Manage.vue'),
                 name: 'supplier:manage',
                 meta: {title: '供应商名单', perm: 'customer:manage'}
             },

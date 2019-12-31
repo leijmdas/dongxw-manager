@@ -1,49 +1,27 @@
-<!--订单管理-->
+<!--cust管理-->
 <template>
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
 
-                <el-form-item label="日期">
-
-                    <div slot="label">
-                        <el-select v-model="dateRangeType" filterable clearable style="width:120px" class="formitem-label">
-                            <el-option value="orderDate" label="下单日期"></el-option>
-                            <el-option value="customerIssueDate" label="客户交货日期"></el-option>
-                            <el-option value="checkDate" label="验货日期"></el-option>
-                            <el-option value="factroyIssueDate" label="工厂交货日期"></el-option>
-                        </el-select>
-                    </div>
-
-                    <el-date-picker v-model="dateRange" type="daterange" range-separator="至"
-                                    start-placeholder="开始日期" end-placeholder="结束日期"
-                                    value-format="yyyy-MM-dd">
-
-                    </el-date-picker>
+                <el-form-item label="供应商编码" prop="custNo">
+                    <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="状态" prop="status">
+                <el-form-item label="供应商名称" prop="custName">
+                    <el-input v-model="page.query.param.name" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="状态" prop="moneyType">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
+                        <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
 
-
-                <el-form-item label="客户" prop="subjectType">
-                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
-
-                </el-form-item>
-
-
-                <el-form-item label="客户订单号" prop="customerOrderCode">
-                    <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="EP订单号" prop="epOrderCode">
-                    <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
-                </el-form-item>
-
-                <el-form-item label="业务员" prop="businessBy"  >
-                    <el-input v-model="page.query.param.businessBy" clearable></el-input>
+                <el-form-item label="结算币种" prop="moneyType">
+                    <el-select :clearable="true" v-model="page.query.param.moneyType" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
                 </el-form-item>
 
                 <el-form-item>
@@ -51,93 +29,65 @@
                     <el-button @click="cancel">取消</el-button>
 
                 </el-form-item>
-
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
-        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
 
+
+        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column prop="seq" label="序号" width="50">
 
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column prop="customerId" label="客户" width="120">
-                <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custName:'-'}}
-                 </template>
-            </el-table-column>
+            <el-table-column class="status_green" prop="code" label="供应商编码" width="100"></el-table-column>
+            <el-table-column prop="name" label="供应商名称" width="120"></el-table-column>
 
-            <!--0-草稿1-下单2-在生产-3-生产完成4&#45;&#45;发货完成5-收款完成',-->
-            <el-table-column prop="status" label="订单状态" width="80">
+            <el-table-column prop="sname" label="供应商详细名称" width="245">      </el-table-column>
+
+            <el-table-column prop="country" label="国家" width="80">            </el-table-column>
+            <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
+
+            <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}
+                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
                 </template>
             </el-table-column>
+            <el-table-column prop="email" label="供应商电子邮箱" width="150">
+            </el-table-column>
+            <el-table-column prop="contact" label="联系人" width="150">
+            </el-table-column>
+            <el-table-column prop="tel" label="联系人电话" width="180">
+            </el-table-column>
+            <el-table-column prop="fax" label="传真" width="180">
+            </el-table-column>
 
-            <el-table-column prop="customerOrderCode" label="客户订单号" width="120"></el-table-column>
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
-            <el-table-column prop="invoiceNo" label="发票编号" width="120"></el-table-column>
-
-
-            <el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>
-
-            <el-table-column prop="orderDate" label="下单日期" width="100">
+            <el-table-column prop="status" label="状态" width="60">
                 <template slot-scope="{row}">
-                {{ $dongxwDict.viewDate(row.orderDate)}}
+                    {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="customerIssueDate" label="客户交货日期" width="100">
+            <el-table-column prop="createDate"  label="建档时间" width="100">
                 <template slot-scope="{row}">
-                    {{ $dongxwDict.viewDate(row.customerIssueDate)}}
+                    {{row.createDate.substr(0,10)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="checkDate" label="验货日期" width="100">
-                <template slot-scope="{row}">
-                    {{ $dongxwDict.viewDate(row.checkDate)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="factroyIssuseDate" label="工厂交货日期" width="100">
-                <template slot-scope="{row}">
-                    {{ $dongxwDict.viewDate(row.factroyIssuseDate)}}
-                </template>
-            </el-table-column>
-
-            <!--material_remark      '主料描述 ',-->
-            <el-table-column  prop="customerOrderImg" label="订单图片" width="80">
-                <template slot-scope="scope">
-                    <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg">下载</a>-->
-                    <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
-                </template>
-            </el-table-column>
-            <el-table-column prop="remark" label="备注"></el-table-column>
-
-            <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
-
-            <!--总数量，总金额-->
-            <el-table-column width="140" label="操作" :fixed="'right'">
+            <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
-                    <el-button type="text" title="编辑" @click="edit(scope.row)">
+                    <el-button type="text" title="编辑" @click="edit(scope.row)"  >
                         <i class="el-icon-edit"></i>
-                        
                     </el-button>
-
-                    <el-button type="success" @click="edit(scope.row)" round size="mini">产品</el-button>
-
-                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
-                        <i class="el-icon-delete red"></i>
+                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
+                      <i class="el-icon-delete red"></i>
                     </el-button>
-
                 </template>
             </el-table-column>
-
         </v-table>
-        <v-dialog ref="formDiag" title="信息编辑" :width="'600px'">
+        <v-dialog ref="formDiag" :width="'600px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
@@ -147,29 +97,34 @@
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
+
+    .status_green {
+        color: green;
+    }
 </style>
+
 <script>
-    import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
+    //import ProductTypeSelect from '@/components/widgets/ProductTypeSelect.vue';
     import FormPanel from './Form';
 
     export default {
-        components: {FormPanel, CustomerSelect   },
+        components: { FormPanel },
         data() {
             return {
-                dateRangeType: null,
                 formStatus: 1,
-                dateRange: [],
+                orderDateRange: [],
                 summaryMap: {},
                 page: {
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            customerId: undefined,
+                            subjectId: undefined,
                             isDeleted: false
                         }
                     },
-                    getData: this.$api.dongxw.OrderMaster.query
-                },
+                    getData : this.$api.dongxw.SupplierService.query
+
+        },
                 tableActions: [
                     {
                         name: "编辑",
@@ -197,6 +152,14 @@
                 //     })
                 // })
             },
+            /*
+            导出
+             */
+            exportRecords() {
+                let params = this.getSearchParams();
+                console.log(params);
+                this.$api.dongxw.CustomerService.export(params);
+            },
             getSearchParams() {
                 this.page.query.dateRanges = {};
                 if (this.dateRangeType != null && this.dateRange&&this.dateRange.length > 0) {
@@ -206,14 +169,6 @@
                     };
                 }
                 return this.page.query;
-            },
-            /*
-            导出
-            */
-            exportRecords() {
-                let params = this.getSearchParams();
-                console.log(params);
-                this.$api.dongxw.OrderMaster.export(params);
             },
             create() {
                 this.$refs.formDiag.show();
@@ -231,7 +186,7 @@
                     type: "warning",
                     dangerouslyUseHTMLString: true
                 }).then(() => {
-                    this.$api.ipark.PromotionInfoService.updateStatus(row.id, status == 1 ? 2 : 1).then(rsp => {
+                    this.$api.dongxw.CustomerService.updateStatus(row.id, status == 1 ? 2 : 1).then(rsp => {
                         this.search();
                         this.$message({
                             type: "success",
@@ -244,7 +199,7 @@
                 this.$confirm("确定删除此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    this.$api.dongxw.OrderMaster.deleteById(row.id).then(rsp => {
+                    this.$api.dongxw.SupplierService.deleteById(row.id).then(rsp => {
                         this.search();
                         this.$message({
                             type: "success",
@@ -264,7 +219,6 @@
                 this.$refs.table.load();
             },
             cancel() {
-                this.dateRangeType=null;
                 this.dateRange = [];
                 this.page.query.param = {};
                 this.search();

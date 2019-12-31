@@ -83,11 +83,13 @@
                     <!--<el-form-item label="主料描述" prop="materialRemark">-->
                         <!--<el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>-->
                     <!--</el-form-item>-->
-                    <el-form-item label="供应商" prop="supplyId">
-                        <el-input placeholder="供应商" v-model="entity.supplyId"></el-input>
+
+                    <el-form-item label="供应商"   prop="supplyId"  >
+                        <supplier-select  v-model="entity.supplyId" :clearable="true"></supplier-select>
                     </el-form-item>
 
                 </fieldset>
+
 
             </el-tab-pane>
             <el-tab-pane label="订单图片" name="orderPic">
@@ -97,7 +99,7 @@
 
                     </v-image-uploader>
                     <div style="text-align:center">
-                        LOGO
+                        订单原件
                     </div>
                 </div>
                 <el-form-item label="订单图片" prop="customerOrderImg">
@@ -142,8 +144,7 @@
 <script>
 
     import CustomerSelect  from '@/components/widgets/dongxw/CustomerSelect.vue';
-
-    //import BusinessSelect from "@/components/widgets/BusinessSelect.vue";
+    import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
 
     const defaultEntity = {
         id: null,
@@ -159,11 +160,11 @@
         supplyId: 0,
         orderDate : null,
         customerIssueDate : null,
-        checkDate : null ,
+        checkDate: null,
         factroyIssuseDate: null
     };
     export default {
-        components: {CustomerSelect},
+        components: {CustomerSelect, SupplierSelect},
         data() {
             return {
                 activeName: 'orderInfo',
@@ -204,14 +205,6 @@
                             type: "number",
                             required: true,
                             message: "请选择状态",
-                            trigger: "change"
-                        }
-                    ],
-                    discountType: [
-                        {
-                            type: "number",
-                            required: true,
-                            message: "请选择优惠类型",
                             trigger: "change"
                         }
                     ],

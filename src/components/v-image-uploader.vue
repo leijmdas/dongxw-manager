@@ -1,7 +1,7 @@
 <template>
     <el-upload v-loading="loading" :drag="drag" :action="action" :data="formData" :limit="limit" :accept="accept" :before-upload="beforeUpload" :on-success="onSuccess" :on-error="onError"
                :disabled="disabled" :show-file-list="showFileList" :multiple="multiple">
-        <img v-if="preview && currentValue" :src="currentValue " class="avatar" style="width:100%; height: 100%">
+        <img v-if="preview && currentValue" :src="currentValue " class="avatar" style="width:50%; height: 50%">
         <div v-else>
         <slot >
           <i class="el-icon-upload"></i>

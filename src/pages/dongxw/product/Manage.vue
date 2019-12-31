@@ -43,11 +43,17 @@
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-            <el-button-group>
-                <el-button plain @click="exportRecords">导出 XLS</el-button>
+
+            <el-switch
+                v-model="showPrdPic"
+                active-text="显示产品图片"
+                inactive-text="不显示">
+            </el-switch>
+
+            <el-button plain @click="exportRecords">导出 XLS</el-button>
                 <el-button type="primary" plain @click="create">新增</el-button>
 
-            </el-button-group>
+
         </v-toolbar>
 
 
@@ -77,7 +83,10 @@
             </el-table-column>
             <el-table-column prop="barCode" label="条码" width="150">
             </el-table-column>
-            <el-table-column prop="picUrl" label="图片" width="150">
+            <el-table-column prop="picUrl" label="产品图片" v-if="showPrdPic" width="90">
+                <template slot-scope="{row}">
+                    <img v-if="row.picUrl" :src="row.picUrl" width="60" height="60" alt="">
+                </template>
             </el-table-column>
             <el-table-column prop="upcA" label="UPC-A" width="150">
             </el-table-column>
@@ -127,9 +136,11 @@
         components: { FormPanel, ProductTypeSelect },
         data() {
             return {
+                showPrdPic : false,
                 formStatus: 1,
                 orderDateRange: [],
                 summaryMap: {},
+
                 page: {
                     query: {
                         orderBys: 'id|desc',

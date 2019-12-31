@@ -30,12 +30,7 @@
         <el-form-item label="地址" prop="addr">
             <el-input placeholder="地址" v-model="entity.addr"></el-input>
         </el-form-item>
-        <el-form-item label="结算币种" prop="moneyType">
-            <el-select v-model="entity.moneyType" :disabled="isDisabled">
-                <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
-                           :value="item[0]" :label="item[1]"></el-option>
-            </el-select>
-        </el-form-item>
+ c
             <el-form-item label="公司电子邮箱" prop="email">
                 <el-input placeholder="公司电子邮箱" v-model="entity.email"></el-input>
             </el-form-item>
@@ -151,14 +146,7 @@
                             trigger: "change"
                         }
                     ],
-                    discountType: [
-                        {
-                            type: "number",
-                            required: true,
-                            message: "请选择优惠类型",
-                            trigger: "change"
-                        }
-                    ],
+
 
                 }
             };
