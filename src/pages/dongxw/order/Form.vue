@@ -5,7 +5,6 @@
 
 
                 <fieldset align="bottom">
-                    <lagend style="color :red">只有草稿状态才可以删除!</lagend>
 
                     <el-form-item label="客户" style="margin-top: 10px" prop="customerId" :rules="[{ required: true}]">
                         <customer-select v-model="entity.customerId" :clearable="true"></customer-select>

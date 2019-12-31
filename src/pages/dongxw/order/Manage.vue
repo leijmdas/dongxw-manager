@@ -57,6 +57,7 @@
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
+            <span style="color :red">只有草稿状态才可以删除!</span>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
