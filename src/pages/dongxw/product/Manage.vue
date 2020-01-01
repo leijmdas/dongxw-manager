@@ -91,6 +91,10 @@
             <el-table-column prop="picUrl" label="产品图片" v-if="showPrdPic" width="90">
                 <template slot-scope="{row}">
                     <img v-if="row.picUrl" :src="row.picUrl" width="60" height="60" alt="">
+                    <el-image v-if="row.picUrl"
+                              style="width: 60px; height: 60px"
+                              :src="row.picUrl">
+                    </el-image>
                 </template>
             </el-table-column>
             <el-table-column prop="upcA" label="UPC-A" width="150">

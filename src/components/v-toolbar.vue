@@ -6,11 +6,12 @@
   padding-bottom:3px;
   padding-right: 10px;
   line-height: 30px;
-  height: 30px;
+  height: 32px;
 
   color: #606266;
 
   .toolbar-title{
+      margin-top: 5px;
     font-weight: bold;
     float:left;padding-left:10px;
   }
@@ -39,7 +40,7 @@
 <template>
     <div class="toolbar" :type="type">
         <div class="toolbar-title">
-            <span>{{title}}</span>
+            <span >{{title}}</span>
         </div>
         <div style="float:left">
             <slot name="tip">
