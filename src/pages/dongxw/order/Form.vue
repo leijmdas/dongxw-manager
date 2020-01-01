@@ -1,6 +1,6 @@
 <template>
     <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
-        <el-tabs v-model="activeName" :stretch="true" @tab-click="handleClick">
+        <el-tabs :stretch="isExp" v-model="activeName"  @tab-click="handleClick">
             <el-tab-pane label="订单信息" name="orderInfo">
 
 
@@ -187,6 +187,7 @@
         data() {
             return {
                 activeName: 'orderInfo',
+                isExp : false,
                 ruleTpl: {when: null, then: null},
                 entity: _.cloneDeep(defaultEntity),
                 dateRange: [],

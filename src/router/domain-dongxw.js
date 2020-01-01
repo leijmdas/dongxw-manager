@@ -10,7 +10,7 @@ let router0 = [
 
             {
                 path: 'dongxw/order/manage',
-                component: require('@/pages/dongxw/order/Manage.vue'),
+                component: require('@/pages/dongxw/order/Main.vue'),
                 name: 'order:manage',
                 meta: {title: '客户订单', perm: 'order:manage'}
             },

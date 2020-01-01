@@ -64,15 +64,15 @@
 
 
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
-            <el-table-column prop="seq" label="序号" width="50">
+            <el-table-column  prop="seq" label="序号" width="50">
 
-                <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+                <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
 
             </el-table-column>
 
             <el-table-column prop="code" label="编码" width="120">
                 <template slot-scope="{row}">
-                   <span :class="'color_red'"  > {{row.code }} </span>
+                   <span   > {{row.code }} </span>
                 </template>
             </el-table-column>
 
@@ -139,7 +139,7 @@
         width: 160px;
     }
     .status_green {
-        color: green;
+        color: red;
     }
 </style>
 
