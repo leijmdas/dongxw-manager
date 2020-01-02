@@ -58,7 +58,6 @@
             <span slot="tip" style="margin-left:60px;color :red">  只有草稿状态才可以删除!   </span>
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
-            <el-button @click="clickbtn">btn</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>

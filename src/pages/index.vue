@@ -19,10 +19,10 @@
 <!--http://127.0.0.1:10080/sys/metadata/queryFieldsByTable?tableName=dict_area-->
 <style rel="stylesheet/less" lang='less'>
     .loginPanel {
-        //height: 100%;
-        background-image: url("../assets/images/main-bg.png");
-        background-repeat: repeat;
-        //background-size: 100% 100%;
+        height: 100%;
+        //background-image: url("../assets/images/main-bg.png");
+        //background-repeat: repeat;
+        background-size: 100% 100%;
     }
     .index-container {
         padding: 15px;
