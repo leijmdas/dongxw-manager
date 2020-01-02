@@ -2,10 +2,10 @@
     <div>
         <p></p>
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
+
             <el-form-item label="大类标识" prop="parentId" >
                 <el-input placeholder="parentId" v-model="parentId" disabled></el-input>
             </el-form-item>
-
 
             <el-form-item label="产品类型" prop="code" >
                 <el-input placeholder="产品类型" v-model="entity.code"></el-input>
@@ -60,10 +60,15 @@
 
     export default {
         components: {},
+        props:{
+            parentId:{
+                // type:Number
+            }
+        },
         data() {
             return {
                 ppp: '',
-                parentId:0,
+
                 ruleTpl: {when: null, then: null},
                 entity: _.cloneDeep(defaultEntity),
                 dateRange: [],
@@ -143,12 +148,13 @@
             setValues(vals) {
                 this.resetEntity = _.cloneDeep(vals);
                 this.entity = _.cloneDeep(this.resetEntity);
-            },
+             },
             submitForm() {
                 this.$refs["form"].validate(valid => {
                     if (valid) {
+                        this.entity.parentId = this.parentId;
                         let params = Object.assign({}, this.entity);
-
+                        console.log(this.entity);
                         this.$api.dongxw.ProductTypeService.save(params).then(rsp => {
                             this.$emit("saved", rsp);
                         });
@@ -159,15 +165,13 @@
                 //this.$refs["form"].resetFields();
                 this.entity = _.cloneDeep(defaultEntity);
                 if (!this.entity.id) {
-
-                    this.entity.createDate = this.$dongxwDict.formatDateZero(new Date())
+                    this.entity.createDate = this.$dongxwDict.formatDateZero(new Date());
                 }
             },
             init(options) {
                 this.resetForm();
                 if (options.id) {
                     console.log(JSON.stringify(this.entity));
-                    //this.isDisabled = true;//this.entity.status > 0;
 
                     this.$api.dongxw.ProductTypeService.findById(options.id).then(r => {
                         console.log(JSON.stringify(r))

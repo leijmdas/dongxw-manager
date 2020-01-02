@@ -53,18 +53,23 @@
             }
         },
         methods: {
-            handleChange (val) {
+            handleChange(val) {
                 this.$emit('change', val)
             },
-            refresh () {
+            refresh() {
                 this.loading = true
-                this.$api.dongxw.ProductTypeService.query({param: {productTypeId: this.productTypeId,isDeleted:false}}).then(rsp => {
+                this.$api.dongxw.ProductTypeService.query({
+                    param: {
+                        parentId: 0,
+                        isDeleted: false
+                    }
+                }).then(rsp => {
                     this.options = rsp.data
                     this.loading = false
                 })
             }
         },
-        created () {
+        created() {
             this.refresh()
         }
     }

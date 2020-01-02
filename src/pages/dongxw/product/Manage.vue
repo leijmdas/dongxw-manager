@@ -75,6 +75,16 @@
                    <span   > {{row.code }} </span>
                 </template>
             </el-table-column>
+            <el-table-column prop="productType" label="产品大类" width="120">
+                <template slot-scope="{row}">
+                    {{ row.productType? row.productType.code+' '+row.productType.name:'-' }}
+                </template>
+            </el-table-column>
+            <el-table-column prop="productType" label="产品小类" width="120">
+                <template slot-scope="{row}">
+                    <!--{{ row.productType? row.productType.code+' '+row.productType.name:'-' }}-->
+                </template>
+            </el-table-column>
 
             <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
              <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
@@ -105,11 +115,6 @@
                 </template>
             </el-table-column>
             <el-table-column prop="memo" label="备注"  >
-            </el-table-column>
-            <el-table-column prop="productType" label="产品类型" width="120">
-                <template slot-scope="{row}">
-                    {{ row.productType? row.productType.code+' '+row.productType.name:'-' }}
-                </template>
             </el-table-column>
 
             <el-table-column width="100" label="操作" :fixed="'right'">

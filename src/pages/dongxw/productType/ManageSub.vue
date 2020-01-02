@@ -4,17 +4,19 @@
         <v-toolbar type="alert">
             <div slot="tip" class="panel panel-default panel-search">
                 <el-form :inline="true">
-                    <el-form-item label="产品大类" prop="custNo">
+                    <el-form-item label="产品小类" prop="custNo">
                         <el-input v-model="page.query.param.code" clearable></el-input>
                     </el-form-item>
-                    <el-form-item label="产品大类说明" prop="custNo">
+                    <el-form-item label="产品小类说明" prop="custNo">
                         <el-input v-model="page.query.param.name" clearable></el-input>
                     </el-form-item>
 
                     <el-form-item>
-                        <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                       <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                         <el-button @click="cancel">取消</el-button>
+
                         <el-button type="primary" plain @click="create">新增</el-button>
+                        <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue"> {{ parentId }}</span></el-form-item>
 
                     </el-form-item>
                 </el-form>
@@ -22,22 +24,22 @@
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
             <!--<el-button type="primary" plain @click="create">新增</el-button>-->
         </v-toolbar>
-        <div width="50%">
-        <v-table ref="table" :page="page" :click="clickRow" :pageSize="10" :table-minheight="250"  @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column prop="seq" label="序号" width="50">
 
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  prop="id" label="大类标识" width="120"></el-table-column>
-            <el-table-column  prop="code" label="产品大类"  width="160"></el-table-column>
-            <el-table-column  prop="name" label="产品大类说明" width="240"></el-table-column>
+            <el-table-column  prop="parentId" label="大类标识" width="120"></el-table-column>
+            <!--<el-table-column  prop="id" label="小类标识" width="80"></el-table-column>-->
+            <el-table-column prop="code" label="产品小类" width="160"></el-table-column>
+            <el-table-column prop="name" label="产品小类说明" width="240"></el-table-column>
 
-            <el-table-column width="100" label="操作"  >
+            <el-table-column width="100" label="操作">
                 <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
                 <template slot-scope="scope">
 
-                    <el-button type="text" title="编辑" @click="edit(scope.row)"  >
+                    <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
                     </el-button>
                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除"  >
@@ -49,9 +51,8 @@
         </v-table>
 
 
-        </div>
-            <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
-            <form-panel @saved="onFormSaved"></form-panel>
+        <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
+            <form-panel @saved="onFormSaved" :parentId="parentId"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
@@ -68,21 +69,15 @@
 
 <script>
 
-    import FormPanel from './Form';
+    import FormPanel from './FormSub';
 
     export default {
         components: {FormPanel},
-        props: {
-            fatherMethodShowSub: {
-                type: Function,
-                default: null
-            },
 
-        },
         data() {
             return {
                 metafields : [],
-
+                parentId: -1,
                 formStatus: 1,
                 orderDateRange: [],
                 summaryMap: {},
@@ -90,7 +85,7 @@
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            parentId : 0,
+                            parentId : -1,
                             isDeleted: false
                         }
                     },
@@ -143,6 +138,11 @@
                 return this.page.query;
             },
             create() {
+                // this.$message({
+                //     type: "success",
+                //     message: this.parentId
+                // });
+                this.$refs.formDiag.parentId=this.parentId;
                 this.$refs.formDiag.show();
             },
             edit(row) {
@@ -185,22 +185,25 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
-                if (options.parentId) {
-                    this.parentId = options.parentId;
-                }
+
+                console.log(JSON.stringify(options));
+                this.parentId = options.parentId;
+                console.log(this.parentId);
+
+                this.page.query.param.parentId = this.parentId;
+                console.log(JSON.stringify(this.page));
+
                 this.search();
             },
             search() {
+
                 this.$refs.table.load();
-                //this.$refs.tablesub.load();
 
             },
             cancel() {
                 this.dateRange = [];
-                this.page.query.param = {
-                    parentId : 0,
-                    isDeleted: false
-                };
+                this.page.query.param = {};
+                this.page.query.param.parentId = this.parentId;
                 this.search();
             }  ,
             // loadDict(){
@@ -209,15 +212,6 @@
             //         this.metafields = rsp;
             //     });
             // },
-            clickRow(row) {
-                this.row = row;
-                console.log(JSON.stringify(row));
-                if (this.fatherMethodShowSub) {
-                    this.fatherMethodShowSub(row);
-                }
-
-            },
-
         },
 
         created() {

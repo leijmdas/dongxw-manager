@@ -4,7 +4,7 @@ import {auth,bus } from '@/utils'
 
 let currentLoadingCount = 0;
 function incrLoadRequest(config,incr){
-  
+
   if(config.openLoading===undefined){
     config.openLoading = (config.data||{})._openLoading;
   }
@@ -32,11 +32,11 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   // Do something before request is sent
   let token = auth.getToken()
-  
+
   if (token) {
-    config.headers['Access-Token'] = token 
+    config.headers['Access-Token'] = token
   }
- 
+
   if (!config.headers['Content-Type'] && config.params) {
     config.data = '';
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -54,7 +54,7 @@ service.interceptors.response.use(
     let {config} = response;
     incrLoadRequest(config,-1);
     if (response.headers && (response.headers['content-type'] === 'application/x-msdownload' || response.headers['content-type'] === 'application/msexcel')) {
-      
+
       downloadUrl(response)
       return Promise.resolve(response.data)
     }
@@ -68,10 +68,12 @@ service.interceptors.response.use(
     let statusCode
     if (response && response instanceof Object) {
       // const {msg: errMsg, code: errCode} = (response.data || {msg: '', code: ''}).data
-      const { msg: errMsg, code: errCode } = response.data
+        console.log(JSON.stringify(response.data));
+
+        const { msg: errMsg, code: errCode } = response.data
       statusCode = response.status
       code = errCode
-      msg = errMsg
+      msg = errMsg||response.data.message
 
     } else {
       statusCode = 600
@@ -93,7 +95,7 @@ function defaultHandler(reqError) {
     case 403: msg = '拒绝访问(403)'; break;
     case 404: msg = '请求出错(404)'; break;
     case 408: msg = '请求超时(408)'; break;
-    case 500: msg = '服务器错误(500)'; break;
+    case 500: msg = '服务器错误(500)' ; break;
     case 501: msg = '服务未实现(501)'; break;
     case 502: msg = '网络错误(502)'; break;
     case 503: msg = '服务不可用(503)'; break;

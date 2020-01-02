@@ -86,8 +86,9 @@ export default {
       corpId: auth.getCurrentCorpId(),
       page: {
         query: {
-          orderBys:'id|desc',
-          param:{
+            orderBys:'username|asc',
+            // orderBys:'id|desc',
+            param:{
             corpId: this.corpId,
             employeeNo: undefined,
             orgId: undefined,
