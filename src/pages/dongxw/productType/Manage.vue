@@ -22,8 +22,8 @@
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
             <!--<el-button type="primary" plain @click="create">新增</el-button>-->
         </v-toolbar>
-
-        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
+        <div width="50%">
+        <v-table ref="table" :page="page" :table-minheight="450"   @dataloaded="onDataloaded">
             <el-table-column prop="seq" label="序号" width="50">
 
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
@@ -46,7 +46,8 @@
             </el-table-column>
 
         </v-table>
-        <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
+        </div>
+            <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
@@ -64,10 +65,10 @@
 
 <script>
 
-      import FormPanel from './Form';
+    import FormPanel from './Form';
 
     export default {
-        components: {FormPanel },
+        components: {FormPanel},
         data() {
             return {
                 metafields : [],

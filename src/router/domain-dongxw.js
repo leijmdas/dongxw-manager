@@ -22,7 +22,7 @@ let router0 = [
             },
             {
                 path: 'dongxw/productType/manage',
-                component: require('@/pages/dongxw/productType/Manage.vue'),
+                component: require('@/pages/dongxw/productType/MainForm.vue'),
                 name: 'productType:manage',
                 meta: {title: '产品类型', perm: 'productType:manage'}
             },
