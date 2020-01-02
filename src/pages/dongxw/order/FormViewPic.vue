@@ -2,13 +2,14 @@
     <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
 
             <div label="订单原件" name="orderPic">
+                <img v-if="entity.customerOrderImg" :src="entity.customerOrderImg" alt="">
 
-                <div style="margin:10px" class="orderLogoView">
-                    <v-image-uploader :form-data="{}" :multiple=true v-model="entity.customerOrderImg">
+                <!--<div style="margin:10px" class="orderLogoView">-->
+                    <!--<v-image-uploader :form-data="{}" :multiple=true v-model="entity.customerOrderImg">-->
 
-                    </v-image-uploader>
-                    <!--<div style="text-align:center"> 订单原件</div>-->
-                </div>
+                    <!--</v-image-uploader>-->
+                    <!--&lt;!&ndash;<div style="text-align:center"> 订单原件</div>&ndash;&gt;-->
+                <!--</div>-->
                 <!--<el-form-item label="订单原件" prop="customerOrderImg">-->
                 <!--<el-input placeholder="订单原件" v-model="entity.customerOrderImg" disabled></el-input>-->
                 <!--</el-form-item>-->
