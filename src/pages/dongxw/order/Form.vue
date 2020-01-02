@@ -1,6 +1,6 @@
 <template>
     <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
-        <el-tabs :stretch="isExp" v-model="activeName"  @tab-click="handleClick">
+        <el-tabs :stretch="isExp" v-model="activeName"   >
             <el-tab-pane label="订单信息" name="orderInfo">
 
 

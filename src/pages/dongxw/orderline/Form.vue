@@ -110,7 +110,7 @@
             </el-tab-pane>
             <el-tab-pane height="400px" label="订单原件" name="orderPic">
 
-                <div style="margin:10px" class="orderLogo">
+                <div style="margin:10px" class="orderLine">
                     <v-image-uploader :form-data="{}" :multiple=true v-model="entity.customerOrderImg">
 
                     </v-image-uploader>
@@ -126,7 +126,7 @@
     </el-form>
 </template>
 <style lang="less" scoped>
-    .orderLogo .el-upload-dragger {
+    .orderLine .el-upload-dragger {
         img {
             width: 400px;
             height: 300px;

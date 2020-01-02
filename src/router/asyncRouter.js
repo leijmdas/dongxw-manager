@@ -6,9 +6,9 @@ let router0=[{
   component: Layout,
   meta:{title:'会员及商户',icon:'user'},
   children: [{
-    path: 'userInfo/manage',
+    path: 'userInfo/manage1',
     component: require('@/pages/app/userInfo/Manage.vue'),
-    name: 'userInfo:manage',
+    name: 'userInfo:manage1',
     meta: { title:'用户管理' }
   },{
     path: 'merchant/manage',

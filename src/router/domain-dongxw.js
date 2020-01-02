@@ -80,9 +80,9 @@ let router0 = [
         component: Layout,
         meta: {title: 'BOM', icon: 'user', group: 'dongxw'},
         children: [{
-            path: 'userInfo/manage',
+            path: 'userInfo/manage1',
             component: require('@/pages/app/userInfo/Manage.vue'),
-            name: 'userInfo:manage',
+            name: 'userInfo:manage1',
             meta: {title: '原料清单', perm: 'user:manage'}
         }, {
             path: 'userInfo/userGrade',
@@ -106,26 +106,26 @@ let router0 = [
         meta: {title: '采购订单', icon: 'user', group: 'dongxw'},
         children: [
             {
-                path: 'userInfo/manage',
+                path: 'userInfo/manage2',
                 component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'userInfo:manage',
+                name: 'userInfo:manage2',
                 meta: {title: '供应商', perm: 'user:manage'}
             },
             {
-                path: 'userInfo/manage',
+                path: 'userInfo/manage3',
                 component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'userInfo:manage',
+                name: 'userInfo:manage3',
                 meta: {title: '原料清单', perm: 'user:manage'}
             }, {
-                path: 'userInfo/manage',
+                path: 'userInfo/manage4',
                 component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'userInfo:manage',
+                name: 'userInfo:manage4',
                 meta: {title: '原料分类', perm: 'user:manage'}
             },
             {
-                path: 'userInfo/userGrade',
+                path: 'userInfo/userGrade1',
                 component: require('@/pages/app/userGrade/Manage.vue'),
-                name: 'userGrade:manage',
+                name: 'userGrade:manage1',
                 meta: {title: 'BOM树', perm: 'userGrade:manage'}
             },
 
@@ -144,14 +144,14 @@ let router0 = [
         meta: {title: '库存管理', icon: 'user', group: 'dongxw'},
         children: [
         {
-            path: 'userInfo/manage',
+            path: 'userInfo/manage5',
             component: require('@/pages/app/userInfo/Manage.vue'),
-            name: 'userInfo:manage',
+            name: 'userInfo:manage5',
             meta: {title: '原料库存', perm: 'user:manage'}
         }, {
-            path: 'userInfo/userGrade',
+            path: 'userInfo/userGrade2',
             component: require('@/pages/app/userGrade/Manage.vue'),
-            name: 'userGrade:manage',
+            name: 'userGrade:manage2',
             meta: {title: '原料入库单', perm: 'userGrade:manage'}
         },
 
@@ -162,21 +162,21 @@ let router0 = [
                 meta: {title: '原料出库单', perm: 'userGrade:manage'}
             },
             {
-                path: 'userInfo/manage',
+                path: 'userInfo/manage6',
                 component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'userInfo:manage',
+                name: 'userInfo:manage6',
                 meta: {title: '成品库存', perm: 'user:manage'}
             }, {
-                path: 'userInfo/userGrade',
+                path: 'userInfo/userGrade3',
                 component: require('@/pages/app/userGrade/Manage.vue'),
-                name: 'userGrade:manage',
+                name: 'userGrade:manage3',
                 meta: {title: '成品入库单', perm: 'userGrade:manage'}
             },
 
             {
-                path: 'userInfo/recharge',
+                path: 'userInfo/recharge1',
                 component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'recharge:manage',
+                name: 'recharge:manage1',
                 meta: {title: '成品出库单', perm: 'userGrade:manage'}
             }
         ]
@@ -187,25 +187,25 @@ let router0 = [
         meta: {title: '应收应付款', icon: 'user', group: 'dongxw'},
         children: [
             {
-                path: 'userInfo/manage',
+                path: 'userInfo/manage7',
                 component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'userInfo:manage',
+                name: 'userInfo:manage7',
                 meta: {title: '产品应收款', perm: 'user:manage'}
             }, {
-                path: 'userInfo/userGrade',
+                path: 'userInfo/userGrade8',
                 component: require('@/pages/app/userGrade/Manage.vue'),
-                name: 'userGrade:manage',
+                name: 'userGrade:manage8',
                 meta: {title: '原料应付款', perm: 'userGrade:manage'}
             },
             {
-                path: 'userInfo/manage',
+                path: 'userInfo/manage8',
                 component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'userInfo:manage',
+                name: 'userInfo:manage8',
                 meta: {title: '产品收款发票', perm: 'user:manage'}
             }, {
-                path: 'userInfo/userGrade',
+                path: 'userInfo/userGrade9',
                 component: require('@/pages/app/userGrade/Manage.vue'),
-                name: 'userGrade:manage',
+                name: 'userGrade:manage9',
                 meta: {title: '原料付款发票', perm: 'userGrade:manage'}
             },
         ]
@@ -216,19 +216,19 @@ let router0 = [
         component: Layout,
         meta: {title: '查询', icon: 'user', group: 'dongxw'},
         children: [{
-            path: 'userInfo/manage',
+            path: 'userInfo/manage11',
             component: require('@/pages/app/userInfo/Manage.vue'),
-            name: 'userInfo:manage',
+            name: 'userInfo:manage11',
             meta: {title: '查询客户订单', perm: 'user:manage'}
         }, {
-            path: 'userInfo/userGrade',
+            path: 'userInfo/userGrade11',
             component: require('@/pages/app/userGrade/Manage.vue'),
-            name: 'userGrade:manage',
+            name: 'userGrade:manage11',
             meta: {title: '查询采购订单', perm: 'userGrade:manage'}
         }, {
-            path: 'userInfo/userGrade',
+            path: 'userInfo/userGrade12',
             component: require('@/pages/app/userGrade/Manage.vue'),
-            name: 'userGrade:manage',
+            name: 'userGrade:manage12',
             meta: {title: '查询库存', perm: 'userGrade:manage'}
         }, {
             path: 'common/query',

@@ -1,62 +1,65 @@
-<!--订单管理-->
+<!--订单产品管理-->
 <template>
     <div>
-        <div class="panel panel-default panel-search">
-            <el-form :inline="true">
+        <div class="show-form" >
 
-                <el-form-item label="日期">
+            <!--<el-form :inline="true">-->
 
-                    <div slot="label">
-                        <el-select v-model="dateRangeType" filterable clearable style="width:120px" class="formitem-label">
-                            <el-option value="orderDate" label="下单日期"></el-option>
-                            <el-option value="customerIssueDate" label="客户交货日期"></el-option>
-                            <el-option value="checkDate" label="验货日期"></el-option>
-                            <el-option value="factroyIssueDate" label="工厂交货日期"></el-option>
-                        </el-select>
-                    </div>
-                    <el-date-picker style="width:270px" v-model="dateRange" type="daterange" range-separator="至"
-                                    start-placeholder="开始日期" end-placeholder="结束日期"
-                                    format="yyyy年MM月dd日"
-                                    value-format="yyyy-MM-dd HH:mm:ss">
-                    </el-date-picker>
+            <!--<el-form-item label="日期">-->
 
-
-                </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
+                    <!--<div slot="label">-->
+                        <!--<el-select v-model="dateRangeType" filterable clearable style="width:120px" class="formitem-label">-->
+                            <!--<el-option value="orderDate" label="下单日期"></el-option>-->
+                            <!--<el-option value="customerIssueDate" label="客户交货日期"></el-option>-->
+                            <!--<el-option value="checkDate" label="验货日期"></el-option>-->
+                            <!--<el-option value="factroyIssueDate" label="工厂交货日期"></el-option>-->
+                        <!--</el-select>-->
+                    <!--</div>-->
+                    <!--<el-date-picker style="width:270px" v-model="dateRange" type="daterange" range-separator="至"-->
+                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
+                                    <!--format="yyyy年MM月dd日"-->
+                                    <!--value-format="yyyy-MM-dd HH:mm:ss">-->
+                    <!--</el-date-picker>-->
 
 
-                <el-form-item label="客户" prop="subjectType">
-                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
+                <!--</el-form-item>-->
+                <!--<el-form-item label="状态" prop="status">-->
+                    <!--<el-select :clearable="true" v-model="page.query.param.status" style="width:100px">-->
+                        <!--<el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"-->
+                                   <!--:label="item[1]"></el-option>-->
+                    <!--</el-select>-->
+                <!--</el-form-item>-->
 
-                </el-form-item>
 
-
-                <el-form-item label="客户订单号" prop="customerOrderCode">
-                    <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="EP订单号" prop="epOrderCode">
-                    <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
-                </el-form-item>
-
-                <el-form-item label="业务员" prop="businessBy" >
-                    <el-input v-model="page.query.param.businessBy" clearable></el-input>
-                </el-form-item>
-
-                <!--<el-form-item>-->
-                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
-                    <!--<el-button @click="cancel">取消</el-button>-->
+                <!--<el-form-item label="客户" prop="subjectType">-->
+                    <!--<customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>-->
 
                 <!--</el-form-item>-->
 
-            </el-form>
+
+                <!--<el-form-item label="客户订单号" prop="customerOrderCode">-->
+                    <!--<el-input v-model="page.query.param.customerOrderCode" clearable></el-input>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="EP订单号" prop="epOrderCode">-->
+                    <!--<el-input v-model="page.query.param.epOrderCode" clearable></el-input>-->
+                <!--</el-form-item>-->
+
+                <!--<el-form-item label="业务员" prop="businessBy" >-->
+                    <!--<el-input v-model="page.query.param.businessBy" clearable></el-input>-->
+                <!--</el-form-item>-->
+
+                <!--&lt;!&ndash;<el-form-item>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<el-button @click="cancel">取消</el-button>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;</el-form-item>&ndash;&gt;-->
+
+            <!--</el-form>-->
         </div>
         <v-toolbar title="数据列表" type="alert">
-            <span slot="tip" style="margin-left:60px;color :red">只有草稿状态才可以删除!</span>
+            <span slot="tip" style="margin-left:10px;margin-top:30px;color :green" > EP订单号: {{order.epOrderCode}}</span>
+            <span width="100px"></span>
+            <span slot="tip" style="margin-top:30px;color :green" >客户订单号: {{order.customerOrderCode}}</span>
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
@@ -168,20 +171,44 @@
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
-    .el-input{
+    .el-input {
         width: 160px;
     }
+
+    .show-form {
+        .el-radio-group {
+            .el-radio {
+                display: flex;
+                align-items: center;
+            }
+
+            label {
+                height: 40px;
+            }
+            .group-text {
+                display: inline-block;
+                width: 100px;
+            }
+            .title-text {
+                display: inline-block;
+                width: 120px;
+            }
+        }
+
+    }
+
 </style>
 <script>
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import FormPanel from './Form';
-    import FormViewPanel from './FormViewPic';
 
     export default {
-        components: {FormPanel, FormViewPanel, CustomerSelect},
+        components: {FormPanel, CustomerSelect},
         data() {
             return {
                 dateRangeType: 'orderDate',
+                order: [],
+                orderId : 0,
                 formStatus: 1,
                 dateRange: [],
                 summaryMap: {},
@@ -193,7 +220,7 @@
                             isDeleted: false
                         }
                     },
-                    getData: this.$api.dongxw.OrderMaster.query
+                    getData: this.$api.dongxw.OrderLine.query
                 },
                 tableActions: [
                     {
@@ -223,6 +250,7 @@
                 // })
             },
             getSearchParams() {
+                this.page.query.param.orderId = this.orderId;
                 this.page.query.dateRanges = {};
                 if (this.dateRangeType != null && this.dateRange && this.dateRange.length > 0) {
                     this.page.query.dateRanges[this.dateRangeType] = {
@@ -241,7 +269,7 @@
                     type: "warning"
                 }).then(() => {
                     let params =  self.getSearchParams();
-                    self.$api.dongxw.OrderMaster.export(params);
+                    self.$api.dongxw.OrderLine.export(params);
 
                 });
                 // let params = this.getSearchParams();
@@ -281,7 +309,7 @@
                 this.$confirm("确定删除此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    this.$api.dongxw.OrderMaster.deleteById(row.id).then(rsp => {
+                    this.$api.dongxw.OrderLine.deleteById(row.id).then(rsp => {
                         this.search();
                         this.$message({
                             type: "success",
@@ -295,6 +323,9 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
+                this.order=options;
+                this.orderId = options.id;
+                console.log(options);
                 this.search();
             },
             search() {

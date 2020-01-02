@@ -59,6 +59,7 @@
             <span slot="tip" style="margin-left:60px;color :red">只有草稿状态才可以删除!</span>
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
+            <el-button @click="clickbtn">btn</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
@@ -132,14 +133,14 @@
             <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
 
             <!--总数量，总金额-->
-            <el-table-column width="90" label="操作" :fixed="'right'">
+            <el-table-column width="140" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
                     </el-button>
 
-                    <!--<el-button type="success" @click="edit(scope.row)" round size="mini">产品</el-button>-->
+                    <el-button type="success" @click="showLine(scope.row)" round size="mini">产品</el-button>
 
                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
                         <i class="el-icon-delete red"></i>
@@ -178,6 +179,12 @@
 
     export default {
         components: {FormPanel, FormViewPanel, CustomerSelect},
+        props: {
+            fatherMethod: {
+                type: Function,
+                default: null
+            }
+        },
         data() {
             return {
                 dateRangeType: 'orderDate',
@@ -235,11 +242,11 @@
             导出
             */
             exportRecords() {
-                let self=this;
+                let self = this;
                 this.$confirm("确定要导出所有查询的记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    let params =  self.getSearchParams();
+                    let params = self.getSearchParams();
                     self.$api.dongxw.OrderMaster.export(params);
 
                 });
@@ -294,6 +301,7 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
+                //console.log(options)
                 this.search();
             },
             search() {
@@ -305,8 +313,28 @@
                 this.dateRange = [];
                 this.page.query.param = {};
                 this.search();
+            },
+            clickbtn() {
+                this.$alert('这是一段内容', '标题名称', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                        this.$message({
+                            type: 'info',
+                            message: `action: ${ action }`
+                        });
+                    }
+                });
+            },
+            showLine(row) {
+                console.log(JSON.stringify(row));
+                console.log(this.fatherMethod);
+                if (this.fatherMethod) {
+                    this.fatherMethod(row);
+                }
+
             }
         },
+
         created() {
         },
         mounted() {
