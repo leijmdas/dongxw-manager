@@ -1,6 +1,6 @@
 <template>
 
-    <el-tabs :stretch="isExp" type="border-card" tab-position="top" v-model="activeName" @tab-click="tabClick"
+    <el-tabs :stretch="isExp"   tab-position="top" v-model="activeName" @tab-click="tabClick"
              @tab-remove="removeTab">
         <el-tab-pane id="tabOrder" style="margin-right: 20px" label="订单管理" name="orderInfo">
             <order-form ref="orderDlg" :funShowPic="funShowPic" :fatherMethod="funShowOrderLine"></order-form>
