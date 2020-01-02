@@ -83,7 +83,7 @@
                             isDeleted: false
                         }
                     },
-                    getData : this.$api.dongxw.ProductService.query
+                    getData : this.$api.dongxw.ProductTypeService.query
 
         },
                 tableActions: [
