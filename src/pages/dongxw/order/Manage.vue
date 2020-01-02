@@ -3,6 +3,10 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
+                <el-form-item label="客户" prop="subjectType">
+                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
+
+                </el-form-item>
 
                 <el-form-item label="日期">
 
@@ -20,6 +24,19 @@
                                     value-format="yyyy-MM-dd HH:mm:ss">
                     </el-date-picker>
 
+                    <el-form-item label="EP订单号" prop="epOrderCode">
+                        <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
+                    </el-form-item>
+
+
+                <el-form-item label="客户订单号" prop="customerOrderCode">
+                    <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
+                </el-form-item>
+
+
+                <el-form-item label="业务员" prop="businessBy" >
+                    <el-input v-model="page.query.param.businessBy" clearable></el-input>
+                </el-form-item>
 
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
@@ -27,24 +44,6 @@
                         <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
-                </el-form-item>
-
-
-                <el-form-item label="客户" prop="subjectType">
-                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
-
-                </el-form-item>
-
-
-                <el-form-item label="客户订单号" prop="customerOrderCode">
-                    <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="EP订单号" prop="epOrderCode">
-                    <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
-                </el-form-item>
-
-                <el-form-item label="业务员" prop="businessBy" >
-                    <el-input v-model="page.query.param.businessBy" clearable></el-input>
                 </el-form-item>
 
                 <!--<el-form-item>-->
