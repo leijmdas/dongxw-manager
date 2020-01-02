@@ -71,6 +71,12 @@
     };
     export default {
         components: {CustomerSelect, SupplierSelect},
+        props: {
+            fatherMethod: {
+                type: Function,
+                default: null
+            }
+        },
         data() {
             return {
                 activeName: 'orderInfo',
@@ -237,19 +243,26 @@
             init(options) {
                 this.resetForm();
                 if (options.id) {
-                    this.isDisabled = true;//this.entity.status > 0;
+                    this.isDisabled = true;
                     this.$api.dongxw.OrderMaster.findById(options.id).then(rr => {
                         let r = rr.data;
                         this.isDisabled = r.status > 0;
 
                         this.entity = r;
 
-                        //this.oldProps = r.props || [];
-                        //this.resetProps();
                     });
                 } else {
                     this.isDisabled = false;
                 }
+            },
+            showPic(row) {
+                console.log("showPic: showPic ")
+                console.log(this.fatherMethod);
+                console.log(row)
+                if (this.fatherMethod) {
+                    this.fatherMethod(row);
+                }
+
             }
         },
         mounted() {

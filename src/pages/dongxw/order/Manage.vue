@@ -56,7 +56,7 @@
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-            <span slot="tip" style="margin-left:60px;color :red">只有草稿状态才可以删除!</span>
+            <span slot="tip" style="margin-left:60px;color :red">  只有草稿状态才可以删除!   </span>
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
             <el-button @click="clickbtn">btn</el-button>
@@ -64,7 +64,7 @@
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
-        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page" :dblclick="showLine" :click="clickRow" :table-minheight="450" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
 
@@ -140,7 +140,7 @@
                         <i class="el-icon-edit"></i>
                     </el-button>
 
-                    <el-button type="success" @click="showLine(scope.row)" round size="mini">产品</el-button>
+                    <!--<el-button type="success" @click="showLine(scope.row)" round size="mini">产品</el-button>-->
 
                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
                         <i class="el-icon-delete red"></i>
@@ -183,11 +183,17 @@
             fatherMethod: {
                 type: Function,
                 default: null
-            }
+            },
+            funShowPic: {
+                type: Function,
+                default: null
+            },
+
         },
         data() {
             return {
                 dateRangeType: 'orderDate',
+                row : null,
                 formStatus: 1,
                 dateRange: [],
                 summaryMap: {},
@@ -261,6 +267,11 @@
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});
             },
+            clickRow(row) {
+                this.row = row;
+                console.log(row);
+            },
+
             view(row) {
                 this.$refs.formDiagView.show({id: row.id});
             },
@@ -302,6 +313,7 @@
             },
             init(options = {}) {
                 //console.log(options)
+                this.row = null;
                 this.search();
             },
             search() {
@@ -327,11 +339,39 @@
             },
             showLine(row) {
                 console.log(JSON.stringify(row));
-                console.log(this.fatherMethod);
+                console.log("fatherMethodL: ");
+                console.log( this.fatherMethod);
                 if (this.fatherMethod) {
                     this.fatherMethod(row);
                 }
 
+            },
+            showPic(row) {
+                console.log(JSON.stringify(row));
+                console.log("funShowPic: ");
+                console.log( this.funShowPic);
+                if (this.funShowPic) {
+                    this.funShowPic(row);
+                }
+
+            },
+            getRow() {
+                console.log("row");
+                console.log(this.row);
+
+                if (this.row) {
+                    console.log("rowT");
+                    return this.row;
+                }else{
+                    console.log("rowF");
+
+                }
+                console.log("this.$refs.table.tableData");
+                console.log(this.$refs.table.tableData);
+                if (this.$refs.table.tableData) {
+                    this.row = this.$refs.table.tableData[0];
+                }
+                return this.row;
             }
         },
 

@@ -1,15 +1,17 @@
 <!--订单产品管理-->
 <template>
     <div>
-        <div class="show-form" >
+        <div class="panel panel-default panel-search">
+            <el-form :inline="true">
+                <el-form-item label="客户名称">  <span style="color:blue"> {{ order.customer?order.customer.custName:'-'}}</span></el-form-item>
+                <el-form-item label="EP订单号"> <span style="color:blue"> {{order.epOrderCode}}</span></el-form-item>
+                <el-form-item label="客户订单号"> <span style="color:blue"> {{order.customerOrderCode}}</span></el-form-item>
 
-            <!--<el-form :inline="true">-->
 
-            <!--<el-form-item label="日期">-->
 
-                    <!--<div slot="label">-->
-                        <!--<el-select v-model="dateRangeType" filterable clearable style="width:120px" class="formitem-label">-->
-                            <!--<el-option value="orderDate" label="下单日期"></el-option>-->
+                <!--<div slot="label">-->
+                <!--<el-select v-model="dateRangeType" filterable clearable style="width:120px" class="formitem-label">-->
+                <!--<el-option value="orderDate" label="下单日期"></el-option>-->
                             <!--<el-option value="customerIssueDate" label="客户交货日期"></el-option>-->
                             <!--<el-option value="checkDate" label="验货日期"></el-option>-->
                             <!--<el-option value="factroyIssueDate" label="工厂交货日期"></el-option>-->
@@ -54,12 +56,10 @@
 
                 <!--&lt;!&ndash;</el-form-item>&ndash;&gt;-->
 
-            <!--</el-form>-->
+            </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-            <span slot="tip" style="margin-left:10px;margin-top:30px;color :green" > EP订单号: {{order.epOrderCode}}</span>
-            <span width="100px"></span>
-            <span slot="tip" style="margin-top:30px;color :green" >客户订单号: {{order.customerOrderCode}}</span>
+
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
@@ -105,8 +105,12 @@
             </el-table-column>
 
 
-            <el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>
-
+            <el-table-column prop="qty" label="数量" width="100"></el-table-column>
+            <el-table-column prop="unit" label="单位" width="100"></el-table-column>
+            <el-table-column prop="price" label="单价" width="100"></el-table-column>
+            <el-table-column prop="currency" label="货币" width="100"></el-table-column>
+            <el-table-column prop="money" label="金额" width="100"></el-table-column>
+            <el-table-column prop="supplierId" label="供应商" width="100"></el-table-column>
             <el-table-column prop="orderDate" label="下单日期" width="100">
                 <template slot-scope="{row}">
                 {{ $dongxwDict.viewDate(row.orderDate)}}
@@ -323,7 +327,7 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
-                this.order=options;
+                this.order = options;
                 this.orderId = options.id;
                 console.log(options);
                 this.search();
@@ -333,7 +337,7 @@
                 this.$refs.table.load();
             },
             cancel() {
-                this.dateRangeType=null;
+                this.dateRangeType = null;
                 this.dateRange = [];
                 this.page.query.param = {};
                 this.search();

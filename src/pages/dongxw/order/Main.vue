@@ -3,12 +3,14 @@
     <el-tabs :stretch="isExp" type="border-card" tab-position="top" v-model="activeName" @tab-click="tabClick"
              @tab-remove="removeTab">
         <el-tab-pane id="tabOrder" style="margin-right: 20px" label="订单管理" name="orderInfo">
-            <order-form ref="orderDlg" :fatherMethod="funShowOrderLine"></order-form>
+            <order-form ref="orderDlg" :funShowPic="funShowPic" :fatherMethod="funShowOrderLine"></order-form>
         </el-tab-pane>
-        <el-tab-pane id="tabLine" label="订单产品管理" name="orderLine" closable>
+        <el-tab-pane id="tabLine" label="订单产品管理" name="orderLine"  >
             <order-line ref="orderLine"></order-line>
         </el-tab-pane>
-
+        <el-tab-pane id="tabPic"   label="订单原件" name="tabPic"  >
+            <form-view-panel ref="viewPanel"></form-view-panel>
+        </el-tab-pane>
     </el-tabs>
 </template>
 
@@ -16,9 +18,10 @@
 <script>
     import OrderForm from './Manage';
     import OrderLine from '../orderline/Manage';
+    import FormViewPanel from './FormViewPic';
 
     export default {
-        components: {OrderForm, OrderLine},
+        components: {OrderForm, OrderLine, FormViewPanel},
         data() {
             return {
                 activeName: 'orderInfo',
@@ -30,16 +33,20 @@
 
         methods: {
             tabClick(tab) {
-                //this.showOrderLine = !this.showOrderLine;
-                if (tab.name  === 'orderInfo') {
-                    //this.showOrderLine = false;
-
+                console.log(tab.name);
+                if (tab.name === 'orderInfo') {
                 }
-                this.showTabPane(this.showOrderLine ? 1 : 0, 'tabLine');
-                // this.$message({
-                //     message: '恭喜你，这是一条成功消息'+tab.name,
-                //     type: 'success'
-                // });
+                if (tab.name === 'orderLine') {
+                    if (this.$refs.orderDlg.getRow()) {
+                        this.$refs.orderDlg.showLine(this.$refs.orderDlg.getRow());
+                    }
+                }
+                if (tab.name === 'tabPic') {
+                    console.log(this.$refs.orderDlg.getRow());
+                    if (this.$refs.orderDlg.getRow()) {
+                        this.$refs.orderDlg.showPic(this.$refs.orderDlg.getRow());
+                    }
+                }
             },
             removeTab(name) {
                 console.log(name);
@@ -75,20 +82,25 @@
                     }
                 })
             },
-            funShowOrderLine( row ) {
-                // this.$message({
-                //     message: '恭喜你，这是一条成功消息',
-                //     type: 'success'
-                // });
-                this.showOrderLine = true;
+            funShowOrderLine(row) {
+
+                // this.showOrderLine = true;
+                // this.showTabPane(this.showOrderLine ? 1 : 0, 'tabLine');
                 console.log(this.showOrderLine);
 
-                this.showTabPane(this.showOrderLine ? 1 : 0, 'tabLine');
                 this.activeName = 'orderLine';
                 this.$refs.orderLine.init(row);
 
+            },
+            funShowPic(row) {
+                // this.showOrderLine = true;
+                // this.showTabPane(this.showOrderLine ? 1 : 0, 'tabLine');
+                this.$refs.viewPanel.init(row);
+
             }
         },
+
+
         mounted() {
             this.$refs.orderDlg.init();
 

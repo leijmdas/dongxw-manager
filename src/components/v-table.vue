@@ -136,8 +136,16 @@ Vue.component("action-column", {
 import { assistance } from "../utils";
 export default {
   name: "vTable",
-  props: {
-    selection: {
+    props: {
+        dblclick: {
+            type: Function,
+            default: null
+        },
+        click: {
+            type: Function,
+            default: null
+        },
+        selection: {
       type: Boolean,
       required: false,
       default: false
@@ -397,14 +405,20 @@ export default {
       this.internalPageSize = pageSize;
       this.load(this.storeParams);
     },
-    handleRowDblclick(row, event, column) {
-      this.expandColumns &&
-        this.$el
+      handleRowDblclick(row, event, column) {
+          if (this.dblclick) {
+              this.dblclick(row);
+          }
+          this.expandColumns &&
+          this.$el
           .querySelectorAll("div.el-table__expand-icon")
           [this.tableData.indexOf(row)].click();
       this.$emit("row-dblclick", row);
     },
     handleRowClick(row) {
+        if (this.click) {
+            this.click(row);
+        }
       this.$refs.multipleTable.clearSelection();
       this.$refs.multipleTable.toggleRowSelection(row, true);
       this.$emit("row-click", row);
