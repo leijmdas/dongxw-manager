@@ -18,7 +18,7 @@ let router0 = [
                 path: 'dongxw/orderlst/manage',
                 component: require('@/pages/dongxw/order/Manage.vue'),
                 name: 'orderlst:manage',
-                meta: {title: '订单产品表', perm: 'order:manage'}
+                meta: {title: '订单产品表', perm: 'orderProduct:manage'}
             },
             {
                 path: 'dongxw/productType/manage',
@@ -42,7 +42,7 @@ let router0 = [
                 path: 'dongxw/supplier/manage',
                 component: require('@/pages/dongxw/supplier/Manage.vue'),
                 name: 'supplier:manage',
-                meta: {title: '供应商名单', perm: 'customer:manage'}
+                meta: {title: '供应商名单', perm: 'supplier:manage'}
             },
 
         ]
