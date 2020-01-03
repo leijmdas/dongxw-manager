@@ -3,7 +3,7 @@
         <div class="login" v-show="show==='account'" v-loading="loading" element-loading-text="loading ..."
              element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
             <div class="login_logo">
-                <img src="../../assets/logo.png" alt="">
+                <img src="../../assets/logo.png" height="60" width="60" alt="">
                 <span>东兴旺ERP系统</span>
             </div>
             <div class="login_container">
@@ -161,7 +161,7 @@
 
     .loginPanel {
         height: 100%;
-          background-image: url("../../assets/images/login.jpg")  ;
+          background-image: url("../../assets/images/main_login.png")  ;
         //background-repeat: repeat;
         background-size: 100% 100%;
     }
@@ -178,7 +178,7 @@
 
         &_logo {
             padding-top: 210px;
-            padding-left: 28%;
+            padding-left: 30%;
             display: flex;
             align-items: center;
 
@@ -188,7 +188,7 @@
 
             span {
                 font-size: 36px;
-                color: blue;
+                color: whitesmoke;
                 letter-spacing: 0;
             }
         }
