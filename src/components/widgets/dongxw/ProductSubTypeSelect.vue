@@ -29,8 +29,7 @@
                 type: Boolean
             },
             parentTypeId: {
-                type: Number,
-                default: null
+                // type: Number,
             }
         },
         computed: {
@@ -45,7 +44,7 @@
         },
         watch: {
             parentTypeId: {
-                handler: function(newVal, oldVal) { 
+                handler: function(newVal, oldVal) {
                     this.refresh();
                 },
                 deep: true

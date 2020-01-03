@@ -28,7 +28,9 @@
             disabled: {
                 type: Boolean
             },
-
+            productTypeId: {
+                //type: Number
+            }
         },
         computed: {
             currentValue: {
@@ -41,7 +43,14 @@
             }
         },
         watch: {
-
+            productTypeId: {
+                handler: function(newVal, oldVal) {
+                    this.value = ''
+                    this.currentValue = ''
+                    this.refresh();
+                },
+                deep: true
+            }
         },
         methods: {
             handleChange(val) {

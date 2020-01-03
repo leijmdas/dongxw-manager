@@ -38,10 +38,12 @@
             <el-form-item label="联系人" prop="contact">
             <el-input placeholder="联系人" v-model="entity.contact"></el-input>
         </el-form-item>
-        <el-form-item label="联系人电话" prop="tel">
-            <el-input placeholder="联系人电话" v-model="entity.tel"></el-input>
-        </el-form-item>
-
+            <el-form-item label="联系人电话" prop="tel">
+                <el-input placeholder="联系人电话" v-model="entity.tel"></el-input>
+            </el-form-item>
+            <el-form-item label="传真" prop="fax">
+                <el-input placeholder="传真" v-model="entity.fax"></el-input>
+            </el-form-item>
 
     </el-form>
     </div>

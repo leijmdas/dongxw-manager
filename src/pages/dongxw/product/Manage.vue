@@ -31,6 +31,7 @@
                 </el-form-item>
 
 
+
                 <el-form-item label="状态" prop="status">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
@@ -104,6 +105,10 @@
             </el-table-column>
             <el-table-column prop="barCode" label="条码" width="150">
             </el-table-column>
+            <el-table-column prop="upcA" label="UPC-A" width="150">
+            </el-table-column>
+
+
             <el-table-column prop="picUrl" label="产品图片" v-if="showPrdPic" width="90">
                 <template slot-scope="{row}">
                     <img v-if="row.picUrl" :src="row.picUrl" width="60" height="60" alt="">
@@ -113,13 +118,18 @@
                     </el-image>
                 </template>
             </el-table-column>
-            <el-table-column prop="upcA" label="UPC-A" width="150">
+            <el-table-column prop="createDate" label="建档时间" width="150">
             </el-table-column>
+
+            <el-table-column prop="createBy" label="建档人" width="150">
+            </el-table-column>
+
             <el-table-column prop="status" label="状态" width="60">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
                 </template>
             </el-table-column>
+
             <el-table-column prop="memo" label="备注"  >
             </el-table-column>
 

@@ -64,7 +64,11 @@
             </el-table-column>
             <el-table-column prop="fax" label="传真" width="180">
             </el-table-column>
-
+            <el-table-column prop="status" label="状态" width="60">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
+                </template>
+            </el-table-column>
 
             <el-table-column prop="createDate"  label="建档时间" width="100">
                 <template slot-scope="{row}">
@@ -77,9 +81,9 @@
                     <el-button type="text" title="编辑" @click="edit(scope.row)"  >
                         <i class="el-icon-edit"></i>
                     </el-button>
-                     <!--<el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">-->
-                      <!--<i class="el-icon-delete red"></i>-->
-                    <!--</el-button>-->
+                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
+                      <i class="el-icon-delete red"></i>
+                    </el-button>
                 </template>
             </el-table-column>
         </v-table>

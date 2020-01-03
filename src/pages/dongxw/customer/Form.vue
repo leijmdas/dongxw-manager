@@ -30,8 +30,12 @@
         <el-form-item label="地址" prop="addr">
             <el-input placeholder="地址" v-model="entity.addr"></el-input>
         </el-form-item>
- c
-            <el-form-item label="公司电子邮箱" prop="email">
+            <el-form-item label="状态" prop="moneyType">
+                <el-select v-model="entity.status" :disabled="isDisabled">
+                    <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
+                               :value="item[0]" :label="item[1]"></el-option>
+                </el-select>
+            </el-form-item>      <el-form-item label="公司电子邮箱" prop="email">
                 <el-input placeholder="公司电子邮箱" v-model="entity.email"></el-input>
             </el-form-item>
             <el-form-item label="联系人" prop="contact">
@@ -41,7 +45,9 @@
             <el-input placeholder="联系人电话" v-model="entity.tel"></el-input>
         </el-form-item>
 
-
+            <el-form-item label="传真" prop="fax">
+                <el-input placeholder="传真" v-model="entity.fax"></el-input>
+            </el-form-item>
     </el-form>
     </div>
 </template>

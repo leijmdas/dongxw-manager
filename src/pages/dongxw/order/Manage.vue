@@ -29,14 +29,15 @@
                     </el-form-item>
 
 
-                <el-form-item label="客户订单号" prop="customerOrderCode">
-                    <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
-                </el-form-item>
+                    <el-form-item label="客户订单号" prop="customerOrderCode">
+                        <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
+                    </el-form-item>
 
 
-                <el-form-item label="业务员" prop="businessBy" >
-                    <el-input v-model="page.query.param.businessBy" clearable></el-input>
-                </el-form-item>
+                    <el-form-item label="业务员" prop="businessBy">
+                        <el-input v-model="page.query.param.businessBy" clearable></el-input>
+                    </el-form-item>
+
 
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
@@ -125,6 +126,10 @@
             </el-table-column>
 
             <el-table-column prop="invoiceNo" label="发票编号" width="120"></el-table-column>
+             <el-table-column prop="createDate" label="建档时间" width="150">
+            </el-table-column>
+            <el-table-column prop="createBy" label="建档人" width="150">
+            </el-table-column>
 
             <el-table-column prop="remark" label="备注"></el-table-column>
 

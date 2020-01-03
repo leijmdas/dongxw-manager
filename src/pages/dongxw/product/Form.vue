@@ -126,7 +126,9 @@
         unit: '',
         createBy: 0,
         productTypeId: null,
-        parentId: null
+        parentId: null,
+        createBy:null,
+        createDate:null
     };
 
 
