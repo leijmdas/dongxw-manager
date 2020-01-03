@@ -3,6 +3,13 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
+                <el-form-item label="产品大类">
+                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
+                </el-form-item>
+                <el-form-item label="产品小类">
+                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
+                </el-form-item>
+
                 <el-form-item label="编码" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
@@ -21,9 +28,6 @@
                 </el-form-item>
                 <el-form-item label="条码" prop="barCode">
                     <el-input v-model="page.query.param.barCode" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="产品类型">
-                    <product-type-select v-model="page.query.param.productTypeId" :clearable="true"></product-type-select>
                 </el-form-item>
 
 
@@ -70,19 +74,20 @@
 
             </el-table-column>
 
-            <el-table-column prop="code" label="编码" width="120">
+            <el-table-column prop="code" label="编码" width="100">
                 <template slot-scope="{row}">
                    <span   > {{row.code }} </span>
                 </template>
             </el-table-column>
-            <el-table-column prop="productType" label="产品大类" width="120">
+            <el-table-column prop="parentId" label="产品大类" width="120">
                 <template slot-scope="{row}">
-                    {{ row.productType? row.productType.code+' '+row.productType.name:'-' }}
+                    {{ row.productType? row.productType.code :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="productType" label="产品小类" width="120">
+            <el-table-column prop="productSubType" label="产品小类" width="160">
                 <template slot-scope="{row}">
-                    <!--{{ row.productType? row.productType.code+' '+row.productType.name:'-' }}-->
+                    <!--{{ row.productSubType? row.productSubType.code+' '+row.productSubType.name:'-' }}-->
+                    {{ row.productSubType? row.productSubType.code :'-' }}
                 </template>
             </el-table-column>
 
@@ -90,6 +95,7 @@
              <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
 
             <el-table-column prop="remark" label="产品描述" width="245">      </el-table-column>
+            <el-table-column prop="unit" label="单位" width="60">      </el-table-column>
 
 
             <el-table-column prop="color" label="颜色" width="150">
@@ -149,11 +155,12 @@
 </style>
 
 <script>
+    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import FormPanel from './Form';
 
     export default {
-        components: { FormPanel, ProductTypeSelect },
+        components: { FormPanel, ProductTypeSelect,ProductSubTypeSelect },
         data() {
             return {
                 showPrdPic : false,

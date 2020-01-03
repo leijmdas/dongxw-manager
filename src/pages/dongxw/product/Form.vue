@@ -1,20 +1,18 @@
 <template>
     <div>
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
-            <el-form-item label="编码" prop="code">
+
+            <el-form-item style="margin-top: 10px" label="编码" prop="code">
                 <el-input placeholder="编码" v-model="entity.code"></el-input>
             </el-form-item>
             <el-form-item label="EP款号" prop="epCode">
                 <el-input placeholder="EP款号" v-model="entity.epCode"></el-input>
             </el-form-item>
-            <!--<el-form-item label="客款号" prop="code">-->
-                <!--<el-input placeholder="客款号" v-model="entity.code"></el-input>-->
-            <!--</el-form-item>-->
-
 
             <el-form-item label="产品描述" prop="remark">
                 <el-input placeholder="产品描述" v-model="entity.remark"></el-input>
             </el-form-item>
+
             <el-form-item label="颜色" prop="color">
                 <el-input placeholder="颜色" v-model="entity.color"></el-input>
             </el-form-item>
@@ -26,15 +24,28 @@
                 <el-input placeholder="条码" v-model="entity.barCode"></el-input>
             </el-form-item>
 
-
             <el-form-item label="UPC-A" prop="upcA">
                 <el-input placeholder="UPC-A" v-model="entity.upcA"></el-input>
             </el-form-item>
 
-            <el-row :span="24" style="margin-top: 10px" >
+            <el-row :span="24" style="margin-top: 10px">
                 <el-col :span="12">
-                    <el-form-item label="产品类型" prop="productTypeId" :rules="[{ required: true}]">
-                        <product-type-select v-model="entity.productTypeId" :clearable="true"></product-type-select>
+                    <el-form-item label="产品大类" prop="parentId" :rules="[{ required: true}]">
+                        <product-type-select v-model="entity.parentId" :clearable="true"></product-type-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="产品小类" prop="productTypeId" :rules="[{ required: true}]">
+                        <product-sub-type-select :parentTypeId="entity.parentId" v-model="entity.productTypeId"
+                                                 :clearable="true"></product-sub-type-select>
+                    </el-form-item>
+                </el-col>
+
+            </el-row>
+            <el-row :span="24" style="margin-top: 10px">
+                <el-col :span="12">
+                    <el-form-item label="单位" prop="unit">
+                        <el-input placeholder="单位" v-model="entity.unit"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -48,13 +59,13 @@
                 </el-col>
             </el-row>
 
-                    <el-form-item label="产品图片" prop=""  >
-                        <div :span="12"  class="productLogo">
+            <el-form-item label="产品图片" prop="">
+                <div :span="12" class="productLogo">
 
-                            <v-image-uploader :form-data="{}" v-model="entity.picUrl"/>
-                            <!--<div style="text-align:center"> 产品图片 </div>-->
-                        </div>
-                    </el-form-item>
+                    <v-image-uploader :form-data="{}" v-model="entity.picUrl"/>
+                    <!--<div style="text-align:center"> 产品图片 </div>-->
+                </div>
+            </el-form-item>
 
 
             <el-form-item label="备注" prop="memo">
@@ -99,6 +110,7 @@
 <script>
 
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
+    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
     const defaultEntity = {
         id: null,
         epCode: null,
@@ -111,12 +123,15 @@
         picUrl : null ,
         upcA : '',
         memo : '',
-        createBy: 0
+        unit: '',
+        createBy: 0,
+        productTypeId: null,
+        parentId: null
     };
 
 
     export default {
-        components: {ProductTypeSelect},
+        components: {ProductTypeSelect,ProductSubTypeSelect},
         data() {
             return {
                 ppp: '',
@@ -168,14 +183,7 @@
                             trigger: "change"
                         }
                     ],
-                    discountType: [
-                        {
-                            type: "number",
-                            required: true,
-                            message: "请选择优惠类型",
-                            trigger: "change"
-                        }
-                    ],
+
 
                 }
             };
@@ -225,7 +233,6 @@
                 this.resetForm();
                 if (options.id) {
                     console.log(JSON.stringify(this.entity));
-                    //this.isDisabled = true;//this.entity.status > 0;
 
                     this.$api.dongxw.ProductService.findById(options.id).then(r => {
                         console.log(JSON.stringify(r))
