@@ -59,7 +59,7 @@
 
 
             <el-switch style="margin-left:20px; margin-right: 20px"
-                       v-model="showPrdPic"
+                       v-model="isShowPrdPic"
                        active-text="显示产品图片"
                        inactive-text="不显示">
             </el-switch>
@@ -109,9 +109,9 @@
             </el-table-column>
 
 
-            <el-table-column prop="picUrl" label="产品图片" v-if="showPrdPic" width="90">
+            <el-table-column prop="picUrl" label="产品图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
-                    <img v-if="row.picUrl" :src="row.picUrl" width="60" height="60" alt="">
+                    <img v-if="row.picUrl" :src="row.picUrl" width="60px" height="60px" alt="">
                     <el-image v-if="row.picUrl"
                               style="width: 60px; height: 60px"
                               :src="row.picUrl">
@@ -173,7 +173,7 @@
         components: { FormPanel, ProductTypeSelect,ProductSubTypeSelect },
         data() {
             return {
-                showPrdPic : false,
+                isShowPrdPic : false,
                 formStatus: 1,
                 orderDateRange: [],
                 summaryMap: {},

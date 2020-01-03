@@ -42,6 +42,12 @@
 
             <el-button plain @click="exportRecords">导出XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
+            <el-switch style="margin-left:20px; margin-right: 20px"
+                       v-model="isShowPrdPic"
+                       active-text="显示产品图片"
+                       inactive-text="不显示">
+            </el-switch>
+
         </v-toolbar>
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
 
@@ -78,11 +84,17 @@
             </el-table-column>
 
 
-            <el-table-column prop="图片" label="图片" width="60">
+
+            <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
-                    {{ row.product?row.product.picUrl:'-'}}
+                    <img v-if="row.product.picUrl" :src="row.product.picUrl" width="60px" height="60px" alt="">
+                    <el-image v-if="row.product.picUrl"
+                              style="width: 60px; height: 60px"
+                              :src="row.product.picUrl">
+                    </el-image>
                 </template>
             </el-table-column>
+
             <el-table-column prop="条码" label="条码" width="60">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.barCode:'-'}}
@@ -199,6 +211,8 @@
         components: {ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel,SupplierSelect},
         data() {
             return {
+
+                isShowPrdPic:false,
                 dateRangeType: 'orderDate',
                 order: [],
                 orderId: 0,
