@@ -126,7 +126,13 @@
             </el-table-column>
 
             <el-table-column prop="invoiceNo" label="发票编号" width="120"></el-table-column>
-             <el-table-column prop="createDate" label="建档时间" width="150">
+            <el-table-column prop="moneyType" label="结算币种" width="80">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="createDate" label="建档时间" width="150">
             </el-table-column>
             <el-table-column prop="createBy" label="建档人" width="150">
             </el-table-column>
