@@ -69,7 +69,7 @@
 </style>
 <template>
   <div :class="pageSize>0?'panel panel-default':''">
-    <el-table  ref="multipleTable" highlight-current-row :data="tableData" element-loading-text="数据加载中" v-loading="showLoading" @row-dblclick="handleRowDblclick" @select="handleSelect" @select-all="handleSelectAll" @selection-change="handleSelectionChange" @current-change="handleCurrentChange" @row-click="handleRowClick" @sort-change="handleSortChange" :border="tableBorder" :height="tableHeight" :max-height="tableMaxheight" :style="tableStyle" :span-method="spanMethod" :row-class-name="rowClassName" :show-summary="showSummary" :summary-method="getSummaries">
+    <el-table stripe ref="multipleTable" highlight-current-row :data="tableData" element-loading-text="数据加载中" v-loading="showLoading" @row-dblclick="handleRowDblclick" @select="handleSelect" @select-all="handleSelectAll" @selection-change="handleSelectionChange" @current-change="handleCurrentChange" @row-click="handleRowClick" @sort-change="handleSortChange" :border="tableBorder" :height="tableHeight" :max-height="tableMaxheight" :style="tableStyle" :span-method="spanMethod" :row-class-name="rowClassName" :show-summary="showSummary" :summary-method="getSummaries">
       <slot name="prepend"></slot>
       <el-table-column type="selection" width="35" v-if="selection || multi" :fixed="fixed && 'left'"></el-table-column>
       <el-table-column type="expand" v-if="expandColumns" :fixed="fixed && 'left'">
