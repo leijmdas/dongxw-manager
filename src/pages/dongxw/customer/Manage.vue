@@ -51,11 +51,6 @@
             <el-table-column prop="country" label="客户国家" width="80">            </el-table-column>
             <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
 
-            <el-table-column prop="moneyType" label="结算币种" width="80">
-                <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
-                </template>
-            </el-table-column>
             <el-table-column prop="email" label="公司电子邮箱" width="150">
             </el-table-column>
             <el-table-column prop="contact" label="联系人" width="150">
@@ -70,6 +65,11 @@
                 </template>
             </el-table-column>
 
+            <el-table-column prop="moneyType" label="结算币种" width="80">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                </template>
+            </el-table-column>
             <el-table-column prop="createDate"  label="建档时间" width="100">
                 <template slot-scope="{row}">
                     {{row.createDate.substr(0,10)}}
