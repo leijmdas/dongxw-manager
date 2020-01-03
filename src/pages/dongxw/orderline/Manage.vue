@@ -3,58 +3,35 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <el-form-item label="客户名称">  <span style="color:blue"> {{ order.customer?order.customer.custName:'-'}}</span></el-form-item>
-                <el-form-item label="EP订单号"> <span style="color:blue"> {{order.epOrderCode}}</span></el-form-item>
-                <el-form-item label="客户订单号"> <span style="color:blue"> {{order.customerOrderCode}}</span></el-form-item>
+
+                <el-form-item label="产品大类" prop="parentId">
+                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
+
+                </el-form-item>
 
 
+                <el-form-item label="产品小类" prop="productTypeId">
+                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
 
-                <!--<div slot="label">-->
-                <!--<el-select v-model="dateRangeType" filterable clearable style="width:120px" class="formitem-label">-->
-                <!--<el-option value="orderDate" label="下单日期"></el-option>-->
-                            <!--<el-option value="customerIssueDate" label="客户交货日期"></el-option>-->
-                            <!--<el-option value="checkDate" label="验货日期"></el-option>-->
-                            <!--<el-option value="factroyIssueDate" label="工厂交货日期"></el-option>-->
-                        <!--</el-select>-->
-                    <!--</div>-->
-                    <!--<el-date-picker style="width:270px" v-model="dateRange" type="daterange" range-separator="至"-->
-                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
-                                    <!--format="yyyy年MM月dd日"-->
-                                    <!--value-format="yyyy-MM-dd HH:mm:ss">-->
-                    <!--</el-date-picker>-->
+                </el-form-item>
 
 
-                <!--</el-form-item>-->
-                <!--<el-form-item label="状态" prop="status">-->
-                    <!--<el-select :clearable="true" v-model="page.query.param.status" style="width:100px">-->
-                        <!--<el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"-->
-                                   <!--:label="item[1]"></el-option>-->
-                    <!--</el-select>-->
-                <!--</el-form-item>-->
+                <el-form-item label="产品标识" prop="productId">
+                    <product-select :productTypeId="page.query.param.productTypeId" v-model="page.query.param.productId" :clearable="true"></product-select>
+
+                </el-form-item>
 
 
-                <!--<el-form-item label="客户" prop="subjectType">-->
-                    <!--<customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>-->
+                <el-form-item label="客款号" prop="customerCode">
+                    <el-input v-model="page.query.param.epCode" clearable></el-input>
+                </el-form-item>
 
-                <!--</el-form-item>-->
 
+                <el-form-item label="供应商" prop="supplierId">
+                 <supplier-select v-model="page.query.param.supplierId" :clearable="true"></supplier-select>
 
-                <!--<el-form-item label="客户订单号" prop="customerOrderCode">-->
-                    <!--<el-input v-model="page.query.param.customerOrderCode" clearable></el-input>-->
-                <!--</el-form-item>-->
-                <!--<el-form-item label="EP订单号" prop="epOrderCode">-->
-                    <!--<el-input v-model="page.query.param.epOrderCode" clearable></el-input>-->
-                <!--</el-form-item>-->
+                </el-form-item>
 
-                <!--<el-form-item label="业务员" prop="businessBy" >-->
-                    <!--<el-input v-model="page.query.param.businessBy" clearable></el-input>-->
-                <!--</el-form-item>-->
-
-                <!--&lt;!&ndash;<el-form-item>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button @click="cancel">取消</el-button>&ndash;&gt;-->
-
-                <!--&lt;!&ndash;</el-form-item>&ndash;&gt;-->
 
             </el-form>
         </div>
@@ -63,7 +40,7 @@
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
-            <el-button plain @click="exportRecords">导出 XLS</el-button>
+            <el-button plain @click="exportRecords">导出XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
@@ -73,70 +50,80 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column prop="customerId" label="客户编码" width="80">
+
+            <el-table-column prop="orderId" label="订单标识" width="80"></el-table-column>
+
+
+            <el-table-column prop="parentId" label="产品大类" width="120">
                 <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custNo:'-'}}
-                 </template>
+                    {{ row.parentProductType?row.parentProductType.code:'-'}}
+                </template>
             </el-table-column>
-            <el-table-column prop="customerId" label="客户名称" width="120">
+            <el-table-column prop="productTypeId" label="产品小类" width="120">
                 <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custName:'-'}}
+                    {{ row.productType?row.productType.code:'-'}}
                 </template>
             </el-table-column>
-
-
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
-            <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号" width="120">
-                <template slot-scope="scope">
-                    <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
-                    <span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column  prop="customerOrderImg" label="订单原件" width="78">
-                <template slot-scope="scope">
-                    <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
-                    <!--<el-button type="text" @click="view(scope.row)" plain >View</el-button>-->
-                </template>
-            </el-table-column>
-            <el-table-column  prop="status" label="订单状态" width="80">
+            <el-table-column prop="productId" label="产品编码" width="100">
                 <template slot-scope="{row}">
-                    <span :style="'style:red'"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
+                     {{ row.product?row.product.code:'-'}}
                 </template>
+            </el-table-column>
+            <el-table-column prop="customerCode" label="客款号" width="120"></el-table-column>
+            <el-table-column prop="epCode" label="EP款号" width="120">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.epCode:'-'}}
+                </template>
+
             </el-table-column>
 
 
-            <el-table-column prop="qty" label="数量" width="100"></el-table-column>
-            <el-table-column prop="unit" label="单位" width="100"></el-table-column>
+            <el-table-column prop="图片" label="图片" width="60">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.picUrl:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="条码" label="条码" width="60">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.barCode:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="配色" label="配色" width="60"></el-table-column>
+            <el-table-column prop="尺寸" label="尺寸" width="60"></el-table-column>
+            <el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>
+
+            <el-table-column prop="supplier" label="供应商" width="120">
+                <template slot-scope="{row}">
+                    {{ row.supplier?row.supplier.name:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="unit" label="单位" width="80"></el-table-column>
+            <el-table-column prop="qty" label="数量" width="120"></el-table-column>
             <el-table-column prop="price" label="单价" width="100"></el-table-column>
-            <el-table-column prop="currency" label="货币" width="100"></el-table-column>
-            <el-table-column prop="money" label="金额" width="100"></el-table-column>
-            <el-table-column prop="supplierId" label="供应商" width="100"></el-table-column>
-            <el-table-column prop="orderDate" label="下单日期" width="100">
-                <template slot-scope="{row}">
-                {{ $dongxwDict.viewDate(row.orderDate)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="customerIssueDate" label="客户交货日期" width="100">
-                <template slot-scope="{row}">
-                    {{ $dongxwDict.viewDate(row.customerIssueDate)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="checkDate" label="验货日期" width="100">
-                <template slot-scope="{row}">
-                    {{ $dongxwDict.viewDate(row.checkDate)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="factroyIssueDate" label="工厂交货日期" width="100">
-                <template slot-scope="{row}">
-                    {{ $dongxwDict.viewDate(row.factroyIssueDate)}}
-                </template>
-            </el-table-column>
+            <el-table-column prop="currency" label="货币" width="80"></el-table-column>
+            <el-table-column prop="money" label="金额" width="80"></el-table-column>
 
-            <el-table-column prop="invoiceNo" label="发票编号" width="120"></el-table-column>
 
             <el-table-column prop="remark" label="备注"></el-table-column>
+            <el-table-column prop="material" label="主料" width="120"></el-table-column>
 
-            <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
+            <el-table-column prop="createDate" label="建档时间" width="100"></el-table-column>
+            <!--<el-table-column prop="createBy" label="建档人" width="100">-->
+            <el-table-column prop="status" label="状态" width="80">
+                <template slot-scope="{row}">
+                        <span
+                            :style="'style:red'"> {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="ibQty" label="内盒数量"></el-table-column>
+            <el-table-column prop="ibGw" label="内盒毛重(kg)" width="100"></el-table-column>
+            <el-table-column prop="ibNw" label="内盒净重(kg)" width="100"></el-table-column>
+            <el-table-column prop="ibSize" label="内盒尺寸"></el-table-column>
+
+            <el-table-column prop="obQty" label="外箱数量"></el-table-column>
+            <el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>
+            <el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>
+            <el-table-column prop="obSize" label="外箱尺寸"></el-table-column>
 
             <!--总数量，总金额-->
             <el-table-column width="140" label="操作" :fixed="'right'">
@@ -147,9 +134,7 @@
 
                     </el-button>
 
-                    <el-button type="success" @click="edit(scope.row)" round size="mini">产品</el-button>
-
-                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
+                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除">
                         <i class="el-icon-delete red"></i>
                     </el-button>
 
@@ -157,20 +142,21 @@
             </el-table-column>
 
         </v-table>
-        <v-dialog ref="formDiag" title="信息编辑" >
+        <v-dialog ref="formDiag" width="40%" title="信息编辑">
+
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
-        <v-dialog ref="formDiagView" title="订单原件">
-            <form-view-panel @saved="onFormSaved"></form-view-panel>
-            <div slot="footer">
-                <!--<el-button type="primary" @click="$refs.formDiagView.dispatch('submit')">保存</el-button>-->
-                <el-button type="default" @click="()=>{$refs.formDiagView.hide()}">关闭</el-button>
-            </div>
-        </v-dialog>
+        <!--<v-dialog ref="formDiagView" title="订单原件">-->
+        <!--<form-view-panel @saved="onFormSaved"></form-view-panel>-->
+        <!--<div slot="footer">-->
+        <!--&lt;!&ndash;<el-button type="primary" @click="$refs.formDiagView.dispatch('submit')">保存</el-button>&ndash;&gt;-->
+        <!--<el-button type="default" @click="()=>{$refs.formDiagView.hide()}">关闭</el-button>-->
+        <!--</div>-->
+        <!--</v-dialog>-->
 
     </div>
 </template>
@@ -203,16 +189,19 @@
 
 </style>
 <script>
-    import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import FormPanel from './Form';
+    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
+    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
+    import ProductSelect from '@/components/widgets/dongxw/ProductSelect.vue';
+    import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
 
     export default {
-        components: {FormPanel, CustomerSelect},
+        components: {ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel,SupplierSelect},
         data() {
             return {
                 dateRangeType: 'orderDate',
                 order: [],
-                orderId : 0,
+                orderId: 0,
                 formStatus: 1,
                 dateRange: [],
                 summaryMap: {},
@@ -268,11 +257,11 @@
             导出
             */
             exportRecords() {
-                let self=this;
+                let self = this;
                 this.$confirm("确定要导出所有查询的记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    let params =  self.getSearchParams();
+                    let params = self.getSearchParams();
                     self.$api.dongxw.OrderLine.export(params);
 
                 });
@@ -282,7 +271,8 @@
 
             },
             create() {
-                this.$refs.formDiag.show();
+                this.$refs.formDiag.orderId=this.orderId;
+                this.$refs.formDiag.show({orderId: this.orderId});
             },
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});

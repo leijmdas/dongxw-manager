@@ -197,7 +197,7 @@
         remark : '',
         materialRemark : '',
         customerOrderImg: null,
-        supplyId: 0,
+        supplierId: 0,
         orderDate : null,
         customerIssueDate : null,
         checkDate: null,

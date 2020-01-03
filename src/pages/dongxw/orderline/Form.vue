@@ -1,127 +1,92 @@
 <template>
     <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
-        <el-tabs v-model="activeName" :stretch="true" @tab-click="handleClick">
-            <el-tab-pane label="订单信息" name="orderInfo">
+        <el-tabs :stretch="isExp" v-model="activeName" >
+            <el-tab-pane label="基本信息" name="orderInfo">
 
 
-                <fieldset align="bottom">
-                    <el-row :span="24"  style="margin-top: 10px">
-                        <el-col :span="14">
-                            <el-form-item  label="客户" prop="customerId"
-                                          :rules="[{ required: true}]">
-                                <customer-select :width="'200px'" v-model="entity.customerId" :clearable="true"></customer-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10">
-                            <el-form-item label="状态" prop="status">
+                <el-form-item label="产品大类" prop="parentId">
+                    <product-type-select   v-model="entity.parentId" :clearable="true"></product-type-select>
+                </el-form-item>
 
-                                <el-select v-model="entity.status">
-                                    <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]"
-                                               :value="item[0]" :label="item[1]"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+                <el-form-item label="产品小类" prop="productTypeId">
+                    <product-sub-type-select :parentTypeId="entity.parentId" v-model="entity.productTypeId" :clearable="true"></product-sub-type-select>
+                </el-form-item>
 
-                    <el-form-item label="EP订单号" prop="epOrderCode">
-                        <el-input placeholder="EP订单号" v-model="entity.epOrderCode"></el-input>
-                    </el-form-item>
+                <el-form-item label="产品标识" prop="productId">
+                    <product-select :productTypeId="entity.productTypeId" v-model="entity.productId" :clearable="true"></product-select>
 
-                    <el-form-item label="客户订单号" prop="customerOrderCode">
-                        <el-input placeholder="客户订单号" v-model="entity.customerOrderCode"></el-input>
+                </el-form-item>
+               <el-form-item label="客款号" prop="customerCode">
+                    <el-input placeholder="客款号" v-model="entity.customerCode"></el-input>
+                </el-form-item>
 
-                    </el-form-item>
-
-                    <el-form-item label="发票编号" prop="invoiceNo">
-                        <el-input placeholder="发票编号" v-model="entity.invoiceNo"></el-input>
-                    </el-form-item>
-                    <el-form-item label="业务员" prop="businessBy">
-                        <el-input placeholder="业务员" v-model="entity.businessBy"></el-input>
-                    </el-form-item>
-                    <el-row :span="24"  style="margin-top: 10px;margin-right: 16px">
-                        <el-col :span="12">
-                            <el-form-item label="下单日期" prop="" :rules="[{ required: true}]">
-                                <el-date-picker :disabled="disables"
-                                                v-model="entity.orderDate"
-                                                format="yyyy 年 MM 月 dd 日"
-                                                value-format="yyyy-MM-dd HH:mm:ss"
-                                                type="date"
-                                                placeholder="选择日期">
-                                </el-date-picker>
-                            </el-form-item>
-                            <!--format="yyyy-MM-dd"-->
-                        </el-col>
-
-                        <el-col :span="12">
-                            <el-form-item label="客户交货日期" prop="" :rules="[{ required: true}]">
-                                <el-date-picker   :disabled="disables"
-                                    v-model="entity.customerIssueDate"
-                                                  format="yyyy 年 MM 月 dd 日"
-                                                  value-format="yyyy-MM-dd HH:mm:ss"
-                                    type="date"
-                                    placeholder="选择日期">
-                                </el-date-picker>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :span="24" style="margin-top: 10px;margin-right: 16px">
-                        <el-col :span="12">
-                            <el-form-item label="验货日期" prop="">
-                                <el-date-picker
-                                    :disabled="disables"
-                                    v-model="entity.checkDate"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd HH:mm:ss"
-                                    type="date"
-                                    placeholder="选择日期">
-                                </el-date-picker>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-
-                            <el-form-item label="工厂交货日期" prop="">
-                                <el-date-picker
-                                    :disabled="disables"
-                                    v-model="entity.factroyIssueDate"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd HH:mm:ss"
-                                    type="date"
-                                    placeholder="选择日期">
-                                </el-date-picker>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-
-
-                    <el-form-item label="备注"  style="margin-top: 10px" prop="remark">
-                        <el-input placeholder="备注" v-model="entity.remark"></el-input>
-                    </el-form-item>
-                    <!--<el-form-item label="主料描述" prop="materialRemark">-->
-                        <!--<el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>-->
-                    <!--</el-form-item>-->
-
-                    <!--<el-form-item label="供应商"   prop="supplyId"  >-->
-                        <!--<supplier-select  v-model="entity.supplyId" :clearable="true"></supplier-select>-->
-                    <!--</el-form-item>-->
-
-                </fieldset>
-
-
-            </el-tab-pane>
-            <el-tab-pane height="400px" label="订单原件" name="orderPic">
-
-                <div style="margin:10px" class="orderLine">
-                    <v-image-uploader :form-data="{}" :multiple=true v-model="entity.customerOrderImg">
-
-                    </v-image-uploader>
-                    <!--<div style="text-align:center"> 订单原件</div>-->
-                </div>
-                <!--<el-form-item label="订单原件" prop="customerOrderImg">-->
-                <!--<el-input placeholder="订单原件" v-model="entity.customerOrderImg" disabled></el-input>-->
+                <el-form-item label="数量" prop="qty">
+                    <el-input placeholder="数量" v-model="entity.qty"></el-input>
+                </el-form-item>
+                <el-form-item label="单价" prop="price">
+                    <el-input placeholder="单价" v-model="entity.price"></el-input>
+                </el-form-item>
+                <!--<el-form-item label="单位" prop="unit">-->
+                    <!--<el-input placeholder="单位" v-model="entity.unit"></el-input>-->
                 <!--</el-form-item>-->
+                <el-form-item label="货币" prop="unit">
+                    <el-input placeholder="货币" v-model="entity.currency"></el-input>
+                </el-form-item>
+
+                <!--<el-form-item label="金额" prop="unit">-->
+                    <!--<el-input placeholder="金额" v-model="entity.money"></el-input>-->
+                <!--</el-form-item>-->
+                <!--`order_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单标识 ',   -->
+
+                <el-form-item label="供应商" prop="supplierId">
+                    <supplier-select v-model="entity.supplierId" :clearable="true"></supplier-select>
+                </el-form-item>
+                <!--`pic_url` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '0' COMMENT '图片 ',-->
+                <!--`size` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '0' COMMENT '尺寸 ',-->
+               <el-form-item label="备注" style="margin-top: 10px" prop="remark">
+                    <el-input placeholder="备注" v-model="entity.remark"></el-input>
+                </el-form-item>
+
 
             </el-tab-pane>
+            <el-tab-pane label="包装信息" name="orderPackageInfo">
+                <!--`color` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '0' COMMENT '配色 ',-->
+                <el-form-item label="内盒数量" prop="ibQty">
+                    <el-input placeholder="内盒数量" v-model="entity.ibQty"></el-input>
+                </el-form-item>
+                <el-form-item label="内盒毛重(kg)" prop="ibGw">
+                    <el-input placeholder="内盒毛重(kg)" v-model="entity.ibGw"></el-input>
+                </el-form-item>
 
+                <el-form-item label="内盒净重(kg)" prop="ibNw">
+                    <el-input placeholder="内盒净重(kg)" v-model="entity.ibNw"></el-input>
+                </el-form-item>
+                <el-form-item label="内盒尺寸" prop="ibSize">
+                    <el-input placeholder="内盒尺寸" v-model="entity.ibSize"></el-input>
+                </el-form-item>
+
+                <el-form-item label="外箱数量" prop="obQty">
+                    <el-input placeholder="外箱数量" v-model="entity.obQty"></el-input>
+                </el-form-item>
+                <el-form-item label="外箱毛重(kg)" prop="obGw">
+                    <el-input placeholder="外箱毛重(kg)" v-model="entity.obGw"></el-input>
+                </el-form-item>
+
+                <el-form-item label="外箱净重(kg)" prop="obNw">
+                    <el-input placeholder="外箱净重(kg)" v-model="entity.obNw"></el-input>
+                </el-form-item>
+                <el-form-item label="外箱尺寸" prop="obSize">
+                    <el-input placeholder="外箱尺寸" v-model="entity.obSize"></el-input>
+                </el-form-item>
+
+            </el-tab-pane>
+            <el-tab-pane label="主料" name="orderMainM">
+
+                <el-form-item label="主料" prop="material">
+                    <el-input placeholder="主料" v-model="entity.materialRemark"></el-input>
+                </el-form-item>
+
+            </el-tab-pane>
         </el-tabs>
     </el-form>
 </template>
@@ -162,30 +127,46 @@
 
 <script>
 
-    import CustomerSelect  from '@/components/widgets/dongxw/CustomerSelect.vue';
+    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
+    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
+    import ProductSelect from '@/components/widgets/dongxw/ProductSelect.vue';
     import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
 
     const defaultEntity = {
         id: null,
-        customerId: null,
-        status: 0,
-        customerOrderCode: '',
-        epOrderCode : '',
-        businessBy : '',
-        invoiceNo: '',
+        orderId : 0,
+        productId : null,
+        productTypeId : null,
+        customerCode : '',
+        picUrl : '',
+        size: '',
+        color : '',
+        qty : 0,
+        unit : '',
+        price : 0,
+        currency :'',
+        money : 0,
+        supplierId :null,
+        material :'',
+        ibQty : 0,
+        ibGw : 0,
+        ibNw : 0,
+        ibSize : '',
+        obQty : 0,
+        obGw : 0,
+        obNw : 0,
+        obSize : '',
+
+        createBy: 0,
         remark : '',
-        materialRemark : '',
-        customerOrderImg: null,
-        supplyId: 0,
-        orderDate : null,
-        customerIssueDate : null,
-        checkDate: null,
-        factroyIssuseDate: null
+        status: 1
     };
     export default {
-        components: {CustomerSelect, SupplierSelect},
+        components: {ProductTypeSelect,ProductSubTypeSelect, ProductSelect,SupplierSelect},
         data() {
             return {
+                isExp :false,
+                orderId : null ,
                 activeName: 'orderInfo',
                 ruleTpl: {when: null, then: null},
                 entity: _.cloneDeep(defaultEntity),
@@ -195,7 +176,17 @@
                 isDisabled: false,
                 limitTotal: false,
                 rules: {
-                    bizType: [{
+                    parentId: [{
+                        required: true
+                    }],
+                    productTypeId: [{
+                        required: true
+                    }],
+                    productId: [{
+                        required: true
+                    }],
+
+                    supplierId: [{
                         required: true
                     }],
                     name: [
@@ -207,15 +198,7 @@
                             trigger: "blur"
                         }
                     ],
-                    epOrderCode: [
-                        {required: true, message: "EP订单号", trigger: "blur"},
-                        {
-                            min: 1,
-                            max: 128,
-                            message: "长度在 1 到 128 个字符",
-                            trigger: "blur"
-                        }
-                    ],
+
                     customerOrderCode: [
                         {required: true, message: "客户订单号", trigger: "blur"},
                         {
@@ -349,13 +332,18 @@
             submitForm() {
                 this.$refs["form"].validate(valid => {
                     if (valid) {
+                        if (this.entity.id == null) {
+                            this.entity.orderId = this.orderId;
+                        }
                         let params = Object.assign({}, this.entity);
-
 
                         // params.startOn = this.entity.effectRange[0];
                         // params.endOn = this.entity.effectRange[1];
-
-                        this.$api.dongxw.OrderMaster.save(params).then(rsp => {
+                         this.$message({
+                            message: '恭喜你，这是一条成功消息'+params,
+                            type: 'success'
+                        });
+                        this.$api.dongxw.OrderLine.save(params).then(rsp => {
                             this.$emit("saved", rsp);
                         });
                     }
@@ -367,16 +355,22 @@
             },
             init(options) {
                 this.resetForm();
+                if (options.orderId) {
+                    this.orderId = options.orderId;
+                }
+                console.log(this.orderId);
+                this.$message({
+                    type: "success",
+                    message: this.orderId+" !"
+                });
                 if (options.id) {
-                    this.isDisabled = true;//this.entity.status > 0;
-                    this.$api.dongxw.OrderMaster.findById(options.id).then(rr => {
+                    this.isDisabled = true;
+                    this.$api.dongxw.OrderLine.findById(options.id).then(rr => {
                         let r = rr.data;
                         this.isDisabled = r.status > 0;
 
                         this.entity = r;
 
-                        //this.oldProps = r.props || [];
-                        //this.resetProps();
                     });
                 } else {
                     this.isDisabled = false;

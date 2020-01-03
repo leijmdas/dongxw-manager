@@ -4,13 +4,13 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
 
-                <el-form-item label="供应商编码" prop="custNo">
+                <el-form-item label="供应商编码" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="供应商名称" prop="custName">
+                <el-form-item label="供应商名称" prop="name">
                     <el-input v-model="page.query.param.name" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="状态" prop="moneyType">
+                <el-form-item label="状态" prop="status">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
