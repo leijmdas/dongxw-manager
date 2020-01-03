@@ -68,12 +68,15 @@
             </el-table-column>
             <el-table-column prop="fax" label="传真" width="180">
             </el-table-column>
+            <el-table-column prop="remark" label="备注" width="180">
+            </el-table-column>
 
             <el-table-column prop="status" label="状态" width="60">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
                 </template>
             </el-table-column>
+
             <el-table-column prop="createDate"  label="建档时间" width="100">
                 <template slot-scope="{row}">
                     {{row.createDate.substr(0,10)}}

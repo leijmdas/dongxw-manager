@@ -199,7 +199,7 @@
                 this.$confirm("确定删除此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    this.$api.ipark.PromotionInfoService.delete(row.id).then(rsp => {
+                    this.$api.dongxw.CustomerService.deleteById(row.id).then(rsp => {
                         this.search();
                         this.$message({
                             type: "success",

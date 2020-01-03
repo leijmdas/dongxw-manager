@@ -44,8 +44,11 @@
             <el-form-item label="传真" prop="fax">
                 <el-input placeholder="传真" v-model="entity.fax"></el-input>
             </el-form-item>
+            <el-form-item label="备注" prop="remark">
+                <el-input placeholder="备注" v-model="entity.remark"></el-input>
+            </el-form-item>
 
-    </el-form>
+        </el-form>
     </div>
 </template>
 <style lang="less" scoped>
@@ -94,7 +97,7 @@
         contact: '',
         country: '',
         createBy: 0,
-
+        remark : '',
         status: 1
     };
 

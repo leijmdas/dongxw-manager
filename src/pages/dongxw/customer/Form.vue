@@ -96,7 +96,8 @@
         createDate: '',
         contact: '',
         country: '',
-        createBy: 0
+        createBy: 0,
+        status: 0
     };
 
 

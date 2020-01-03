@@ -47,5 +47,10 @@ export default {
     //         method: 'POST'
     //     })
     // },
-
+    deleteById(id) {
+        return request({
+            url: '/dongxw/customer/deleteById/'+id,
+            method: 'POST'
+        })
+    },
 }
