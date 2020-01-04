@@ -3,7 +3,14 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
+                <el-form-item label="客户" prop="subjectType">
+                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
 
+                </el-form-item>
+                <el-form-item label="订单" prop="subjectType">
+                <order-master-select :customerId="page.query.param.customerId" v-model="page.query.param.orderId" :clearable="true"></order-master-select>
+
+                </el-form-item>
                 <el-form-item label="产品大类" prop="parentId">
                     <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
 
@@ -21,11 +28,9 @@
 
                 </el-form-item>
 
-
-                <el-form-item label="客款号" prop="customerCode">
-                    <el-input v-model="page.query.param.epCode" clearable></el-input>
-                </el-form-item>
-
+                <!--<el-form-item label="客款号" prop="customerCode">-->
+                    <!--<el-input v-model="page.query.param.epCode" clearable></el-input>-->
+                <!--</el-form-item>-->
 
                 <el-form-item label="供应商" prop="supplierId">
                  <supplier-select v-model="page.query.param.supplierId" :clearable="true"></supplier-select>
@@ -41,7 +46,7 @@
             <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出XLS</el-button>
-            <el-button type="primary" plain @click="create">新增</el-button>
+            <!--<el-button type="primary" plain @click="create">新增</el-button>-->
             <el-switch style="margin-left:20px; margin-right: 20px"
                        v-model="isShowPrdPic"
                        active-text="显示产品图片"
@@ -52,13 +57,25 @@
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
-
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
-
             </el-table-column>
 
-            <el-table-column prop="orderId" label="订单标识" width="80"></el-table-column>
+            <el-table-column prop="客户名称" label="客户名称" width="120">
+                <template slot-scope="{row}">
+                    {{ row.customer?row.customer.custName:'-'}}
+                </template>
+            </el-table-column>
 
+            <el-table-column prop="customerOrderCode" label="客户订单号" width="120">
+                <template slot-scope="{row}">
+                    {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
+                <template slot-scope="{row}">
+                    {{ row.orderMaster?row.orderMaster.epOrderCode:'-'}}
+                </template>
+            </el-table-column>
 
             <el-table-column prop="parentId" label="产品大类" width="120">
                 <template slot-scope="{row}">
@@ -88,10 +105,7 @@
             <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
                     <img v-if="row.product.picUrl" :src="row.product.picUrl" width="60px" height="60px" alt="">
-                    <!--<el-image v-if="row.product.picUrl"-->
-                              <!--style="width: 60px; height: 60px"-->
-                              <!--:src="row.product.picUrl">-->
-                    <!--</el-image>-->
+
                 </template>
             </el-table-column>
 
@@ -135,23 +149,20 @@
             <el-table-column prop="obQty" label="外箱数量"></el-table-column>
             <el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>
             <el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>
-            <el-table-column prop="obSize" label="外箱尺寸"></el-table-column>
+            <el-table-column prop="obSize" label="外箱尺寸" :fixed="'right'"></el-table-column>
 
             <!--总数量，总金额-->
-            <el-table-column width="140" label="操作" :fixed="'right'">
-                <template slot-scope="scope">
+            <!--<el-table-column width="140" label="操作" :fixed="'right'">-->
+                <!--<template slot-scope="scope">-->
 
-                    <el-button type="text" title="编辑" @click="edit(scope.row)">
-                        <i class="el-icon-edit"></i>
-
-                    </el-button>
-
-                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除">
-                        <i class="el-icon-delete red"></i>
-                    </el-button>
-
-                </template>
-            </el-table-column>
+                    <!--<el-button type="text" title="编辑" @click="edit(scope.row)">-->
+                        <!--<i class="el-icon-edit"></i>-->
+                    <!--</el-button>-->
+                    <!--<el-button type="text" @click="del(scope.row,scope.$index)" title="删除">-->
+                        <!--<i class="el-icon-delete red"></i>-->
+                    <!--</el-button>-->
+                <!--</template>-->
+            <!--</el-table-column>-->
 
         </v-table>
         <v-dialog ref="formDiag" width="40%" title="信息编辑">
@@ -201,14 +212,18 @@
 
 </style>
 <script>
+
     import FormPanel from './Form';
+
+    import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
+    import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import ProductSelect from '@/components/widgets/dongxw/ProductSelect.vue';
     import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
 
     export default {
-        components: {ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel,SupplierSelect},
+        components: {OrderMasterSelect,CustomerSelect,ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel,SupplierSelect},
         data() {
             return {
 

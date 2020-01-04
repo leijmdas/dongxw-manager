@@ -60,15 +60,7 @@
                     message: '恭喜你，这是一条成功消息',
                     type: 'success'
                 });
-                // this.$alert('这是一段内容', '标题名称', {
-                //     confirmButtonText: '确定',
-                //     callback: action => {
-                //         this.$message({
-                //             type: 'info',
-                //             message: `action: ${ action }`
-                //         });
-                //     }
-                // });
+
             },
             // mehods里面定义showTabPane方法
             showTabPane (control, pane) {
@@ -84,8 +76,6 @@
             },
             funShowOrderLine(row) {
 
-                // this.showOrderLine = true;
-                // this.showTabPane(this.showOrderLine ? 1 : 0, 'tabLine');
                 console.log(this.showOrderLine);
 
                 this.activeName = 'orderLine';
@@ -93,8 +83,6 @@
 
             },
             funShowPic(row) {
-                // this.showOrderLine = true;
-                // this.showTabPane(this.showOrderLine ? 1 : 0, 'tabLine');
                 this.$refs.viewPanel.init(row);
 
             }
