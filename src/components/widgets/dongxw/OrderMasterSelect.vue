@@ -33,7 +33,7 @@
             disabled: {
                 type: Boolean
             },
-            customerId: {
+            pCustomerId: {
                 //type: Number
             }
         },
@@ -48,10 +48,10 @@
             }
         },
         watch: {
-            customerId: {
+            pCustomerId: {
                 handler: function(newVal, oldVal) {
-                    this.value = ''
-                    this.currentValue = ''
+                    // this.value = ''
+                    // this.currentValue = ''
                     this.refresh();
                 },
                 deep: true
@@ -61,9 +61,14 @@
             handleChange (val) {
                 this.$emit('change', val)
             },
-            refresh () {
+            refresh() {
                 this.loading = true
-                this.$api.dongxw.OrderMaster.query({param: {customerId: this.customerId,isDeleted:false}}).then(rsp => {
+                this.$api.dongxw.OrderMaster.query({
+                    param: {
+                        customerId: this.pCustomerId,
+                        isDeleted: false
+                    }
+                }).then(rsp => {
                     this.options = rsp.data
                     this.loading = false
                 })

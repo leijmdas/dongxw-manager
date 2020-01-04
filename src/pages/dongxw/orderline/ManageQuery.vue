@@ -4,15 +4,21 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
                 <el-form-item label="客户" prop="subjectType">
-                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
+                    <customer-select v-model="page.query.param.customerId" :clearable="true">
+
+                    </customer-select>
 
                 </el-form-item>
-                <el-form-item label="订单" prop="subjectType">
-                <order-master-select :customerId="page.query.param.customerId" v-model="page.query.param.orderId" :clearable="true"></order-master-select>
+                <el-form-item label="订单" prop="orderId">
+                    <order-master-select  v-model="page.query.param.orderId"   :clearable="true">
+
+                    </order-master-select>
 
                 </el-form-item>
                 <el-form-item label="产品大类" prop="parentId">
-                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
+                    <product-type-select v-model="page.query.param.parentId" :clearable="true">
+
+                    </product-type-select>
 
                 </el-form-item>
 
@@ -31,7 +37,6 @@
                 <!--<el-form-item label="客款号" prop="customerCode">-->
                     <!--<el-input v-model="page.query.param.epCode" clearable></el-input>-->
                 <!--</el-form-item>-->
-
                 <el-form-item label="供应商" prop="supplierId">
                  <supplier-select v-model="page.query.param.supplierId" :clearable="true"></supplier-select>
 
@@ -217,13 +222,13 @@
 
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
+     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
-    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import ProductSelect from '@/components/widgets/dongxw/ProductSelect.vue';
     import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
 
     export default {
-        components: {OrderMasterSelect,CustomerSelect,ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel,SupplierSelect},
+        components: {CustomerSelect,OrderMasterSelect,ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel,SupplierSelect},
         data() {
             return {
 
@@ -337,7 +342,7 @@
                 this.order = options;
                 this.customerId = options.customerId;
                 this.orderId = options.id;
-                console.log(JSON.toString(this.order));
+                console.log(JSON.toString(options));
                 this.search();
             },
             search() {
