@@ -15,8 +15,8 @@
                 </el-col>
 
             </el-row>
-            <el-form-item style="margin-top: 10px" label="编码" prop="code">
-                <el-input placeholder="编码" v-model="entity.code"></el-input>
+            <el-form-item style="margin-top: 10px" label="客款号" prop="code">
+                <el-input placeholder="客款号" v-model="entity.code"></el-input>
             </el-form-item>
             <el-form-item label="EP款号" prop="epCode">
                 <el-input placeholder="EP款号" v-model="entity.epCode"></el-input>

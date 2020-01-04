@@ -10,7 +10,7 @@
                     <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
                 </el-form-item>
 
-                <el-form-item label="编码" prop="code">
+                <el-form-item label="客款号" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="EP款号" prop="epCode">
@@ -30,8 +30,6 @@
                     <el-input v-model="page.query.param.barCode" clearable></el-input>
                 </el-form-item>
 
-
-
                 <el-form-item label="状态" prop="status">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
@@ -43,7 +41,6 @@
                     <!--<el-button-group></el-button-group>-->
                     <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
                     <!--<el-button @click="cancel">取消</el-button>-->
-
                     <!--<el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>-->
                     <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
 
@@ -56,7 +53,6 @@
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
-
 
             <el-switch style="margin-left:20px; margin-right: 20px"
                        v-model="isShowPrdPic"
@@ -74,8 +70,10 @@
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
 
             </el-table-column>
+            <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
+            <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
 
-            <el-table-column prop="code" label="编码" width="100">
+            <el-table-column prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
                    <span   > {{row.code }} </span>
                 </template>
@@ -92,22 +90,9 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
-             <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
 
             <el-table-column prop="remark" label="产品描述" width="245">      </el-table-column>
             <el-table-column prop="unit" label="单位" width="60">      </el-table-column>
-
-
-            <el-table-column prop="color" label="颜色" width="150">
-            </el-table-column>
-            <el-table-column prop="size" label="尺寸" width="150">
-            </el-table-column>
-            <el-table-column prop="barCode" label="条码" width="150">
-            </el-table-column>
-            <el-table-column prop="upcA" label="UPC-A" width="150">
-            </el-table-column>
-
 
             <el-table-column prop="picUrl" label="产品图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
@@ -118,11 +103,20 @@
                     </el-image>
                 </template>
             </el-table-column>
+            <el-table-column prop="color" label="颜色" width="100">
+            </el-table-column>
+            <el-table-column prop="size" label="尺寸" width="150">
+            </el-table-column>
+            <el-table-column prop="barCode" label="条码" width="120">
+            </el-table-column>
+<!--            <el-table-column prop="upcA" label="UPC-A" width="150">-->
+<!--            </el-table-column>-->
+
             <el-table-column prop="createDate" label="建档时间" width="150">
             </el-table-column>
 
-            <el-table-column prop="createBy" label="建档人" width="150">
-            </el-table-column>
+<!--            <el-table-column prop="createBy" label="建档人" width="150">-->
+<!--            </el-table-column>-->
 
             <el-table-column prop="status" label="状态" width="60">
                 <template slot-scope="{row}">

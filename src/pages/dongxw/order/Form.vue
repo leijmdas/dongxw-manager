@@ -1,18 +1,19 @@
 <template>
     <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
-        <el-tabs :stretch="isExp" v-model="activeName"   >
+        <el-tabs :stretch="isExp" v-model="activeName">
             <el-tab-pane label="订单信息" name="orderInfo">
 
 
                 <fieldset align="bottom">
-                    <el-row :span="24"  style="margin-top: 10px">
-                        <el-col :span="12">
-                            <el-form-item  label="客户" prop="customerId"
+                    <el-row :span="22" style="margin-top: 10px">
+                        <el-col :span="11">
+                            <el-form-item label="客户" prop="customerId"
                                           :rules="[{ required: true}]">
-                                <customer-select :width="'200px'" v-model="entity.customerId" :clearable="true"></customer-select>
+                                <customer-select :width="'200px'" v-model="entity.customerId"
+                                                 :clearable="true"></customer-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="11">
                             <el-form-item label="状态" prop="status">
 
                                 <el-select v-model="entity.status">
@@ -22,7 +23,7 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row :span="22"  >
+                    <el-row :span="22">
                         <el-col :span="11">
                             <el-form-item label="EP订单号" prop="epOrderCode">
                                 <el-input placeholder="EP订单号" v-model="entity.epOrderCode"></el-input>
@@ -38,8 +39,23 @@
 
                     <el-row :span="22">
                         <el-col :span="11">
-                            <el-form-item label="发票编号" prop="invoiceNo">
-                                <el-input placeholder="发票编号" v-model="entity.invoiceNo"></el-input>
+                            <el-form-item label="预付发票编号" prop="invoiceNo">
+                                <el-input placeholder="预付发票编号" v-model="entity.invoiceNo"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="11">
+                            <el-form-item label="正式发票编号" prop="businessBy">
+                                <el-input placeholder="正式发票编号" v-model="entity.businessBy"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row :span="22">
+                        <el-col :span="11">
+                            <el-form-item label="结算币种" prop="moneyType">
+                                <el-select v-model="entity.moneyType">
+                                    <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
+                                               :value="item[0]" :label="item[1]"></el-option>
+                                </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
@@ -48,7 +64,7 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row :span="22"  style="margin-top: 10px ">
+                    <el-row :span="22" style="margin-top: 10px ">
                         <el-col :span="11">
                             <el-form-item label="下单日期" prop="" :rules="[{ required: true}]">
                                 <el-date-picker :disabled="disables"
@@ -64,12 +80,12 @@
 
                         <el-col :span="11">
                             <el-form-item label="客户交货日期" prop="" :rules="[{ required: true}]">
-                                <el-date-picker   :disabled="disables"
-                                    v-model="entity.customerIssueDate"
-                                                  format="yyyy 年 MM 月 dd 日"
-                                                  value-format="yyyy-MM-dd HH:mm:ss"
-                                    type="date"
-                                    placeholder="选择日期">
+                                <el-date-picker :disabled="disables"
+                                                v-model="entity.customerIssueDate"
+                                                format="yyyy 年 MM 月 dd 日"
+                                                value-format="yyyy-MM-dd HH:mm:ss"
+                                                type="date"
+                                                placeholder="选择日期">
                                 </el-date-picker>
                             </el-form-item>
                         </el-col>
@@ -103,26 +119,19 @@
                     </el-row>
 
                     <el-row :span="22" style="margin-top: 10px ">
-                        <el-col :span="6">
-                            <el-form-item label="结算币种" prop="moneyType">
-                                <el-select v-model="entity.moneyType"  >
-                                    <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
-                                               :value="item[0]" :label="item[1]"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12" >
+
+                        <el-col :span="22">
                             <el-form-item label="备注" prop="remark">
                                 <el-input placeholder="备注" v-model="entity.remark"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <!--<el-form-item label="主料描述" prop="materialRemark">-->
-                        <!--<el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>-->
+                    <!--<el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>-->
                     <!--</el-form-item>-->
 
                     <!--<el-form-item label="供应商"   prop="supplyId"  >-->
-                        <!--<supplier-select  v-model="entity.supplyId" :clearable="true"></supplier-select>-->
+                    <!--<supplier-select  v-model="entity.supplyId" :clearable="true"></supplier-select>-->
                     <!--</el-form-item>-->
 
                 </fieldset>
@@ -154,10 +163,12 @@
             // height: 60% !important;
         }
     }
-    .input-class{
+
+    .input-class {
         width: 500px;
         height: 40px;
     }
+
     .dialog-form {
         .el-radio-group {
             .el-radio {
@@ -168,10 +179,12 @@
             label {
                 height: 40px;
             }
+
             .group-text {
                 display: inline-block;
                 width: 100px;
             }
+
             .title-text {
                 display: inline-block;
                 width: 120px;
@@ -183,24 +196,24 @@
 
 <script>
 
-    import CustomerSelect  from '@/components/widgets/dongxw/CustomerSelect.vue';
-    import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
+    import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
+    import SupplierSelect from '@/components/widgets/dongxw/SupplierSelect.vue';
 
     const defaultEntity = {
         id: null,
         customerId: null,
         status: 0,
         customerOrderCode: '',
-        epOrderCode : '',
-        businessBy : '',
+        epOrderCode: '',
+        businessBy: '',
         invoiceNo: '',
-        remark : '',
-        materialRemark : '',
+        remark: '',
+        materialRemark: '',
         customerOrderImg: null,
         //supplierId: 0,
         supplyId: 0,
-        orderDate : null,
-        customerIssueDate : null,
+        orderDate: null,
+        customerIssueDate: null,
         checkDate: null,
         factroyIssuseDate: null
     };
@@ -209,7 +222,7 @@
         data() {
             return {
                 activeName: 'orderInfo',
-                isExp : false,
+                isExp: false,
                 ruleTpl: {when: null, then: null},
                 entity: _.cloneDeep(defaultEntity),
                 dateRange: [],
