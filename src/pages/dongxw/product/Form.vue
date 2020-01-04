@@ -1,7 +1,20 @@
 <template>
     <div>
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
+            <el-row :span="24" style="margin-top: 10px">
+                <el-col :span="12">
+                    <el-form-item label="产品大类" prop="parentId" :rules="[{ required: true}]">
+                        <product-type-select v-model="entity.parentId" :clearable="true"></product-type-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="产品小类" prop="productTypeId" :rules="[{ required: true}]">
+                        <product-sub-type-select :parentTypeId="entity.parentId" v-model="entity.productTypeId"
+                                                 :clearable="true"></product-sub-type-select>
+                    </el-form-item>
+                </el-col>
 
+            </el-row>
             <el-form-item style="margin-top: 10px" label="编码" prop="code">
                 <el-input placeholder="编码" v-model="entity.code"></el-input>
             </el-form-item>
@@ -28,20 +41,8 @@
                 <el-input placeholder="UPC-A" v-model="entity.upcA"></el-input>
             </el-form-item>
 
-            <el-row :span="24" style="margin-top: 10px">
-                <el-col :span="12">
-                    <el-form-item label="产品大类" prop="parentId" :rules="[{ required: true}]">
-                        <product-type-select v-model="entity.parentId" :clearable="true"></product-type-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="产品小类" prop="productTypeId" :rules="[{ required: true}]">
-                        <product-sub-type-select :parentTypeId="entity.parentId" v-model="entity.productTypeId"
-                                                 :clearable="true"></product-sub-type-select>
-                    </el-form-item>
-                </el-col>
 
-            </el-row>
+
             <el-row :span="24" style="margin-top: 10px">
                 <el-col :span="12">
                     <el-form-item label="单位" prop="unit">
@@ -61,7 +62,6 @@
 
             <el-form-item label="产品图片" prop="">
                 <div :span="12" class="productLogo">
-
                     <v-image-uploader :form-data="{}" v-model="entity.picUrl"/>
                     <!--<div style="text-align:center"> 产品图片 </div>-->
                 </div>
