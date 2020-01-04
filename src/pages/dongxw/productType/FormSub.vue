@@ -7,11 +7,11 @@
                 <el-input placeholder="parentId" v-model="parentId" disabled></el-input>
             </el-form-item>
 
-            <el-form-item label="产品类型" prop="code" >
-                <el-input placeholder="产品类型" v-model="entity.code"></el-input>
+            <el-form-item label="产品小类" prop="code" >
+                <el-input placeholder="产品小类" v-model="entity.code"></el-input>
             </el-form-item>
-            <el-form-item label="产品类型说明" prop="name">
-                <el-input placeholder="产品类型说明" v-model="entity.name"></el-input>
+            <el-form-item label="产品小类说明" prop="name">
+                <el-input placeholder="产品小类说明" v-model="entity.name"></el-input>
             </el-form-item>
 
 

@@ -10,7 +10,7 @@
 
                 </el-form-item>
                 <el-form-item label="订单" prop="orderId">
-                    <order-master-select  v-model="page.query.param.orderId"   :clearable="true">
+                    <order-master-select :customerId="page.query.param.customerId" v-model="page.query.param.orderId"   :clearable="true">
 
                     </order-master-select>
 
@@ -33,14 +33,16 @@
                     <product-select :productTypeId="page.query.param.productTypeId" v-model="page.query.param.productId" :clearable="true"></product-select>
 
                 </el-form-item>
-
-                <!--<el-form-item label="客款号" prop="customerCode">-->
-                    <!--<el-input v-model="page.query.param.epCode" clearable></el-input>-->
-                <!--</el-form-item>-->
-                <el-form-item label="供应商" prop="supplierId">
-                 <supplier-select v-model="page.query.param.supplierId" :clearable="true"></supplier-select>
-
+                <el-form-item label="EP款号" prop="customerCode" style="width:120px">
+                    <el-input v-model="page.query.param.epCode" clearable></el-input>
                 </el-form-item>
+                <el-form-item label="客款号" prop="customerCode" style="width:120px">
+                    <el-input v-model="page.query.param.code" clearable></el-input>
+                </el-form-item>
+                <!--<el-form-item label="供应商" prop="supplierId">-->
+                 <!--<supplier-select v-model="page.query.param.supplierId" :clearable="true"></supplier-select>-->
+
+                <!--</el-form-item>-->
 
 
             </el-form>
@@ -71,12 +73,12 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="customerOrderCode" label="客户订单号" width="120">
+            <el-table-column prop="customerOrderCode" label="客户订单号" width="110">
                 <template slot-scope="{row}">
                     {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
+            <el-table-column prop="epOrderCode" label="EP订单号" width="110">
                 <template slot-scope="{row}">
                     {{ row.orderMaster?row.orderMaster.epOrderCode:'-'}}
                 </template>
@@ -92,13 +94,13 @@
                     {{ row.productType?row.productType.code:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="productId" label="产品编码" width="100">
+            <el-table-column prop="productId" label="客款号" width="100">
                 <template slot-scope="{row}">
                      {{ row.product?row.product.code:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="customerCode" label="客款号" width="120"></el-table-column>
-            <el-table-column prop="epCode" label="EP款号" width="120">
+            <!--<el-table-column prop="customerCode" label="客款号" width="120"></el-table-column>-->
+            <el-table-column prop="epCode" label="EP款号" width="100">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.epCode:'-'}}
                 </template>
@@ -106,37 +108,47 @@
             </el-table-column>
 
 
-
             <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
-                    <img v-if="row.product.picUrl" :src="row.product.picUrl" width="60px" height="60px" alt="">
+                    <img v-if="row.product&&row.product.picUrl" :src="row.product.picUrl" width="60px" height="60px"
+                         alt="">
 
                 </template>
             </el-table-column>
 
-            <el-table-column prop="条码" label="条码" width="60">
+            <el-table-column prop="产品描述" label="产品描述" width="120">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.remark:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="配色" label="配色" width="70">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.color:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="尺寸" label="尺寸" width="80">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.size:'-'}}
+                </template>
+            </el-table-column>
+            <!--<el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>-->
+            <!--<el-table-column prop="currency" label="货币" width="80"></el-table-column>-->
+            <el-table-column prop="条码" label="条码" width="115">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.barCode:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="配色" label="配色" width="60"></el-table-column>
-            <el-table-column prop="尺寸" label="尺寸" width="60"></el-table-column>
-            <el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>
-
-            <el-table-column prop="supplier" label="供应商" width="120">
+            <el-table-column prop="qty" label="数量" width="100"></el-table-column>
+            <el-table-column prop="unit" label="单位" width="80">
                 <template slot-scope="{row}">
-                    {{ row.supplier?row.supplier.name:'-'}}
+                    {{ row.product?row.product.uint:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="unit" label="单位" width="80"></el-table-column>
-            <el-table-column prop="qty" label="数量" width="120"></el-table-column>
             <el-table-column prop="price" label="单价" width="100"></el-table-column>
-             <el-table-column prop="money" label="金额" width="80"></el-table-column>
+            <el-table-column prop="money" label="金额" width="80"></el-table-column>
 
-            <el-table-column prop="currency" label="货币" width="80"></el-table-column>
 
             <el-table-column prop="remark" label="备注"></el-table-column>
-            <el-table-column prop="material" label="主料" width="120"></el-table-column>
 
             <el-table-column prop="createDate" label="建档时间" width="100"></el-table-column>
             <!--<el-table-column prop="createBy" label="建档人" width="100">-->
@@ -146,15 +158,47 @@
                             :style="'style:red'"> {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="ibQty" label="内盒数量"></el-table-column>
-            <el-table-column prop="ibGw" label="内盒毛重(kg)" width="100"></el-table-column>
-            <el-table-column prop="ibNw" label="内盒净重(kg)" width="100"></el-table-column>
-            <el-table-column prop="ibSize" label="内盒尺寸"></el-table-column>
+            <el-table-column prop="ibQty" label="内盒数量">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.ibQty:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="ibGw" label="内盒毛重(kg)" width="100">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.ibGw:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="ibNw" label="内盒净重(kg)" width="100">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.ibNw:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="ibSize" label="内盒尺寸">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.ibSize:'-'}}
+                </template>
+            </el-table-column>
 
-            <el-table-column prop="obQty" label="外箱数量"></el-table-column>
-            <el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>
-            <el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>
-            <el-table-column prop="obSize" label="外箱尺寸" :fixed="'right'"></el-table-column>
+            <el-table-column prop="obQty" label="外箱数量">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.obQty:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="obGw" label="外箱毛重(kg)" width="100">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.obGw:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="obNw" label="外箱净重(kg)" width="100">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.obNw:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="obSize" label="外箱尺寸" :fixed="'right'">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.obSize:'-'}}
+                </template>
+            </el-table-column>
 
             <!--总数量，总金额-->
             <!--<el-table-column width="140" label="操作" :fixed="'right'">-->

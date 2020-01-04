@@ -21,6 +21,12 @@ let router0 = [
                 meta: {title: '订单产品查询', perm: 'orderProduct:manage'}
             },
             {
+                path: 'dongxw/customer/manage',
+                component: require('@/pages/dongxw/customer/Manage.vue'),
+                name: 'customer:manage',
+                meta: {title: '客户名单', perm: 'customer:manage'}
+            },
+            {
                 path: 'dongxw/productType/manage',
                 component: require('@/pages/dongxw/productType/MainForm.vue'),
                 name: 'productType:manage',
@@ -32,18 +38,13 @@ let router0 = [
                 name: 'product:manage',
                 meta: {title: '产品列表', perm: 'product:manage'}
             },
-            {
-                path: 'dongxw/customer/manage',
-                component: require('@/pages/dongxw/customer/Manage.vue'),
-                name: 'customer:manage',
-                meta: {title: '客户名单', perm: 'customer:manage'}
-            },
-            {
-                path: 'dongxw/supplier/manage',
-                component: require('@/pages/dongxw/supplier/Manage.vue'),
-                name: 'supplier:manage',
-                meta: {title: '供应商名单', perm: 'supplier:manage'}
-            },
+
+            // {
+            //     path: 'dongxw/supplier/manage',
+            //     component: require('@/pages/dongxw/supplier/Manage.vue'),
+            //     name: 'supplier:manage',
+            //     meta: {title: '供应商名单', perm: 'supplier:manage'}
+            // },
 
         ]
     },

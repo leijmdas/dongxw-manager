@@ -9,42 +9,39 @@
                 <el-form-item label="产品小类">
                     <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
                 </el-form-item>
-
-                <el-form-item label="客款号" prop="code">
-                    <el-input v-model="page.query.param.code" clearable></el-input>
-                </el-form-item>
                 <el-form-item label="EP款号" prop="epCode">
                     <el-input v-model="page.query.param.epCode" clearable></el-input>
                 </el-form-item>
 
-                <!--<el-form-item label="客款号" prop="code">-->
-                    <!--<el-input v-model="page.query.param.code" clearable></el-input>-->
-                <!--</el-form-item>-->
+                <el-form-item label="客款号" prop="code">
+                    <el-input v-model="page.query.param.code" clearable></el-input>
+                </el-form-item>
+
                 <el-form-item label="产品描述" prop="remark">
                     <el-input v-model="page.query.param.remark" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="颜色" prop="color">
                     <el-input v-model="page.query.param.color" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="条码" prop="barCode">
-                    <el-input v-model="page.query.param.barCode" clearable></el-input>
+                <el-form-item label="尺寸" prop="barCode">
+                    <el-input v-model="page.query.param.size" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="状态" prop="status">
-                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
+                <!--<el-form-item label="状态" prop="status">-->
+                    <!--<el-select :clearable="true" v-model="page.query.param.status" style="width:100px">-->
+                        <!--<el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"-->
+                                   <!--:label="item[1]"></el-option>-->
+                    <!--</el-select>-->
+                <!--</el-form-item>-->
 
-                <el-form-item>
-                    <!--<el-button-group></el-button-group>-->
-                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
-                    <!--<el-button @click="cancel">取消</el-button>-->
-                    <!--<el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>-->
-                    <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
+                <!--<el-form-item>-->
+                    <!--&lt;!&ndash;<el-button-group></el-button-group>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<el-button @click="cancel">取消</el-button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>&ndash;&gt;-->
 
-                </el-form-item>
+                <!--</el-form-item>-->
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
@@ -66,10 +63,15 @@
 
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column  prop="seq" label="序号" width="50">
-
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
-
             </el-table-column>
+
+            <el-table-column prop="customerId" label="客户名称" width="120">
+                <template slot-scope="{row}">
+                    {{ row.customer?row.customer.custName:'-'}}
+                </template>
+            </el-table-column>
+
             <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
             <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
 
@@ -85,22 +87,21 @@
             </el-table-column>
             <el-table-column prop="productSubType" label="产品小类" width="160">
                 <template slot-scope="{row}">
-                    <!--{{ row.productSubType? row.productSubType.code+' '+row.productSubType.name:'-' }}-->
                     {{ row.productSubType? row.productSubType.code :'-' }}
                 </template>
             </el-table-column>
 
 
-            <el-table-column prop="remark" label="产品描述" width="245">      </el-table-column>
-            <el-table-column prop="unit" label="单位" width="60">      </el-table-column>
+            <el-table-column prop="remark" label="产品描述" width="245"></el-table-column>
+            <el-table-column prop="unit" label="单位" width="60"></el-table-column>
 
             <el-table-column prop="picUrl" label="产品图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
                     <img v-if="row.picUrl" :src="row.picUrl" width="60px" height="60px" alt="">
-                    <el-image v-if="row.picUrl"
-                              style="width: 60px; height: 60px"
-                              :src="row.picUrl">
-                    </el-image>
+                    <!--<el-image v-if="row.picUrl"-->
+                    <!--style="width: 60px; height: 60px"-->
+                              <!--:src="row.picUrl">-->
+                    <!--</el-image>-->
                 </template>
             </el-table-column>
             <el-table-column prop="color" label="颜色" width="100">
@@ -123,6 +124,15 @@
                     {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
                 </template>
             </el-table-column>
+            <el-table-column prop="ibQty" label="内盒数量"></el-table-column>
+            <el-table-column prop="ibGw" label="内盒毛重(kg)" width="100"></el-table-column>
+            <el-table-column prop="ibNw" label="内盒净重(kg)" width="100"></el-table-column>
+            <el-table-column prop="ibSize" label="内盒尺寸"></el-table-column>
+
+            <el-table-column prop="obQty" label="外箱数量"></el-table-column>
+            <el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>
+            <el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>
+            <el-table-column prop="obSize" label="外箱尺寸"></el-table-column>
 
             <el-table-column prop="memo" label="备注"  >
             </el-table-column>
@@ -140,9 +150,9 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag" :width="'600px'" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'650px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
-            <div slot="footer">
+            <div slot="footer"  style="margin-right:40px">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>

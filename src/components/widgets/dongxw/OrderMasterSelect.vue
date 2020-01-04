@@ -33,7 +33,7 @@
             disabled: {
                 type: Boolean
             },
-            pCustomerId: {
+            customerId: {
                 //type: Number
             }
         },
@@ -48,10 +48,10 @@
             }
         },
         watch: {
-            pCustomerId: {
+            customerId: {
                 handler: function(newVal, oldVal) {
-                    // this.value = ''
-                    // this.currentValue = ''
+                    this.value = ''
+                    this.currentValue = ''
                     this.refresh();
                 },
                 deep: true
@@ -65,7 +65,7 @@
                 this.loading = true
                 this.$api.dongxw.OrderMaster.query({
                     param: {
-                        customerId: this.pCustomerId,
+                        customerId: this.customerId,
                         isDeleted: false
                     }
                 }).then(rsp => {

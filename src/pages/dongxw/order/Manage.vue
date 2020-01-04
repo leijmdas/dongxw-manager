@@ -50,7 +50,6 @@
                 <!--<el-form-item>-->
                     <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
                     <!--<el-button @click="cancel">取消</el-button>-->
-
                 <!--</el-form-item>-->
 
             </el-form>
@@ -70,7 +69,7 @@
             </el-table-column>
             <el-table-column prop="id" label="订单标识" width="80"></el-table-column>
 
-            <el-table-column prop="customerId" label="客户编码" width="80">
+            <el-table-column prop="customerId" label="客户代码" width="80">
                 <template slot-scope="{row}">
                     {{ row.customer?row.customer.custNo:'-'}}
                  </template>
@@ -101,7 +100,11 @@
                 </template>
             </el-table-column>
 
-
+            <el-table-column prop="moneyType" label="结算币种" width="80">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                </template>
+            </el-table-column>
             <el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>
 
             <el-table-column prop="orderDate" label="下单日期" width="100">
@@ -125,13 +128,9 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="invoiceNo" label="预付发票编号" width="120"></el-table-column>
+            <el-table-column prop="invoiceNoIni" label="预付发票编号" width="120"></el-table-column>
             <el-table-column prop="invoiceNo" label="正式发票编号" width="120"></el-table-column>
-            <el-table-column prop="moneyType" label="结算币种" width="80">
-                <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
-                </template>
-            </el-table-column>
+
 
             <el-table-column prop="createDate" label="建档时间" width="150">
             </el-table-column>
@@ -140,9 +139,6 @@
 
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <!--<el-table-column prop="supplyId" label="供应商" width="120"></el-table-column>-->
-
-            <!--总数量，总金额-->
             <el-table-column width="140" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
@@ -322,7 +318,6 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
-                //console.log(options)
                 this.row = null;
                 this.search();
             },
@@ -366,17 +361,12 @@
 
             },
             getRow() {
-                console.log("row");
                 console.log(this.row);
 
                 if (this.row) {
-                    console.log("rowT");
                     return this.row;
                 }else{
-                    console.log("rowF");
-
                 }
-                console.log("this.$refs.table.tableData");
                 console.log(this.$refs.table.tableData);
                 if (this.$refs.table.tableData) {
                     this.row = this.$refs.table.tableData[0];

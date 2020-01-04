@@ -37,18 +37,7 @@
                         </el-col>
                     </el-row>
 
-                    <el-row :span="22">
-                        <el-col :span="11">
-                            <el-form-item label="预付发票编号" prop="invoiceNo">
-                                <el-input placeholder="预付发票编号" v-model="entity.invoiceNo"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="11">
-                            <el-form-item label="正式发票编号" prop="businessBy">
-                                <el-input placeholder="正式发票编号" v-model="entity.businessBy"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+
                     <el-row :span="22">
                         <el-col :span="11">
                             <el-form-item label="结算币种" prop="moneyType">
@@ -64,6 +53,7 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
+
                     <el-row :span="22" style="margin-top: 10px ">
                         <el-col :span="11">
                             <el-form-item label="下单日期" prop="" :rules="[{ required: true}]">
@@ -117,22 +107,27 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-
+                    <el-row :span="22">
+                        <el-col :span="11">
+                            <el-form-item label="预付发票编号" prop="invoiceNoIni">
+                                <el-input placeholder="预付发票编号" v-model="entity.invoiceNoIni"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="11">
+                            <el-form-item label="正式发票编号" prop="invoiceNo">
+                                <el-input placeholder="正式发票编号" v-model="entity.invoiceNo"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                     <el-row :span="22" style="margin-top: 10px ">
-
                         <el-col :span="22">
                             <el-form-item label="备注" prop="remark">
                                 <el-input placeholder="备注" v-model="entity.remark"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <!--<el-form-item label="主料描述" prop="materialRemark">-->
-                    <!--<el-input placeholder="主料描述" v-model="entity.materialRemark"></el-input>-->
-                    <!--</el-form-item>-->
 
-                    <!--<el-form-item label="供应商"   prop="supplyId"  >-->
-                    <!--<supplier-select  v-model="entity.supplyId" :clearable="true"></supplier-select>-->
-                    <!--</el-form-item>-->
+
 
                 </fieldset>
 
@@ -203,19 +198,21 @@
         id: null,
         customerId: null,
         status: 0,
+        moneyType:100,
         customerOrderCode: '',
         epOrderCode: '',
         businessBy: '',
         invoiceNo: '',
+        invoiceNoIni: '',
         remark: '',
         materialRemark: '',
         customerOrderImg: null,
-        //supplierId: 0,
-        supplyId: 0,
         orderDate: null,
         customerIssueDate: null,
         checkDate: null,
-        factroyIssuseDate: null
+        factroyIssuseDate: null,
+        invoiceId : 0,
+        invoiceIdIni:0
     };
     export default {
         components: {CustomerSelect, SupplierSelect},
@@ -231,9 +228,7 @@
                 isDisabled: false,
                 limitTotal: false,
                 rules: {
-                    bizType: [{
-                        required: true
-                    }],
+
                     name: [
                         {required: true, message: "名称不能为空", trigger: "blur"},
                         {
