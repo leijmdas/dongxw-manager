@@ -53,7 +53,8 @@
             <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出XLS</el-button>
-            <!--<el-button type="primary" plain @click="create">新增</el-button>-->
+
+
             <el-switch style="margin-left:20px; margin-right: 20px"
                        v-model="isShowPrdPic"
                        active-text="显示产品图片"
@@ -99,7 +100,7 @@
                      {{ row.product?row.product.code:'-'}}
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="customerCode" label="客款号" width="120"></el-table-column>-->
+
             <el-table-column prop="epCode" label="EP款号" width="100">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.epCode:'-'}}
@@ -141,13 +142,16 @@
             <el-table-column prop="qty" label="数量" width="100"></el-table-column>
             <el-table-column prop="unit" label="单位" width="80">
                 <template slot-scope="{row}">
-                    {{ row.product?row.product.uint:'-'}}
+                    {{ row.product?row.product.unit:'-'}}
                 </template>
             </el-table-column>
             <el-table-column prop="price" label="单价" width="100"></el-table-column>
             <el-table-column prop="money" label="金额" width="80"></el-table-column>
-
-
+            <el-table-column prop="moneyType" label="货币" width="80">
+                <template slot-scope="{row}">
+                    {{ row.orderMaster?$dongxwDict.getText(row.orderMaster.moneyType,$dongxwDict.store.MONEY_TYPE):'-'}}
+                </template>
+            </el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
 
             <el-table-column prop="createDate" label="建档时间" width="100"></el-table-column>

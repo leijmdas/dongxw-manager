@@ -114,32 +114,28 @@
                 </template>
             </el-table-column>
             <!--<el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>-->
-            <!--<el-table-column prop="currency" label="货币" width="80"></el-table-column>-->
             <el-table-column prop="条码" label="条码" width="115">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.barCode:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="qty" label="数量" width="100"></el-table-column>
             <el-table-column prop="unit" label="单位" width="80">
                 <template slot-scope="{row}">
-                    {{ row.product?row.product.uint:'-'}}
+                    {{ row.product?row.product.unit:'-'}}
                 </template>
             </el-table-column>
             <!--<el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>-->
 
-           <!-- <el-table-column prop="supplier" label="供应商" width="120">
-                <template slot-scope="{row}">
-                    {{ row.supplier?row.supplier.name:'-'}}
-                </template>
-            </el-table-column>-->
+
             <el-table-column prop="qty" label="数量" width="120"></el-table-column>
             <el-table-column prop="price" label="单价" width="100"></el-table-column>
-             <el-table-column prop="money" label="金额" width="80"></el-table-column>
-
-            <!--<el-table-column prop="currency" label="货币" width="80"></el-table-column>-->
+            <el-table-column prop="money" label="金额" width="80"></el-table-column>
+            <el-table-column prop="moneyType" label="货币" width="80">
+                <template slot-scope="{row}">
+                    {{ row.orderMaster?$dongxwDict.getText(row.orderMaster.moneyType,$dongxwDict.store.MONEY_TYPE):'-'}}
+                </template>
+            </el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
-            <!--<el-table-column prop="material" label="主料" width="120"></el-table-column>-->
 
             <el-table-column prop="createDate" label="建档时间" width="100"></el-table-column>
             <!--<el-table-column prop="createBy" label="建档人" width="100">-->
