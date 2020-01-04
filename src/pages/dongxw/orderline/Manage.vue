@@ -8,8 +8,6 @@
                     <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
 
                 </el-form-item>
-
-
                 <el-form-item label="产品小类" prop="productTypeId">
                     <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
 
@@ -21,16 +19,10 @@
 
                 </el-form-item>
 
-
                 <el-form-item label="客款号" prop="customerCode">
                     <el-input v-model="page.query.param.epCode" clearable></el-input>
                 </el-form-item>
 
-
-                <!--<el-form-item label="供应商" prop="supplierId">-->
-                 <!--<supplier-select v-model="page.query.param.supplierId" :clearable="true"></supplier-select>-->
-
-                <!--</el-form-item>-->
 
 
             </el-form>
@@ -52,7 +44,6 @@
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
-
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
@@ -61,9 +52,23 @@
                     {{ row.customer?row.customer.custName:'-'}}
                 </template>
             </el-table-column>
+            <el-table-column prop="productId" label="客款号" width="100">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.code:'-'}}
+                </template>
+            </el-table-column>
 
-            <el-table-column prop="orderId" label="订单标识" width="70"></el-table-column>
-
+            <!--<el-table-column prop="orderId" label="订单标识" width="70"></el-table-column>-->
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
+                <template slot-scope="{row}">
+                    {{ row.orderMaster?row.orderMaster.epOrderCode:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="epCode" label="EP款号" width="100">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.epCode:'-'}}
+                </template>
+            </el-table-column>
 
             <el-table-column prop="parentId" label="产品大类" width="100">
                 <template slot-scope="{row}">
@@ -75,30 +80,16 @@
                     {{ row.productType?row.productType.code:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="productId" label="客款号" width="100">
-                <template slot-scope="{row}">
-                     {{ row.product?row.product.code:'-'}}
-                </template>
-            </el-table-column>
-            <!--<el-table-column prop="customerCode" label="客款号" width="120"></el-table-column>-->
-            <el-table-column prop="epCode" label="EP款号" width="100">
-                <template slot-scope="{row}">
-                    {{ row.product?row.product.epCode:'-'}}
-                </template>
-
-            </el-table-column>
-
 
 
             <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
                     <img v-if="row.product&&row.product.picUrl" :src="row.product.picUrl" width="60px" height="60px" alt="">
 
-
                 </template>
             </el-table-column>
 
-            <el-table-column prop="产品描述" label="产品描述" >
+            <el-table-column prop="产品描述" label="产品描述" width="140">>
                 <template slot-scope="{row}">
                     {{ row.product?row.product.remark:'-'}}
                 </template>
@@ -119,7 +110,7 @@
                     {{ row.product?row.product.barCode:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="unit" label="单位" width="80">
+            <el-table-column prop="unit" label="单位" width="70">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.unit:'-'}}
                 </template>
@@ -127,9 +118,9 @@
             <!--<el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>-->
 
 
-            <el-table-column prop="qty" label="数量" width="120"></el-table-column>
-            <el-table-column prop="price" label="单价" width="100"></el-table-column>
-            <el-table-column prop="money" label="金额" width="80"></el-table-column>
+            <el-table-column prop="qty" label="数量" width="80"></el-table-column>
+            <el-table-column prop="price" label="单价" width="60"></el-table-column>
+            <el-table-column prop="money" label="金额" width="120"></el-table-column>
             <el-table-column prop="moneyType" label="货币" width="80">
                 <template slot-scope="{row}">
                     {{ row.orderMaster?$dongxwDict.getText(row.orderMaster.moneyType,$dongxwDict.store.MONEY_TYPE):'-'}}

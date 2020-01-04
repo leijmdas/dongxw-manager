@@ -55,7 +55,7 @@
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-            <span slot="tip" style="margin-left:60px;color :red">  只有草稿状态才可以删除!   </span>
+            <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单产品管理!  只有草稿状态才可以删除! </span>
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
@@ -67,7 +67,7 @@
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
-            <el-table-column prop="id" label="订单标识" width="80"></el-table-column>
+            <!--<el-table-column prop="id" label="订单标识" width="80"></el-table-column>-->
 
             <el-table-column prop="customerId" label="客户代码" width="80">
                 <template slot-scope="{row}">
@@ -81,13 +81,14 @@
             </el-table-column>
 
 
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
-            <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号" width="120">
+             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号" width="120">
                 <template slot-scope="scope">
                     <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
                     <span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>
                 </template>
             </el-table-column>
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
+
             <el-table-column  prop="customerOrderImg" label="订单原件" width="78">
                 <template slot-scope="scope">
                     <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
