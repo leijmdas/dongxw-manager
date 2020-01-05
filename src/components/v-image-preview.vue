@@ -1,8 +1,8 @@
 <template>
-    <div v-model="urls" :removeUrl="funRemoveUrl">
-        <span v-for="url in urls">
+    <div  :removeUrl="funRemoveUrl">
+        <span v-for="url in urlArrays">
               <span v-if="url">
-                <el-button @click="removeUrl(url)"type="text" title="删除" plain>
+                <el-button v-if="showRemoveBtn" @click="removeUrl(url)"type="text" title="删除" plain>
                  <i class="el-icon-delete " style="color:red"></i>
                 </el-button>
 
@@ -18,34 +18,69 @@
         name: 'vImageUploader',
         data() {
             return {
-                // urls:[
-                //     'http://120.78.136.63:8888/group1/M00/00/02/rBIvIF4RaECAJCaKAABm2RpgHNo984.jpg',
-                //     'http://120.78.136.63:8888/group1/M00/00/02/rBIvIF4RaECAJCaKAABm2RpgHNo984.jpg',
-                //
-                // ]
+                urls: null
             }
         },
         props: {
             funRemoveUrl:{
-                required : true,
+                required : false,
                 type: Function ,
             },
-            urls: {
-                required: true,
-                type: Array,
-                default: []
+
+            value: {
+                type: String,
+                required: false
+            },
+            picUrl: {
+                type: String,
+                required: false,
+                default:null
             },
             imgStyle: {
                 required: false,
                 type: String,
-                default: null
+                default: 'width:60px;height:60px'
+            },
+
+            showRemoveBtn:{
+                required : false,
+                type: Boolean ,
+                default:false
+            },
+        },
+
+        computed: {
+            urlArrays: {
+                get() {
+                    let arr = this.value ? this.value.split(',') : [];
+                    if(this.picUrl){
+                        arr.unshift(this.picUrl)
+                    }
+                    return arr
+                },
+                set (val) {
+                    this.$emit('input', val)
+                }
             }
         },
         methods: {
             removeUrl(url) {
-                if(this.funRemoveUrl){
-                    this.funRemoveUrl(url)
+                // if (this.funRemoveUrl) {
+                //     this.funRemoveUrl(url)
+                // }
+                this.$message(url);
+                let newurls=[]
+                for(var i in this.urlArrays){
+                    if(url===this.urlArrays[i]){
+
+                    }
+                    else{
+                        newurls.push(this.urlArrays[i])
+                    }
+
                 }
+
+                this.urlArrays = newurls.join(',')
             }
         }
 

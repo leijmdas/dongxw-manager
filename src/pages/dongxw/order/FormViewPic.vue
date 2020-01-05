@@ -2,7 +2,10 @@
     <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
 
             <div label="订单原件" name="customerOrderImg">
-                <img v-if="entity.customerOrderImg" :src="entity.customerOrderImg" alt="">
+                <img v-if="entity.customerOrderImg"
+                     :src="entity.customerOrderImg"
+                     Style="height:85%;width:85%"
+                     alt="\">
 
                 <!--<div style="margin:10px" class="orderLogoView">-->
                     <!--<v-image-uploader :form-data="{}" :multiple=true v-model="entity.customerOrderImg">-->

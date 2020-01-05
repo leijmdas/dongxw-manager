@@ -80,7 +80,9 @@
                             <el-form-item label="产品图片" prop="">
 
                                 <div :span="12" >
-                                    <v-image-uploader    :isShow="isShow" :form-data="{}" v-model="entity.picUrl"/>
+                                    <v-image-uploader    :isShow="isShow" :form-data="{}" v-model="entity.picUrl"
+                                        :imgStyle="'margin-right:10px;width:160px;height:160px'"/>
+
                                     <!--<i slot="default" class="el-icon-plus"></i>-->
                                 </div>
                             </el-form-item>
@@ -131,8 +133,8 @@
 
                 </el-tab-pane>
                 <el-tab-pane label="产品图片集" name="prdImage">
-                    <v-image-preview :urls="urls" v-model="urls" :funRemoveUrl="removeUrl"
-                                     :imgStyle="'margin-right:10px;width:140px;height:120px'">
+                    <v-image-preview v-model="entity.imgUrls"
+                                     :showRemoveBtn = "true" :imgStyle="'margin-right:10px;width:140px;height:120px'">
 
                     <!--<el-upload ref="upload" list-type="text" :action="action" :data="formData"-->
                                <!--:beforeUpload="beforeUpload" :auto-upload="true"-->
@@ -306,25 +308,12 @@
             };
         },
         methods: {
-            removeUrl(url){
-                this.$message(url);
-                let newurls=[]
-                for(var i in this.urls){
-                    if(url===this.urls[i]){
 
-                    }
-                    else{
-                        newurls.push(this.urls[i])
-                    }
-
-                }
-                this.urls=newurls;
+            clearImg() {
+                this.entity.picUrl = null;
             },
-            clearImg(){
-                this.entity.picUrl=null;
-            },
-            clearAllImg(){
-                this.urls=null;
+            clearAllImg() {
+                this.entity.imgUrls = null;
             },
 
             handleExceed() {
@@ -332,8 +321,11 @@
             },
             handleSuccess(response, file, fileList) {
                 console.log(response.path)
-                this.urls.push(response.path)
-                //this.$refs.myupload.clearFiles();
+                let urls=this.entity.imgUrls?this.entity.imgUrls.split(','):[]
+                urls.push(response.path)
+                this.entity.imgUrls=urls.join(',')
+                console.log(this.entity.imgUrls)
+
             },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
@@ -374,7 +366,7 @@
                 this.entity = _.cloneDeep(this.resetEntity);
             },
             submitForm() {
-                this.entity.imgUrls = this.urls ? this.urls.join(',') : null;
+                //this.entity.imgUrls = this.urls ? this.urls.join(',') : null;
 
                 this.$refs["form"].validate(valid => {
                     if (valid) {
@@ -404,7 +396,7 @@
                         console.log(JSON.stringify(r))
                         this.entity = r.data;
 
-                        this.urls = this.entity.imgUrls  ? this.entity.imgUrls.split(',') : [];
+                        //this.urls = this.entity.imgUrls  ? this.entity.imgUrls.split(',') : [];
 
                     });
                 } else {

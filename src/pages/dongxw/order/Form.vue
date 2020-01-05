@@ -147,7 +147,8 @@
             <el-tab-pane height="400px" label="订单原件" name="orderPic">
 
                 <div style="margin:10px" class="orderLogo">
-                    <v-image-uploader :form-data="{}" :multiple=true v-model="entity.customerOrderImg">
+                    <v-image-uploader v-model="entity.customerOrderImg" :form-data="{}" :multiple=true
+                       :imgStyle="'width:80%;height:80%'">
 
                     </v-image-uploader>
                     <!--<div style="text-align:center"> 订单原件</div>-->

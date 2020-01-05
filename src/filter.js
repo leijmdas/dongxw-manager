@@ -9,7 +9,7 @@ export default {
       val = + val
       return val ? val.toFixed(2) : '0.00'
     })
-    
+
     //转换为大写字母
     Vue.filter('upper', {
       read: val => {
@@ -105,5 +105,7 @@ export default {
         return '√'
       }
     })
+
+
   }
 }

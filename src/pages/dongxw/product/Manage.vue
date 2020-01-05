@@ -102,11 +102,11 @@
 
             <el-table-column prop="picUrl" label="产品图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
-                    <img v-if="row.picUrl" :src="row.picUrl" width="60px" height="60px" alt="">
-                    <!--<el-image v-if="row.picUrl"-->
-                    <!--style="width: 60px; height: 60px"-->
-                              <!--:src="row.picUrl">-->
-                    <!--</el-image>-->
+                    <!--<img v-if="row.picUrl" :src="row.picUrl" width="60px" height="60px" alt="">-->
+
+                    <v-image-preview v-model="row.imgUrls" :picUrl="row.picUrl"  >
+                    </v-image-preview>
+
                 </template>
             </el-table-column>
             <el-table-column prop="color" label="颜色" width="100">
@@ -216,6 +216,7 @@
         computed: {},
 
         methods: {
+
             onDataloaded(rsp) {
                 // if (rsp.total < 1) return;
                 // let promotionIds = rsp.data.map(r => r.id);
