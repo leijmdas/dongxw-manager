@@ -3,7 +3,7 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <el-form-item label="客户" prop="subjectType">
+                <el-form-item label="客户" prop="customerId">
                     <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
 
                 </el-form-item>
@@ -54,14 +54,16 @@
 
             </el-form>
         </div>
-        <v-toolbar title="数据列表" type="alert">
-            <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单产品管理!  只有草稿状态才可以删除! </span>
-            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-            <el-button @click="cancel">取消</el-button>
+            <v-toolbar title="数据列表" type="alert">
+                <span slot="tip" style="margin-left:60px;">
+                <span style="color :red">  鼠标双击进入订单产品管理! </span>
+                </span>
+                <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                <el-button @click="cancel">取消</el-button>
 
-            <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button type="primary" plain @click="create">新增</el-button>
-        </v-toolbar>
+                <el-button plain @click="exportRecords">导出 XLS</el-button>
+                <el-button type="primary" plain @click="create">新增</el-button>
+            </v-toolbar>
         <v-table ref="table" :page="page" :dblclick="showLine" :click="clickRow" :table-minheight="450" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
@@ -88,6 +90,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
+
 
             <el-table-column  prop="customerOrderImg" label="订单原件" width="78">
                 <template slot-scope="scope">
@@ -129,7 +132,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="invoiceNoIni" label="预付发票编号" width="120"></el-table-column>
+            <el-table-column prop="invoiceNoIni" label="预收发票编号" width="120"></el-table-column>
             <el-table-column prop="invoiceNo" label="正式发票编号" width="120"></el-table-column>
 
 
@@ -140,24 +143,28 @@
 
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column width="140" label="操作" :fixed="'right'">
+            <el-table-column width="145" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
-                    <el-button type="text" title="编辑" @click="edit(scope.row)">
-                        <i class="el-icon-edit"></i>
-                    </el-button>
+                        <el-button type="text" title="编辑" @click="edit(scope.row)">
+                            <i class="el-icon-edit"></i>
+                        </el-button>
+                    <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
+                        <el-button type="text" @click="del(scope.row,scope.$index)" title="删除"
+                                   v-if="scope.row.status==0">
+                            <i class="el-icon-delete red"></i>
+                        </el-button>
+                    </el-tooltip>
 
-                    <!--<el-button type="success" @click="showLine(scope.row)" round size="mini">产品</el-button>-->
-
-                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
-                        <i class="el-icon-delete red"></i>
-                    </el-button>
+                    <!--<el-button v-if="scope.row.orderType==20" type="info" @click="showLine(scope.row)" >增加子订单</el-button>-->
 
                 </template>
             </el-table-column>
 
         </v-table>
-        <v-dialog ref="formDiag" title="信息编辑" >
+
+
+        <v-dialog ref="formDiag" title="信息编辑" :width="'65%'">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>

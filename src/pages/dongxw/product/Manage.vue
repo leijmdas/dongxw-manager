@@ -3,6 +3,11 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
+                <el-form-item label="客户" prop="customerId">
+                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
+
+                </el-form-item>
+
                 <el-form-item label="产品大类">
                     <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
                 </el-form-item>
@@ -150,9 +155,10 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag" :width="'650px'" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'750px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
-            <div slot="footer"  style="margin-right:40px">
+            <div slot="footer" style="margin-right:40px">
+                <!--<el-button type="default"  @click="$refs.formDiag.clearImage()">清除图片</el-button>-->
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
@@ -172,9 +178,10 @@
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import FormPanel from './Form';
+    import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
 
     export default {
-        components: { FormPanel, ProductTypeSelect,ProductSubTypeSelect },
+        components: { CustomerSelect,FormPanel, ProductTypeSelect,ProductSubTypeSelect },
         data() {
             return {
                 isShowPrdPic : false,

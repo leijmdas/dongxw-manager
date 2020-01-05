@@ -4,7 +4,18 @@
             <el-tab-pane label="订单信息" name="orderInfo">
 
 
-                <fieldset align="bottom">
+                <fieldset align="top">
+                    <el-row :span="22" style="margin-top: 10px">
+                        <el-col :span="11">
+                            <el-form-item label="订单类型" prop="orderType" >
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="11">
+                            <el-form-item label="父订单" prop="parentId">
+
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                     <el-row :span="22" style="margin-top: 10px">
                         <el-col :span="11">
                             <el-form-item label="客户" prop="customerId"
@@ -109,8 +120,8 @@
                     </el-row>
                     <el-row :span="22">
                         <el-col :span="11">
-                            <el-form-item label="预付发票编号" prop="invoiceNoIni">
-                                <el-input placeholder="预付发票编号" v-model="entity.invoiceNoIni"></el-input>
+                            <el-form-item label="预收发票编号" prop="invoiceNoIni">
+                                <el-input placeholder="预收发票编号" v-model="entity.invoiceNoIni"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
@@ -219,6 +230,7 @@
         data() {
             return {
                 activeName: 'orderInfo',
+                disables:false,
                 isExp: false,
                 ruleTpl: {when: null, then: null},
                 entity: _.cloneDeep(defaultEntity),

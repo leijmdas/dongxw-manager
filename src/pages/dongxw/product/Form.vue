@@ -78,11 +78,13 @@
                             </el-row>
 
                             <el-form-item label="产品图片" prop="">
-                                <div :span="12" class="productLogo">
-                                    <v-image-uploader :form-data="{}" v-model="entity.picUrl"/>
-                                    <!--<div style="text-align:center"> 产品图片 </div>-->
+
+                                <div :span="12" >
+                                    <v-image-uploader    :isShow="isShow" :form-data="{}" v-model="entity.picUrl"/>
+                                    <!--<i slot="default" class="el-icon-plus"></i>-->
                                 </div>
                             </el-form-item>
+
 
                             <el-form-item label="备注" prop="memo">
                                 <el-input placeholder="备注" v-model="entity.memo"></el-input>
@@ -128,8 +130,32 @@
                     </el-row>
 
                 </el-tab-pane>
-                <el-tab-pane label="产品图片" name="prdImage">
+                <el-tab-pane label="产品图片集" name="prdImage">
+                    <v-image-preview :urls="urls" v-model="urls" :funRemoveUrl="removeUrl"
+                                     :imgStyle="'margin-right:10px;width:140px;height:120px'">
 
+                    <!--<el-upload ref="upload" list-type="text" :action="action" :data="formData"-->
+                               <!--:beforeUpload="beforeUpload" :auto-upload="true"-->
+                               <!--:on-success="handleSuccess" :on-exceed="handleExceed"-->
+                               <!--:on-remove="handleRemove" :multiple="true" :limit="limit">-->
+                        <!--<i class="el-icon-plus"></i>-->
+                        <!--</el-upload>-->
+                        <el-upload slot="loadImage" ref="myupload" :limit="limit" :multiple="true"
+                                   :action="action" :auto-upload="true" :data="formData"
+                                   list-type="text" :beforeUpload="beforeUpload"  :on-exceed="handleExceed"
+                                   :on-preview="handlePictureCardPreview" :on-success="handleSuccess"
+                                   :on-remove="handleRemove">
+                            <i class="el-icon-plus  el-upload--picture-card"></i>
+
+                        </el-upload>
+
+                    </v-image-preview>
+                    <el-button   @click="clearAllImg" type="text" title="清除图片" plain>
+                        <i class="el-icon-delete " style="color:red"></i>
+                    </el-button>
+                    <!--<el-dialog :visible.sync="dialogVisible">-->
+                    <!--<img width="100%" :src="dialogImageUrl" alt="">-->
+                    <!--</el-dialog>-->
                 </el-tab-pane>
 
             </el-tabs>
@@ -169,12 +195,14 @@
 </style>
 
 <script>
+    import {getToken} from '@/utils/auth'
 
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
 
     const defaultEntity = {
+        fileList:[],
         id: null,
         epCode: null,
         code: null,
@@ -184,6 +212,8 @@
         size : '',
         barCode : '',
         picUrl : null ,
+        imgUrls : null,
+        urls :[],
         upcA : '',
         memo : '',
         unit: '',
@@ -191,7 +221,15 @@
         productTypeId: null,
         parentId: null,
         createBy:null,
-        createDate:null
+        createDate:null,
+        ibQty : 0,
+        ibGw : 0,
+        ibNw : 0,
+        ibSize : '',
+        obQty : 0,
+        obGw : 0,
+        obNw : 0,
+        obSize : '',
     };
 
 
@@ -199,7 +237,19 @@
         components: {CustomerSelect,ProductTypeSelect,ProductSubTypeSelect},
         data() {
             return {
+                dialogImageUrl: '',
+                dialogVisible: false,
+                urls:[
+                    // 'http://120.78.136.63:8888/group1/M00/00/02/rBIvIF4RaECAJCaKAABm2RpgHNo984.jpg',
+                    // 'http://120.78.136.63:8888/group1/M00/00/02/rBIvIF4RaECAJCaKAABm2RpgHNo984.jpg',
 
+                ],
+                //   fileList: [{'':'http://120.78.136.63:8888/group1/M00/00/01/rBIvIF4RV3OADd7cAAAWylUKCoI026.png'}],
+                formData: {},
+                action: '/api/file/upload',
+                limit: 8,
+                isShow: true,
+                multiple: true,
                 isExp: false,
                 activeName: 'productInfo',
 
@@ -256,6 +306,51 @@
             };
         },
         methods: {
+            removeUrl(url){
+                this.$message(url);
+                let newurls=[]
+                for(var i in this.urls){
+                    if(url===this.urls[i]){
+
+                    }
+                    else{
+                        newurls.push(this.urls[i])
+                    }
+
+                }
+                this.urls=newurls;
+            },
+            clearImg(){
+                this.entity.picUrl=null;
+            },
+            clearAllImg(){
+                this.urls=null;
+            },
+
+            handleExceed() {
+                this.$message('最多只允许上传'+this.limit+'张图片！')
+            },
+            handleSuccess(response, file, fileList) {
+                console.log(response.path)
+                this.urls.push(response.path)
+                //this.$refs.myupload.clearFiles();
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+                // this.$message(JSON.stringify(file.response.path))
+                //this.urls = []
+            },
+            handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
+            },
+            handleDownload(file) {
+                console.log(file);
+            },
+            beforeUpload(file) {
+                Object.assign(this.formData,{"access-token":getToken()})
+            },
+
             getProps(scope) {
                 return this.entity.props.filter(p => p.propScope == scope);
             },
@@ -269,6 +364,7 @@
                     this.entity.discountValue = 1;
                 }
             },
+
             resetProps() {
 
 
@@ -278,10 +374,11 @@
                 this.entity = _.cloneDeep(this.resetEntity);
             },
             submitForm() {
+                this.entity.imgUrls = this.urls ? this.urls.join(',') : null;
+
                 this.$refs["form"].validate(valid => {
                     if (valid) {
                         let params = Object.assign({}, this.entity);
-
                         this.$api.dongxw.ProductService.save(params).then(rsp => {
                             this.$emit("saved", rsp);
                         });
@@ -297,6 +394,8 @@
                 }
             },
             init(options) {
+                this.$refs.myupload.clearFiles();
+                this.urls = [];
                 this.resetForm();
                 if (options.id) {
                     console.log(JSON.stringify(this.entity));
@@ -304,6 +403,9 @@
                     this.$api.dongxw.ProductService.findById(options.id).then(r => {
                         console.log(JSON.stringify(r))
                         this.entity = r.data;
+
+                        this.urls = this.entity.imgUrls  ? this.entity.imgUrls.split(',') : [];
+
                     });
                 } else {
                     this.isDisabled = false;

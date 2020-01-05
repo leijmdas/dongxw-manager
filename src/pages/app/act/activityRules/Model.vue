@@ -183,7 +183,7 @@
              */
             handleSuccess(response, file, fileList) {
                 console.log(response)
-                this.imgPath = response.path
+                //this.imgPath = response.path
             },
             create() {
                 this.tableDataArea.push({

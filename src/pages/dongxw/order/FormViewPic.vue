@@ -1,7 +1,7 @@
 <template>
     <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
 
-            <div label="订单原件" name="orderPic">
+            <div label="订单原件" name="customerOrderImg">
                 <img v-if="entity.customerOrderImg" :src="entity.customerOrderImg" alt="">
 
                 <!--<div style="margin:10px" class="orderLogoView">-->

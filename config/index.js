@@ -29,7 +29,7 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/api': {
-                //  target: 'http://120.78.136.63:10080',
+                  //target: 'http://120.78.136.63:10080',
                  target: 'http://localhost:10080',
 
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置,
@@ -39,7 +39,7 @@ module.exports = {
             },
             '/dongxw': {
                 //   target: 'http://120.78.136.63:10081/dongxw', // 接口的域名
-                 target: 'http://localhost:10081/dongxw', // 接口的域名
+                target: 'http://localhost:10081/dongxw', // 接口的域名
 
                 secure: false,  // 如果是https接口，需要配置这个参数
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置,

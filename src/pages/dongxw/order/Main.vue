@@ -11,6 +11,9 @@
         <el-tab-pane id="tabPic" label="订单原件" name="tabPic">
             <form-view-panel ref="viewPanel"></form-view-panel>
         </el-tab-pane>
+        <!--<el-tab-pane id="TabSubOrder" label="子订单管理" name="TabSubOrder">-->
+            <!--<form-view-panel ref="viewPanel"></form-view-panel>-->
+        <!--</el-tab-pane>-->
     </el-tabs>
 </template>
 

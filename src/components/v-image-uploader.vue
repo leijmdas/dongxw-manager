@@ -1,17 +1,28 @@
 <template>
-    <el-upload v-loading="loading" :drag="drag" :action="action" :data="formData" :limit="limit" :accept="accept" :before-upload="beforeUpload" :on-success="onSuccess" :on-error="onError"
-               :disabled="disabled" :show-file-list="showFileList" :multiple="multiple">
-        <img v-if="preview && currentValue" :src="currentValue " class="avatar" style="width:100%; height: 100%">
-        <div v-else>
-        <slot >
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        </slot>
-        <div class="el-upload__tip"  v-show="isShow">
-            <slot name="tip"></slot>
-        </div>
-        </div>
-    </el-upload>
+    <div>
+        <el-button v-if="preview && currentValue" @click="clearImg"type="text" title="清除图片" plain>
+            <i class="el-icon-delete " style="color:red"></i>
+        </el-button>
+        <el-upload v-loading="loading" :drag="drag" :action="action" :data="formData" :limit="limit"
+                   :accept="accept"
+                   :before-upload="beforeUpload" :on-success="onSuccess" :on-error="onError"
+                   :disabled="disabled" :show-file-list="showFileList" :multiple="multiple">
+
+             <img v-if="preview && currentValue" :src="currentValue" class="avatar"
+                 style="width:100%; height: 100%">
+            <div v-else>
+                <slot>
+                    <i class="el-icon-upload"></i>
+                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                </slot>
+                <div class="el-upload__tip" v-show="isShow">
+                    <slot name="tip"></slot>
+                </div>
+            </div>
+
+         </el-upload>
+
+    </div>
 </template>
 <style scoped lang="less">
 .el-upload{
@@ -35,22 +46,23 @@
         objectUrl: undefined
       }
     },
-    props: {
-      isShow: {
-        required: false,
-        type: Boolean,
-        default:true
-      },
-      value: {
-        type: String,
-        required: false
-      },
-      action: {
-        type: String,
-        default: '/api/file/upload'
-      },
-      accept: {
-        type: String,
+      props: {
+          isShow: {
+              required: false,
+              type: Boolean,
+              default: true
+          },
+          value: {
+              type: String,
+              required: false
+          },
+
+        action: {
+            type: String,
+            default: '/api/file/upload'
+        },
+        accept: {
+            type: String,
         default: 'image/*'
       },
       formData: {
@@ -91,22 +103,28 @@
     },
     computed: {
       currentValue: {
-        get () {
-          this.objectUrl = undefined
-          return this.value
-        }
-      }
-    },
-    methods: {
-      beforeUpload (file) {
+        get() {
+            this.objectUrl = undefined
 
-        Object.assign(this.formData,{"access-token":getToken()})
-        console.log(this.formData)
-        this.objectUrl = URL.createObjectURL(file)
-        let flag = true
-        if(this.checkParams){
-          flag = this.checkParams(this.formData)
-        }
+            return this.value
+        },
+
+      }
+      },
+      methods: {
+          clearImg() {
+              this.$emit('input', null)
+          },
+
+          beforeUpload(file) {
+
+              Object.assign(this.formData, {"access-token": getToken()})
+              console.log(this.formData)
+              this.objectUrl = URL.createObjectURL(file)
+              let flag = true
+              if (this.checkParams) {
+                  flag = this.checkParams(this.formData)
+              }
         this.loading = flag
         return flag;
       },
