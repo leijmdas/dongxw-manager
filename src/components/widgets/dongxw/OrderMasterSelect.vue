@@ -2,7 +2,9 @@
 
 <template>
     <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
-        <el-option  v-for="item in options" :key="item.id" :label="item.epOrderCode" :value="item.id" :disabled="item.disabled">
+        <el-option  v-for="item in options" :key="item.id"
+                    :label="item.epOrderCode" :value="item.id"
+                    :disabled="item.disabled">
         </el-option>
     </el-select>
 </template>
@@ -70,11 +72,12 @@
                     }
                 }).then(rsp => {
                     this.options = rsp.data
+                    this.options.push({id: 0, epOrderCode: '无'})
                     this.loading = false
                 })
             }
         },
-        created () {
+        created() {
             this.refresh()
         }
     }

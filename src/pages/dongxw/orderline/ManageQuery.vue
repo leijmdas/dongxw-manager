@@ -33,16 +33,13 @@
                     <product-select :productTypeId="page.query.param.productTypeId" v-model="page.query.param.productId" :clearable="true"></product-select>
 
                 </el-form-item>
-                <el-form-item label="EP款号" prop="customerCode" style="width:120px">
+                <el-form-item label="EP款号" prop="customerCode"  >
                     <el-input v-model="page.query.param.epCode" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="客款号" prop="customerCode" style="width:120px">
+                <el-form-item label="客款号" prop="customerCode" >
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
-                <!--<el-form-item label="供应商" prop="supplierId">-->
-                 <!--<supplier-select v-model="page.query.param.supplierId" :clearable="true"></supplier-select>-->
 
-                <!--</el-form-item>-->
 
 
             </el-form>
@@ -95,7 +92,7 @@
                     {{ row.productType?row.productType.code:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="productId" label="客款号" width="100">
+            <el-table-column prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
                      {{ row.product?row.product.code:'-'}}
                 </template>

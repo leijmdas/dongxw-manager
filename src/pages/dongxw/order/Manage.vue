@@ -70,6 +70,9 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
             <!--<el-table-column prop="id" label="订单标识" width="80"></el-table-column>-->
+            <el-table-column prop="parentId" label="父订单" width="70">
+
+            </el-table-column>
 
             <el-table-column prop="customerId" label="客户代码" width="80">
                 <template slot-scope="{row}">
@@ -152,7 +155,7 @@
                     <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
                         <el-button type="text" @click="del(scope.row,scope.$index)" title="删除"
                                    v-if="scope.row.status==0">
-                            <i class="el-icon-delete red"></i>
+                            <i style = "color:red" class="el-icon-delete"></i>
                         </el-button>
                     </el-tooltip>
 

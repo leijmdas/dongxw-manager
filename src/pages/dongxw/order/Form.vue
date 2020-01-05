@@ -6,13 +6,12 @@
 
                 <fieldset align="top">
                     <el-row :span="22" style="margin-top: 10px">
-                        <el-col :span="11">
-                            <el-form-item label="订单类型" prop="orderType" >
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="11">
-                            <el-form-item label="父订单" prop="parentId">
 
+                        <el-col :span="11">
+
+                            <el-form-item label="父订单" prop="parentId" >
+                                <order-master-select :width="'200px'" v-model="entity.parentId"
+                                                 :clearable="true"></order-master-select>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -204,10 +203,12 @@
 <script>
 
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
+    import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
     import SupplierSelect from '@/components/widgets/dongxw/SupplierSelect.vue';
 
     const defaultEntity = {
         id: null,
+        parentId: 0,
         customerId: null,
         status: 0,
         moneyType:100,
@@ -227,7 +228,7 @@
         invoiceIdIni:0
     };
     export default {
-        components: {CustomerSelect, SupplierSelect},
+        components: {OrderMasterSelect,CustomerSelect, SupplierSelect},
         data() {
             return {
                 activeName: 'orderInfo',

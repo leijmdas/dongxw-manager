@@ -41,7 +41,7 @@
             </el-switch>
 
         </v-toolbar>
-        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page"  :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
@@ -163,7 +163,7 @@
             </el-table-column>
 
         </v-table>
-        <v-dialog ref="formDiag" width="40%" title="信息编辑">
+        <v-dialog ref="formDiag" width="50%" title="信息编辑">
 
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">

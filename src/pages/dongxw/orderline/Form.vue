@@ -1,9 +1,9 @@
 <template>
-    <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
+    <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
         <el-tabs :stretch="isExp" v-model="activeName">
             <el-tab-pane label="基本信息" name="orderInfo">
                 <el-row>
-                    <el-col :span="22">
+                    <el-col :span="24">
 
                         <el-row :span="24">
                             <el-col :span="12">
@@ -21,66 +21,44 @@
                             </el-col>
                         </el-row>
                         <el-row :span="24">
-                            <el-col :span="12">
-                                <el-form-item label="产品标识" prop="productId">
+                            <el-col :span="24">
+                                <el-form-item label="产品" prop="productId">
                                     <product-select :productTypeId="entity.productTypeId" v-model="entity.productId"
                                                     :clearable="true"></product-select>
 
                                 </el-form-item>
                             </el-col>
-                            <!--<el-col :span="12">-->
-                                <!--<el-form-item label="客款号" prop="customerCode">-->
-                                    <!--<el-input placeholder="客款号" v-model="entity.customerCode"></el-input>-->
-                                <!--</el-form-item>-->
-                            <!--</el-col>-->
+
                         </el-row>
 
-                        <el-row :span="24">
-                            <el-col :span="12">
+                        <el-row :span="22">
+                            <el-col :span="11">
                                 <el-form-item label="数量" prop="qty">
                                     <el-input placeholder="数量" v-model="entity.qty"></el-input>
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="12">
+                            <el-col :span="11">
                                 <el-form-item label="单价" prop="price">
                                     <el-input placeholder="单价" v-model="entity.price"></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row :span="24">
-                            <el-col :span="12">
+                        <el-row :span="22">
+                            <el-col :span="11">
                                 <el-form-item label="金额" prop="unit">
                                     <el-input placeholder="金额" v-model="money" disabled></el-input>
                                 </el-form-item>
                             </el-col>
 
                         </el-row>
-                        <!--<el-form-item label="单位" prop="unit">-->
-                        <!--<el-input placeholder="单位" v-model="entity.unit"></el-input>-->
-                        <!--</el-form-item>-->
-                        <el-row :span="24">
-                            <!--<el-col :span="12">-->
-                                <!--<el-form-item label="货币" prop="unit">-->
-                                    <!--<el-input placeholder="货币" v-model="entity.currency"></el-input>-->
-                                <!--</el-form-item>-->
-                            <!--</el-col>-->
-                            <!--`color` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '0' COMMENT '配色 ',-->
-                            <!--<el-form-item label="金额" prop="unit">-->
-                            <!--<el-input placeholder="金额" v-model="entity.money"></el-input>-->
-                            <!--</el-form-item>-->
-                            <!--`order_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单标识 ',   -->
-                            <!--<el-col :span="12">-->
 
-                            <!--<el-form-item label="供应商" prop="supplierId">-->
-                            <!--<supplier-select v-model="entity.supplierId" :clearable="true"></supplier-select>-->
-                            <!--</el-form-item>-->
-                            <!--</el-col>-->
+                        <el-row :span="22">
+                            <el-col :span="22">
+                            <el-form-item label="备注" style="margin-top: 10px" prop="remark">
+                                <el-input placeholder="备注" v-model="entity.remark"></el-input>
+                            </el-form-item>
+                            </el-col>
                         </el-row>
-                        <!--`pic_url` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '0' COMMENT '图片 ',-->
-                        <!--`size` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '0' COMMENT '尺寸 ',-->
-                        <el-form-item label="备注" style="margin-top: 10px" prop="remark">
-                            <el-input placeholder="备注" v-model="entity.remark"></el-input>
-                        </el-form-item>
 
                     </el-col>
                 </el-row>
@@ -182,8 +160,7 @@
 
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
-    import ProductSelect from '@/components/widgets/dongxw/ProductSelect.vue';
-    // import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
+    import ProductSelect from '@/components/widgets/dongxw/ProductSelectComplex.vue';
 
     const defaultEntity = {
         id: null,
