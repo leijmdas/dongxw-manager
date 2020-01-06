@@ -149,11 +149,15 @@
             <el-table-column width="145" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
-                        <el-button type="text" title="编辑" @click="edit(scope.row)">
-                            <i class="el-icon-edit"></i>
-                        </el-button>
+                    <el-button type="text" title="编辑" @click="edit(scope.row)">
+                        <i class="el-icon-edit"></i>
+                    </el-button>
+
+                    <el-button  title="产品" @click="showLine(scope.row)">
+
+                    </el-button>
                     <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
-                        <el-button type="text" @click="del(scope.row,scope.$index)" title="删除"
+                        <el-button type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除"
                                    v-if="scope.row.status==0">
                             <i style = "color:red" class="el-icon-delete"></i>
                         </el-button>

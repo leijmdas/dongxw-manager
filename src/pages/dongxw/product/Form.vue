@@ -139,14 +139,14 @@
                     <!--<el-upload ref="upload" list-type="text" :action="action" :data="formData"-->
                                <!--:beforeUpload="beforeUpload" :auto-upload="true"-->
                                <!--:on-success="handleSuccess" :on-exceed="handleExceed"-->
-                               <!--:on-remove="handleRemove" :multiple="true" :limit="limit">-->
+                               <!--:on-remove="handleRemove" :multiple="true" >-->
                         <!--<i class="el-icon-plus"></i>-->
                         <!--</el-upload>-->
                         <el-upload slot="loadImage" ref="myupload" :limit="limit" :multiple="true"
                                    :action="action" :auto-upload="true" :data="formData"
                                    list-type="text" :beforeUpload="beforeUpload"  :on-exceed="handleExceed"
                                    :on-preview="handlePictureCardPreview" :on-success="handleSuccess"
-                                   :on-remove="handleRemove">
+                                   :on-remove="handleRemove" >
                             <i class="el-icon-plus  el-upload--picture-card"></i>
 
                         </el-upload>
@@ -247,7 +247,7 @@
 
                 ],
                 //   fileList: [{'':'http://120.78.136.63:8888/group1/M00/00/01/rBIvIF4RV3OADd7cAAAWylUKCoI026.png'}],
-                formData: {},
+                formData: {maxSize:500},
                 action: '/api/file/upload',
                 limit: 8,
                 isShow: true,
@@ -340,6 +340,14 @@
                 console.log(file);
             },
             beforeUpload(file) {
+
+                if(file.size>500*1024){
+                        this.$message({
+                            type: 'error',
+                            message: '文件大于500k!'
+                        });
+                    return false;
+                }
                 Object.assign(this.formData,{"access-token":getToken()})
             },
 

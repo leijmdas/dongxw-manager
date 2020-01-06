@@ -14,12 +14,12 @@ let router0 = [
                 name: 'order:manage',
                 meta: {title: '客户订单', perm: 'order:manage'}
             },
-            {
-                path: 'dongxw/suborder/manage',
-                component: require('@/pages/dongxw/order/Main.vue'),
-                name: 'suborder:manage',
-                meta: {title: '子订单', perm: 'order:manage'}
-            },
+            // {
+            //     path: 'dongxw/suborder/manage',
+            //     component: require('@/pages/dongxw/order/Main.vue'),
+            //     name: 'suborder:manage',
+            //     meta: {title: '子订单', perm: 'order:manage'}
+            // },
             {
                 path: 'dongxw/orderlst/manage',
                 component: require('@/pages/dongxw/orderline/ManageQuery.vue'),
