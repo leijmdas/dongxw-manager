@@ -186,7 +186,7 @@
                 <el-tab-pane label="产品图片集" name="prdImage">
 
                             <v-image-preview ref="imagePreview" v-model="entity.imgUrls" :imgRemarks = "entity.imgRemark"
-                                             :showRemoveBtn="true" :funRemoveUrl="removeUrl"
+                                             :showRemoveBtn="true" :funHandleChange = "funHandleChange" :funRemoveUrl="removeUrl"
                                              :imgStyle="'margin-right:10px;width:140px;height:120px'">
 
                                 <el-upload slot="slotLoadImg" ref="myupload" :data="formData" :limit="limit" :multiple="true"
@@ -363,9 +363,14 @@
             clearAllImg() {
                 this.$refs.myupload.clearFiles();
                 this.entity.imgUrls = null;
+                this.entity.imgRemark = null;
             },
             removeUrl(){
                 this.$refs.myupload.clearFiles();
+
+            },
+            funHandleChange(imgRemarkArray) {
+                this.entity.imgRemark = imgRemarkArray.join(",")
 
             },
             handleExceed() {
@@ -431,6 +436,9 @@
                 this.$refs["form"].validate(valid => {
                     if (valid) {
                         let params = Object.assign({}, this.entity);
+                        // if(this.$refs.imagePreview.remarks){
+                        //     params.imgRemark=this.$refs.imagePreview.remarks.join(",")
+                        // }
                         this.$api.dongxw.ProductService.save(params).then(rsp => {
                             this.$emit("saved", rsp);
                         });

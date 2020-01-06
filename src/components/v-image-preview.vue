@@ -60,6 +60,10 @@
                 required : false,
                 type: Function ,
             },
+            funHandleChange:{
+                required: false,
+                type:Function
+            },
             imgRemarks: {
                 type: String,
                 required: false
@@ -113,13 +117,8 @@
         },
         methods: {
             handleChange(value) {
-                this.item = this.options.find((item) => {
-                    return item.value === value
-                })
-                if(this.imgRemarks) {
-                    this.imgRemarks = this.imgRemarks.join(",")
-                    console.log(this.imgRemarks)
-                    this.$message(JSON.stringify(this.imgRemarks))
+                if (this.funHandleChange) {
+                    this.funHandleChange(this.remarks)
                 }
             },
 
@@ -134,17 +133,16 @@
                     this.funRemoveUrl(url)
                 }
 
-                let newurls=[]
-                for(var i in this.urlInfo){
-                    if(url===this.urlInfo[i]){
-
-                    }
-                    else{
-                        newurls.push(this.urlInfo[i])
-                    }
-
+                let newurls  = _.cloneDeep(this.urlInfo);
+                var index = newurls.indexOf(url);
+                if (index > -1) {
+                    newurls.splice(index, 1);
                 }
 
+                if(this.remarks){
+                   this.remarks.splice(index, 1);
+                   this.funHandleChange(this.remarks)
+                }
                 this.urlInfo = newurls.join(',')
             },
 
