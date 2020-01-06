@@ -6,7 +6,7 @@
   </el-select>
 </template>
 
-<style rel="stylesheet/less" lang="less">
+<style rel="stylesheet/less" lang="less" scoped>
     .el-select-dropdown__item{
         max-width: 250px;
     }

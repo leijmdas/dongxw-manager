@@ -65,8 +65,11 @@
     </el-tabs>
 </template>
 <style lang="less" rel="stylesheet/less" scoped>
-    .el-selection {
-         background-color: #00438a;
+    /*.el-selection {*/
+         /*background-color: #00438a;*/
+    /*}*/
+    .el-select-dropdown__item{
+       // max-width: 550px;
     }
 </style>
 
