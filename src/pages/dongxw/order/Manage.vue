@@ -70,6 +70,10 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
             <!--<el-table-column prop="id" label="订单标识" width="80"></el-table-column>-->
+            <el-table-column prop="orderType" label="订单类型" width="70">
+
+            </el-table-column>
+
             <el-table-column prop="parentId" label="父订单" width="70">
 
             </el-table-column>

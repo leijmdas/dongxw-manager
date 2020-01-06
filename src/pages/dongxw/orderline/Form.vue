@@ -271,6 +271,7 @@
 
         methods: {
             view(row) {
+                this.$refs.formDiag.init({ queryForm:this.$refs.queryForm,formDiag: this.$refs.formDiag });
                 this.$refs.formDiag.show({ queryForm:this.$refs.queryForm,formDiag: this.$refs.formDiag });
 
             },

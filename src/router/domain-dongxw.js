@@ -12,13 +12,19 @@ let router0 = [
                 path: 'dongxw/order/manage',
                 component: require('@/pages/dongxw/order/Main.vue'),
                 name: 'order:manage',
-                meta: {title: '客户订单', perm: 'order:manage'}
+                meta: {title: '客户订单', perm: 'order:manage'},
+                params: {
+                    orderType: null
+                }
             },
             {
                 path: 'dongxw/suborder/manage',
                 component: require('@/pages/dongxw/order/Main.vue'),
                 name: 'suborder:manage',
-                meta: {title: '子订单', perm: 'order:manage'}
+                meta: {title: '子订单', perm: 'order:manage'},
+                params: {
+                    orderType: 200
+                }
             },
             {
                 path: 'dongxw/orderlst/manage',

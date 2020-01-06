@@ -6,16 +6,6 @@
 
                 <fieldset align="top">
                     <el-row :span="22" style="margin-top: 10px">
-
-                        <el-col :span="11">
-
-                            <el-form-item label="父订单" prop="parentId" >
-                                <order-master-select :width="'200px'" v-model="entity.parentId"
-                                                 :clearable="true"></order-master-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :span="22" style="margin-top: 10px">
                         <el-col :span="11">
                             <el-form-item label="客户" prop="customerId"
                                           :rules="[{ required: true}]">
@@ -33,6 +23,25 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
+                    <el-row :span="22" style="margin-top: 10px">
+                        <el-col :span="11">
+
+                            <el-form-item label="订单类型" prop="orderType">
+                                <el-select v-model="entity.orderType">
+                                    <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]"
+                                               :value="item[0]" :label="item[1]"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="11">
+
+                            <el-form-item label="父订单" v-if="entity.orderType==200" prop="parentId">
+                                <order-master-select :width="'200px'" :orderType="200" :customerId="entity.customerId" v-model="entity.parentId"
+                                                     :clearable="true"></order-master-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+
                     <el-row :span="22">
                         <el-col :span="11">
                             <el-form-item label="EP订单号" prop="epOrderCode">
@@ -150,7 +159,6 @@
                        :imgStyle="'width:80%;height:80%'">
 
                     </v-image-uploader>
-                    <!--<div style="text-align:center"> 订单原件</div>-->
                 </div>
                 <!--<el-form-item label="订单原件" prop="customerOrderImg">-->
                 <!--<el-input placeholder="订单原件" v-model="entity.customerOrderImg" disabled></el-input>-->
@@ -208,6 +216,7 @@
 
     const defaultEntity = {
         id: null,
+        orderType:0 ,
         parentId: 0,
         customerId: null,
         status: 0,
@@ -393,6 +402,9 @@
             },
             submitForm() {
                 this.$refs["form"].validate(valid => {
+                    if (this.entity.orderType != 200) {
+                        this.entity.parentId = 0
+                    }
                     if (valid) {
                         let params = Object.assign({}, this.entity);
 
