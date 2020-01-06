@@ -5,7 +5,7 @@
     <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading"
                :clearable="clearable" :disabled="disabled" @change="handleChange">
         <el-option v-for="item in options" :key="item.id"
-                   :label="item.code+'-'+item.remark+'-'+item.color+'-'+item.size"
+                   :label="item.code+'--'+item.epCode+'--'+item.remark "
                    :value="item.id" :disabled="item.disabled">
         </el-option>
     </el-select>
@@ -32,7 +32,7 @@
             disabled: {
                 type: Boolean
             },
-            productTypeId: {
+            orderId: {
                 // type: Number,
             }
         },
@@ -47,7 +47,7 @@
             }
         },
         watch: {
-            productTypeId: {
+            orderId: {
                 handler: function(newVal, oldVal) {
                     this.refresh();
                 },
@@ -60,13 +60,17 @@
             },
             refresh() {
                 this.loading = true
-                this.$api.dongxw.ProductService.query({
+                this.$api.dongxw.OrderLine.query({
                     param: {
-                        productTypeId: this.productTypeId,
+                        orderId: this.orderId,
                         isDeleted: false
                     }
                 }).then(rsp => {
-                    this.options = rsp.data
+                    for(var item in rsp.data) {
+                        this.options=[]
+                        this.options.push(item.product)
+                    }
+                    this.$message(rsp.data);
                     this.loading = false
                 })
             }

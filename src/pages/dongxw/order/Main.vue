@@ -5,15 +5,13 @@
         <el-tab-pane id="tabOrder" label="订单管理" name="orderInfo">
             <order-form ref="orderDlg" :funShowPic="funShowPic" :fatherMethod="funShowOrderLine"></order-form>
         </el-tab-pane>
-        <el-tab-pane id="tabLine" label="订单产品管理" name="orderLine">
+        <el-tab-pane id="tabLine" label="订单产品" name="orderLine">
             <order-line ref="orderLine"></order-line>
         </el-tab-pane>
         <el-tab-pane id="tabPic" label="订单原件" name="tabPic">
             <form-view-panel ref="viewPanel"></form-view-panel>
         </el-tab-pane>
-        <!--<el-tab-pane id="TabSubOrder" label="子订单管理" name="TabSubOrder">-->
-            <!--<form-view-panel ref="viewPanel"></form-view-panel>-->
-        <!--</el-tab-pane>-->
+
     </el-tabs>
 </template>
 
@@ -36,7 +34,7 @@
 
         methods: {
             tabClick(tab) {
-                console.log(tab.name);
+                //console.log(tab.name);
                 if (tab.name === 'orderInfo') {
                 }
                 if (tab.name === 'orderLine') {

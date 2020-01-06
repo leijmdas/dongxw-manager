@@ -4,23 +4,23 @@
             <el-tabs :stretch="isExp" v-model="activeName">
                 <el-tab-pane label="产品信息" name="productInfo">
                     <el-row>
-                        <el-col :span="22">
-                            <el-form-item label="客户" prop="customerId"
+                        <el-col :span="23">
+                            <el-form-item label="客户" style="width:100%"  prop="customerId"
                                           :rules="[{ required: true}]">
-                                <customer-select :width="'200px'" v-model="entity.customerId"
+                                <customer-select style="width:100%" v-model="entity.customerId"
                                                  :clearable="true"></customer-select>
                             </el-form-item>
                             <el-row :span="24" style="margin-top: 10px">
                                 <el-col :span="12">
                                     <el-form-item label="产品大类" prop="parentId" :rules="[{ required: true}]">
-                                        <product-type-select   v-model="entity.parentId"  :clearable="true">
+                                        <product-type-select  style="width:100%" v-model="entity.parentId"  :clearable="true">
 
                                         </product-type-select>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
                                     <el-form-item label="产品小类" prop="productTypeId" :rules="[{ required: true}]">
-                                        <product-sub-type-select :parentTypeId="entity.parentId"
+                                        <product-sub-type-select  style="width:100%" :parentTypeId="entity.parentId"
                                                                  v-model="entity.productTypeId"
                                                                  :clearable="true"></product-sub-type-select>
                                     </el-form-item>
@@ -45,15 +45,19 @@
                             <el-form-item label="产品描述" prop="remark">
                                 <el-input placeholder="产品描述" v-model="entity.remark"></el-input>
                             </el-form-item>
-
-                            <el-form-item label="颜色" prop="color">
-                                <el-input placeholder="颜色" v-model="entity.color"></el-input>
-                            </el-form-item>
-                            <el-form-item label="尺寸" prop="size">
-                                <el-input placeholder="尺寸" v-model="entity.size"></el-input>
-                            </el-form-item>
-
-                            <el-row :span="24" style="margin-top: 10px">
+                            <el-row :span="24" style="margin-top: 5px">
+                                <el-col :span="12">
+                                    <el-form-item label="颜色" prop="color">
+                                        <el-input placeholder="颜色" v-model="entity.color"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="尺寸" prop="size">
+                                        <el-input placeholder="尺寸" v-model="entity.size"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row :span="24" style="margin-top: 5px">
                                 <el-col :span="12">
                                     <el-form-item label="单位" prop="unit">
                                         <el-input placeholder="单位" v-model="entity.unit"></el-input>
@@ -62,7 +66,7 @@
                                 <el-col :span="12">
 
                                     <el-form-item label="状态" prop="moneyType">
-                                        <el-select v-model="entity.status" :disabled="isDisabled">
+                                        <el-select  style="width:100%" v-model="entity.status" :disabled="isDisabled">
                                             <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
                                                        :value="item[0]" :label="item[1]"></el-option>
                                         </el-select>

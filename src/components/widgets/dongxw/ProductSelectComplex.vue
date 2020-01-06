@@ -3,44 +3,55 @@
 <template>
     <el-tabs   tab-position="top" v-model="activeName">
 
-        <el-tab-pane style="background-color: mintcream" id="tabProduct" label="产品" name="tabProduct">
+        <el-tab-pane style="background-color: mintcream" id="tabProduct" label="选择产品" name="tabProduct">
 
-            <el-form label-width="100px"  >
-
-                <el-form-item label="产品描述" prop="remark" :style="'color:red;width:600px'">
-                    <el-input v-model="remark" clearable></el-input>
-                </el-form-item>
-
-
-                <el-row :span="18">
-                    <el-col :span="11">
-                        <el-form-item label="颜色" style="color:red;width:320px" prop="color">
+            <el-form label-width="100px"  :rules="rules">
+                <el-row :span="24">
+                    <el-col :span="24">
+                        <el-form-item label="产品描述" prop="remark" :style="'color:red'">
+                            <el-input style="width:100%" v-model="remark" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :span="24">
+                    <el-col :span="12">
+                        <el-form-item label="颜色" style="color:red;width:100%" prop="color">
                             <el-input v-model="color" clearable></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="11">
-                        <el-form-item label="尺寸" style="color:red;width:320px" prop="size">
+                    <el-col :span="12">
+                        <el-form-item label="尺寸" style="color:red;width:100%" prop="size">
                             <el-input v-model="size" clearable></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-                <el-row :span="18">
-                    <el-col :span="11">
-                        <el-form-item label="客款号" style="color:red;width:320px" prop="color">
+                <el-row :span="24">
+                    <el-col :span="12">
+                        <el-form-item label="客款号" style="color:red;width:100% " prop="color">
                             <el-input v-model="code" clearable></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="11">
-                        <el-form-item label="EP款号" style="color:red;width:320px" prop="size">
+                    <el-col :span="12">
+                        <el-form-item label="EP款号" style="color:red;width:100% " prop="size">
                             <el-input v-model="epCode" clearable></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-                <el-form-item label="客户" prop="id" :style="'color:red;width:600px'">
-                    <customer-select v-model="customerId" clearable tyle="color:red;width:280px"></customer-select>
+                <el-row :span="24">
+                    <el-col :span="12">
+                    <el-form-item label="客户" prop="customerId"  >
+                    <customer-select :style="'color:red;width:100%'" v-model="customerId" clearable tyle="color:red;width:280px"></customer-select>
+                    </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                     <el-button plain :style="'margin-left:20px;color:green;width:15%'" type="primary" @click="refresh">查询</el-button>
+                     <el-button plain :style="'color:red;width:15%'" @click="cancel">取消</el-button>
 
-                    <el-button type="primary" @click="refresh">过滤</el-button>
-                    <el-select v-model="currentValue" :style="'color:red;width:500px'" placeholder="请选择" filterable
+                    </el-col>
+                </el-row>
+                    <el-form-item label="产品" :style="'color:red'" prop="currentValue" style="width:100%">
+
+                     <el-select v-model="currentValue" :style="'color:red;width:100%'" placeholder="请选择" filterable
                                :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
                         <el-option v-for="item in options" :key="item.id"
                                    :label="item.code+'--'+item.epCode+'--'+item.remark+'-'+item.color+'-'+item.size"
@@ -67,6 +78,7 @@
         components:{CustomerSelect},
         data () {
             return {
+                isExp : true,
                 activeName:'tabProduct',
                 loading: false,
                 options: [],
@@ -76,7 +88,17 @@
                 color: null,
                 code : null,
                 epCode: null,
-                customerId: null
+                customerId: null,
+                rules: {
+                    currentValue: [
+                        {required: true, message: "编号不能为空", trigger: "blur"},
+                        {
+                            required: true,
+                            type: Number,
+                            trigger: "blur"
+                        }
+                    ]
+                }
             }
         },
         props: {
@@ -114,6 +136,15 @@
         methods: {
             handleChange(val) {
                 this.$emit('change', val)
+            },
+            cancel() {
+                this.remark = null,
+                    this.size = null,
+                    this.color = null,
+                    this.code = null,
+                    this.epCode = null,
+                    this.customerId = null
+                this.refresh();
             },
             refresh() {
                 this.loading = true

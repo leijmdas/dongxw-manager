@@ -74,7 +74,12 @@ service.interceptors.response.use(
       statusCode = response.status
       code = errCode
       msg = errMsg||response.data.message
+        if(msg.indexOf("Dupli")>-1){
+            msg='数据重复！'
+        }else  if(msg.indexOf("SQLIntegrityConstraintViolationException")>-1){
+            msg=msg.split('SQLIntegrityConstraintViolationException')[1].split('###')[0]
 
+        }
     } else {
       statusCode = 600
       msg = error.msg || 'Network Error'

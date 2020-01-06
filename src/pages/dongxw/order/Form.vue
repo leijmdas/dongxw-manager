@@ -3,31 +3,30 @@
         <el-tabs :stretch="isExp" v-model="activeName">
             <el-tab-pane label="订单信息" name="orderInfo">
 
-
                 <fieldset align="top">
-                    <el-row :span="22" style="margin-top: 10px">
+                    <el-row :span="23" style="margin-top: 10px">
                         <el-col :span="11">
                             <el-form-item label="客户" prop="customerId"
                                           :rules="[{ required: true}]">
-                                <customer-select :width="'200px'" v-model="entity.customerId"
+                                <customer-select style="width:100%" v-model="entity.customerId"
                                                  :clearable="true"></customer-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
                             <el-form-item label="状态" prop="status">
 
-                                <el-select v-model="entity.status">
+                                <el-select  style="width:100%" v-model="entity.status">
                                     <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]"
                                                :value="item[0]" :label="item[1]"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row :span="22" style="margin-top: 10px">
+                    <el-row :span="23" style="margin-top: 10px">
                         <el-col :span="11">
 
-                            <el-form-item label="订单类型" prop="orderType">
-                                <el-select v-model="entity.orderType">
+                            <el-form-item label="订单类型"  prop="orderType">
+                                <el-select style="width:100%"  v-model="entity.orderType">
                                     <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]"
                                                :value="item[0]" :label="item[1]"></el-option>
                                 </el-select>
@@ -36,7 +35,7 @@
                         <el-col :span="11">
 
                             <el-form-item label="父订单" v-if="entity.orderType==200" prop="parentId">
-                                <order-master-select :width="'200px'" :orderType="100" :customerId="entity.customerId" v-model="entity.parentId"
+                                <order-master-select style="width:100%" :orderType="100" :customerId="entity.customerId" v-model="entity.parentId"
                                                      :clearable="true"></order-master-select>
                             </el-form-item>
                         </el-col>
@@ -60,7 +59,7 @@
                     <el-row :span="22">
                         <el-col :span="11">
                             <el-form-item label="结算币种" prop="moneyType">
-                                <el-select v-model="entity.moneyType">
+                                <el-select style="width:100%" v-model="entity.moneyType">
                                     <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
                                                :value="item[0]" :label="item[1]"></el-option>
                                 </el-select>
@@ -73,23 +72,22 @@
                         </el-col>
                     </el-row>
 
-                    <el-row :span="22" style="margin-top: 10px ">
+                    <el-row :span="22" style="margin-top: 5px ">
                         <el-col :span="11">
                             <el-form-item label="下单日期" prop="" :rules="[{ required: true}]">
-                                <el-date-picker :disabled="disables"
+                                <el-date-picker style="width:100%" :disabled="disables"
                                                 v-model="entity.orderDate"
                                                 format="yyyy 年 MM 月 dd 日"
                                                 value-format="yyyy-MM-dd HH:mm:ss"
                                                 type="date"
                                                 placeholder="选择日期">
                                 </el-date-picker>
-                            </el-form-item>
-                            <!--format="yyyy-MM-dd"-->
+                            </el-form-item>                            <!--format="yyyy-MM-dd"-->
                         </el-col>
 
                         <el-col :span="11">
                             <el-form-item label="客户交货日期" prop="" :rules="[{ required: true}]">
-                                <el-date-picker :disabled="disables"
+                                <el-date-picker style="width:100%" :disabled="disables"
                                                 v-model="entity.customerIssueDate"
                                                 format="yyyy 年 MM 月 dd 日"
                                                 value-format="yyyy-MM-dd HH:mm:ss"
@@ -102,8 +100,8 @@
                     <el-row :span="22" style="margin-top: 10px ">
                         <el-col :span="11">
                             <el-form-item label="验货日期" prop="">
-                                <el-date-picker
-                                    :disabled="disables"
+                                <el-date-picker style="width:100%"
+                                                :disabled="disables"
                                     v-model="entity.checkDate"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd HH:mm:ss"
@@ -115,8 +113,8 @@
                         <el-col :span="11">
 
                             <el-form-item label="工厂交货日期" prop="">
-                                <el-date-picker
-                                    :disabled="disables"
+                                <el-date-picker style="width:100%"
+                                                :disabled="disables"
                                     v-model="entity.factroyIssueDate"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd HH:mm:ss"

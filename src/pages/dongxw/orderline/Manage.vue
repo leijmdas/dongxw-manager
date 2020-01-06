@@ -13,25 +13,20 @@
 
                 </el-form-item>
 
+                <!--<el-form-item label="产品" prop="productId" >-->
+                    <!--<order-product-select style="width:300px" :orderId="page.query.param.orderId"-->
+                                             <!--v-model="page.query.param.productId" :clearable="true"></order-product-select>-->
 
-                <el-form-item label="产品标识" prop="productId">
-                    <product-select :productTypeId="page.query.param.productTypeId" v-model="page.query.param.productId" :clearable="true"></product-select>
+                <!--</el-form-item>-->
 
-                </el-form-item>
-
-                <el-form-item label="客款号" prop="customerCode">
-                    <el-input v-model="page.query.param.epCode" clearable></el-input>
-                </el-form-item>
-
-
-
+                <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                <el-button @click="cancel">取消</el-button>
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-            <span slot="tip" style="color: red ;padding-left: 20px"> EP订单号:   {{order?order.epOrderCode:'-'}}</span>
-            <span slot="tip" style="color: red ;padding-left: 20px"> 客户订单号:   {{order?order.customerOrderCode:'-'}}</span>
-            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-            <el-button @click="cancel">取消</el-button>
+            <span slot="tip" style="color: red ;padding-left: 180px"> 客户订单号:   {{order?order.customerOrderCode:'-'}}</span>
+            <span slot="tip" style="color: red ; padding-left: 20px"> EP订单号:   {{order?order.epOrderCode:'-'}}</span>
+
             <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
 
             <el-button plain @click="exportRecords">导出XLS</el-button>
@@ -49,28 +44,6 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column prop="customerId" label="客户名称" width="120">
-                <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custName:'-'}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="productId" label="客款号" width="100">
-                <template slot-scope="{row}">
-                    {{ row.product?row.product.code:'-'}}
-                </template>
-            </el-table-column>
-
-            <!--<el-table-column prop="orderId" label="订单标识" width="70"></el-table-column>-->
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
-                <template slot-scope="{row}">
-                    {{ row.orderMaster?row.orderMaster.epOrderCode:'-'}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="epCode" label="EP款号" width="100">
-                <template slot-scope="{row}">
-                    {{ row.product?row.product.epCode:'-'}}
-                </template>
-            </el-table-column>
 
             <el-table-column prop="parentId" label="产品大类" width="100">
                 <template slot-scope="{row}">
@@ -80,6 +53,32 @@
             <el-table-column prop="productTypeId" label="产品小类" width="140">
                 <template slot-scope="{row}">
                     {{ row.productType?row.productType.code:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="customerId" label="客户名称" width="120">
+                <template slot-scope="{row}">
+                    {{ row.customer?row.customer.custName:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="customerOrderCode" label="客户订单号" width="120">
+                <template slot-scope="{row}">
+                    {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
+                <template slot-scope="{row}">
+                    {{ row.orderMaster?row.orderMaster.epOrderCode:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="code" label="客款号" width="100">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.code:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="epCode" label="EP款号" width="100">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.epCode:'-'}}
                 </template>
             </el-table-column>
 
@@ -138,17 +137,8 @@
                             :style="'style:red'"> {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}</span>
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="ibQty" label="内盒数量"></el-table-column>-->
-            <!--<el-table-column prop="ibGw" label="内盒毛重(kg)" width="100"></el-table-column>-->
-            <!--<el-table-column prop="ibNw" label="内盒净重(kg)" width="100"></el-table-column>-->
-            <!--<el-table-column prop="ibSize" label="内盒尺寸"></el-table-column>-->
 
-            <!--<el-table-column prop="obQty" label="外箱数量"></el-table-column>-->
-            <!--<el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>-->
-            <!--<el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>-->
-            <!--<el-table-column prop="obSize" label="外箱尺寸"></el-table-column>-->
 
-            <!--总数量，总金额-->
             <el-table-column width="140" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
@@ -216,10 +206,10 @@
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import ProductSelect from '@/components/widgets/dongxw/ProductSelect.vue';
-    // import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
+    import OrderProductSelect  from '@/components/widgets/dongxw/ProductSelectByOrder.vue';
 
     export default {
-        components: {ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel},
+        components: {ProductTypeSelect,ProductSubTypeSelect,ProductSelect,OrderProductSelect,FormPanel},
         data() {
             return {
 

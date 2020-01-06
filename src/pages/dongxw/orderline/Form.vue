@@ -1,81 +1,64 @@
 <template>
-<div>
-    <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
-        <el-tabs :stretch="isExp" v-model="activeName">
-            <el-tab-pane label="基本信息" name="orderInfo">
-                <el-row>
-                    <el-col :span="24">
-
-                        <el-row :span="24">
+    <div>
+        <el-form :model="entity"  ref="form" label-width="100px" class="dialog-form">
+            <el-tabs :stretch="isExp" v-model="activeName">
+                <el-tab-pane label="基本信息" name="orderInfo">
+                    <el-col :span="22">
+                        <el-row>
                             <el-col :span="12">
                                 <el-form-item label="产品大类" prop="parentId">
-                                    <product-type-select v-model="entity.parentId"
+                                    <product-type-select style="width:100%" v-model="entity.parentId"
                                                          :clearable="true"></product-type-select>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item label="产品小类" prop="productTypeId">
-                                    <product-sub-type-select :parentTypeId="entity.parentId"
-                                                             v-model="entity.productTypeId"
+                                    <product-sub-type-select style="width:100%" v-model="entity.productTypeId"
+                                                             :parentTypeId="entity.parentId"
                                                              :clearable="true"></product-sub-type-select>
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row :span="24">
-                            <el-col :span="24">
-                                <el-form-item label="产品" prop="productId">
-                                    <product-select :productTypeId="entity.productTypeId" v-model="entity.productId"
-                                                    :clearable="true"></product-select>
-                                    <el-button @click="view">选择产品</el-button>
+                        <product-select :productTypeId="entity.productTypeId"
+                                        v-model="entity.productId"
+                                        :clearable="true"></product-select>
+                        <!--<el-button @click="view">选择产品</el-button>-->
+                        <el-row>
+                            <el-col :span="12">
 
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-
-                        <el-row :span="22">
-                            <el-col :span="11">
-                                <el-form-item label="数量" prop="qty">
+                                <el-form-item label="数量" style="width:100%" prop="qty">
                                     <el-input placeholder="数量" v-model="entity.qty"></el-input>
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="11">
-                                <el-form-item label="单价" prop="price">
+                            <el-col :span="12">
+                                <el-form-item label="单价" style="width:100%" prop="price">
                                     <el-input placeholder="单价" v-model="entity.price"></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row :span="22">
-                            <el-col :span="11">
-                                <el-form-item label="金额" prop="unit">
-                                    <el-input placeholder="金额" v-model="money" disabled></el-input>
-                                </el-form-item>
-                            </el-col>
 
-                        </el-row>
+                        <el-form-item label="金额" style="width:50%" prop="unit">
+                            <el-input placeholder="金额" v-model="money" disabled></el-input>
+                        </el-form-item>
 
-                        <el-row :span="22">
-                            <el-col :span="22">
-                            <el-form-item label="备注" style="margin-top: 10px" prop="remark">
-                                <el-input placeholder="备注" v-model="entity.remark"></el-input>
-                            </el-form-item>
-                            </el-col>
-                        </el-row>
 
+                        <el-form-item label="备注" style="margin-top: 5px" prop="remark">
+                            <el-input placeholder="备注" v-model="entity.remark"></el-input>
+                        </el-form-item>
                     </el-col>
-                </el-row>
-            </el-tab-pane>
+                </el-tab-pane>
 
-        </el-tabs>
-    </el-form>
-    <v-dialog ref="formDiag" width="80%" title="查询">
+            </el-tabs>
+        </el-form>
+        <v-dialog ref="formDiag" width="80%" title="查询">
 
-        <query-form ref="queryForm"></query-form>
-        <div slot="footer">
-            <!--<el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>-->
-            <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
-        </div>
-    </v-dialog>
-</div>
+            <query-form ref="queryForm"></query-form>
+            <div slot="footer">
+                <!--<el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>-->
+                <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
+            </div>
+        </v-dialog>
+    </div>
 </template>
 <style lang="less" scoped>
     .orderLine .el-upload-dragger {
@@ -170,19 +153,34 @@
                 isDisabled: false,
                 limitTotal: false,
                 rules: {
-                    parentId: [{
-                        required: true
-                    }],
-                    productTypeId: [{
-                        required: true
-                    }],
+                    parentId: [
+                        {
+                            required: true,
+                        }
+                    ], productTypeId: [
+                        {
+                            required: true,
+                        }
+                    ], qty: [
+                        {
+                            type: "number",
+                            required: true,
+                            trigger: "change"
+                        }
+                    ],
+                    price: [
+                        {
+                            type: "number",
+                            required: true,
+                            trigger: "change"
+                        }
+                    ],
+
                     productId: [{
                         required: true
                     }],
 
-                    supplierId: [{
-                        required: true
-                    }],
+
                     name: [
                         {required: true, message: "名称不能为空", trigger: "blur"},
                         {
@@ -202,18 +200,8 @@
                             trigger: "blur"
                         }
                     ],
-                    startOn: [
-                        {
-                            required: true,
-                            message: "请选择开始时间",
-                            trigger: "blur"
-                        }
-                    ],
-                    merchantId: [
-                        {
-                            type: "number"
-                        }
-                    ],
+
+
                     status: [
                         {
                             type: "number",
@@ -223,40 +211,8 @@
                         }
                     ],
 
-                    limitDays: [
-                        {
-                            required: false
-                        }
-                    ],
-                    limitTotalNum: [
-                        {
-                            required: false
-                        }
-                    ],
-                    isMerchant: [
-                        {
-                            required: true
-                        }
-                    ],
 
-                    limitPermanTimes: [
-                        {
-                            required: true,
-                            message: "限次不能为空",
-                        }
-                    ],
-                    visibility: [
-                        {
-                            required: false,
-                        }
-                    ],
 
-                    effectRange: [
-                        {
-                            required: true,
-                            message: "请选择活动时间"
-                        }
-                    ]
                 }
             };
         },
