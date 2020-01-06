@@ -94,7 +94,13 @@
 
         mounted() {
             this.$refs.orderDlg.init();
-
+            // this.orderType = this.$route.params.orderType;
+            // if (this.orderType == null) {
+            //     this.orderType = localStorage.pageBizType;
+            // } else {
+            //     localStorage.orderType = this.orderType;
+            // }
+            // this.$message(this.orderType);
         }
     }
 </script>

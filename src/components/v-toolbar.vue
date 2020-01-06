@@ -8,13 +8,14 @@
   line-height: 30px;
   height: 32px;
 
-  color: #606266;
+    color: #606266;
 
-  .toolbar-title{
-      margin-top: 5px;
-    font-weight: bold;
-    float:left;padding-left:10px;
-  }
+    .toolbar-title {
+        margin-top: 5px;
+        font-weight: bold;
+        float: left;
+        padding-left: 10px;
+    }
 }
 
 .toolbar[type="success"] {

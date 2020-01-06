@@ -6,7 +6,11 @@
         </el-option>
     </el-select>
 </template>
-
+<style rel="stylesheet/less" lang="less">
+    /*.el-select {*/
+        /*width: 250px;*/
+    /*}*/
+</style>
 <script>
     import { fetch } from "@/utils";
 
@@ -25,7 +29,7 @@
             width: {
                 type: String,
                 required: false,
-                defult: "50%"
+                defult: "60%"
             },
             clearable: {
                 type: Boolean

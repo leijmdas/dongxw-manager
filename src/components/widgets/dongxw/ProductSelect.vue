@@ -2,7 +2,8 @@
 
 <template>
 
-    <el-select  style="color:red;width:360px" v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
+    <el-select   v-model="currentValue" placeholder="请选择" filterable :loading="loading"
+                 :clearable="clearable" :disabled="disabled" @change="handleChange">
         <el-option v-for="item in options" :key="item.id"
                    :label="item.code+'-'+item.remark+'-'+item.color+'-'+item.size"
                    :value="item.id" :disabled="item.disabled">

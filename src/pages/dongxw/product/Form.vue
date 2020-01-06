@@ -13,8 +13,9 @@
                             <el-row :span="24" style="margin-top: 10px">
                                 <el-col :span="12">
                                     <el-form-item label="产品大类" prop="parentId" :rules="[{ required: true}]">
-                                        <product-type-select v-model="entity.parentId"
-                                                             :clearable="true"></product-type-select>
+                                        <product-type-select   v-model="entity.parentId"  :clearable="true">
+
+                                        </product-type-select>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
@@ -29,16 +30,17 @@
                             <el-row :span="24" style="margin-top: 10px">
                                 <el-col :span="12">
 
-                                    <el-form-item  label="客款号" prop="code">
-                                        <el-input placeholder="客款号" v-model="entity.code"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
-
                                     <el-form-item label="EP款号" prop="epCode">
                                         <el-input placeholder="EP款号" v-model="entity.epCode"></el-input>
                                     </el-form-item>
                                 </el-col>
+                                <el-col :span="12">
+
+                                    <el-form-item  label="客款号" prop="code">
+                                        <el-input placeholder="客款号" v-model="entity.code"></el-input>
+                                    </el-form-item>
+                                </el-col>
+
                             </el-row>
                             <el-form-item label="产品描述" prop="remark">
                                 <el-input placeholder="产品描述" v-model="entity.remark"></el-input>
@@ -50,15 +52,6 @@
                             <el-form-item label="尺寸" prop="size">
                                 <el-input placeholder="尺寸" v-model="entity.size"></el-input>
                             </el-form-item>
-
-                            <el-form-item label="条码" prop="barCode">
-                                <el-input placeholder="条码" v-model="entity.barCode"></el-input>
-                            </el-form-item>
-
-                            <el-form-item label="UPC-A" prop="upcA">
-                                <el-input placeholder="UPC-A" v-model="entity.upcA"></el-input>
-                            </el-form-item>
-
 
                             <el-row :span="24" style="margin-top: 10px">
                                 <el-col :span="12">
@@ -73,6 +66,18 @@
                                             <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
                                                        :value="item[0]" :label="item[1]"></el-option>
                                         </el-select>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row :span="24" style="margin-top: 10px">
+                                <el-col :span="12">
+                                    <el-form-item label="条码" prop="barCode">
+                                        <el-input placeholder="条码" v-model="entity.barCode"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="UPC-A" prop="upcA">
+                                        <el-input placeholder="UPC-A" v-model="entity.upcA"></el-input>
                                     </el-form-item>
                                 </el-col>
                             </el-row>
@@ -95,69 +100,107 @@
                     </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="包装信息" name="packageInfo">
-                    <el-row>
-                        <el-col :span="22">
-                            <el-form-item label="内盒数量" prop="ibQty">
-                                <el-input placeholder="内盒数量" v-model="entity.ibQty"></el-input>
-                            </el-form-item>
-                            <el-form-item label="内盒毛重(kg)" prop="ibGw">
-                                <el-input placeholder="内盒毛重(kg)" v-model="entity.ibGw"></el-input>
-                            </el-form-item>
-
-                            <el-form-item label="内盒净重(kg)" prop="ibNw">
-                                <el-input placeholder="内盒净重(kg)" v-model="entity.ibNw"></el-input>
-                            </el-form-item>
+                    <el-row :span="24">
+                        <el-col :span="11">
                             <el-form-item label="内盒尺寸" prop="ibSize">
                                 <el-input placeholder="内盒尺寸" v-model="entity.ibSize"></el-input>
                             </el-form-item>
                         </el-col>
+                        <el-col :span="11">
+                            <el-form-item label="内盒数量" prop="ibQty">
+                                <el-input placeholder="内盒数量" v-model="entity.ibQty"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row :span="24">
+                        <el-col :span="11">
+                            <el-form-item label="内盒毛重(kg)" prop="ibGw">
+                                <el-input placeholder="内盒毛重(kg)" v-model="entity.ibGw"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="11">
+
+                            <el-form-item label="内盒净重(kg)" prop="ibNw">
+                                <el-input placeholder="内盒净重(kg)" v-model="entity.ibNw"></el-input>
+                            </el-form-item>
+                        </el-col>
+
                     </el-row>
                     <el-row style="margin-top: 20px">
 
-                        <el-col :span="22">
-                            <el-form-item label="外箱数量" prop="obQty">
-                                <el-input placeholder="外箱数量" v-model="entity.obQty"></el-input>
-                            </el-form-item>
-                            <el-form-item label="外箱毛重(kg)" prop="obGw">
-                                <el-input placeholder="外箱毛重(kg)" v-model="entity.obGw"></el-input>
-                            </el-form-item>
-
-                            <el-form-item label="外箱净重(kg)" prop="obNw">
-                                <el-input placeholder="外箱净重(kg)" v-model="entity.obNw"></el-input>
-                            </el-form-item>
+                        <el-col :span="11">
                             <el-form-item label="外箱尺寸" prop="obSize">
                                 <el-input placeholder="外箱尺寸" v-model="entity.obSize"></el-input>
                             </el-form-item>
                         </el-col>
+                        <el-col :span="11">
+
+                            <el-form-item label="外箱数量" prop="obQty">
+                                <el-input placeholder="外箱数量" v-model="entity.obQty"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="11">
+                            <el-form-item label="外箱毛重(kg)" prop="obGw">
+                                <el-input placeholder="外箱毛重(kg)" v-model="entity.obGw"></el-input>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="11">
+                            <el-form-item label="外箱净重(kg)" prop="obNw">
+                                <el-input placeholder="外箱净重(kg)" v-model="entity.obNw"></el-input>
+                            </el-form-item>
+
+                        </el-col>
+                    </el-row>
+                    <el-row style="margin-top: 20px">
+                    <el-col :span="11">
+                            <el-form-item label="正唛" prop="pkgFront">
+                                <el-input placeholder="正唛" v-model="entity.pkgFront"></el-input>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="11">
+                            <el-form-item label="侧唛" prop="pkgSide">
+                                <el-input placeholder="侧唛" v-model="entity.pkgSide"></el-input>
+                            </el-form-item>
+
+                        </el-col>
+                    </el-row>
+
+
+                    <el-row :span="24">
+
+                        <el-col :span="22">
+
+                            <el-form-item label="备注" prop="pkgRemark">
+                                <el-input placeholder="备注" v-model="entity.pkgRemark"></el-input>
+                            </el-form-item>
+
+                        </el-col>
+
                     </el-row>
 
                 </el-tab-pane>
                 <el-tab-pane label="产品图片集" name="prdImage">
-                    <v-image-preview v-model="entity.imgUrls"
-                                     :showRemoveBtn = "true" :imgStyle="'margin-right:10px;width:140px;height:120px'">
 
-                    <!--<el-upload ref="upload" list-type="text" :action="action" :data="formData"-->
-                               <!--:beforeUpload="beforeUpload" :auto-upload="true"-->
-                               <!--:on-success="handleSuccess" :on-exceed="handleExceed"-->
-                               <!--:on-remove="handleRemove" :multiple="true" >-->
-                        <!--<i class="el-icon-plus"></i>-->
-                        <!--</el-upload>-->
-                        <el-upload slot="loadImage" ref="myupload" :limit="limit" :multiple="true"
-                                   :action="action" :auto-upload="true" :data="formData"
-                                   list-type="text" :beforeUpload="beforeUpload"  :on-exceed="handleExceed"
-                                   :on-preview="handlePictureCardPreview" :on-success="handleSuccess"
-                                   :on-remove="handleRemove" >
-                            <i class="el-icon-plus  el-upload--picture-card"></i>
+                            <v-image-preview ref="imagePreview" v-model="entity.imgUrls" :imgRemarks = "entity.imgRemark"
+                                             :showRemoveBtn="true" :funRemoveUrl="removeUrl"
+                                             :imgStyle="'margin-right:10px;width:140px;height:120px'">
 
-                        </el-upload>
+                                <el-upload slot="slotLoadImg" ref="myupload" :data="formData" :limit="limit" :multiple="true"
+                                           :action="action" :auto-upload="true"  list-type="text"
+                                           :beforeUpload="beforeUpload" :on-exceed="handleExceed"  :on-preview="handlePictureCardPreview"
+                                           :on-success="handleSuccess"  :on-remove="handleRemove">
+                                    <i class="el-icon-plus  el-upload--picture-card"></i>
 
-                    </v-image-preview>
-                    <el-button   @click="clearAllImg" type="text" title="清除图片" plain>
-                        <i class="el-icon-delete " style="color:red"></i>
-                    </el-button>
-                    <!--<el-dialog :visible.sync="dialogVisible">-->
-                    <!--<img width="100%" :src="dialogImageUrl" alt="">-->
-                    <!--</el-dialog>-->
+                                </el-upload>
+                                <el-button slot="slotRmBtn"  @click="clearAllImg" type="text" title="清除图片" plain>
+                                    <i class="el-icon-delete " style="color:red"></i>
+                                </el-button>
+                            </v-image-preview>
+
                 </el-tab-pane>
 
             </el-tabs>
@@ -215,6 +258,7 @@
         barCode : '',
         picUrl : null ,
         imgUrls : null,
+        imgRemark : "12,11",
         urls :[],
         upcA : '',
         memo : '',
@@ -232,6 +276,10 @@
         obGw : 0,
         obNw : 0,
         obSize : '',
+        pkgFront:'',
+        pkgSide:'',
+        pkgRemark:'',
+        imgRemark:null
     };
 
 
@@ -249,7 +297,7 @@
                 //   fileList: [{'':'http://120.78.136.63:8888/group1/M00/00/01/rBIvIF4RV3OADd7cAAAWylUKCoI026.png'}],
                 formData: {maxSize:500},
                 action: '/api/file/upload',
-                limit: 8,
+                limit: 12,
                 isShow: true,
                 multiple: true,
                 isExp: false,
@@ -313,9 +361,13 @@
                 this.entity.picUrl = null;
             },
             clearAllImg() {
+                this.$refs.myupload.clearFiles();
                 this.entity.imgUrls = null;
             },
+            removeUrl(){
+                this.$refs.myupload.clearFiles();
 
+            },
             handleExceed() {
                 this.$message('最多只允许上传'+this.limit+'张图片！')
             },

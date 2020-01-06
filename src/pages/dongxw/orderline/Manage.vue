@@ -28,13 +28,15 @@
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-
+            <span slot="tip" style="color: red ;padding-left: 20px"> EP订单号:   {{order?order.epOrderCode:'-'}}</span>
+            <span slot="tip" style="color: red ;padding-left: 20px"> 客户订单号:   {{order?order.customerOrderCode:'-'}}</span>
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
+            <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
 
             <el-button plain @click="exportRecords">导出XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
-            <el-switch style="margin-left:20px; margin-right: 20px"
+            <el-switch style="color: mediumpurple;margin-left:20px; margin-right: 20px"
                        v-model="isShowPrdPic"
                        active-text="显示产品图片"
                        inactive-text="不显示">
@@ -223,7 +225,7 @@
 
                 isShowPrdPic:false,
                 dateRangeType: 'orderDate',
-                order: [],
+                order: {},
                 orderId: 0,
                 formStatus: 1,
                 dateRange: [],
@@ -328,6 +330,7 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
+
                 this.order = options;
                 this.customerId = options.customerId;
                 this.orderId = options.id;

@@ -46,7 +46,12 @@
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-
+                <el-form-item label="订单类型" prop="orderType">
+                    <el-select :clearable="true" v-model="page.query.param.orderType" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
                 <!--<el-form-item>-->
                     <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
                     <!--<el-button @click="cancel">取消</el-button>-->
@@ -69,9 +74,18 @@
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
-            <!--<el-table-column prop="id" label="订单标识" width="80"></el-table-column>-->
-            <el-table-column prop="parentId" label="父订单" width="70">
 
+            <el-table-column prop="orderType" label="订单类型" width="70">
+                <template slot-scope="{row}">
+                    <span :style="'style:red'"> {{$dongxwDict.getText(row.orderType,$dongxwDict.store.ORDER_TYPE)}}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="parentId" label="父订单" width="80">
+                <template slot-scope="{row}">
+                    {{ row.orderMasterParent? row.orderMasterParent.epOrderCode:'-'}}
+
+                </template>
             </el-table-column>
 
             <el-table-column prop="customerId" label="客户代码" width="80">
@@ -153,8 +167,8 @@
                         <i class="el-icon-edit"></i>
                     </el-button>
 
-                    <el-button  title="产品" @click="showLine(scope.row)">
-
+                    <el-button  style="color:green"  type="info" plain title="产品" @click="showLine(scope.row)">
+                        产品
                     </el-button>
                     <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
                         <el-button type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除"
@@ -360,7 +374,7 @@
             showLine(row) {
                 console.log(JSON.stringify(row));
                 console.log("fatherMethodL: ");
-                console.log( this.fatherMethod);
+                console.log(this.fatherMethod);
                 if (this.fatherMethod) {
                     this.fatherMethod(row);
                 }

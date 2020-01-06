@@ -21,6 +21,11 @@
             }
         },
         props: {
+            orderType: {
+                required: false,
+                type: Number,
+                defult: null
+            },
             value: {
                 required: true
             },
@@ -68,6 +73,8 @@
                 this.$api.dongxw.OrderMaster.query({
                     param: {
                         customerId: this.customerId,
+                        orderType: this.orderType,
+
                         isDeleted: false
                     }
                 }).then(rsp => {

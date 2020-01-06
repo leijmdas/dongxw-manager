@@ -59,7 +59,7 @@
             </el-switch>
 
         </v-toolbar>
-        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page"   :table-minheight="450" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
@@ -276,7 +276,7 @@
         components: {CustomerSelect,OrderMasterSelect,ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel,SupplierSelect},
         data() {
             return {
-
+                row : [],
                 isShowPrdPic:false,
                 dateRangeType: 'orderDate',
                 order: [],
@@ -341,18 +341,18 @@
             create() {
                 this.$refs.formDiag.show({customerId: this.customerId, orderId: this.orderId});
             },
+
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});
             },
             view(row) {
+                this.row=row
                 this.$refs.formDiagView.show({id: row.id});
             },
             toggleStatus(row) {
                 let status = row.status;
                 let msg = '确定上架此活动吗？</br><span style="color:red">一旦上架，部分信息不允许修改!</span>';
-                if (status == 1) {
-                    msg = '确定下架此活动吗？</br><span style="color:red">一旦下架，已派发的优惠券无法使用!</span>';
-                }
+
                 this.$confirm(msg, "确认", {
                     type: "warning",
                     dangerouslyUseHTMLString: true
@@ -384,6 +384,8 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
+
+                this.$message(options.querForm)
                 this.order = options;
                 this.customerId = options.customerId;
                 this.orderId = options.id;
