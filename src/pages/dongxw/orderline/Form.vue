@@ -1,4 +1,5 @@
 <template>
+<div>
     <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
         <el-tabs :stretch="isExp" v-model="activeName">
             <el-tab-pane label="基本信息" name="orderInfo">
@@ -25,10 +26,10 @@
                                 <el-form-item label="产品" prop="productId">
                                     <product-select :productTypeId="entity.productTypeId" v-model="entity.productId"
                                                     :clearable="true"></product-select>
+                                    <el-button @click="view">选择产品</el-button>
 
                                 </el-form-item>
                             </el-col>
-
                         </el-row>
 
                         <el-row :span="22">
@@ -63,60 +64,18 @@
                     </el-col>
                 </el-row>
             </el-tab-pane>
-            <!--<el-tab-pane label="包装信息" name="orderPackageInfo">-->
-                <!--<el-row>-->
-                    <!--<el-col :span="22">-->
-                        <!--<el-form-item label="内盒数量" prop="ibQty">-->
-                            <!--<el-input placeholder="内盒数量" v-model="entity.ibQty"></el-input>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="内盒毛重(kg)" prop="ibGw">-->
-                            <!--<el-input placeholder="内盒毛重(kg)" v-model="entity.ibGw"></el-input>-->
-                        <!--</el-form-item>-->
 
-                        <!--<el-form-item label="内盒净重(kg)" prop="ibNw">-->
-                            <!--<el-input placeholder="内盒净重(kg)" v-model="entity.ibNw"></el-input>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="内盒尺寸" prop="ibSize">-->
-                            <!--<el-input placeholder="内盒尺寸" v-model="entity.ibSize"></el-input>-->
-                        <!--</el-form-item>-->
-                    <!--</el-col>-->
-                <!--</el-row>-->
-                <!--<el-row  style="margin-top: 20px">-->
-
-                    <!--<el-col :span="22">-->
-                        <!--<el-form-item label="外箱数量" prop="obQty">-->
-                            <!--<el-input placeholder="外箱数量" v-model="entity.obQty"></el-input>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="外箱毛重(kg)" prop="obGw">-->
-                            <!--<el-input placeholder="外箱毛重(kg)" v-model="entity.obGw"></el-input>-->
-                        <!--</el-form-item>-->
-
-                        <!--<el-form-item label="外箱净重(kg)" prop="obNw">-->
-                            <!--<el-input placeholder="外箱净重(kg)" v-model="entity.obNw"></el-input>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="外箱尺寸" prop="obSize">-->
-                            <!--<el-input placeholder="外箱尺寸" v-model="entity.obSize"></el-input>-->
-                        <!--</el-form-item>-->
-                    <!--</el-col>-->
-                <!--</el-row>-->
-            <!--</el-tab-pane>-->
-            <!--<el-tab-pane label="主料" name="orderMaterial">-->
-                <!--<el-row>-->
-                    <!--<el-col :span="22">-->
-                        <!--<el-form-item label="主料" prop="material">-->
-                            <!--<el-input placeholder="主料" v-model="entity.materialRemark"></el-input>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="customerId" prop="customerId">-->
-                            <!--<el-input placeholder="customerId" v-model="customerId" disabled></el-input>-->
-                        <!--</el-form-item>-->
-                        <!--<el-form-item label="orderId" prop="orderId">-->
-                            <!--<el-input placeholder="orderId" v-model="orderId" disabled></el-input>-->
-                        <!--</el-form-item>-->
-                    <!--</el-col>-->
-                <!--</el-row>-->
-            <!--</el-tab-pane>-->
         </el-tabs>
     </el-form>
+    <v-dialog ref="formDiag" width="80%" title="查询">
+
+        <query-form ref="queryForm"></query-form>
+        <div slot="footer">
+            <!--<el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>-->
+            <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
+        </div>
+    </v-dialog>
+</div>
 </template>
 <style lang="less" scoped>
     .orderLine .el-upload-dragger {
@@ -161,6 +120,8 @@
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import ProductSelect from '@/components/widgets/dongxw/ProductSelectComplex.vue';
+    import ProductSelectForm from '@/components/widgets/dongxw/ProductSelectForm.vue';
+    import QueryForm from '@/pages/dongxw/product/ManageQuery.vue';
 
     const defaultEntity = {
         id: null,
@@ -193,7 +154,7 @@
         status: 1
     };
     export default {
-        components: {ProductTypeSelect,ProductSubTypeSelect, ProductSelect},
+        components: {QueryForm,ProductTypeSelect,ProductSelectForm,ProductSubTypeSelect, ProductSelect},
         data() {
             return {
                 isExp :false,
@@ -303,24 +264,16 @@
             money: function () {
                 return this.entity.qty * this.entity.price;
             }
-            // newQty() {
-            //     return this.entity.qty;
-            // },
-            // newPrice() {
-            //     return this.entity.price;
-            // }
+
         },
 
-        // watch: {
-        //     newQty(val) {
-        //         this.entity.money = val * entity.price;
-        //     },
-        //     newPrice(val) {
-        //         this.entity.money = val * entity.qty;
-        //     },
-        // },
+
 
         methods: {
+            view(row) {
+                this.$refs.formDiag.show({ queryForm:this.$refs.queryForm,formDiag: this.$refs.formDiag });
+
+            },
             getProps(scope) {
                 return this.entity.props.filter(p => p.propScope == scope);
             },

@@ -1,7 +1,7 @@
 <!-- 产品选择-->
 
 <template>
-    <el-tabs stretch="false" tab-position="top" v-model="activeName">
+    <el-tabs   tab-position="top" v-model="activeName">
 
         <el-tab-pane style="background-color: mintcream" id="tabProduct" label="产品" name="tabProduct">
 
@@ -43,7 +43,7 @@
                     <el-select v-model="currentValue" :style="'color:red;width:500px'" placeholder="请选择" filterable
                                :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
                         <el-option v-for="item in options" :key="item.id"
-                                   :label="item.code+'-'+item.remark+'-'+item.color+'-'+item.size"
+                                   :label="item.code+'--'+item.epCode+'--'+item.remark+'-'+item.color+'-'+item.size"
                                    :value="item.id" :disabled="item.disabled">
                         </el-option>
                     </el-select>
