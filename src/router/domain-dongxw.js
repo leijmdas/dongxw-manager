@@ -17,15 +17,15 @@ let router0 = [
                     orderType: null
                 }
             },
-            {
-                path: 'dongxw/suborder/manage',
-                component: require('@/pages/dongxw/order/Main.vue'),
-                name: 'suborder:manage',
-                meta: {title: '子订单', perm: 'order:manage'},
-                params: {
-                    orderType: 200
-                }
-            },
+            // {
+            //     path: 'dongxw/suborder/manage',
+            //     component: require('@/pages/dongxw/order/Main.vue'),
+            //     name: 'suborder:manage',
+            //     meta: {title: '子订单', perm: 'order:manage'},
+            //     params: {
+            //         orderType: 200
+            //     }
+            // },
             {
                 path: 'dongxw/orderlst/manage',
                 component: require('@/pages/dongxw/orderline/ManageQuery.vue'),

@@ -46,7 +46,12 @@
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-
+                <el-form-item label="订单类型" prop="orderType">
+                    <el-select :clearable="true" v-model="page.query.param.orderType" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
                 <!--<el-form-item>-->
                     <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
                     <!--<el-button @click="cancel">取消</el-button>-->
@@ -71,11 +76,16 @@
             </el-table-column>
             <!--<el-table-column prop="id" label="订单标识" width="80"></el-table-column>-->
             <el-table-column prop="orderType" label="订单类型" width="70">
-
+                <template slot-scope="{row}">
+                    <span :style="'style:red'"> {{$dongxwDict.getText(row.orderType,$dongxwDict.store.ORDER_TYPE)}}</span>
+                </template>
             </el-table-column>
 
-            <el-table-column prop="parentId" label="父订单" width="70">
+            <el-table-column prop="parentId" label="父订单" width="80">
+                <template slot-scope="{row}">
+                    {{ row.orderMasterParent? row.orderMasterParent.epOrderCode:'-'}}
 
+                </template>
             </el-table-column>
 
             <el-table-column prop="customerId" label="客户代码" width="80">

@@ -36,7 +36,7 @@
                         <el-col :span="11">
 
                             <el-form-item label="父订单" v-if="entity.orderType==200" prop="parentId">
-                                <order-master-select :width="'200px'" :orderType="200" :customerId="entity.customerId" v-model="entity.parentId"
+                                <order-master-select :width="'200px'" :orderType="100" :customerId="entity.customerId" v-model="entity.parentId"
                                                      :clearable="true"></order-master-select>
                             </el-form-item>
                         </el-col>
