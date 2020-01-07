@@ -274,7 +274,7 @@
         components: {CustomerSelect,ProductTypeSelect,ProductSubTypeSelect},
         data() {
             return {
- 
+
                 options: [
                     { label: '产品正面', value: '1' },
                     { label: '产品背面', value: '2' },
