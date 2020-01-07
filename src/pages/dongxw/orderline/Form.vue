@@ -245,43 +245,7 @@
                 }
             },
             resetProps() {
-                let ruleCode = this.entity.ruleTplCode;
-                if (!ruleCode) {
-                    return;
-                }
-                if (!this.ruleDefs) {
-                    return;
-                }
-                let opt = this.ruleDefs.filter(tmp => tmp.code == ruleCode)[0];
-                if (!opt) return;
-                this.ruleTpl = opt;
-                let whenFields = opt.when == null ? [] : opt.when.fields;
-                let thenFields = opt.then == null ? [] : opt.then.fields;
-                let oldProps = this.oldProps || [];
 
-                function field2Props(fields, type) {
-                    let rs = [];
-                    fields.forEach(f => {
-                        let tmpOlds = oldProps.filter(
-                            p => p.propKey == f.prop && p.propScope == type
-                        );
-                        let tmpOld = tmpOlds.length > 0 ? tmpOlds[0] : null;
-                        rs.push({
-                            propKey: f.prop,
-                            propName: f.name,
-                            propValue: tmpOld == null ? "" : tmpOld.propValue,
-                            remark: f.remark,
-                            required: !!f.required,
-                            propScope: type
-                        });
-                    });
-                    return rs;
-                }
-
-                let whenProps = field2Props(whenFields || [], "when");
-                let thenProps = field2Props(thenFields || [], "then");
-                this.entity.props = [];
-                this.entity.props = this.entity.props.concat(whenProps).concat(thenProps);
             },
             setValues(vals) {
                 this.resetEntity = _.cloneDeep(vals);

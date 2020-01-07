@@ -2,7 +2,7 @@
     <div>
         <el-row :span="24" :removeUrl="funRemoveUrl">
 
-            <el-col :span="6" v-for="(url,index) in urlInfo">
+            <el-col :span="6" v-for="(url,index) in urlInfo" :key="url">
 
                 <!--<el-input v-if="url&&showRemoveBtn" style="width:120px" placeholder="描述" v-model="remarks[index]"></el-input>-->
                 <el-select v-if="url&&showRemoveBtn" v-model="remarks[index]" filterable placeholder="请选择" @change="handleChange">
@@ -13,8 +13,7 @@
                         :value="item.label">
                     </el-option>
                 </el-select>
-                <el-button v-if="url && showRemoveBtn" style="margin-left:10px" @click="removeUrl(url)" type="text"
-                           title="删除" plain>
+                <el-button v-if="url && showRemoveBtn" @click="removeUrl(url)" style="margin-left:5px"  type="text" title="删除" plain>
                     <i class="el-icon-delete " style="color:red;"></i>
                 </el-button>
                 <img :src="url" class="avatar" :style="imgStyle"/>
@@ -24,13 +23,21 @@
         </el-row>
         <el-row v-if="showRemoveBtn" :span="24" >
 
+
             <el-col :span="1" style=" padding-top: 120px">
-                <slot name="slotRmBtn"></slot>
-            </el-col>
+                <el-button  @click="clearAllImg" type="text" title="清除图片" plain>
+                    <i class="el-icon-delete " style="color:red"></i>
+                </el-button>   </el-col>
 
             <el-col :span="3" style="margin-left: -10px">
-                <slot name="slotLoadImg" >
-                </slot>
+                <el-upload  ref="upload" :data="formData" :limit="limit"  :multiple="true"
+                            :action="action" :auto-upload="true"  list-type="text"
+                           :beforeUpload="beforeUpload" :on-exceed="handleExceed"
+                            :on-preview="handlePictureCardPreview"
+                           :on-success="handleSuccess"  :on-remove="handleRemove">
+                    <i class="el-icon-plus  el-upload--picture-card"></i>
+
+                </el-upload>
             </el-col>
         </el-row>
 
@@ -39,23 +46,24 @@
     </div>
 </template>
 <script>
+    import {getToken} from '@/utils/auth'
     export default {
         name: 'vImageUploader',
         data() {
             return {
                 urls: null,
+                formData: {maxSize:500},
+                action: '/api/file/upload',
+                limit: 12,
                 remarks : [],
-                options: [
-                    { label: '产品正面', value: '1' },
-                    { label: '产品背面', value: '2' },
-                    { label: '内部结构', value: '3' },
-                    { label: 'logo', value: '4' },
-                    { label: '拉链以及拉头', value: '5' },
-                    { label: '内唛', value: '6' },
-                ],
+
             }
         },
         props: {
+            options : {
+                required : false,
+                type: Array ,
+            },
             funRemoveUrl:{
                 required : false,
                 type: Function ,
@@ -116,22 +124,27 @@
             }
         },
         methods: {
+            clearFiles(){
+                this.$refs.upload.clearFiles();
+
+            },
+            clearAllImg() {
+                this.$refs.upload.clearFiles();
+                this.urlInfo = null;
+                if (this.remarks) {
+                    this.remarks = []
+                    this.funHandleChange(this.remarks)
+                }
+            },
             handleChange(value) {
                 if (this.funHandleChange) {
                     this.funHandleChange(this.remarks)
                 }
             },
 
-            selectBlur(e) {
-                this.aaa = e.target.value
-            },
-            searchBlur(e) {
-                this.aaa = e.target.value
-            },
+
             removeUrl(url) {
-                if (this.funRemoveUrl) {
-                    this.funRemoveUrl(url)
-                }
+                this.$refs.upload.clearFiles();
 
                 let newurls  = _.cloneDeep(this.urlInfo);
                 var index = newurls.indexOf(url);
@@ -144,6 +157,37 @@
                    this.funHandleChange(this.remarks)
                 }
                 this.urlInfo = newurls.join(',')
+            },
+            handleExceed() {
+                this.$message('最多只允许上传'+this.limit+'张图片！')
+            },
+            handleSuccess(response, file, fileList) {
+                console.log(response.path)
+                let urls = this.urlInfo
+                urls.push(response.path)
+                this.urlInfo = urls.join(',')
+                console.log(this.urlInfo)
+
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+            handlePictureCardPreview(file) {
+
+            },
+            handleDownload(file) {
+                console.log(file);
+            },
+            beforeUpload(file) {
+
+                if(file.size>500*1024){
+                    this.$message({
+                        type: 'error',
+                        message: '文件大于500k!'
+                    });
+                    return false;
+                }
+                Object.assign(this.formData,{"access-token":getToken()})
             },
 
         }

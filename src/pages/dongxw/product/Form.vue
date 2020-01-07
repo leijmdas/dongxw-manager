@@ -89,10 +89,9 @@
                             <el-form-item label="产品图片" prop="">
 
                                 <div :span="12" >
-                                    <v-image-uploader    :isShow="isShow" :form-data="{}" v-model="entity.picUrl"
+                                    <v-image-uploader  :isShow="isShow" :form-data="{}" v-model="entity.picUrl"
                                         :imgStyle="'margin-right:10px;width:160px;height:160px'"/>
 
-                                    <!--<i slot="default" class="el-icon-plus"></i>-->
                                 </div>
                             </el-form-item>
 
@@ -187,24 +186,11 @@
                     </el-row>
 
                 </el-tab-pane>
-                <el-tab-pane label="产品图片集" name="prdImage">
-
+                <el-tab-pane label="产品图片" name="prdImage">
                             <v-image-preview ref="imagePreview" v-model="entity.imgUrls" :imgRemarks = "entity.imgRemark"
-                                             :showRemoveBtn="true" :funHandleChange = "funHandleChange" :funRemoveUrl="removeUrl"
+                                             :options="options" :showRemoveBtn="true" :funHandleChange = "funHandleChange"
                                              :imgStyle="'margin-right:10px;width:140px;height:120px'">
-
-                                <el-upload slot="slotLoadImg" ref="myupload" :data="formData" :limit="limit" :multiple="true"
-                                           :action="action" :auto-upload="true"  list-type="text"
-                                           :beforeUpload="beforeUpload" :on-exceed="handleExceed"  :on-preview="handlePictureCardPreview"
-                                           :on-success="handleSuccess"  :on-remove="handleRemove">
-                                    <i class="el-icon-plus  el-upload--picture-card"></i>
-
-                                </el-upload>
-                                <el-button slot="slotRmBtn"  @click="clearAllImg" type="text" title="清除图片" plain>
-                                    <i class="el-icon-delete " style="color:red"></i>
-                                </el-button>
                             </v-image-preview>
-
                 </el-tab-pane>
 
             </el-tabs>
@@ -244,14 +230,13 @@
 </style>
 
 <script>
-    import {getToken} from '@/utils/auth'
 
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
 
     const defaultEntity = {
-        fileList:[],
+
         id: null,
         epCode: null,
         code: null,
@@ -262,8 +247,6 @@
         barCode : '',
         picUrl : null ,
         imgUrls : null,
-        imgRemark : "12,11",
-        urls :[],
         upcA : '',
         memo : '',
         unit: '',
@@ -291,17 +274,16 @@
         components: {CustomerSelect,ProductTypeSelect,ProductSubTypeSelect},
         data() {
             return {
-                dialogImageUrl: '',
-                dialogVisible: false,
-                urls:[
-                    // 'http://120.78.136.63:8888/group1/M00/00/02/rBIvIF4RaECAJCaKAABm2RpgHNo984.jpg',
-                    // 'http://120.78.136.63:8888/group1/M00/00/02/rBIvIF4RaECAJCaKAABm2RpgHNo984.jpg',
-
+ 
+                options: [
+                    { label: '产品正面', value: '1' },
+                    { label: '产品背面', value: '2' },
+                    { label: '内部结构', value: '3' },
+                    { label: 'logo', value: '4' },
+                    { label: '拉链以及拉头', value: '5' },
+                    { label: '内唛', value: '6' },
+                    { label: '', value: '0' },
                 ],
-                //   fileList: [{'':'http://120.78.136.63:8888/group1/M00/00/01/rBIvIF4RV3OADd7cAAAWylUKCoI026.png'}],
-                formData: {maxSize:500},
-                action: '/api/file/upload',
-                limit: 12,
                 isShow: true,
                 multiple: true,
                 isExp: false,
@@ -334,18 +316,7 @@
                         }
                     ],
 
-                    startOn: [
-                        {
-                            required: true,
-                            message: "请选择开始时间",
-                            trigger: "blur"
-                        }
-                    ],
-                    merchantId: [
-                        {
-                            type: "number"
-                        }
-                    ],
+
                     status: [
                         {
                             type: "number",
@@ -364,52 +335,10 @@
             clearImg() {
                 this.entity.picUrl = null;
             },
-            clearAllImg() {
-                this.$refs.myupload.clearFiles();
-                this.entity.imgUrls = null;
-                this.entity.imgRemark = null;
-            },
-            removeUrl(){
-                this.$refs.myupload.clearFiles();
 
-            },
+
             funHandleChange(imgRemarkArray) {
                 this.entity.imgRemark = imgRemarkArray.join(",")
-
-            },
-            handleExceed() {
-                this.$message('最多只允许上传'+this.limit+'张图片！')
-            },
-            handleSuccess(response, file, fileList) {
-                console.log(response.path)
-                let urls=this.entity.imgUrls?this.entity.imgUrls.split(','):[]
-                urls.push(response.path)
-                this.entity.imgUrls=urls.join(',')
-                console.log(this.entity.imgUrls)
-
-            },
-            handleRemove(file, fileList) {
-                console.log(file, fileList);
-                // this.$message(JSON.stringify(file.response.path))
-                //this.urls = []
-            },
-            handlePictureCardPreview(file) {
-                this.dialogImageUrl = file.url;
-                this.dialogVisible = true;
-            },
-            handleDownload(file) {
-                console.log(file);
-            },
-            beforeUpload(file) {
-
-                if(file.size>500*1024){
-                        this.$message({
-                            type: 'error',
-                            message: '文件大于500k!'
-                        });
-                    return false;
-                }
-                Object.assign(this.formData,{"access-token":getToken()})
             },
 
             getProps(scope) {
@@ -435,14 +364,11 @@
                 this.entity = _.cloneDeep(this.resetEntity);
             },
             submitForm() {
-                //this.entity.imgUrls = this.urls ? this.urls.join(',') : null;
 
                 this.$refs["form"].validate(valid => {
                     if (valid) {
                         let params = Object.assign({}, this.entity);
-                        // if(this.$refs.imagePreview.remarks){
-                        //     params.imgRemark=this.$refs.imagePreview.remarks.join(",")
-                        // }
+
                         this.$api.dongxw.ProductService.save(params).then(rsp => {
                             this.$emit("saved", rsp);
                         });
@@ -450,7 +376,6 @@
                 });
             },
             resetForm() {
-                //this.$refs["form"].resetFields();
                 this.entity = _.cloneDeep(defaultEntity);
                 if (!this.entity.id) {
 
@@ -458,8 +383,8 @@
                 }
             },
             init(options) {
-                this.$refs.myupload.clearFiles();
-                this.urls = [];
+                this.$refs.imagePreview.clearFiles();
+
                 this.resetForm();
                 if (options.id) {
                     console.log(JSON.stringify(this.entity));
@@ -467,8 +392,6 @@
                     this.$api.dongxw.ProductService.findById(options.id).then(r => {
                         console.log(JSON.stringify(r))
                         this.entity = r.data;
-
-                        //this.urls = this.entity.imgUrls  ? this.entity.imgUrls.split(',') : [];
 
                     });
                 } else {
