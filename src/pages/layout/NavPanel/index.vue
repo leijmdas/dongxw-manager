@@ -7,14 +7,14 @@
             <el-menu-item index="domain_dongxw"><span class="ele-icon el-icon-ipyunyingguanli"></span>
                 <span>ERP</span>
             </el-menu-item>
-
+            <el-menu-item index="domain_office"><span
+                class="ele-icon el-icon-ipyunyingbaobiao"></span><span>办公自动化</span>
+            </el-menu-item>
             <!--<el-menu-item v-show="isadmin=='true'" index="domain_parking"><span-->
                 <!--class="ele-icon el-icon-ipyunyingguanli"></span><span>运营</span>-->
             <!--</el-menu-item>-->
             <!---->
-            <!--<el-menu-item index="domain_maintenance"><span-->
-                <!--class="ele-icon el-icon-ipyunyingbaobiao"></span><span>运维</span>-->
-            <!--</el-menu-item>-->
+
 
             <el-menu-item v-show="isadmin=='true'" index="domain_sys"><span
                 class="ele-icon el-icon-ipshezhi"></span><span>设置</span>

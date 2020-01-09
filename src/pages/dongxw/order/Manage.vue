@@ -67,7 +67,7 @@
                 <el-button @click="cancel">取消</el-button>
 
                 <el-button plain @click="exportRecords">导出 XLS</el-button>
-                <el-button plain @click="exportMail">发送邮件</el-button>
+                <el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>
 
                 <el-button type="primary" plain @click="create">新增</el-button>
             </v-toolbar>
