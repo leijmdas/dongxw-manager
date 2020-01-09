@@ -70,21 +70,21 @@ service.interceptors.response.use(
       // const {msg: errMsg, code: errCode} = (response.data || {msg: '', code: ''}).data
         console.log(JSON.stringify(response.data));
 
-        const { msg: errMsg, code: errCode } = response.data
-      statusCode = response.status
-      code = errCode
-      msg = errMsg||response.data.message
-        if(msg.indexOf("Dupli")>-1){
-            msg='数据重复！'
-        }else  if(msg.indexOf("SQLIntegrityConstraintViolationException")>-1){
-            msg=msg.split('SQLIntegrityConstraintViolationException')[1].split('###')[0]
-
+        const {msg: errMsg, code: errCode} = response.data
+        statusCode = response.status
+        code = errCode
+        msg = errMsg || response.data.message
+        if (msg.indexOf("Dupli") > -1) {
+            msg = '数据重复！'
+        } else if (msg.indexOf("SQLIntegrityConstraintViolationException") > -1) {
+            msg = msg.split('SQLIntegrityConstraintViolationException')[1].split('###')[0]
         }
+        console.log(msg);
     } else {
-      statusCode = 600
-      msg = error.msg || 'Network Error'
+        statusCode = 600
+        msg = error.msg || 'Network Error'
     }
-    let wrapError = new RequestError(statusCode, code, msg)
+      let wrapError = new RequestError(statusCode, code, msg)
     //默认处理
     if (!config.autoHandleError) {
       defaultHandler(wrapError)

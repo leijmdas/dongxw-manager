@@ -35,6 +35,17 @@ export default {
             responseType: 'blob'
         })
     },
+    /**
+     * 导出xlsxMail
+     */
+    exportMail(data) {
+        return request({
+            url: '/dongxw/ordermaster/exportMail',
+            method: 'POST',
+            data
+        })
+    },
+
     findById(id) {
         return request({
             url: '/dongxw/ordermaster/findById/'+id,

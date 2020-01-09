@@ -67,6 +67,8 @@
                 <el-button @click="cancel">取消</el-button>
 
                 <el-button plain @click="exportRecords">导出 XLS</el-button>
+                <el-button plain @click="exportMail">发送邮件</el-button>
+
                 <el-button type="primary" plain @click="create">新增</el-button>
             </v-toolbar>
         <v-table ref="table" :page="page" :dblclick="showLine" :click="clickRow" :table-minheight="450" @dataloaded="onDataloaded">
@@ -291,9 +293,19 @@
                     self.$api.dongxw.OrderMaster.export(params);
 
                 });
-                // let params = this.getSearchParams();
-                // console.log(params);
-                // this.$api.dongxw.OrderMaster.export(params);
+
+            },
+             /*发送邮件
+             * */
+            exportMail() {
+                let self = this;
+                this.$confirm("确定要发送订单记录的邮件吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+                    let params = self.getSearchParams();
+                    self.$api.dongxw.OrderMaster.exportMail(params);
+
+                });
 
             },
             create() {
