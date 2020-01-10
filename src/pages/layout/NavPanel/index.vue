@@ -21,9 +21,11 @@
                  active-text-color="#ffd04b">
 
             <el-menu-item index="4">
-                <a href="https://element.eleme.cn" target="_blank" class="go-to">
+
+                <el-link href="https://element.eleme.cn" target="_blank">
                     <img style="width:50px;height:50px" src="../../../assets/logo.png" alt="el"/>
-                </a>
+                </el-link>
+
             </el-menu-item>
 
             <el-menu-item index="3">
