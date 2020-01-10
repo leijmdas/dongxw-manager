@@ -4,7 +4,7 @@
 
             <router-link :to="{path:'/dashboard'}">
                 <div class="logo">
-                    <img src="../../assets/logo.png" style="height: 40px;">
+                    <img src="../../assets/logo.png" style="height: 60px;">
                     <p>
                         <span style="font-size: 18px;">东兴旺ERP系统</span>
                         <span style="font-size: 12px;">DXW ERP SYSTEM</span>

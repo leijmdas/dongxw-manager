@@ -10,10 +10,6 @@
             <el-menu-item index="domain_office"><span
                 class="ele-icon el-icon-ipyunyingbaobiao"></span><span>办公自动化</span>
             </el-menu-item>
-            <!--<el-menu-item v-show="isadmin=='true'" index="domain_parking"><span-->
-                <!--class="ele-icon el-icon-ipyunyingguanli"></span><span>运营</span>-->
-            <!--</el-menu-item>-->
-            <!---->
 
 
             <el-menu-item v-show="isadmin=='true'" index="domain_sys"><span
@@ -23,6 +19,19 @@
 
         <el-menu mode="horizontal" :default-active="activeIndex" background-color="#00438A" text-color="#fff"
                  active-text-color="#ffd04b">
+
+            <el-menu-item index="4">
+                <a href="https://element.eleme.cn" target="_blank" class="go-to">
+                    <img style="width:50px;height:50px" src="../../../assets/logo.png" alt="el"/>
+                </a>
+            </el-menu-item>
+
+            <el-menu-item index="3">
+                <a href="https://www.kubernetes.org.cn" target="_blank" class="go-to">
+                    <img style="width:50px;height:50px" src="../../../assets/logo.png" alt="k8s"/>
+                </a>
+            </el-menu-item>
+
             <el-menu-item index="2">
                 <a href="http://120.79.98.67/" target="_blank" class="go-to">宏利达海棉</a>
             </el-menu-item>
