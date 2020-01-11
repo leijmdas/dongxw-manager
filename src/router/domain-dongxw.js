@@ -222,27 +222,13 @@ let router0 = [
         path: '/qry',
         component: Layout,
         meta: {title: '查询', icon: 'user', group: 'dongxw'},
-        children: [{
-            path: 'userInfo/manage11',
-            component: require('@/pages/app/userInfo/Manage.vue'),
-            name: 'userInfo:manage11',
-            meta: {title: '查询客户订单', perm: 'user:manage'}
-        }, {
-            path: 'userInfo/userGrade11',
-            component: require('@/pages/app/userGrade/Manage.vue'),
-            name: 'userGrade:manage11',
-            meta: {title: '查询采购订单', perm: 'userGrade:manage'}
-        }, {
-            path: 'userInfo/userGrade12',
-            component: require('@/pages/app/userGrade/Manage.vue'),
-            name: 'userGrade:manage12',
-            meta: {title: '查询库存', perm: 'userGrade:manage'}
-        }, {
-            path: 'common/query',
-            component: require('@/pages/common/queryByMetadata/Manage.vue'),
-            name: 'common:query',
-            meta: {title: '通用查询', perm: 'order:manage'}
-        },
+        children: [
+            {
+                path: 'common/query',
+                component: require('@/pages/common/queryByMetadata/Manage.vue'),
+                name: 'common:query',
+                meta: {title: '通用查询', perm: 'order:manage'}
+            },
         ]
     },
 ];

@@ -312,9 +312,13 @@ export default {
       selectItemIndex: -1
     };
   },
-  methods: {
-    getSummaries(param) {
-      const { columns, data } = param;
+    methods: {
+        reset() {
+            this.internalPageSize = this.pageSize
+            this.currentPage = 1
+        },
+        getSummaries(param) {
+            const {columns, data } = param;
       const sums = [];
       columns.forEach((column, index) => {
         if (index === 0) {

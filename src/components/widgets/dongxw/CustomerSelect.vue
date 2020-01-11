@@ -41,8 +41,9 @@
             disabled: {
                 type: Boolean
             },
-            custId: {
-                //type: Number
+            customerId: {
+                //type: Number,
+
             }
         },
         computed: {
@@ -56,7 +57,7 @@
             }
         },
         watch: {
-            custId: {
+            customerId: {
                 handler: function(newVal, oldVal) {
                     this.value = ''
                     this.currentValue = ''
@@ -74,7 +75,7 @@
             },
             refresh () {
                 this.loading = true
-                this.$api.dongxw.CustomerService.query({param: {custId: this.custId,isDeleted:false}}).then(rsp => {
+                this.$api.dongxw.CustomerService.query({param: {isDeleted:false}}).then(rsp => {
                     this.options = rsp.data
                     this.loading = false
                 })

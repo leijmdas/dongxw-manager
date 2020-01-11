@@ -48,7 +48,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="订单类型" prop="orderType">
-                    <el-select :clearable="true" v-model="page.query.param.orderType" style="width:100px">
+                    <el-select @change="search" :clearable="true" v-model="page.query.param.orderType" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>

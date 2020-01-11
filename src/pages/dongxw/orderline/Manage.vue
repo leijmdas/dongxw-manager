@@ -224,7 +224,7 @@
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            customerId: undefined,
+
                             isDeleted: false
                         }
                     },

@@ -33,7 +33,7 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  :prop="pp" :label="ll" width="120"></el-table-column>
+            <!--<el-table-column  :prop="pp" :label="ll" width="120"></el-table-column>-->
             <el-table-column  prop="fieldName" label="英文名称" width="120"></el-table-column>
             <el-table-column  prop="fieldMemo" label="中文名称" width="160"></el-table-column>
             <el-table-column  prop="fieldType" label="字段类型" width="100"></el-table-column>
@@ -78,8 +78,8 @@
         data() {
             return {
                 metafields : [],
-                pp:"fieldName",
-                ll:"英文名称",
+                // pp:"fieldName",
+                // ll:"英文名称",
 
                 formStatus: 1,
                 orderDateRange: [],

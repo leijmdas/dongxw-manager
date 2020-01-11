@@ -41,6 +41,14 @@ export default {
         })
     },
 
+    selectTable(data) {
+        return request({
+            url: '/api/sys/metadata/public/selectTable',
+            method: 'POST',
+            data
+
+        })
+    },
 
 
 

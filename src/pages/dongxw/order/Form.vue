@@ -42,15 +42,16 @@
                     </el-row>
 
                     <el-row :span="22">
-                        <el-col :span="11">
-                            <el-form-item label="EP订单号" prop="epOrderCode">
-                                <el-input placeholder="EP订单号" v-model="entity.epOrderCode"></el-input>
-                            </el-form-item>
-                        </el-col>
+
                         <el-col :span="11">
                             <el-form-item label="客户订单号" prop="customerOrderCode">
                                 <el-input placeholder="客户订单号" v-model="entity.customerOrderCode"></el-input>
 
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="11">
+                            <el-form-item label="EP订单号" prop="epOrderCode">
+                                <el-input placeholder="EP订单号" v-model="entity.epOrderCode"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>

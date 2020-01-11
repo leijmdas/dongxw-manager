@@ -3,14 +3,15 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <el-form-item label="客户" prop="subjectType">
-                    <customer-select v-model="page.query.param.customerId" :clearable="true">
+                <el-form-item label="客户" prop="customerId">
+                    <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true">
 
                     </customer-select>
 
                 </el-form-item>
                 <el-form-item label="订单" prop="orderId">
-                    <order-master-select :customerId="page.query.param.customerId" v-model="page.query.param.orderId"   :clearable="true">
+                    <order-master-select :fnChange="search"  :customerId="page.query.param.customerId"
+                                         v-model="page.query.param.orderId"   :clearable="true">
 
                     </order-master-select>
 
@@ -267,10 +268,10 @@
 
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
-     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
+    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
     import ProductSelect from '@/components/widgets/dongxw/ProductSelect.vue';
-    import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
+    import SupplierSelect from '@/components/widgets/dongxw/SupplierSelect.vue';
 
     export default {
         components: {CustomerSelect,OrderMasterSelect,ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel,SupplierSelect},
@@ -280,7 +281,6 @@
                 isShowPrdPic:false,
                 dateRangeType: 'orderDate',
                 order: [],
-                orderId: 0,
                 formStatus: 1,
                 dateRange: [],
                 summaryMap: {},
@@ -289,6 +289,7 @@
                         orderBys: 'id|desc',
                         param: {
                             customerId: undefined,
+                            orderId: undefined,
                             isDeleted: false
                         }
                     },
@@ -314,7 +315,6 @@
 
             },
             getSearchParams() {
-                this.page.query.param.orderId = this.orderId;
                 this.page.query.dateRanges = {};
                 if (this.dateRangeType != null && this.dateRange && this.dateRange.length > 0) {
                     this.page.query.dateRanges[this.dateRangeType] = {
@@ -389,7 +389,6 @@
                 this.order = options;
                 this.customerId = options.customerId;
                 this.orderId = options.id;
-                console.log(JSON.toString(options));
                 this.search();
             },
             search() {
