@@ -23,6 +23,10 @@
             }
         },
         props: {
+            fnChange:{
+                required:false,
+                type:Function
+            },
             value: {
                 required: true
             },
@@ -64,6 +68,9 @@
         methods: {
             handleChange (val) {
                 this.$emit('change', val)
+                if(this.fnChange){
+                    this.fnChange();
+                }
             },
             refresh () {
                 this.loading = true

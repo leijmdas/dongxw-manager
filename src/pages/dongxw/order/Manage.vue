@@ -4,7 +4,8 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
                 <el-form-item label="客户" prop="customerId">
-                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
+                    <customer-select :fnChange="search" v-model="page.query.param.customerId"
+                                     :clearable="true"></customer-select>
 
                 </el-form-item>
 

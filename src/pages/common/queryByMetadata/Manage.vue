@@ -8,9 +8,10 @@
                     <sub-sys-select v-model="page.query.param.subsysId" :clearable="true"></sub-sys-select>
                 </el-form-item>
 
-
                 <el-form-item label="表名" prop="metadataId">
-                    <el-input v-model="page.query.param.metadataId" clearable></el-input>
+
+                    <table-select :fnChange="search" :subsysId="page.query.param.subsysId" v-model="page.query.param.metadataId" :clearable="true"></table-select>
+
                 </el-form-item>
                 <el-form-item label="英文名称" prop="fieldName">
                     <el-input v-model="page.query.param.fieldName" clearable></el-input>
@@ -20,7 +21,7 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                    <el-button type="primary" plain @click="search" v-keycode="'ENTER'">查询</el-button>
                     <el-button @click="cancel">取消</el-button>
                     <!--<el-button type="primary" plain @click="create">新增</el-button>-->
 
@@ -28,7 +29,7 @@
             </el-form>
         </div>
 
-        <v-toolbar title="数据列表" type="alert">
+        <v-toolbar title="元数据列表" type="alert">
             <!--<el-button plain @click="loadDict">load dict</el-button>-->
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
             <!--<el-button type="primary" plain @click="create">新增</el-button>-->
@@ -36,24 +37,32 @@
 
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column prop="seq" label="序号" width="50">
-
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
-
             </el-table-column>
-            <el-table-column  :prop="pp" :label="ll" width="120"></el-table-column>
-            <el-table-column  prop="fieldName" label="英文名称" width="120"></el-table-column>
-            <el-table-column  prop="fieldMemo" label="中文名称" width="160"></el-table-column>
-            <el-table-column  prop="fieldType" label="字段类型" width="100"></el-table-column>
-            <el-table-column  prop="fieldSize" label="长度" width="80"></el-table-column>
-            <el-table-column  prop="fieldDisplaysize" label="显示长度" width="80"></el-table-column>
 
-            <el-table-column width="100" label="操作"  >
-                <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
+            <!--<el-table-column  :prop="pp" :label="ll" width="120"></el-table-column>-->
+            <el-table-column  prop="metadataDictModel.subsysId" label="子系统" width="120"></el-table-column>
+            <el-table-column  prop="metadataDictModel.metadataAlias" label="表中文名" width="120"></el-table-column>
+            <el-table-column  prop="metadataDictModel.metadataName" label="表名" width="120"></el-table-column>
+            <el-table-column  prop="fieldName" label="英文名称" width="120"></el-table-column>
+            <el-table-column prop="fieldMemo" label="中文名称" width="160"></el-table-column>
+            <el-table-column prop="fieldOrder" label="排序" width="60"></el-table-column>
+            <el-table-column prop="fieldType" label="字段类型" width="100"></el-table-column>
+            <el-table-column prop="fieldSize" label="字段长度" width="100"></el-table-column>
+            <el-table-column prop="fieldDisplaysize" label="显示长度" width="80"></el-table-column>
+            <el-table-column prop="fieldPk" label="是否主键" width="100"></el-table-column>
+            <el-table-column prop="fieldReadonly" label="只读" width="100"></el-table-column>
+            <el-table-column prop="fieldVisible" label="是否可见" width="100"></el-table-column>
+
+            <el-table-column prop="fieldRemark" label="说明" ></el-table-column>
+
+            <el-table-column width="100" label="操作" :fixed="'right'" >
+
                 <template slot-scope="scope">
 
-                    <el-button type="text" title="编辑" @click="edit(scope.row)"  >
-                        <i class="el-icon-edit"></i>
-                    </el-button>
+                    <!--<el-button type="text" title="编辑" @click="edit(scope.row)"  >-->
+                        <!--<i class="el-icon-edit"></i>-->
+                    <!--</el-button>-->
                     <!--<el-button type="text" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">-->
                     <!--<i class="el-icon-delete red"></i>-->
                     <!--</el-button>-->
@@ -80,14 +89,15 @@
 <script>
 
     import SubSysSelect from '@/components/widgets/dongxw/SubSysSelect.vue';
+    import TableSelect from '@/components/widgets/dongxw/TableSelect.vue';
 
     export default {
-        components: { SubSysSelect },
+        components: { TableSelect,SubSysSelect },
         data() {
             return {
                 metafields : [],
-                pp:"fieldName",
-                ll:"英文名称",
+                // pp:"fieldName",
+                // ll:"英文名称",
 
                 formStatus: 1,
                 orderDateRange: [],
@@ -97,6 +107,7 @@
                         orderBys: 'id|desc',
                         param: {
                             subjectId: undefined,
+                            subsysId : 0,
                             isDeleted: false
                         }
                     },

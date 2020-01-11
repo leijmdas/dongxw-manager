@@ -8,6 +8,24 @@ export default {
             method: 'POST'
         })
     },
+    queryTables(data) {
+        return request({
+            url: '/api/sys/metadata/queryTables',
+            method: 'POST',
+            data
+
+        })
+    },
+
+    queryFields(data) {
+        return request({
+            url: '/api/sys/metadata/queryFields',
+            method: 'POST',
+            data
+
+        })
+    },
+
     queryFieldsByTable(tableName) {
         return request({
             url: '/api/sys/metadata/queryFieldsByTable?tableName=' + tableName,
@@ -23,14 +41,6 @@ export default {
         })
     },
 
-    queryFields(data) {
-        return request({
-            url: '/api/sys/metadata/queryFields',
-            method: 'POST',
-            data
-
-        })
-    },
 
 
 
