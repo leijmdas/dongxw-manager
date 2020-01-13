@@ -68,7 +68,7 @@ let sysRouter = [{
   },
   {
       path: 'appVersion/manage',
-      component: require('@/pages/app/appVersion/Manage.vue'),
+      component: require('@/pages/sys/appVersion/Manage.vue'),
       name: 'appVersion:manage',
       meta: {title: 'APP版本升级',perm: 'appVersion:manage'}
   },

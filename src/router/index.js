@@ -2,11 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import {constantRouter} from './constRouter'
 import sysRouter from './domain-sys'
-import maintenanceRouter from './domain-maintenance'
 import officeRouter from './domain-office'
 import dxwRouter from './domain-dongxw'
 
-import parkingRouter from './domain-parking'
 Vue.use(Router)
 
 export const routers = constantRouter.concat(officeRouter).concat(sysRouter).concat(dxwRouter);
