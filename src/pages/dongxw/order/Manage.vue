@@ -170,7 +170,7 @@
                         <i class="el-icon-edit"></i>
                     </el-button>
 
-                    <el-button  style="color:green"  type="info" plain title="产品" @click="showLine(scope.row)">
+                    <el-button  v-if="scope.row.orderType!=100" style="color:green"  type="info" plain title="产品" @click="showLine(scope.row)">
                         产品
                     </el-button>
                     <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
@@ -386,12 +386,13 @@
             },
             showLine(row) {
                 console.log(JSON.stringify(row));
-                console.log("fatherMethodL: ");
-                console.log(this.fatherMethod);
-                if (this.fatherMethod) {
+                console.log("fatherMethodL: " + this.fatherMethod);
+                if (row.orderType != 100 && this.fatherMethod) {
                     this.fatherMethod(row);
                 }
-
+                if (row.orderType == 100){
+                    this.$message("父订单没有产品清单！")
+                }
             },
             showPic(row) {
                 console.log(JSON.stringify(row));

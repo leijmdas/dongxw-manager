@@ -71,7 +71,11 @@
                     {{ row.customer?row.customer.custName:'-'}}
                 </template>
             </el-table-column>
-
+            <el-table-column prop="orderType" label="订单类型" width="70">
+                <template slot-scope="{row}">
+                    <span :style="'style:red'"> {{$dongxwDict.getText(row.orderMaster?row.orderMaster.orderType:0,$dongxwDict.store.ORDER_TYPE)}}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="customerOrderCode" label="客户订单号" width="110">
                 <template slot-scope="{row}">
                     {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
