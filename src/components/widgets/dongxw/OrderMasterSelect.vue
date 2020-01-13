@@ -44,6 +44,11 @@
             },
             customerId: {
                // type: Number,
+            },
+            orderType:{
+                type:Number,
+                required:false,
+                default : null
             }
         },
         computed: {
@@ -76,7 +81,13 @@
             refresh() {
                 this.loading = true
                 this.$api.dongxw.OrderMaster.query(
-                    {param: {customerId: this.customerId, isDeleted: false}}
+                    {
+                        param: {
+                            customerId: this.customerId,
+                            orderType: this.orderType,
+                            isDeleted: false
+                        }
+                    }
                 ).then(rsp => {
                     this.options = rsp.data
                     this.loading = false
