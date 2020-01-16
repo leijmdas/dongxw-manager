@@ -35,7 +35,10 @@
             </el-menu-item>
 
             <el-menu-item index="2">
-                <a href="http://120.79.98.67/" target="_blank" class="go-to">宏利达海棉</a>
+                <a href="http://hongld.akunlong.top/" target="_blank" class="go-to">宏利达海棉</a>
+            </el-menu-item>
+            <el-menu-item index="1">
+                <a href="http://nexus.akunlong.top/" target="_blank" class="go-to">Test</a>
             </el-menu-item>
             <el-menu-item index="0">
                 <el-popover placement="bottom" width="300" trigger="hover">
