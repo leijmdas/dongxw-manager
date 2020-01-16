@@ -3,13 +3,20 @@
 <template>
     <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
         <el-option  v-for="item in options" :key="item.id" :label="item.custName" :value="item.id" :disabled="item.disabled">
+            <span style="float: left">{{ item.custName }}</span>
+            <span style="float: left">{{ item.custSname }}</span>
+
         </el-option>
     </el-select>
 </template>
-<style rel="stylesheet/less" lang="less">
+<style rel="stylesheet/less" lang="less" scoped>
     /*.el-select {*/
         /*width: 250px;*/
     /*}*/
+    .el-select-dropdown__item span{
+        width:240px;
+        text-align:left;
+    }
 </style>
 <script>
     import { fetch } from "@/utils";
@@ -33,7 +40,7 @@
             width: {
                 type: String,
                 required: false,
-                defult: "60%"
+                defult: "120%"
             },
             clearable: {
                 type: Boolean
