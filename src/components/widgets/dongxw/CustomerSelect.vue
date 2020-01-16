@@ -23,6 +23,10 @@
             }
         },
         props: {
+            fnChange:{
+                required:false,
+                type:Function
+            },
             value: {
                 required: true
             },
@@ -37,8 +41,9 @@
             disabled: {
                 type: Boolean
             },
-            custId: {
-                //type: Number
+            customerId: {
+                //type: Number,
+
             }
         },
         computed: {
@@ -52,7 +57,7 @@
             }
         },
         watch: {
-            custId: {
+            customerId: {
                 handler: function(newVal, oldVal) {
                     this.value = ''
                     this.currentValue = ''
@@ -64,10 +69,13 @@
         methods: {
             handleChange (val) {
                 this.$emit('change', val)
+                if(this.fnChange){
+                    this.fnChange();
+                }
             },
             refresh () {
                 this.loading = true
-                this.$api.dongxw.CustomerService.query({param: {custId: this.custId,isDeleted:false}}).then(rsp => {
+                this.$api.dongxw.CustomerService.query({param: {isDeleted:false}}).then(rsp => {
                     this.options = rsp.data
                     this.loading = false
                 })

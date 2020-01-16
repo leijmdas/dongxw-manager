@@ -19,6 +19,10 @@
             }
         },
         props: {
+            fnChange:{
+                required:false,
+                type:Function
+            },
             value: {
                 required: true
             },
@@ -45,8 +49,8 @@
         watch: {
             subsysId: {
                 handler: function(newVal, oldVal) {
-                    this.value = ''
-                    this.currentValue = ''
+                    // this.value = ''
+                    // this.currentValue = ''
                     this.refresh();
                 },
                 deep: true
@@ -55,10 +59,13 @@
         methods: {
             handleChange (val) {
                 this.$emit('change', val)
+                if(this.fnChange){
+                    this.fnChange();
+                }
             },
             refresh() {
                 this.loading = true
-                this.$api.metadata.MetaData.queryDicts({
+                this.$api.metadata.MetaData.queryTables({
                     param: {
                         subsysId: this.subsysId, isDeleted: false
                     }

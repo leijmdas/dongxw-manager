@@ -45,8 +45,8 @@
         watch: {
             subsysId: {
                 handler: function(newVal, oldVal) {
-                    this.value = ''
-                    this.currentValue = ''
+                    // this.value = ''
+                    // this.currentValue = ''
                     this.refresh();
                 },
                 deep: true

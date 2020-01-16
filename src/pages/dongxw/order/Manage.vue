@@ -4,7 +4,8 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
                 <el-form-item label="客户" prop="customerId">
-                    <customer-select v-model="page.query.param.customerId" :clearable="true"></customer-select>
+                    <customer-select :fnChange="search" v-model="page.query.param.customerId"
+                                     :clearable="true"></customer-select>
 
                 </el-form-item>
 
@@ -47,7 +48,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="订单类型" prop="orderType">
-                    <el-select :clearable="true" v-model="page.query.param.orderType" style="width:100px">
+                    <el-select @change="search" :clearable="true" v-model="page.query.param.orderType" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
@@ -66,11 +67,11 @@
                 <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                 <el-button @click="cancel">取消</el-button>
 
+                <el-button type="primary" plain @click="create">新增</el-button>
+
                 <el-button plain @click="exportRecords">导出 XLS</el-button>
                 <el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>
-
-                <el-button type="primary" plain @click="create">新增</el-button>
-            </v-toolbar>
+           </v-toolbar>
         <v-table ref="table" :page="page" :dblclick="showLine" :click="clickRow" :table-minheight="450" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
@@ -169,7 +170,7 @@
                         <i class="el-icon-edit"></i>
                     </el-button>
 
-                    <el-button  style="color:green"  type="info" plain title="产品" @click="showLine(scope.row)">
+                    <el-button  v-if="scope.row.orderType!=100" style="color:green"  type="info" plain title="产品" @click="showLine(scope.row)">
                         产品
                     </el-button>
                     <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
@@ -385,12 +386,13 @@
             },
             showLine(row) {
                 console.log(JSON.stringify(row));
-                console.log("fatherMethodL: ");
-                console.log(this.fatherMethod);
-                if (this.fatherMethod) {
+                console.log("fatherMethodL: " + this.fatherMethod);
+                if (row.orderType != 100 && this.fatherMethod) {
                     this.fatherMethod(row);
                 }
-
+                if (row.orderType == 100){
+                    this.$message("父订单没有产品清单！")
+                }
             },
             showPic(row) {
                 console.log(JSON.stringify(row));

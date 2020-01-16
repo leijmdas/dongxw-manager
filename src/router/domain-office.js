@@ -7,12 +7,12 @@ let router0 = [{
     meta: {title: '自动办公', icon: 'parking', group: 'office'},
     children: [{
         path: 'office/manageInfo',
-        component: require('@/pages/app/userInfo/Manage.vue'),
+        //component: require('@/pages/app/userInfo/Manage.vue'),
         name: 'office:manage2',
         meta: {title: '个人信息'}
     }, {
         path: 'office/manageTimer',
-        component: require('@/pages/app/userInfo/Manage.vue'),
+        //component: require('@/pages/app/userInfo/Manage.vue'),
         name: 'office:manageTimer',
         meta: {title: '定期提醒'}
     }]

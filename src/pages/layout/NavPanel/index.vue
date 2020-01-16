@@ -22,9 +22,9 @@
 
             <el-menu-item index="4">
 
-                <el-link href="https://element.eleme.cn" target="_blank">
+                <a href="https://element.eleme.cn" target="_blank">
                     <img style="width:50px;height:50px" src="../../../assets/logo.png" alt="el"/>
-                </el-link>
+                </a>
 
             </el-menu-item>
 

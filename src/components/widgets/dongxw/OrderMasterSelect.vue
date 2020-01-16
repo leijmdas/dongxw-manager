@@ -2,13 +2,15 @@
 
 <template>
     <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
-        <el-option  v-for="item in options" :key="item.id"
-                    :label="item.epOrderCode" :value="item.id"
-                    :disabled="item.disabled">
+        <el-option  v-for="item in options" :key="item.id" :label="item.epOrderCode" :value="item.id" :disabled="item.disabled">
         </el-option>
     </el-select>
 </template>
-
+<style rel="stylesheet/less" lang="less">
+    /*.el-select {*/
+        /*width: 250px;*/
+    /*}*/
+</style>
 <script>
     import { fetch } from "@/utils";
 
@@ -21,10 +23,9 @@
             }
         },
         props: {
-            orderType: {
-                required: false,
-                type: Number,
-                defult: null
+            fnChange:{
+                required:false,
+                type:Function
             },
             value: {
                 required: true
@@ -32,16 +33,22 @@
             width: {
                 type: String,
                 required: false,
-                defult: "50%"
+                defult: "60%"
             },
             clearable: {
                 type: Boolean
             },
+
             disabled: {
                 type: Boolean
             },
             customerId: {
-                //type: Number
+               // type: Number,
+            },
+            orderType:{
+                type:Number,
+                required:false,
+                default : null
             }
         },
         computed: {
@@ -57,29 +64,32 @@
         watch: {
             customerId: {
                 handler: function(newVal, oldVal) {
-                    this.value = ''
-                    this.currentValue = ''
+                    // this.value = ''
+                    // this.currentValue = ''
                     this.refresh();
                 },
                 deep: true
             }
         },
         methods: {
-            handleChange (val) {
+            handleChange(val) {
                 this.$emit('change', val)
+                if (this.fnChange) {
+                    this.fnChange();
+                }
             },
             refresh() {
                 this.loading = true
-                this.$api.dongxw.OrderMaster.query({
-                    param: {
-                        customerId: this.customerId,
-                        orderType: this.orderType,
-
-                        isDeleted: false
+                this.$api.dongxw.OrderMaster.query(
+                    {
+                        param: {
+                            customerId: this.customerId,
+                            orderType: this.orderType,
+                            isDeleted: false
+                        }
                     }
-                }).then(rsp => {
+                ).then(rsp => {
                     this.options = rsp.data
-                    this.options.push({id: 0, epOrderCode: '无'})
                     this.loading = false
                 })
             }
