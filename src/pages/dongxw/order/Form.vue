@@ -140,7 +140,7 @@
                     <el-row :span="22" style="margin-top: 10px ">
                         <el-col :span="22">
                             <el-form-item label="备注" prop="remark">
-                                <el-input placeholder="备注" v-model="entity.remark"></el-input>
+                                <el-input placeholder="备注" type="textarea" :rows="3" v-model="entity.remark"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>

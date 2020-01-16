@@ -49,13 +49,18 @@
 
                     </el-col>
                 </el-row>
-                    <el-form-item label="产品" :style="'color:red'" prop="currentValue" style="width:100%">
+                    <el-form-item label="产品"  prop="currentValue" style="width:100%">
 
                      <el-select v-model="currentValue" :style="'color:red;width:100%'" placeholder="请选择" filterable
                                :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
                         <el-option v-for="item in options" :key="item.id"
                                    :label="item.code+' | '+item.epCode+'|'+item.remark+'|'+item.color+'|'+item.size"
                                    :value="item.id" :disabled="item.disabled">
+                            <span style="float: left">{{ item.code }}</span>
+                            <span style="float: left">{{ item.epCode }}</span>
+                            <span style="float: left">{{ item.remark }}</span>
+                            <span style="float: right">{{ item.color }}</span>
+                            <span style="float: right">{{ item.size }}</span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -70,6 +75,10 @@
     /*}*/
     .el-select-dropdown__item{
        // max-width: 550px;
+    }
+    .el-select-dropdown__item span{
+        width:80px;
+        text-align:center;
     }
 </style>
 

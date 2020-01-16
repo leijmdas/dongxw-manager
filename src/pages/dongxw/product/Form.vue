@@ -97,7 +97,7 @@
 
 
                             <el-form-item label="备注" prop="memo">
-                                <el-input placeholder="备注" v-model="entity.memo"></el-input>
+                                <el-input placeholder="备注" type="textarea" :rows="2"  v-model="entity.memo"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -157,7 +157,8 @@
 
                         </el-col>
                     </el-row>
-                    <el-row style="margin-top: 20px">
+                    <hr>
+                    <el-row style="margin-top: 10px">
                     <el-col :span="11">
                             <el-form-item label="正唛" prop="pkgFront">
                                 <el-input placeholder="正唛" v-model="entity.pkgFront"></el-input>
@@ -178,7 +179,7 @@
                         <el-col :span="22">
 
                             <el-form-item label="备注" prop="pkgRemark">
-                                <el-input placeholder="备注" v-model="entity.pkgRemark"></el-input>
+                                <el-input placeholder="备注" type="textarea" :rows="2" v-model="entity.pkgRemark"></el-input>
                             </el-form-item>
 
                         </el-col>

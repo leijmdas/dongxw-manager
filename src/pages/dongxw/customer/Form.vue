@@ -9,24 +9,6 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item  style="width:100%" label="客户名称" prop="custName">
-                        <el-input placeholder="客户名称" v-model="entity.custName"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-form-item label="客户详细名称" prop="custSname">
-                <el-input placeholder="客户详细名称" v-model="entity.custSname"></el-input>
-            </el-form-item>
-
-            <el-row :span="24">
-                <el-col :span="12">    <el-form-item label="结算币种" prop="moneyType">
-                    <el-select v-model="entity.moneyType" :disabled="isDisabled">
-                        <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
-                                   :value="item[0]" :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
-
-                </el-col> <el-col :span="12">
                     <el-form-item label="状态" prop="moneyType">
                         <el-select v-model="entity.status" :disabled="isDisabled">
                             <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
@@ -35,13 +17,35 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-
-                <el-form-item label="国家" prop="country">
-                    <el-input placeholder="国家" v-model="entity.country"></el-input>
+                <el-form-item  style="width:100%" label="客户名称" prop="custName">
+                    <el-input placeholder="客户名称" v-model="entity.custName"></el-input>
                 </el-form-item>
 
+            <el-form-item label="客户详细名称" prop="custSname">
+                <el-input placeholder="客户详细名称" v-model="entity.custSname"></el-input>
+            </el-form-item>
+
+            <el-row :span="24">
+                <el-col :span="12">
+
+                    <el-form-item label="国家" prop="country">
+                        <el-input placeholder="国家" v-model="entity.country"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="结算币种" prop="moneyType">
+                        <el-select v-model="entity.moneyType" :disabled="isDisabled">
+                            <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
+                                       :value="item[0]" :label="item[1]"></el-option>
+                        </el-select>
+                    </el-form-item>
+
+                </el-col>
+
+            </el-row>
+
             <el-form-item label="地址" prop="addr">
-                <el-input placeholder="地址" v-model="entity.addr"></el-input>
+                <el-input placeholder="地址" type="textarea" :rows="2" v-model="entity.addr"></el-input>
             </el-form-item>
             <el-row :span="24">
                 <el-col :span="12">
@@ -62,15 +66,15 @@
                         <el-input placeholder="公司传真" v-model="entity.fax"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="12">
-                    <el-form-item label="公司电子邮箱" prop="email">
-                        <el-input placeholder="公司电子邮箱" v-model="entity.email"></el-input>
-                    </el-form-item>
-                </el-col>
+
             </el-row>
+            <el-form-item label="公司电子邮箱" prop="email">
+                <el-input placeholder="公司电子邮箱" v-model="entity.email"></el-input>
+            </el-form-item>
+
             <el-divider></el-divider>
 
-            <hr style="margin-right: -20px">
+            <!--<hr style="margin-right: -20px">-->
             <el-row :span="24">
                 <el-col :span="12">
                     <el-form-item style="width:100%" label="客户登录名称" prop="loginName">
@@ -80,6 +84,11 @@
                 <el-col :span="12">
                     <el-form-item style="width:100%" label="客户登录密码" prop="loginPassword">
                         <el-input placeholder="客户登录密码" type="password" autocomplete="off" v-model="entity.loginPassword"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item style="width:100%" label="使用语言" prop="useLanguage">
+                        <el-input placeholder="使用语言" v-model="entity.useLanguage"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>

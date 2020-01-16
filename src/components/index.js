@@ -1,5 +1,5 @@
 /**
- * Created by yejunqin on 2016/6/23.
+ * Created by ljming on 2016/6/23.
  */
 import Vue from 'vue';
 import vTable from './v-table.vue'

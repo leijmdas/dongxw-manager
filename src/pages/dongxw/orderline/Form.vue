@@ -23,6 +23,7 @@
                                         v-model="entity.productId"
                                         :clearable="true"></product-select>
                         <!--<el-button @click="view">选择产品</el-button>-->
+                        <hr>
                         <el-row>
                             <el-col :span="12">
 
@@ -42,8 +43,8 @@
                         </el-form-item>
 
 
-                        <el-form-item label="备注" style="margin-top: 5px" prop="remark">
-                            <el-input placeholder="备注" v-model="entity.remark"></el-input>
+                        <el-form-item label="备注" style="margin-top: 10px" prop="remark">
+                            <el-input placeholder="备注" type="textarea" :rows="2" v-model="entity.remark"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-tab-pane>
@@ -69,7 +70,7 @@
         }
     }
     .el-form-item{
-        margin-top: 20px;
+        margin-top: 10px;
     }
     .input-class{
         width: 500px;
@@ -103,7 +104,7 @@
     import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
     import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import ProductSelect from '@/components/widgets/dongxw/ProductSelectComplex.vue';
-    import ProductSelectForm from '@/components/widgets/dongxw/ProductSelectForm.vue';
+    //import ProductSelectForm from '@/components/widgets/dongxw/ProductSelectForm.vue';
     import QueryForm from '@/pages/dongxw/product/ManageQuery.vue';
 
     const defaultEntity = {
@@ -137,7 +138,7 @@
         status: 1
     };
     export default {
-        components: {QueryForm,ProductTypeSelect,ProductSelectForm,ProductSubTypeSelect, ProductSelect},
+        components: {QueryForm,ProductTypeSelect,ProductSubTypeSelect, ProductSelect},
         data() {
             return {
                 isExp :false,
