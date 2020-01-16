@@ -30,6 +30,7 @@
     "sortable": "^2.0.0",
     "vue": "^2.5.16",
     "vue-moment": "^4.0.0",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^2.5.2",
     "vue-svg-icon": "^1.2.9",
     "vuedraggable": "^2.14.1",
