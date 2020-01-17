@@ -72,26 +72,42 @@
                 <el-input placeholder="公司电子邮箱" v-model="entity.email"></el-input>
             </el-form-item>
 
-            <el-divider></el-divider>
+            <!--<el-divider></el-divider>-->
 
-            <!--<hr style="margin-right: -20px">-->
-            <el-row :span="24">
-                <el-col :span="12">
-                    <el-form-item style="width:100%" label="客户登录名称" prop="loginName">
-                        <el-input placeholder="客户登录名称" v-model="entity.loginName"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item style="width:100%" label="客户登录密码" prop="loginPassword">
-                        <el-input placeholder="客户登录密码" type="password" autocomplete="off" v-model="entity.loginPassword"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item style="width:100%" label="使用语言" prop="useLanguage">
-                        <el-input placeholder="使用语言" v-model="entity.useLanguage"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
+            <hr style="margin-right: -20px">
+            <el-tooltip class="item" effect="dark" content="以下为客户提供登录帐户，查询客户订单的明细与进展" placement="bottom-start">
+
+                <el-row :span="24">
+                    <el-col :span="12">
+                        <el-form-item style="width:100%" label="客户登录名称" prop="loginName">
+                            <el-input placeholder="客户登录名称" v-model="entity.loginName"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item style="width:100%" label="客户登录密码" prop="loginPassword">
+                            <el-input placeholder="客户登录密码" type="password" autocomplete="off"
+                                      v-model="entity.loginPassword"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item style="width:100%" label="使用语言" prop="language">
+                            <el-select v-model="entity.language" :disabled="isDisabled">
+                                <el-option v-for="item in $dongxwDict.store.LANGUAGE_TYPE" :key="item[0]"
+                                           :value="item[0]" :label="item[1]"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="12">
+                        <el-form-item style="width:100%" label="登录开关" prop="switch">
+                            <el-select v-model="entity.switch" :disabled="isDisabled">
+                                <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
+                                           :value="item[0]" :label="item[1]"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-tooltip>
         </el-form>
     </div>
 </template>
