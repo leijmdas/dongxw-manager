@@ -36,7 +36,7 @@ let router0 = [
                 path: 'dongxw/orderline/ManageQuery',
                 component: require('@/pages/dongxw/orderline/ManageQuery.vue'),
                 name: 'orderlst:manage',
-                meta: {title: '订单产品查询', perm: 'orderProduct:manage'}
+                meta: {title: '查询订单', perm: 'orderProduct:manage'}
             }
             // {
             //     path: 'dongxw/supplier/manage',

@@ -34,6 +34,12 @@
         <v-toolbar title="数据列表" type="alert">
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
+            <el-switch style="margin-left:20px; margin-right: 20px"
+                       v-model="isShowSecurity"
+                       active-text="显示敏感信息"
+                       inactive-text="不显示">
+            </el-switch>
+
         </v-toolbar>
 
 
@@ -43,25 +49,21 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column   prop="custNo" label="客户编码" width="100"></el-table-column>
+            <el-table-column prop="custNo" label="客户编码" width="100"></el-table-column>
             <el-table-column prop="custName" label="客户名称" width="120"></el-table-column>
 
-            <el-table-column prop="custSname" label="客户详细名称" width="245">      </el-table-column>
-            <el-table-column prop="moneyType" label="结算币种" width="80">
-                <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="country" label="客户国家" width="80">            </el-table-column>
-            <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
+            <el-table-column prop="custSname" v-if="isShowSecurity" label="客户详细名称" width="245"></el-table-column>
 
-            <el-table-column prop="email" label="公司电子邮箱" width="150">
+            <el-table-column prop="country" label="客户国家" width="80"></el-table-column>
+            <el-table-column prop="addr" v-if="isShowSecurity" label="地址" width="300"></el-table-column>
+
+            <el-table-column prop="email" v-if="isShowSecurity" label="公司电子邮箱" width="150">
             </el-table-column>
-            <el-table-column prop="contact" label="联系人" width="150">
+            <el-table-column prop="contact" v-if="isShowSecurity" label="联系人" width="150">
             </el-table-column>
-            <el-table-column prop="tel" label="联系人电话" width="160">
+            <el-table-column prop="tel" v-if="isShowSecurity" label="联系人电话" width="160">
             </el-table-column>
-            <el-table-column prop="fax" label="传真" width="160">
+            <el-table-column prop="fax" v-if="isShowSecurity" label="传真" width="160">
             </el-table-column>
             <el-table-column prop="status" label="状态" width="60">
                 <template slot-scope="{row}">
@@ -69,8 +71,12 @@
                 </template>
             </el-table-column>
 
-
-            <el-table-column prop="createDate"  label="建档时间" width="100">
+            <el-table-column prop="moneyType" label="结算币种" width="80">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="createDate"  label="建档时间"  >
                 <template slot-scope="{row}">
                     {{row.createDate.substr(0,10)}}
                 </template>
@@ -111,6 +117,7 @@
         components: { FormPanel },
         data() {
             return {
+                isShowSecurity: false ,
                 formStatus: 1,
                 orderDateRange: [],
                 summaryMap: {},

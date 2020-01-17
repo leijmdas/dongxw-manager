@@ -72,7 +72,9 @@
             <el-form-item label="公司电子邮箱" prop="email">
                 <el-input placeholder="公司电子邮箱" v-model="entity.email"></el-input>
             </el-form-item>
-
+            <el-form-item label="备注" prop="remark">
+                <el-input placeholder="备注" type="textarea" :rows="2" v-model="entity.remark"></el-input>
+            </el-form-item>
             <!--<el-divider></el-divider>-->
 
             <!--<hr style="margin-right: -20px">-->
