@@ -103,7 +103,10 @@
                     </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="包装信息" name="packageInfo">
-                    <el-row :span="24">
+                    <fieldset style="margin-top: 10px">
+                        <legend>内盒包装</legend>
+
+                        <el-row :span="24">
                         <el-col :span="11">
                             <el-form-item label="内盒尺寸" prop="ibSize">
                                 <el-input placeholder="内盒尺寸" v-model="entity.ibSize"></el-input>
@@ -129,7 +132,11 @@
                         </el-col>
 
                     </el-row>
-                    <el-row style="margin-top: 20px">
+                    </fieldset>
+                    <fieldset style="margin-top: 10px">
+                        <legend>外箱包装</legend>
+
+                        <el-row style="margin-top: 20px">
 
                         <el-col :span="11">
                             <el-form-item label="外箱尺寸" prop="obSize">
@@ -157,38 +164,43 @@
 
                         </el-col>
                     </el-row>
-                    <hr>
-                    <el-row style="margin-top: 10px">
-                    <el-col :span="11">
-                            <el-form-item label="正唛" prop="pkgFront">
-                                <el-input placeholder="正唛" v-model="entity.pkgFront"></el-input>
-                            </el-form-item>
-                        </el-col>
+                    </fieldset>
+                    <!--<hr>-->
+                    <fieldset style="margin-top: 10px">
+                        <legend>备注</legend>
 
-                        <el-col :span="11">
-                            <el-form-item label="侧唛" prop="pkgSide">
-                                <el-input placeholder="侧唛" v-model="entity.pkgSide"></el-input>
-                            </el-form-item>
+                        <el-row style="margin-top: 10px">
+                            <el-col :span="11">
+                                <el-form-item label="正唛" prop="pkgFront">
+                                    <el-input placeholder="正唛" v-model="entity.pkgFront"></el-input>
+                                </el-form-item>
+                            </el-col>
 
-                        </el-col>
-                    </el-row>
+                            <el-col :span="11">
+                                <el-form-item label="侧唛" prop="pkgSide">
+                                    <el-input placeholder="侧唛" v-model="entity.pkgSide"></el-input>
+                                </el-form-item>
+
+                            </el-col>
+                        </el-row>
 
 
-                    <el-row :span="24">
+                        <el-row :span="24">
 
-                        <el-col :span="22">
+                            <el-col :span="22">
 
-                            <el-form-item label="备注" prop="pkgRemark">
-                                <el-input placeholder="备注" type="textarea" :rows="2" v-model="entity.pkgRemark"></el-input>
-                            </el-form-item>
+                                <el-form-item label="备注" prop="pkgRemark">
+                                    <el-input placeholder="备注" type="textarea" :rows="2"
+                                              v-model="entity.pkgRemark"></el-input>
+                                </el-form-item>
 
-                        </el-col>
+                            </el-col>
 
-                    </el-row>
-
+                        </el-row>
+                    </fieldset>
                 </el-tab-pane>
                 <el-tab-pane label="产品图片" name="prdImage">
-                            <v-image-preview ref="imagePreview" v-model="entity.imgUrls" :imgRemarks = "entity.imgRemark"
+                    <v-image-preview ref="imagePreview" v-model="entity.imgUrls" :imgRemarks = "entity.imgRemark"
                                              :options="options" :showRemoveBtn="true" :funHandleChange = "funHandleChange"
                                              :imgStyle="'margin-right:10px;width:140px;height:120px'">
                             </v-image-preview>

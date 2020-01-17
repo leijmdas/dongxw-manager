@@ -7,25 +7,6 @@ let router0 = [
         component: Layout,
         meta: {title: '客户订单', icon: 'finance', group: 'dongxw'},
         children: [
-
-            {
-                path: 'dongxw/order/manage',
-                component: require('@/pages/dongxw/order/Main.vue'),
-                name: 'order:manage',
-                meta: {title: '客户订单', perm: 'order:manage'}
-            },
-            // {
-            //     path: 'dongxw/suborder/manage',
-            //     component: require('@/pages/dongxw/order/Main.vue'),
-            //     name: 'suborder:manage',
-            //     meta: {title: '子订单', perm: 'order:manage'}
-            // },
-            {
-                path: 'dongxw/orderline/ManageQuery',
-                component: require('@/pages/dongxw/orderline/ManageQuery.vue'),
-                name: 'orderlst:manage',
-                meta: {title: '订单产品查询', perm: 'orderProduct:manage'}
-            },
             {
                 path: 'dongxw/customer/manage',
                 component: require('@/pages/dongxw/customer/Manage.vue'),
@@ -45,6 +26,18 @@ let router0 = [
                 meta: {title: '产品列表', perm: 'product:manage'}
             },
 
+            {
+                path: 'dongxw/order/manage',
+                component: require('@/pages/dongxw/order/Main.vue'),
+                name: 'order:manage',
+                meta: {title: '客户订单', perm: 'order:manage'}
+            },
+            {
+                path: 'dongxw/orderline/ManageQuery',
+                component: require('@/pages/dongxw/orderline/ManageQuery.vue'),
+                name: 'orderlst:manage',
+                meta: {title: '订单产品查询', perm: 'orderProduct:manage'}
+            }
             // {
             //     path: 'dongxw/supplier/manage',
             //     component: require('@/pages/dongxw/supplier/Manage.vue'),
