@@ -75,7 +75,7 @@
             <!--<el-divider></el-divider>-->
 
             <hr style="margin-right: -20px">
-            <el-tooltip class="item" effect="dark" content="以下为客户提供登录帐户，查询客户订单的明细与进展" placement="bottom-start">
+            <el-tooltip class="item" effect="dark" content="以上为客户提供登录帐户，查询客户自己订单的明细与进展" placement="bottom-start">
 
                 <el-row :span="24">
                     <el-col :span="12">
@@ -90,7 +90,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item style="width:100%" label="使用语言" prop="language">
+                        <el-form-item style="width:100%" label="客户使用语言" prop="language">
                             <el-select v-model="entity.language" :disabled="isDisabled">
                                 <el-option v-for="item in $dongxwDict.store.LANGUAGE_TYPE" :key="item[0]"
                                            :value="item[0]" :label="item[1]"></el-option>
@@ -99,7 +99,7 @@
                     </el-col>
 
                     <el-col :span="12">
-                        <el-form-item style="width:100%" label="登录开关" prop="switch">
+                        <el-form-item style="width:100%" label="客户登录开关" prop="switch">
                             <el-select v-model="entity.switch" :disabled="isDisabled">
                                 <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
                                            :value="item[0]" :label="item[1]"></el-option>
