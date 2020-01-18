@@ -106,8 +106,8 @@
                         </el-col>
 
                         <el-col :span="12">
-                            <el-form-item style="width:100%" label="客户登录开关" prop="switch">
-                                <el-select v-model="entity.switch" :disabled="isDisabled">
+                            <el-form-item style="width:100%" label="客户登录开关" prop="loginSwitch">
+                                <el-select v-model="entity.loginSwitch" :disabled="isDisabled">
                                     <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
                                                :value="item[0]" :label="item[1]"></el-option>
                                 </el-select>
@@ -162,6 +162,10 @@
         addr: '',
         tel: '',
         email: '',
+
+        language: 100,
+        loginSwitch : 1,
+        loginPassword :'123456',
         moneyType: 100,
         createDate: '',
         contact: '',

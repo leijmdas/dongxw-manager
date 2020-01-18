@@ -158,8 +158,8 @@
 
             <el-table-column prop="createDate" label="建档时间" width="150">
             </el-table-column>
-<!--            <el-table-column prop="createBy" label="建档人" width="150">-->
-<!--            </el-table-column>-->
+            <el-table-column prop="createBy" label="建档人" width="150">
+            </el-table-column>
 
             <el-table-column prop="remark" label="备注"></el-table-column>
 

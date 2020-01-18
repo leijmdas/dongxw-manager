@@ -76,9 +76,14 @@
                     {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="createDate"  label="建档时间"  >
+            <el-table-column prop="createDate"  label="建档时间"   width="120" >
                 <template slot-scope="{row}">
                     {{row.createDate.substr(0,10)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="createBy"  label="建档人"  >
+                <template slot-scope="{row}">
+                    {{row.createByName}}
                 </template>
             </el-table-column>
             <el-table-column width="100" label="操作" :fixed="'right'">
