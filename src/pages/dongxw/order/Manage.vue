@@ -103,7 +103,7 @@
             </el-table-column>
 
 
-             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号" width="120">
+             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号+原件" width="120">
                 <template slot-scope="scope">
                     <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
                     <span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>
@@ -112,12 +112,11 @@
             <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
 
 
-            <el-table-column  prop="customerOrderImg" label="订单原件" width="78">
-                <template slot-scope="scope">
-                    <a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a>
-                    <!--<el-button type="text" @click="view(scope.row)" plain >View</el-button>-->
-                </template>
-            </el-table-column>
+            <!--<el-table-column  prop="customerOrderImg" label="订单原件" width="78">-->
+                <!--<template slot-scope="scope">-->
+                    <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a> -->
+                <!--</template>-->
+            <!--</el-table-column>-->
             <el-table-column  prop="status" label="订单状态" width="80">
                 <template slot-scope="{row}">
                     <span :style="'style:red'"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
