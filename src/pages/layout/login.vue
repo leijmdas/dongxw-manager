@@ -27,40 +27,17 @@
                               maxlength="32">
                         <i slot="prefix" class="el-input__icon ele-icon el-icon-iplock"></i>
                     </el-input>
-                    <el-input class="newinput" placeholder="图形验证码" v-model="account.verifyCode" name="inputPicCode" id="inputPicCode" maxlength="6"/>
+                    <el-input class="newinput" placeholder="图形验证码" v-model="account.verifyCode"
+                              name="inputPicCode" id="inputPicCode" maxlength="6"/>
 
-                    <img id=imgCode height="45" width="130" class="col-md-6"
+                    <img id=imgCode @click="clickImgCode" height="45" width="130" class="col-md-6"
                     src='/api/rest/context/getPicCode' alt="" style="margin-left:25px"/>
 
                     <el-button type="primary" @click="login">登录</el-button>
                 </div>
             </div>
 
-            <!--<div class="login-box">-->
-            <!--<p class="title">请输入您的认证信息</p>-->
-            <!--<div class="content" @keydown.enter.stop="loginFocus">-->
-            <!--<div class="form-group account">-->
-            <!--<label>-->
-            <!--<icon name="user" scale="2"></icon>-->
-            <!--</label>-->
-            <!--<input id="account" type="text" maxlength="32" v-model="account.account" placeholder="用户名">-->
-            <!--</div>-->
-            <!--<div class="form-group password">-->
-            <!--<label>-->
-            <!--<icon name="password" scale="2"></icon>-->
-            <!--</label>-->
-            <!--<input type="password" name="password" style="display: none;">-->
-            <!--<input id="password" name="password" @keydown.enter.stop="login" type="password" v-model="account.password"-->
-            <!--maxlength="32" placeholder="密码">-->
-            <!--</div>-->
-            <!--<div class="btn-group">-->
-            <!--<el-button type="success" @click="login" style="width:100%;margin-top:20px">登录</el-button>-->
-            <!--<div style="text-align:right;color:#aeaeae;margin-top:5px;">忘记密码？-->
-            <!--<el-button type="text">找回密码</el-button>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
+
         </div>
     </div>
 </template>
@@ -118,16 +95,20 @@
             }
         },
         methods: {
+            clickImgCode() {
+                var img = document.getElementById("imgCode")
+                img.src = "/api/rest/context/getPicCode"
+            },
             // 登录，登录成功后获取厂牌
             login() {
-                const {account: loginName, password} = this.account;
+                const {account: loginName, password,verifyCode} = this.account;
 
                 window.localStorage.setItem('isadmin',loginName==='admin')
                 this.loading = true;
-                //let pwd=this.$md5(password)
+                //let pwd=this.$md5(password) http://localhost/#/login
                 //this.$api.AppService.login({username: this.$md5(loginName),pwd})
                 let pwd = this.$md5(password)
-                this.$api.AppService.login({username: loginName, password})
+                this.$api.AppService.login({username: loginName, password, verifyCode})
                     .then(data => {
                         this.loading = false;
                         auth.setToken({access_token: data.token, expires_in: data.expiresIn});
@@ -161,7 +142,7 @@
 
     .loginPanel {
         height: 100%;
-          background-image: url("../../assets/images/main_login.png")  ;
+        background-image: url("../../assets/images/main_login.png");
         //background-repeat: repeat;
         background-size: 100% 100%;
     }

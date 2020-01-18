@@ -10,11 +10,11 @@ export default {
       method: 'POST'
     })
   },
-  login(params) {
-    return request({
-      url: '/api/auth/login',
-      method: 'POST',
-      params:params
-    })
-  },
+    login(params) {
+        return request({
+            url: '/api/auth/login',
+            method: 'POST',
+            params: params
+        })
+    },
 }

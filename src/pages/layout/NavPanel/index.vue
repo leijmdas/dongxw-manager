@@ -19,7 +19,9 @@
 
         <el-menu mode="horizontal" :default-active="activeIndex" background-color="#00438A" text-color="#fff"
                  active-text-color="#ffd04b">
-
+            <el-menu-item index="10">
+                <a href="http://customer.akunlong.top/" target="_blank" class="go-to">客户登录</a>
+            </el-menu-item>
             <el-menu-item index="4">
 
                 <a href="https://element.eleme.cn" target="_blank">
@@ -37,9 +39,7 @@
             <el-menu-item index="2">
                 <a href="http://hongld.akunlong.top/" target="_blank" class="go-to">宏利达海棉</a>
             </el-menu-item>
-            <el-menu-item index="1">
-                <a href="http://customer.akunlong.top/" target="_blank" class="go-to">客户登录</a>
-            </el-menu-item>
+
             <el-menu-item index="0">
                 <el-popover placement="bottom" width="300" trigger="hover">
                     <ul class="msgUL">
