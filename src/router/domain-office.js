@@ -4,7 +4,7 @@ import Layout from '../pages/layout'
 let router0 = [{
     path: '/office',
     component: Layout,
-    meta: {title: '自动办公', icon: 'parking', group: 'office'},
+    meta: {title: '自动办公', icon: 'finance', group: 'office'},
     children: [{
         path: 'office/manageInfo',
         //component: require('@/pages/app/userInfo/Manage.vue'),

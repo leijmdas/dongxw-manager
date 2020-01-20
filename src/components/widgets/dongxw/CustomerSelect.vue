@@ -3,6 +3,7 @@
 <template>
     <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
         <el-option  v-for="item in options" :key="item.id" :label="item.custName" :value="item.id" :disabled="item.disabled">
+            <span style="float: left">{{ item.custNo }}</span>
             <span style="float: left">{{ item.custName }}</span>
             <span style="float: left">{{ item.custSname }}</span>
 
@@ -14,7 +15,7 @@
         /*width: 250px;*/
     /*}*/
     .el-select-dropdown__item span{
-        width:240px;
+        width:160px;
         text-align:left;
     }
 </style>

@@ -2,10 +2,13 @@
     <div>
 
         <p></p>
-
-        <a style="margin-left: 80px;margin-top:100px" href="http://manager.akunlong.top/v/login.html" target="_blank"
+        <p></p>
+        <hr>
+        <a style="margin-left: 80px;margin-top:100px" href="http://manager.akunlong.top:18080/" target="_blank"
+           class="go-to">  <font size="3" color="red">DUBBO服务监控</font></a>
+            <hr>
+        <a style="margin-left: 80px;margin-top:100px" href="http://manager.akunlong.top/" target="_blank"
            class="go-to">  <font size="3" color="red">元数据字典</font></a>
-
 
     </div>
 </template>

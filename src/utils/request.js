@@ -78,6 +78,11 @@ service.interceptors.response.use(
             msg = '数据重复！'
         } else if (msg.indexOf("SQLIntegrityConstraintViolationException") > -1) {
             msg = msg.split('SQLIntegrityConstraintViolationException')[1].split('###')[0]
+        } else if (msg.indexOf("checkPass") > -1) {
+            msg = msg.split('checkPass')[1].split('###')[0]
+        }
+        else {
+            msg = errMsg
         }
         console.log(msg);
     } else {
