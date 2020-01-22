@@ -62,7 +62,7 @@
         </div>
             <v-toolbar title="数据列表" type="alert">
                 <span slot="tip" style="margin-left:60px;">
-                <span style="color :red">  鼠标双击进入订单产品管理! </span>
+                <span style="color :red">  鼠标双击进入订单修改! </span>
                 </span>
                 <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
                 <!--<el-button @click="cancel">取消</el-button>-->
@@ -72,7 +72,7 @@
                 <el-button plain @click="exportRecords">导出 XLS</el-button>
                 <el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>
            </v-toolbar>
-        <v-table ref="table" :page="page" :dblclick="showLine" :click="clickRow" :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page" :dblclick="edit" :click="clickRow" :table-minheight="450" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
@@ -102,6 +102,11 @@
                 </template>
             </el-table-column>
 
+            <el-table-column  prop="status" label="订单状态" width="80">
+                <template slot-scope="{row}">
+                    <span :style="row.status==0?'color:green':''"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
+                </template>
+            </el-table-column>
 
              <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号+原件" width="120">
                 <template slot-scope="scope">
@@ -110,18 +115,11 @@
                 </template>
             </el-table-column>
             <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
-
-
             <!--<el-table-column  prop="customerOrderImg" label="订单原件" width="78">-->
                 <!--<template slot-scope="scope">-->
                     <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a> -->
                 <!--</template>-->
             <!--</el-table-column>-->
-            <el-table-column  prop="status" label="订单状态" width="80">
-                <template slot-scope="{row}">
-                    <span :style="'style:red'"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
-                </template>
-            </el-table-column>
 
             <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">
@@ -168,12 +166,12 @@
             <el-table-column width="200" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
-
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
                     </el-button>
 
-                    <el-button  v-if="scope.row.orderType!=100" style="color:green"  type="info" plain title="产品" @click="showLine(scope.row)">
+                    <el-button    @click="showLine(scope.row)"v-if="scope.row.orderType!=100"
+                                  style="color:green"  type="info" plain title="产品"    >
                         产品
                     </el-button>
                     <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
@@ -182,9 +180,9 @@
                             <i style = "color:red" class="el-icon-delete"></i>
                         </el-button>
                     </el-tooltip>
-                    <el-button  type="primary"  v-if="scope.row.status>0" title="生成计划" @click="makePlan(scope.row)">
-                        生成计划
-                    </el-button>
+                    <!--<el-button  type="primary"  v-if="scope.row.status>0" title="生成计划(不会重复生成)" @click="makePlan(scope.row)">-->
+                        <!--生成计划-->
+                    <!--</el-button>-->
 
                 </template>
             </el-table-column>

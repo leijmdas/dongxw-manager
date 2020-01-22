@@ -11,11 +11,19 @@
                 <el-form-item label="订单" prop="orderId">
                     <order-master-select :fnChange="search"  :customerId="page.query.param.customerId"
                                          v-model="page.query.param.orderId"   :clearable="true">
-
                     </order-master-select>
-
                 </el-form-item>
-
+                <!--<el-button type="primary"   v-if="page.query.param.orderId>0"  @click="makePlan" plain >新增订单计划</el-button>-->
+                <el-dropdown @command="handleCommand">
+                    <el-button type="primary" :disabled="disabledAddBtn" >
+                        同步订单计划<i class="el-icon-arrow-down el-icon--right"></i>
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="add">新增订单计划</el-dropdown-item>
+                        <el-dropdown-item command="check">检查订单计划</el-dropdown-item>
+                        <el-dropdown-item command="del">删除计划多余产品</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
                 <el-form-item label="日期">
 
                     <div slot="label">
@@ -66,6 +74,7 @@
 
                 <el-button style="margin-left: 30px" slot="tip" type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                 <el-button slot="tip" @click="cancel">取消</el-button>
+                <!--<el-button slot="tip" @click="cancel" title="检查订单与计划产品一致!">检查订单计划</el-button>-->
 
                 <!--<el-button type="primary" slot="tip"  plain @click="create">新增订单产品计划</el-button>-->
 
@@ -148,25 +157,25 @@
                     {{ $dongxwDict.viewDate(row.pkgDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="planStart" label="计划上线" width="100">
+            <el-table-column prop="planStart" label="计划上线日期" width="100">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.planStart)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="planEnd" label="计划完成" width="100">
+            <el-table-column prop="planEnd" label="计划完成日期" width="100">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.planEnd)}}
                 </template>
             </el-table-column>
 
-            <el-table-column prop="realEnd" label="实际完成" width="100">
+            <el-table-column prop="realEnd" label="实际完成日期" width="100">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.realEnd)}}
                 </template>
             </el-table-column>
             <el-table-column  prop="finishFlag" label="是否完成" width="75">
                 <template slot-scope="{row}">
-                    <span :style="row.finishFlag==0?'color: red':''">
+                    <span :style="row.finishFlag==0?'color: red':'color: green'">
                         {{$dongxwDict.getText(row.finishFlag,$dongxwDict.store.FINISH_FLAG)}}
                     </span>
                 </template>
@@ -228,6 +237,15 @@
     .el-input{
         width: 160px;
     }
+    .el-dropdown {
+        vertical-align: top;
+    }
+    .el-dropdown + .el-dropdown {
+        margin-left: 15px;
+    }
+    .el-icon-arrow-down {
+        font-size: 12px;
+    }
 </style>
 <script>
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
@@ -277,11 +295,43 @@
                 ]
             };
         },
-        computed: {},
+        computed: {
+            disabledAddBtn: {
+                get() {
+                    return this.page.query.param.orderId <= 0
+                },
+            },
+        },
 
         methods: {
+
+            handleCommand(command) {
+                if (command === "add") {
+                    this.makePlan();
+                } else {
+                    this.$message('click on item ' + command);
+
+                }
+            },
             onDataloaded(rsp) {
 
+            },
+            makePlan() {
+                let self = this;
+
+                this.$confirm("确定要新增订单产品计划吗?", "提示：可多次操作，已增加不会重复。", {
+                    type: "warning"
+                }).then(() => {
+
+                    self.$api.dongxw.MakePlan.makePlanByOrder(this.page.query.param.orderId).then(rsp => {
+                        self.search();
+                        self.$message({
+                            type: "success",
+                            message: "生成成功!"
+                        });
+                    });
+
+                });
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};

@@ -115,7 +115,7 @@
             </el-row>
             <el-row :span="22" style="margin-top: 10px ">
                 <el-col :span="11">
-                    <el-form-item label="计划上线" prop="planStart">
+                    <el-form-item label="计划上线日期" prop="planStart">
                         <el-date-picker style="width:100%"
                                         :disabled="disables"
                                         v-model="entity.planStart"
@@ -128,7 +128,7 @@
                 </el-col>
                 <el-col :span="11">
 
-                    <el-form-item label="计划完成" prop="planEnd">
+                    <el-form-item label="计划完成日期" prop="planEnd">
                         <el-date-picker style="width:100%"
                                         :disabled="disables"
                                         v-model="entity.planEnd"
