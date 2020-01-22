@@ -8,7 +8,12 @@
                                      :clearable="true"></customer-select>
 
                 </el-form-item>
-
+                <el-form-item label="状态" prop="status">
+                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="日期">
 
                     <div slot="label">
@@ -41,22 +46,17 @@
 
 
                 </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
+
                 <el-form-item label="订单类型" prop="orderType">
                     <el-select @change="search" :clearable="true" v-model="page.query.param.orderType" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-                <!--<el-form-item>-->
-                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
-                    <!--<el-button @click="cancel">取消</el-button>-->
-                <!--</el-form-item>-->
+                <el-form-item>
+                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                    <el-button @click="cancel">取消</el-button>
+                </el-form-item>
 
             </el-form>
         </div>
@@ -64,8 +64,8 @@
                 <span slot="tip" style="margin-left:60px;">
                 <span style="color :red">  鼠标双击进入订单产品管理! </span>
                 </span>
-                <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                <el-button @click="cancel">取消</el-button>
+                <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+                <!--<el-button @click="cancel">取消</el-button>-->
 
                 <el-button type="primary" plain @click="create">新增</el-button>
 
@@ -155,15 +155,19 @@
             <el-table-column prop="invoiceNo" label="正式发票编号" width="120"></el-table-column>
 
 
-            <el-table-column prop="createDate" label="建档时间" width="150">
+            <el-table-column prop="createDate" label="建档时间" width="100">
+                <template slot-scope="{row}">
+                    {{ $dongxwDict.viewDate(row.createDate)}}
+                </template>
             </el-table-column>
-            <el-table-column prop="createBy" label="建档人" width="150">
+            <el-table-column prop="createByName" label="建档人" width="150">
             </el-table-column>
 
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column width="145" label="操作" :fixed="'right'">
+            <el-table-column width="200" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
+
 
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
@@ -178,8 +182,9 @@
                             <i style = "color:red" class="el-icon-delete"></i>
                         </el-button>
                     </el-tooltip>
-
-                    <!--<el-button v-if="scope.row.orderType==20" type="info" @click="showLine(scope.row)" >增加子订单</el-button>-->
+                    <el-button  type="primary"  v-if="scope.row.status>0" title="生成计划" @click="makePlan(scope.row)">
+                        生成计划
+                    </el-button>
 
                 </template>
             </el-table-column>
@@ -311,6 +316,16 @@
             create() {
                 this.$refs.formDiag.show();
             },
+
+            makePlan(row) {
+                this.$api.dongxw.MakePlan.makePlanByOrder(row.id).then(rsp => {
+                    //this.search();
+                    this.$message({
+                        type: "success",
+                        message: "生成成功!"
+                    });
+                });
+            },
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});
             },
@@ -364,6 +379,7 @@
             },
             search() {
                 this.getSearchParams();
+                this.$refs.table.currentPage = 1;
                 this.$refs.table.load();
             },
             cancel() {

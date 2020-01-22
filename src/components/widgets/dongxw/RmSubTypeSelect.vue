@@ -1,4 +1,4 @@
-<!--产品类型选择-->
+<!-- 名称选择-->
 
 <template>
     <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
@@ -28,8 +28,8 @@
             disabled: {
                 type: Boolean
             },
-            productTypeId: {
-                //type: Number
+            parentTypeId: {
+                // type: Number,
             }
         },
         computed: {
@@ -43,10 +43,8 @@
             }
         },
         watch: {
-            productTypeId: {
+            parentTypeId: {
                 handler: function(newVal, oldVal) {
-                    this.value = ''
-                    this.currentValue = ''
                     this.refresh();
                 },
                 deep: true
@@ -60,8 +58,8 @@
                 this.loading = true
                 this.$api.dongxw.ProductTypeService.query({
                     param: {
-                        parentId: 0,
-                        prdFlag : 0,
+                        parentId: this.parentTypeId,
+                        prdFlag : 200,
                         isDeleted: false
                     }
                 }).then(rsp => {

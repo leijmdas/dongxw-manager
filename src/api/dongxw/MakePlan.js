@@ -41,6 +41,18 @@ export default {
             method: 'POST'
         })
     },
+    deleteById(id) {
+        return request({
+            url: '/dongxw/makeplan/deleteById/'+id,
+            method: 'POST'
+        })
+    },
+    makePlanByOrder(orderId) {
+        return request({
+            url: '/dongxw/makeplan/makePlanByOrder/'+orderId,
+            method: 'POST'
+        })
+    },
 
 
 }

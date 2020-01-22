@@ -3,41 +3,42 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <el-form-item label="客户" prop="customerId">
-                    <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>
 
+                <el-form-item label="大类" prop="orderType">
+                    <el-select style="width:160px" @change="search" :clearable="true"
+                               v-model="page.query.param.parentId">
+                        <el-option v-for="item in $dongxwDict.store.RM_TYPE" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="小类">
+                    <sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></sub-type-select>
                 </el-form-item>
 
-                <el-form-item label="产品大类">
-                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
-                </el-form-item>
-                <el-form-item label="产品小类">
-                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
-                </el-form-item>
-                <el-form-item label="EP款号" prop="epCode">
+                <el-form-item label="EP编码" prop="epCode">
                     <el-input v-model="page.query.param.epCode" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="客款号" prop="code">
+                <el-form-item label="供编码" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="产品描述" prop="remark">
+                <el-form-item label="原料描述" prop="remark">
                     <el-input v-model="page.query.param.remark" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="颜色" prop="color">
-                    <el-input v-model="page.query.param.color" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="尺寸" prop="barCode">
                     <el-input v-model="page.query.param.size" clearable></el-input>
                 </el-form-item>
+                <el-form-item label="颜色" prop="color">
+                    <el-input v-model="page.query.param.color" clearable></el-input>
+                </el-form-item>
 
-                <!--<el-form-item label="状态" prop="status">-->
-                    <!--<el-select :clearable="true" v-model="page.query.param.status" style="width:100px">-->
-                        <!--<el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"-->
-                                   <!--:label="item[1]"></el-option>-->
-                    <!--</el-select>-->
-                <!--</el-form-item>-->
+                <el-form-item label="状态" prop="status">
+                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
 
                 <!--<el-form-item>-->
                     <!--&lt;!&ndash;<el-button-group></el-button-group>&ndash;&gt;-->
@@ -71,36 +72,37 @@
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
 
-            <el-table-column prop="customerId" label="客户名称" width="120">
-                <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custName:'-'}}
-                </template>
-            </el-table-column>
+            <!--<el-table-column prop="customerId" label="客户名称" width="120">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{ row.customer?row.customer.custName:'-'}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
 
-            <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
+            <el-table-column prop="epCode" label="EP编码" width="100"></el-table-column>
             <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
 
-            <el-table-column prop="code" label="客款号" width="100">
+            <el-table-column prop="code" label="供编码" width="100">
                 <template slot-scope="{row}">
                    <span   > {{row.code }} </span>
                 </template>
             </el-table-column>
-            <el-table-column prop="parentId" label="产品大类" width="120">
+            <el-table-column prop="parentId" label="大类" width="120">
+
                 <template slot-scope="{row}">
-                    {{ row.productType? row.productType.code :'-' }}
+                    {{$dongxwDict.getText(row.parentId,$dongxwDict.store.RM_TYPE)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="productSubType" label="产品小类" width="160">
+            <el-table-column prop="productSubType" label="小类" width="160">
                 <template slot-scope="{row}">
                     {{ row.productSubType? row.productSubType.code :'-' }}
                 </template>
             </el-table-column>
 
 
-            <el-table-column prop="remark" label="产品描述" width="245"></el-table-column>
+            <el-table-column prop="remark" label="原料描述" width="245"></el-table-column>
             <el-table-column prop="unit" label="单位" width="60"></el-table-column>
 
-            <el-table-column prop="picUrl" label="产品图片" v-if="isShowPrdPic" width="90">
+            <el-table-column prop="picUrl" label="原料图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
                     <!--<img v-if="row.picUrl" :src="row.picUrl" width="60px" height="60px" alt="">-->
 
@@ -109,15 +111,15 @@
 
                 </template>
             </el-table-column>
-            <el-table-column prop="color" label="颜色" width="100">
-            </el-table-column>
             <el-table-column prop="size" label="尺寸" width="150">
             </el-table-column>
+            <el-table-column prop="color" label="颜色" width="100">
+            </el-table-column>
+
             <el-table-column prop="barCode" label="条码" width="120">
             </el-table-column>
 <!--            <el-table-column prop="upcA" label="UPC-A" width="150">-->
 <!--            </el-table-column>-->
-
             <el-table-column prop="createDate" label="建档时间" width="150">
             </el-table-column>
 
@@ -129,15 +131,15 @@
                     {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="ibQty" label="内盒数量"></el-table-column>
-            <el-table-column prop="ibGw" label="内盒毛重(kg)" width="100"></el-table-column>
-            <el-table-column prop="ibNw" label="内盒净重(kg)" width="100"></el-table-column>
-            <el-table-column prop="ibSize" label="内盒尺寸"></el-table-column>
+            <!--<el-table-column prop="ibQty" label="内盒数量"></el-table-column>-->
+            <!--<el-table-column prop="ibGw" label="内盒毛重(kg)" width="100"></el-table-column>-->
+            <!--<el-table-column prop="ibNw" label="内盒净重(kg)" width="100"></el-table-column>-->
+            <!--<el-table-column prop="ibSize" label="内盒尺寸"></el-table-column>-->
 
-            <el-table-column prop="obQty" label="外箱数量"></el-table-column>
-            <el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>
-            <el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>
-            <el-table-column prop="obSize" label="外箱尺寸"></el-table-column>
+            <!--<el-table-column prop="obQty" label="外箱数量"></el-table-column>-->
+            <!--<el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>-->
+            <!--<el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>-->
+            <!--<el-table-column prop="obSize" label="外箱尺寸"></el-table-column>-->
 
             <el-table-column prop="memo" label="备注"  >
             </el-table-column>
@@ -175,13 +177,10 @@
 </style>
 
 <script>
-    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
-    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
+    import SubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
     import FormPanel from './Form';
-    import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
-
     export default {
-        components: { CustomerSelect,FormPanel, ProductTypeSelect,ProductSubTypeSelect },
+        components: { FormPanel, SubTypeSelect },
         data() {
             return {
                 isShowPrdPic : false,
@@ -193,7 +192,7 @@
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            customerId: undefined,
+                            subjectId: undefined,
                             isDeleted: false
                         }
                     },
@@ -237,7 +236,6 @@
                 this.$api.dongxw.ProductService.export(params);
             },
             getSearchParams() {
-
                 this.page.query.dateRanges = {};
                 if (this.dateRangeType != null && this.dateRange&&this.dateRange.length > 0) {
                     this.page.query.dateRanges[this.dateRangeType] = {
@@ -293,8 +291,9 @@
                 this.search();
             },
             search() {
-                this.$refs.table.currentPage = 1;
-                this.$refs.table.load();
+                this.page.query.param.customerId = 0
+                this.$refs.table.currentPage = 1
+                this.$refs.table.load()
             },
             cancel() {
                 this.dateRange = [];

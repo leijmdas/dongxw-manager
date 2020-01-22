@@ -2,16 +2,21 @@
     <div>
         <p></p>
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
-            <el-form-item label="大类标识" prop="parentId" >
+          <!--  <el-form-item label="大类标识" prop="parentId" >
                 <el-input placeholder="parentId" v-model="parentId" disabled></el-input>
+            </el-form-item>-->
+            <el-form-item label="大类" prop="parentId">
+                <el-select  :clearable="true" v-model="entity.parentId" style="width:100px">
+                    <el-option v-for="item in $dongxwDict.store.RM_TYPE" :key="item[0]" :value="item[0]"
+                               :label="item[1]"></el-option>
+                </el-select>
             </el-form-item>
 
-
-            <el-form-item label="产品大类" prop="code" >
-                <el-input placeholder="产品大类" v-model="entity.code"></el-input>
+            <el-form-item label="原料类型" prop="code" >
+                <el-input placeholder="原料类型" v-model="entity.code"></el-input>
             </el-form-item>
-            <el-form-item label="产品大类编码" prop="name">
-                <el-input placeholder="产品大类编码" v-model="entity.name"></el-input>
+            <el-form-item label="类型编码" prop="name">
+                <el-input placeholder="类型编码" v-model="entity.name"></el-input>
             </el-form-item>
 
 
@@ -55,7 +60,8 @@
         code: '',
         name: '',
         active: 1,
-        parentId : 0
+        parentId : null,
+        prdFlag : 200
     };
 
     export default {
@@ -97,7 +103,7 @@
                             trigger: "blur"
                         }
                     ],
-                    merchantId: [
+                    parentId: [
                         {
                             type: "number"
                         }
@@ -166,8 +172,6 @@
             init(options) {
                 this.resetForm();
                 if (options.id) {
-                    console.log(JSON.stringify(this.entity));
-                    //this.isDisabled = true;//this.entity.status > 0;
 
                     this.$api.dongxw.ProductTypeService.findById(options.id).then(r => {
                         console.log(JSON.stringify(r))

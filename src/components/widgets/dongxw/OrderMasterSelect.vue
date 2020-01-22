@@ -2,7 +2,11 @@
 
 <template>
     <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
+
         <el-option  v-for="item in options" :key="item.id" :label="item.epOrderCode" :value="item.id" :disabled="item.disabled">
+            <span style="float: left">{{ item.customerOrderCode }}</span>
+            <span style="float: left">{{ item.epOrderCode }}</span>
+
         </el-option>
     </el-select>
 </template>
@@ -10,6 +14,10 @@
     /*.el-select {*/
         /*width: 250px;*/
     /*}*/
+    .el-select-dropdown__item span{
+        width:140px;
+        text-align:left;
+    }
 </style>
 <script>
     import { fetch } from "@/utils";

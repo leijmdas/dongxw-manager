@@ -44,7 +44,18 @@ import axios from 'axios'
 Vue.prototype.$http = axios
 Vue.prototype.$bus = bus
 Vue.prototype.$api = api
-
+String.prototype.Trim = function()
+{
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+String.prototype.LTrim = function()
+{
+    return this.replace(/(^\s*)/g, "");
+}
+String.prototype.RTrim = function()
+{
+    return this.replace(/(\s*$)/g, "");
+}
 permission.init();
 const app = new Vue({
   el: '#app-wrap',

@@ -137,6 +137,30 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
+                    <el-row :span="22">
+                        <el-col :span="11">
+                            <el-form-item label="采购员" prop="businessBy1">
+                                <el-input placeholder="采购员" v-model="entity.businessBy1"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="11">
+                            <el-form-item label="报关员" prop="businessBy2">
+                                <el-input placeholder="报关员" v-model="entity.businessBy2"></el-input>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="11">
+                            <el-form-item label="计划员" prop="businessBy3">
+                                <el-input placeholder="计划员" v-model="entity.businessBy3"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="11">
+                            <el-form-item label="计划时间" prop="businessBy4">
+                                <el-input disabled placeholder="计划时间" v-model="entity.businessBy4"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+
                     <el-row :span="22" style="margin-top: 10px ">
                         <el-col :span="22">
                             <el-form-item label="备注" prop="remark">
@@ -144,7 +168,21 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
+                    <el-row :span="22">
+                        <el-col :span="11">
+                            <el-form-item label="建档人" prop="createByName">
+                                <el-input disabled placeholder="建档人" v-model="entity.createByName"></el-input>
 
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="11">
+                            <el-form-item label="建档时间" prop="createDate">
+                                <el-input disabled placeholder="建档时间" v-model="entity.createDate"></el-input>
+
+                            </el-form-item>
+                        </el-col>
+
+                    </el-row>
 
 
                 </fieldset>
@@ -405,8 +443,9 @@
                         this.entity.parentId = 0
                     }
                     if (valid) {
+                        this.entity.customerOrderCode =  this.entity.customerOrderCode.Trim();
+                        this.entity.epOrderCode =  this.entity.epOrderCode.Trim();
                         let params = Object.assign({}, this.entity);
-
 
                         // params.startOn = this.entity.effectRange[0];
                         // params.endOn = this.entity.effectRange[1];

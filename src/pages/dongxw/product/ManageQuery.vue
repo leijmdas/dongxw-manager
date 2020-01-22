@@ -211,7 +211,6 @@
              */
             exportRecords() {
                 let params = this.getSearchParams();
-                console.log(params);
                 this.$api.dongxw.ProductService.export(params);
             },
             getSearchParams() {
@@ -273,16 +272,19 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
-                this.formDiag=options.formDiag
-                this.queryForm=options.queryForm
+                this.formDiag = options.formDiag
+                this.queryForm = options.queryForm
                 this.search();
             },
             search() {
+                this.page.query.param.prdFlag = 0;
                 this.$refs.table.load();
             },
             cancel() {
                 this.dateRange = [];
-                this.page.query.param = {};
+                this.page.query.param = {
+                    prdFlag: 0,
+                };
                 this.search();
             }
         },

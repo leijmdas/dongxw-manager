@@ -106,11 +106,11 @@
                 </template>
             </el-table-column>
             <!--<el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>-->
-            <el-table-column prop="条码" label="条码" width="115">
-                <template slot-scope="{row}">
-                    {{ row.product?row.product.barCode:'-'}}
-                </template>
-            </el-table-column>
+            <!--<el-table-column prop="条码" label="条码" width="115">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{ row.product?row.product.barCode:'-'}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
             <el-table-column prop="unit" label="单位" width="70">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.unit:'-'}}

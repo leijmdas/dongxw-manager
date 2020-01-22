@@ -8,7 +8,7 @@
                 <span>ERP</span>
             </el-menu-item>
             <el-menu-item index="domain_office"><span
-                class="ele-icon el-icon-ipyunyingbaobiao"></span><span>办公自动化</span>
+                class="ele-icon el-icon-ipyunyingbaobiao"></span><span>OA</span>
             </el-menu-item>
 
 
@@ -19,10 +19,15 @@
 
         <el-menu mode="horizontal" :default-active="activeIndex" background-color="#00438A" text-color="#fff"
                  active-text-color="#ffd04b">
-            <el-menu-item index="10">
-                <a href="http://customer.akunlong.top/" target="_blank" class="go-to">客户登录</a>
+            <el-menu-item index="1">
+                <a href="http://customer.akunlong.top/" target="_blank" class="go-to">客户端</a>
             </el-menu-item>
-            <el-menu-item index="4">
+
+            <el-menu-item index="2">
+                <a href="http://hongld.akunlong.top/" target="_blank" class="go-to">宏利达海棉</a>
+            </el-menu-item>
+
+            <el-menu-item index="3">
 
                 <a href="https://element.eleme.cn" target="_blank">
                     <img style="width:50px;height:50px" src="../../../assets/logo.png" alt="el"/>
@@ -30,14 +35,10 @@
 
             </el-menu-item>
 
-            <el-menu-item index="3">
+            <el-menu-item index="4">
                 <a href="https://www.kubernetes.org.cn" target="_blank" class="go-to">
                     <img style="width:50px;height:50px" src="../../../assets/logo.png" alt="k8s"/>
                 </a>
-            </el-menu-item>
-
-            <el-menu-item index="2">
-                <a href="http://hongld.akunlong.top/" target="_blank" class="go-to">宏利达海棉</a>
             </el-menu-item>
 
             <el-menu-item index="0">

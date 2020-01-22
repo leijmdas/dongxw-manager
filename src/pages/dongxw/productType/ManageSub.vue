@@ -7,7 +7,7 @@
                     <el-form-item label="产品小类" prop="custNo">
                         <el-input v-model="page.query.param.code" clearable></el-input>
                     </el-form-item>
-                    <el-form-item label="产品小类说明" prop="custNo">
+                    <el-form-item label="产品小类编码" prop="custNo">
                         <el-input v-model="page.query.param.name" clearable></el-input>
                     </el-form-item>
 
@@ -16,7 +16,8 @@
                         <el-button @click="cancel">取消</el-button>
 
                         <el-button type="primary" plain @click="create">新增</el-button>
-                        <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue"> {{ parentId }}</span></el-form-item>
+                        <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue">
+                            {{ parentId }}</span></el-form-item>
 
                     </el-form-item>
                 </el-form>
@@ -24,7 +25,7 @@
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
             <!--<el-button type="primary" plain @click="create">新增</el-button>-->
         </v-toolbar>
-        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page"  :pageSize="12" :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column prop="seq" label="序号" width="50">
 
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
@@ -33,7 +34,7 @@
             <el-table-column  prop="parentId" label="大类标识" width="120"></el-table-column>
             <!--<el-table-column  prop="id" label="小类标识" width="80"></el-table-column>-->
             <el-table-column prop="code" label="产品小类" width="160"></el-table-column>
-            <el-table-column prop="name" label="产品小类说明" width="240"></el-table-column>
+            <el-table-column prop="name" label="产品小类编码" width="240"></el-table-column>
 
             <el-table-column width="100" label="操作">
                 <!--<el-table-column width="100" label="操作" :fixed="'right'">-->

@@ -61,7 +61,7 @@
                 this.$api.dongxw.ProductTypeService.query({
                     param: {
                         parentId: 0,
-                        prdFlag : 0,
+                        prdFlag : 200,
                         isDeleted: false
                     }
                 }).then(rsp => {
