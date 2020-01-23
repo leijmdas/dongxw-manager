@@ -81,16 +81,16 @@ let router0 = [
                 meta: {title: '生产计划表', perm: 'makeplan:manage'}
             },
             {
-                path: 'makePlanOut/manage',
-                component: require('@/pages/dongxw/makeplan/Manage.vue'),
-                name: 'makePlanOut:manage',
-                meta: {title: '外发加工单', perm: 'makeplan:manage'}
-            },
-            {
                 path: 'makesheet/manage',
                 component: require('@/pages/dongxw/makeplan/Manage.vue'),
                 name: 'makesheet:manage',
                 meta: {title: '生产制造单', perm: 'makeplan:manage'}
+            },
+            {
+                path: 'makePlanOut/manage',
+                component: require('@/pages/dongxw/makeplan/Manage.vue'),
+                name: 'makePlanOut:manage',
+                meta: {title: '外发加工单', perm: 'makeplan:manage'}
             },
 
         ]

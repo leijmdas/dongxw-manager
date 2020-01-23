@@ -5,7 +5,10 @@
             <el-col :span="6" v-for="(url,index) in urlInfo" :key="url">
 
                 <!--<el-input v-if="url&&showRemoveBtn" style="width:120px" placeholder="描述" v-model="remarks[index]"></el-input>-->
-                <el-select v-if="url&&showRemoveBtn" v-model="remarks[index]" filterable placeholder="请选择" @change="handleChange">
+                <el-select v-if="url&&showRemoveBtn" v-model="remarks[index]" filterable
+                           filterable
+                           allow-create
+                           placeholder="请选择" @change="handleChange">
                     <el-option
                         v-for="item in options"
                         :key="item.label"

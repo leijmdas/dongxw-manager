@@ -1,9 +1,11 @@
 <!--模板名称选择-->
 
 <template>
-    <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
+    <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading"
+               :clearable="clearable" :disabled="disabled" @change="handleChange">
 
-        <el-option  v-for="item in options" :key="item.id" :label="item.epOrderCode" :value="item.id" :disabled="item.disabled">
+        <el-option  v-for="item in options" :key="item.id"
+                    :label="item.epOrderCode + '('+item.customerOrderCode+')'"  :value="item.id" :disabled="item.disabled">
             <span style="float: left">{{ item.customerOrderCode }}</span>
             <span style="float: left">{{ item.epOrderCode }}</span>
 

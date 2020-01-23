@@ -10,12 +10,20 @@ let router0 = [{
         //component: require('@/pages/app/userInfo/Manage.vue'),
         name: 'office:manage2',
         meta: {title: '个人信息'}
-    }, {
-        path: 'office/manageTimer',
-        //component: require('@/pages/app/userInfo/Manage.vue'),
-        name: 'office:manageTimer',
-        meta: {title: '定期提醒'}
-    }]
+    },
+        {
+            path: 'mail/rev',
+            //component: require('@/pages/app/userInfo/Manage.vue'),
+            name: 'mail:rec',
+            meta: {title: '表单邮件接收人'}
+        },
+        {
+            path: 'office/manageTimer',
+            //component: require('@/pages/app/userInfo/Manage.vue'),
+            name: 'office:manageTimer',
+            meta: {title: '定期提醒'}
+        },
+    ]
 }]
 
 

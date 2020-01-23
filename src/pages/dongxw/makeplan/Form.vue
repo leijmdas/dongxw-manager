@@ -50,7 +50,7 @@
                 </el-col>
                 <el-col :span="11">
 
-                    <el-form-item label="发外标志" prop="outFlag">
+                    <el-form-item label="外发标志" prop="outFlag">
                         <el-select style="width:100%" v-model="entity.outFlag">
                             <el-option v-for="item in $dongxwDict.store.OUT_FLAG" :key="item[0]"
                                        :value="item[0]" :label="item[1]"></el-option>

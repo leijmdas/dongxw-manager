@@ -1,4 +1,4 @@
-<!--订单管理-->
+<!--订单生产计划管理-->
 <template>
     <div>
         <div class="panel panel-default panel-search">
@@ -9,8 +9,8 @@
 
                 </el-form-item>
                 <el-form-item label="订单" prop="orderId">
-                    <order-master-select :fnChange="search"  :customerId="page.query.param.customerId"
-                                         v-model="page.query.param.orderId"   :clearable="true">
+                    <order-master-select :fnChange="search" :customerId="page.query.param.customerId"
+                                         v-model="page.query.param.orderId" :clearable="true">
                     </order-master-select>
                 </el-form-item>
                 <!--<el-button type="primary"   v-if="page.query.param.orderId>0"  @click="makePlan" plain >新增订单计划</el-button>-->
@@ -22,8 +22,15 @@
                         <el-dropdown-item command="add">新增订单计划</el-dropdown-item>
                         <el-dropdown-item command="check">检查订单计划</el-dropdown-item>
                         <el-dropdown-item command="del">删除计划多余产品</el-dropdown-item>
+                        <el-dropdown-item command="del">删除订单计划</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
+                <el-form-item label="外发标志" prop="outFlag">
+                    <el-select @change="search" clearable style="width:100%" v-model="page.query.param.outFlag">
+                        <el-option v-for="item in $dongxwDict.store.OUT_FLAG" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="日期">
 
                     <div slot="label">
@@ -32,9 +39,9 @@
                             <el-option value="issueDate" label="要求交期"></el-option>
                             <el-option value="rmDate" label="物料到位日期"></el-option>
                             <el-option value="pkgDate" label="包材到位日期"></el-option>
-                            <el-option value="planStart" label="计划上线"></el-option>
-                            <el-option value="planEnd" label="计划完成"></el-option>
-                            <el-option value="realEnd" label="实际完成"></el-option>
+                            <el-option value="planStart" label="计划上线日期"></el-option>
+                            <el-option value="planEnd" label="计划完成日期"></el-option>
+                            <el-option value="realEnd" label="实际完成日期"></el-option>
                         </el-select>
                     </div>
                     <el-date-picker style="width:270px" v-model="dateRange" type="daterange" range-separator="至"
@@ -57,6 +64,8 @@
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
+
+
                 <el-form-item label="订单类型" prop="orderType">
                     <el-select @change="search" :clearable="true" v-model="page.query.param.orderType" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
@@ -95,9 +104,11 @@
                 <!--</template>-->
             <!--</el-table-column>-->
 
-            <el-table-column prop="outFlag" label="发外标志" width="70">
+            <el-table-column prop="outFlag" label="外发标志" width="70">
                 <template slot-scope="{row}">
+                    <span :style="row.outFlag==1?'color:blue':''">
                     {{$dongxwDict.getText(row.outFlag,$dongxwDict.store.OUT_FLAG)}}
+                        </span>
                 </template>
             </el-table-column>
             <!--<el-table-column prop="customerId" label="客户代码" width="80">-->
@@ -113,7 +124,7 @@
 
             <!--<el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>-->
 
-            <el-table-column prop="customerOrderCode" label="客户订单号" width="110">
+            <el-table-column prop="customerOrderCode" label="客订单号" width="110">
                 <template slot-scope="{row}">
                     {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
                 </template>
@@ -167,12 +178,6 @@
                     {{ $dongxwDict.viewDate(row.planEnd)}}
                 </template>
             </el-table-column>
-
-            <el-table-column prop="realEnd" label="实际完成日期" width="100">
-                <template slot-scope="{row}">
-                    {{ $dongxwDict.viewDate(row.realEnd)}}
-                </template>
-            </el-table-column>
             <el-table-column  prop="finishFlag" label="是否完成" width="75">
                 <template slot-scope="{row}">
                     <span :style="row.finishFlag==0?'color: red':'color: green'">
@@ -180,6 +185,12 @@
                     </span>
                 </template>
             </el-table-column>
+            <el-table-column prop="realEnd" label="实际完成日期" width="100">
+                <template slot-scope="{row}">
+                    {{ $dongxwDict.viewDate(row.realEnd)}}
+                </template>
+            </el-table-column>
+
             <el-table-column  prop="status" label="订单状态" width="80">
                 <template slot-scope="{row}">
                     <span :style="row.status==0?'color: red':''">
@@ -324,11 +335,8 @@
                 }).then(() => {
 
                     self.$api.dongxw.MakePlan.makePlanByOrder(this.page.query.param.orderId).then(rsp => {
-                        self.search();
-                        self.$message({
-                            type: "success",
-                            message: "生成成功!"
-                        });
+                        self.search()
+                        self.$msgJsonResult(rsp)
                     });
 
                 });

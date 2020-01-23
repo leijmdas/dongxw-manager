@@ -85,7 +85,8 @@ let DongxwDict = {
             str = str.substring(0, i + 1);
         }
         return str;
-    }
+    },
+
 
 };
 Vue.prototype.$dongxwDict = DongxwDict;

@@ -56,6 +56,21 @@ String.prototype.RTrim = function()
 {
     return this.replace(/(\s*$)/g, "");
 }
+Vue.prototype.$msgJsonResult = function(rsp)
+{
+    if (rsp.code === "0") {
+        this.$message({
+            type: "success",
+            message: "生成成功!"
+        });
+    } else {
+        this.$message({
+            type: "error",
+            message: rsp.data
+        });
+    }
+}
+
 permission.init();
 const app = new Vue({
   el: '#app-wrap',
