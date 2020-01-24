@@ -35,7 +35,7 @@
 
         mounted() {
             this.$refs.managePanel.init({parentId: 0});
-            this.$refs.managePanelSub.init({parentId: 1});
+            this.$refs.managePanelSub.init({parentId: -1});
 
 
         }

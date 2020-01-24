@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
+        <el-form :model="entity" :rules="rules" ref="form" label-width="95px" class="dialog-form">
             <el-tabs :stretch="isExp" v-model="activeName">
                 <el-tab-pane label="产品信息" name="productInfo">
                     <el-row>
@@ -42,6 +42,9 @@
                                 </el-col>
 
                             </el-row>
+                            <el-form-item label="产品名称" prop="name">
+                                <el-input placeholder="产品名称" v-model="entity.name"></el-input>
+                            </el-form-item>
                             <el-form-item label="产品描述" prop="remark">
                                 <el-input placeholder="产品描述" v-model="entity.remark"></el-input>
                             </el-form-item>
@@ -117,28 +120,28 @@
                 </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="包装信息" name="packageInfo">
-                    <fieldset style="margin-top: 10px">
+                    <fieldset  >
                         <legend>内盒包装</legend>
 
                         <el-row :span="24">
-                        <el-col :span="11">
+                        <el-col :span="12">
                             <el-form-item label="内盒尺寸" prop="ibSize">
                                 <el-input placeholder="内盒尺寸" v-model="entity.ibSize"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="11">
+                        <el-col :span="12">
                             <el-form-item label="内盒数量" prop="ibQty">
                                 <el-input placeholder="内盒数量" v-model="entity.ibQty"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :span="24">
-                        <el-col :span="11">
+                        <el-col :span="12">
                             <el-form-item label="内盒毛重(kg)" prop="ibGw">
                                 <el-input placeholder="内盒毛重(kg)" v-model="entity.ibGw"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="11">
+                        <el-col :span="12">
 
                             <el-form-item label="内盒净重(kg)" prop="ibNw">
                                 <el-input placeholder="内盒净重(kg)" v-model="entity.ibNw"></el-input>
@@ -147,17 +150,22 @@
 
                     </el-row>
                     </fieldset>
-                    <fieldset style="margin-top: 10px">
+                    <fieldset >
                         <legend>外箱包装</legend>
 
-                        <el-row style="margin-top: 20px">
+                        <el-row  >
 
-                        <el-col :span="11">
+                        <el-col :span="12">
                             <el-form-item label="外箱尺寸" prop="obSize">
-                                <el-input placeholder="外箱尺寸" v-model="entity.obSize"></el-input>
+                                <el-input placeholder="外箱尺寸(x*y*z)" v-model="entity.obSize"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="11">
+                        <el-col :span="12">
+                            <el-form-item label="CBM" prop="cbm">
+                                <el-input disabled placeholder="CBM" v-model="cbm"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
 
                             <el-form-item label="外箱数量" prop="obQty">
                                 <el-input placeholder="外箱数量" v-model="entity.obQty"></el-input>
@@ -165,13 +173,13 @@
                         </el-col>
                     </el-row>
                     <el-row>
-                        <el-col :span="11">
+                        <el-col :span="12">
                             <el-form-item label="外箱毛重(kg)" prop="obGw">
                                 <el-input placeholder="外箱毛重(kg)" v-model="entity.obGw"></el-input>
                             </el-form-item>
                         </el-col>
 
-                        <el-col :span="11">
+                        <el-col :span="12">
                             <el-form-item label="外箱净重(kg)" prop="obNw">
                                 <el-input placeholder="外箱净重(kg)" v-model="entity.obNw"></el-input>
                             </el-form-item>
@@ -180,19 +188,19 @@
                     </el-row>
                     </fieldset>
                     <!--<hr>-->
-                    <fieldset style="margin-top: 10px">
-                        <legend>备注</legend>
+                    <!--<fieldset  >-->
+                        <!--<legend>备注</legend>-->
 
-                        <el-row style="margin-top: 10px">
-                            <el-col :span="11">
-                                <el-form-item label="正唛" prop="pkgFront">
-                                    <el-input placeholder="正唛" v-model="entity.pkgFront"></el-input>
+                        <el-row  :span="24" style="margin-top: 10px">
+                            <el-col :span="12">
+                                <el-form-item  label="正唛" prop="pkgFront">
+                                    <el-input type="textarea" :rows="5" placeholder="正唛" v-model="entity.pkgFront"></el-input>
                                 </el-form-item>
                             </el-col>
 
-                            <el-col :span="11">
+                            <el-col :span="12">
                                 <el-form-item label="侧唛" prop="pkgSide">
-                                    <el-input placeholder="侧唛" v-model="entity.pkgSide"></el-input>
+                                    <el-input type="textarea" :rows="5"  placeholder="侧唛" v-model="entity.pkgSide"></el-input>
                                 </el-form-item>
 
                             </el-col>
@@ -201,7 +209,7 @@
 
                         <el-row :span="24">
 
-                            <el-col :span="22">
+                            <el-col :span="24">
 
                                 <el-form-item label="备注" prop="pkgRemark">
                                     <el-input placeholder="备注" type="textarea" :rows="2"
@@ -211,7 +219,7 @@
                             </el-col>
 
                         </el-row>
-                    </fieldset>
+                    <!--</fieldset>-->
                 </el-tab-pane>
                 <el-tab-pane label="产品图片" name="prdImage">
                     <v-image-preview ref="imagePreview" v-model="entity.imgUrls" :imgRemarks = "entity.imgRemark"
@@ -356,6 +364,21 @@
 
                 }
             };
+        },
+        computed: {
+            cbm: {
+                get () {
+                    let v = this.entity.obSize.split('*')
+
+                    if (v.length === 3) {
+                        var multi = function (a, b) {
+                            return parseInt(a) * parseInt(b);
+                        }
+                        return v.reduce(multi, 1)/1000000
+                    }
+                    return 0;        //return this.entity.obSize;
+                }
+            }
         },
         methods: {
 

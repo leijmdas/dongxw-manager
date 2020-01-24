@@ -46,6 +46,7 @@ Vue.prototype.$bus = bus
 Vue.prototype.$api = api
 String.prototype.Trim = function()
 {
+
     return this.replace(/(^\s*)|(\s*$)/g, "");
 }
 String.prototype.LTrim = function()
@@ -61,7 +62,7 @@ Vue.prototype.$msgJsonResult = function(rsp)
     if (rsp.code === "0") {
         this.$message({
             type: "success",
-            message: "生成成功!"
+            message: rsp.msg
         });
     } else {
         this.$message({

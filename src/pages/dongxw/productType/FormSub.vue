@@ -3,18 +3,20 @@
         <p></p>
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
 
-            <el-form-item label="大类标识" prop="parentId" >
-                <el-input placeholder="parentId" v-model="parentId" disabled></el-input>
+
+            <el-form-item label="大类" prop="parentId">
+                <product-type-select v-model="entity.parentId"  clearable ></product-type-select>
             </el-form-item>
 
-            <el-form-item label="产品小类" prop="code" >
-                <el-input placeholder="产品小类" v-model="entity.code"></el-input>
+            <el-form-item label="小类编码" prop="code">
+                <el-input placeholder="小类编码" v-model="entity.code"></el-input>
             </el-form-item>
-            <el-form-item label="产品小类编码" prop="name">
-                <el-input placeholder="产品小类编码" v-model="entity.name"></el-input>
+            <el-form-item label="小类名称" prop="name" >
+                <el-input placeholder="小类名称" v-model="entity.name"></el-input>
             </el-form-item>
-
-
+            <el-form-item label="描述" prop="remark" >
+                <el-input placeholder="描述" v-model="entity.remark"></el-input>
+            </el-form-item>
         </el-form>
     </div>
 </template>
@@ -49,6 +51,7 @@
 </style>
 
 <script>
+    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
 
     const defaultEntity = {
         id: null,
@@ -59,7 +62,7 @@
     };
 
     export default {
-        components: {},
+        components: {ProductTypeSelect},
         props:{
             parentId:{
                 // type:Number

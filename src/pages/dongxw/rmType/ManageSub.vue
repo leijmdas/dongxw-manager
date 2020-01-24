@@ -4,19 +4,19 @@
         <v-toolbar type="alert">
             <div slot="tip" class="panel panel-default panel-search">
                 <el-form :inline="true">
-                    <el-form-item label="产品小类" prop="custNo">
+                    <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue"> {{ parentId }}</span></el-form-item>
+
+                    <el-form-item label="小类编码" prop="code">
                         <el-input v-model="page.query.param.code" clearable></el-input>
                     </el-form-item>
-                    <el-form-item label="产品小类说明" prop="custNo">
+                    <el-form-item label="小类名称" prop="name">
                         <el-input v-model="page.query.param.name" clearable></el-input>
                     </el-form-item>
 
                     <el-form-item>
                        <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                         <el-button @click="cancel">取消</el-button>
-
                         <el-button type="primary" plain @click="create">新增</el-button>
-                        <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue"> {{ parentId }}</span></el-form-item>
 
                     </el-form-item>
                 </el-form>
@@ -30,10 +30,14 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  prop="parentId" label="大类标识" width="120"></el-table-column>
-            <!--<el-table-column  prop="id" label="小类标识" width="80"></el-table-column>-->
-            <el-table-column prop="code" label="产品小类" width="160"></el-table-column>
-            <el-table-column prop="name" label="产品小类说明" width="240"></el-table-column>
+            <el-table-column  prop="parentId" label="大类" width="190">
+                <template slot-scope="{row}">
+                    {{ row.pProductType?row.pProductType.name:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="code" label="小类编码" width="160"></el-table-column>
+            <el-table-column prop="name" label="小类名称" width="200"></el-table-column>
+            <el-table-column prop="remark" label="描述" width="240"></el-table-column>
 
             <el-table-column width="100" label="操作">
                 <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
@@ -51,7 +55,7 @@
         </v-table>
 
 
-        <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'450px'" title="信息编辑">
             <form-panel @saved="onFormSaved" :parentId="parentId"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
@@ -86,6 +90,7 @@
                         orderBys: 'id|desc',
                         param: {
                             parentId : -1,
+                            //prdFlag : -1,
                             isDeleted: false
                         }
                     },
@@ -109,15 +114,7 @@
 
         methods: {
             onDataloaded(rsp) {
-                // if (rsp.total < 1) return;
-                // let promotionIds = rsp.data.map(r => r.id);
-                // this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
-                //     let _rs = rs || [];
-                //     this.summaryMap = {}
-                //     _rs.forEach(r => {
-                //         this.summaryMap[r.promotionId] = r;
-                //     })
-                // })
+
             },
             /*
             导出
@@ -138,10 +135,7 @@
                 return this.page.query;
             },
             create() {
-                // this.$message({
-                //     type: "success",
-                //     message: this.parentId
-                // });
+
                 this.$refs.formDiag.parentId = this.parentId;
                 this.$refs.formDiag.show();
             },
@@ -149,23 +143,7 @@
                 this.$refs.formDiag.show({id: row.id});
             },
             toggleStatus(row) {
-                let status = row.status;
-                let msg = '确定上架此活动吗？</br><span style="color:red">一旦上架，部分信息不允许修改!</span>';
-                if (status == 1) {
-                    msg = '确定下架此活动吗？</br><span style="color:red">一旦下架，已派发的优惠券无法使用!</span>';
-                }
-                this.$confirm(msg, "确认", {
-                    type: "warning",
-                    dangerouslyUseHTMLString: true
-                }).then(() => {
-                    this.$api.ipark.PromotionInfoService.updateStatus(row.id, status == 1 ? 2 : 1).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "操作成功!"
-                        });
-                    });
-                });
+
             },
             del(row) {
                 this.$confirm("确定删除此条记录吗?", "提示", {
@@ -206,12 +184,7 @@
                 this.page.query.param.parentId = this.parentId;
                 this.search();
             }  ,
-            // loadDict(){
-            //     console.log('load');
-            //     this.$api.metadata.MetaData.queryFieldsByTable('dict_area').then(rsp => {
-            //         this.metafields = rsp;
-            //     });
-            // },
+
         },
 
         created() {

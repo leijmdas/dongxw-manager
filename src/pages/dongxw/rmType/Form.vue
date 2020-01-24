@@ -2,21 +2,22 @@
     <div>
         <p></p>
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
-          <!--  <el-form-item label="大类标识" prop="parentId" >
-                <el-input placeholder="parentId" v-model="parentId" disabled></el-input>
-            </el-form-item>-->
-            <el-form-item label="大类" prop="parentId">
-                <el-select  :clearable="true" v-model="entity.parentId" style="width:100px">
-                    <el-option v-for="item in $dongxwDict.store.RM_TYPE" :key="item[0]" :value="item[0]"
+
+            <el-form-item label="存货分类" prop="prdFlag">
+                <el-select  :clearable="true" v-model="entity.prdFlag" style="width:100px">
+                    <el-option v-for="item in $dongxwDict.store.STORE_TYPE" :key="item[0]" :value="item[0]"
                                :label="item[1]"></el-option>
                 </el-select>
             </el-form-item>
 
-            <el-form-item label="原料类型" prop="code" >
-                <el-input placeholder="原料类型" v-model="entity.code"></el-input>
+            <el-form-item label="大类编码" prop="code" >
+                <el-input placeholder="大类编码" v-model="entity.code"></el-input>
             </el-form-item>
-            <el-form-item label="类型编码" prop="name">
-                <el-input placeholder="类型编码" v-model="entity.name"></el-input>
+            <el-form-item label="大类名称" prop="name">
+                <el-input placeholder="大类名称" v-model="entity.name"></el-input>
+            </el-form-item>
+            <el-form-item label="描述" prop="remark">
+                <el-input placeholder="描述" v-model="entity.remark"></el-input>
             </el-form-item>
 
 
@@ -60,7 +61,7 @@
         code: '',
         name: '',
         active: 1,
-        parentId : null,
+        parentId : 0,
         prdFlag : 200
     };
 
@@ -68,7 +69,7 @@
         components: {},
         data() {
             return {
-                ppp: '',
+
                 parentId:0,
                 ruleTpl: {when: null, then: null},
                 entity: _.cloneDeep(defaultEntity),

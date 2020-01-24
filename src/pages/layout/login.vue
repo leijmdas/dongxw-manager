@@ -8,11 +8,11 @@
             </div>
             <div class="login_container">
                 <div class="login_container--png">
-                    <img src="../../assets/images/login/park-shared.png" alt="" style="left: 0px; top: 180px;">
-                    <img src="../../assets/images/login/GPS.png" alt="" style="left: 130px; top: 60px;">
-                    <img src="../../assets/images/login/park-manage.png" alt="" style="left: 130px; top: 300px;">
-                    <img src="../../assets/images/login/charge-manage.png" alt="" style="left: 260px; top: 180px;">
-                    <img src="../../assets/images/login/travel-manage.png" alt="" style="left: 390px; top: 60px;">
+                    <img src="../../assets/images/login/bom.png" alt="" style="left: 0px; top: 180px;">
+                    <img src="../../assets/images/login/customer-order.png" alt="" style="left: 130px; top: 60px;">
+                    <img src="../../assets/images/login/make-plan.png" alt="" style="left: 130px; top: 300px;">
+                    <img src="../../assets/images/login/purchase.png" alt="" style="left: 260px; top: 180px;">
+                    <img src="../../assets/images/login/store.png" alt="" style="left: 390px; top: 60px;">
                     <img src="../../assets/images/login/pay.png" alt="" style="left: 390px; top: 300px;">
                 </div>
                 <div class="login_container--box" @keydown.enter.stop="login">
@@ -105,16 +105,24 @@
 
                 window.localStorage.setItem('isadmin',loginName==='admin')
                 this.loading = true;
-                //let pwd=this.$md5(password) http://localhost/#/login
                 //this.$api.AppService.login({username: this.$md5(loginName),pwd})
                 let pwd = this.$md5(password)
                 this.$api.AppService.login({username: loginName, password, verifyCode})
-                    .then(data => {
-                        this.loading = false;
-                        auth.setToken({access_token: data.token, expires_in: data.expiresIn});
-                        bus.$emit('app:logged');
+                    .then(rsp => {
+                        this.$msgJsonResult(rsp)
+                        if(rsp.code=="0") {
+                            let data = rsp.data
+                            this.loading = false
+                            auth.setToken({access_token: data.token, expires_in: data.expiresIn});
+                            bus.$emit('app:logged');
+                        }else{
+                            this.loading = false;
+                            this.$message({message: `用户登录错`, type: 'error'});
+
+                        }
                     })
                     .catch(err => {
+
                         this.loading = false;
                         if (err.code === 'account_unvalid') {
                             this.$message({message: `用户名或密码错`, type: 'error'});

@@ -2,16 +2,19 @@
     <div>
         <p></p>
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
-            <el-form-item label="大类标识" prop="parentId" >
+            <el-form-item label="父类标识" prop="parentId" >
                 <el-input placeholder="parentId" v-model="parentId" disabled></el-input>
             </el-form-item>
 
-
-            <el-form-item label="产品大类" prop="code" >
-                <el-input placeholder="产品大类" v-model="entity.code"></el-input>
+            <el-form-item label="大类编码" prop="code">
+                <el-input placeholder="大类编码" v-model="entity.code"></el-input>
             </el-form-item>
-            <el-form-item label="产品大类编码" prop="name">
-                <el-input placeholder="产品大类编码" v-model="entity.name"></el-input>
+
+            <el-form-item label="大类名称" prop="name" >
+                <el-input placeholder="大类名称" v-model="entity.name"></el-input>
+            </el-form-item>
+            <el-form-item label="大类描述" prop="remark">
+                <el-input placeholder="大类描述" v-model="entity.remark"></el-input>
             </el-form-item>
 
 

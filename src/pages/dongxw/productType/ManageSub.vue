@@ -4,10 +4,10 @@
         <v-toolbar type="alert">
             <div slot="tip" class="panel panel-default panel-search">
                 <el-form :inline="true">
-                    <el-form-item label="产品小类" prop="custNo">
+                    <el-form-item label="小类编码" prop="code">
                         <el-input v-model="page.query.param.code" clearable></el-input>
                     </el-form-item>
-                    <el-form-item label="产品小类编码" prop="custNo">
+                    <el-form-item label="小类名称" prop="name">
                         <el-input v-model="page.query.param.name" clearable></el-input>
                     </el-form-item>
 
@@ -31,10 +31,15 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  prop="parentId" label="大类标识" width="120"></el-table-column>
+            <el-table-column  prop="parentId" label="大类" width="120">
+                <template slot-scope="{row}">
+                    {{ row.pProductType?row.pProductType.code:'-'}}
+                </template>
+            </el-table-column>
             <!--<el-table-column  prop="id" label="小类标识" width="80"></el-table-column>-->
-            <el-table-column prop="code" label="产品小类" width="160"></el-table-column>
-            <el-table-column prop="name" label="产品小类编码" width="240"></el-table-column>
+            <el-table-column prop="code" label="小类编码" width="240"></el-table-column>
+            <el-table-column prop="name" label="小类名称" width="160"></el-table-column>
+            <el-table-column prop="remark" label="描述" width="240"></el-table-column>
 
             <el-table-column width="100" label="操作">
                 <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
@@ -52,7 +57,7 @@
         </v-table>
 
 
-        <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'450px'" title="信息编辑">
             <form-panel @saved="onFormSaved" :parentId="parentId"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>

@@ -2,11 +2,20 @@
 
 <template>
     <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
-        <el-option v-for="item in options" :key="item.id" :label="item.code" :value="item.id" :disabled="item.disabled">
+        <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" :disabled="item.disabled">
+             <span style="float: left">{{ item.name }}</span>
+            <span style="float: left">{{ item.code }}</span>
+
         </el-option>
     </el-select>
 </template>
+<style rel="stylesheet/less" lang="less" scoped>
 
+    .el-select-dropdown__item span{
+        width:100px;
+        text-align:left;
+    }
+</style>
 <script>
     import { fetch } from "@/utils";
 
@@ -61,7 +70,7 @@
                 this.$api.dongxw.ProductTypeService.query({
                     param: {
                         parentId: 0,
-                        prdFlag : 200,
+                        prdFlagNot : 0,
                         isDeleted: false
                     }
                 }).then(rsp => {

@@ -97,6 +97,7 @@
             </el-table-column>
 
 
+            <el-table-column prop="name" label="产品名称" width="100"></el-table-column>
             <el-table-column prop="remark" label="产品描述" width="245"></el-table-column>
             <el-table-column prop="unit" label="单位" width="60"></el-table-column>
 
@@ -138,7 +139,11 @@
             <el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>
             <el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>
             <el-table-column prop="obSize" label="外箱尺寸"></el-table-column>
-
+            <el-table-column prop="cbm" label="CBM">
+                <template slot-scope="{row}">
+                    {{calCbm(row.obSize)}}
+                </template>
+            </el-table-column>
             <el-table-column prop="memo" label="备注"  >
             </el-table-column>
 
@@ -175,10 +180,12 @@
 </style>
 
 <script>
-    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
-    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
-    import FormPanel from './Form';
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
+
+    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
+    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
+
+    import FormPanel from './Form';
 
     export default {
         components: { CustomerSelect,FormPanel, ProductTypeSelect,ProductSubTypeSelect },
@@ -194,6 +201,7 @@
                         orderBys: 'id|desc',
                         param: {
                             customerId: undefined,
+                            prdFlag :0,
                             isDeleted: false
                         }
                     },
@@ -216,7 +224,17 @@
         computed: {},
 
         methods: {
+            calCbm(val){
+                let v = val.split('*')
 
+                if (v.length === 3) {
+                    var multi = function (a, b) {
+                        return parseInt(a) * parseInt(b);
+                    }
+                    return v.reduce(multi, 1)/1000000
+                }
+                return 0;
+            },
             onDataloaded(rsp) {
                 // if (rsp.total < 1) return;
                 // let promotionIds = rsp.data.map(r => r.id);
@@ -233,7 +251,6 @@
              */
             exportRecords() {
                 let params = this.getSearchParams();
-                console.log(params);
                 this.$api.dongxw.ProductService.export(params);
             },
             getSearchParams() {
@@ -297,10 +314,9 @@
                 this.$refs.table.load();
             },
             cancel() {
-                this.dateRange = [];
-                //this.currentPage = 1;
-                this.page.query.param = {};
-                this.search();
+                this.dateRange = []
+                this.page.query.param = {prdFlag: 0}
+                this.search()
             }
         },
         created() {

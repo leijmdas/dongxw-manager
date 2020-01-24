@@ -4,16 +4,17 @@
         <v-toolbar type="alert">
             <div slot="tip" class="panel panel-default panel-search">
                 <el-form :inline="true">
-                    <el-form-item label="产品大类" prop="custNo">
+                    <el-form-item label="大类编码" prop="code">
                         <el-input v-model="page.query.param.code" clearable></el-input>
                     </el-form-item>
-                    <el-form-item label="产品大类编码" prop="custNo">
+                    <el-form-item label="大类名称" prop="name">
                         <el-input v-model="page.query.param.name" clearable></el-input>
                     </el-form-item>
 
                     <el-form-item>
                         <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                         <el-button @click="cancel">取消</el-button>
+                        <el-button plain @click="exportRecords">导出XLS</el-button>
                         <el-button type="primary" plain @click="create">新增</el-button>
 
                     </el-form-item>
@@ -29,9 +30,10 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column  prop="id" label="大类标识" width="120"></el-table-column>
-            <el-table-column  prop="code" label="产品大类"  width="160"></el-table-column>
-            <el-table-column  prop="name" label="产品大类编码" width="240"></el-table-column>
+            <el-table-column prop="id" label="大类标识" width="120"></el-table-column>
+            <el-table-column prop="code" label="大类编码" width="240"></el-table-column>
+            <el-table-column prop="name" label="大类名称" width="160"></el-table-column>
+            <el-table-column prop="remark" label="描述" width="240"></el-table-column>
 
             <el-table-column width="100" label="操作"  >
                 <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
@@ -50,7 +52,7 @@
 
 
         </div>
-            <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
+            <v-dialog ref="formDiag" :width="'450px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
@@ -91,6 +93,7 @@
                         orderBys: 'id|desc',
                         param: {
                             parentId : 0,
+                            prdFlag : 0,
                             isDeleted: false
                         }
                     },
@@ -114,23 +117,15 @@
 
         methods: {
             onDataloaded(rsp) {
-                // if (rsp.total < 1) return;
-                // let promotionIds = rsp.data.map(r => r.id);
-                // this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
-                //     let _rs = rs || [];
-                //     this.summaryMap = {}
-                //     _rs.forEach(r => {
-                //         this.summaryMap[r.promotionId] = r;
-                //     })
-                // })
+
             },
             /*
             导出
              */
             exportRecords() {
-                let params = this.getSearchParams();
-                console.log(params);
-                // this.$api.dongxw.CustomerService.export(params);
+                let params = _.cloneDeep(this.getSearchParams())
+                params.param.parentId = null
+                this.$api.dongxw.ProductTypeService.export(params)
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};
@@ -172,11 +167,8 @@
                     type: "warning"
                 }).then(() => {
                     this.$api.dongxw.ProductTypeService.deleteById(row.id).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "删除成功!"
-                        });
+                        this.search()
+                        this.$msgJsonResult(rsp)
                     });
                 });
             },
@@ -199,16 +191,12 @@
                 this.dateRange = [];
                 this.page.query.param = {
                     parentId : 0,
+                    prdFlag : 0,
                     isDeleted: false
                 };
                 this.search();
             }  ,
-            // loadDict(){
-            //     console.log('load');
-            //     this.$api.metadata.MetaData.queryFieldsByTable('dict_area').then(rsp => {
-            //         this.metafields = rsp;
-            //     });
-            // },
+
             clickRow(row) {
                 this.row = row;
                 console.log(JSON.stringify(row));

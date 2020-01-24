@@ -25,11 +25,22 @@ export default {
         })
     },
     /**
-     * 导出xlsx
+     * 导出产品xlsx
      */
     export(data) {
         return request({
             url: '/dongxw/product/export',
+            method: 'POST',
+            data,
+            responseType: 'blob'
+        })
+    },
+    /**
+     * 导出原材料半成品xlsx
+     */
+    exportRm(data) {
+        return request({
+            url: '/dongxw/product/exportRm',
             method: 'POST',
             data,
             responseType: 'blob'

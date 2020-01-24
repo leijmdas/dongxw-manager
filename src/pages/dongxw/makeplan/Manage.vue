@@ -20,9 +20,8 @@
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="add">新增订单计划</el-dropdown-item>
-                        <el-dropdown-item command="check">检查订单计划</el-dropdown-item>
                         <el-dropdown-item command="del">删除计划多余产品</el-dropdown-item>
-                        <el-dropdown-item command="del">删除订单计划</el-dropdown-item>
+                        <el-dropdown-item command="check">检查订单计划</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
                 <el-form-item label="外发标志" prop="outFlag">
@@ -50,12 +49,7 @@
                                     value-format="yyyy-MM-dd HH:mm:ss">
                     </el-date-picker>
 
-                    <!--<el-form-item label="EP订单号" prop="epOrderCode">-->
-                        <!--<el-input v-model="page.query.param.epOrderCode" clearable></el-input>-->
-                    <!--</el-form-item>-->
-                    <!--<el-form-item label="客户订单号" prop="customerOrderCode">-->
-                        <!--<el-input v-model="page.query.param.customerOrderCode" clearable></el-input>-->
-                    <!--</el-form-item>-->
+
 
                 </el-form-item>
                 <el-form-item label="状态" prop="status">

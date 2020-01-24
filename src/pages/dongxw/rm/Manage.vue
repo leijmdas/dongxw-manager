@@ -5,29 +5,24 @@
             <el-form :inline="true">
 
                 <el-form-item label="大类" prop="orderType">
-                    <el-select style="width:160px" @change="search" :clearable="true"
-                               v-model="page.query.param.parentId">
-                        <el-option v-for="item in $dongxwDict.store.RM_TYPE" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
+
+                    <rm-type-select   v-model="page.query.param.parentId" :clearable="true"></rm-type-select>
                 </el-form-item>
                 <el-form-item label="小类">
                     <sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></sub-type-select>
                 </el-form-item>
 
-                <el-form-item label="EP编码" prop="epCode">
-                    <el-input v-model="page.query.param.epCode" clearable></el-input>
-                </el-form-item>
-
-                <el-form-item label="供编码" prop="code">
+                <el-form-item label="物料代码" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="原料描述" prop="remark">
-                    <el-input v-model="page.query.param.remark" clearable></el-input>
+
+                <el-form-item label="物料名称" prop="name">
+                    <el-input v-model="page.query.param.name" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="尺寸" prop="barCode">
-                    <el-input v-model="page.query.param.size" clearable></el-input>
+
+                <el-form-item label="规格型号" prop="remark">
+                    <el-input v-model="page.query.param.remark" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="颜色" prop="color">
                     <el-input v-model="page.query.param.color" clearable></el-input>
@@ -71,55 +66,43 @@
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
-
-            <!--<el-table-column prop="customerId" label="客户名称" width="120">-->
-                <!--<template slot-scope="{row}">-->
-                    <!--{{ row.customer?row.customer.custName:'-'}}-->
-                <!--</template>-->
-            <!--</el-table-column>-->
-
-            <el-table-column prop="epCode" label="EP编码" width="100"></el-table-column>
-            <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
-
-            <el-table-column prop="code" label="供编码" width="100">
+            <el-table-column prop="prdFlag" label="存货分类" width="100">
                 <template slot-scope="{row}">
-                   <span   > {{row.code }} </span>
+                        <span :style="'style:red'">
+                            {{row.productType.prdFlag==null?'-':$dongxwDict.getText(row.productType.prdFlag,$dongxwDict.store.STORE_TYPE)}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="parentId" label="大类" width="120">
+            <el-table-column prop="parentId" label="大类" width="100">
 
                 <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.parentId,$dongxwDict.store.RM_TYPE)}}
+                    {{ row.productType? row.productType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="productSubType" label="小类" width="160">
+            <el-table-column prop="productSubType" label="小类" width="120">
                 <template slot-scope="{row}">
-                    {{ row.productSubType? row.productSubType.code :'-' }}
+                    {{ row.productSubType? row.productSubType.name :'-' }}
                 </template>
             </el-table-column>
+            <el-table-column prop="code" label="物料代码" width="160"></el-table-column>
+            <el-table-column prop="name" label="物料名称" width="180"></el-table-column>
 
 
-            <el-table-column prop="remark" label="原料描述" width="245"></el-table-column>
-            <el-table-column prop="unit" label="单位" width="60"></el-table-column>
-
-            <el-table-column prop="picUrl" label="原料图片" v-if="isShowPrdPic" width="90">
-                <template slot-scope="{row}">
-                    <!--<img v-if="row.picUrl" :src="row.picUrl" width="60px" height="60px" alt="">-->
-
-                    <v-image-preview v-model="row.imgUrls" :picUrl="row.picUrl"  >
-                    </v-image-preview>
-
-                </template>
-            </el-table-column>
-            <el-table-column prop="size" label="尺寸" width="150">
-            </el-table-column>
+            <el-table-column prop="remark" label="规格型号" width="245"></el-table-column>
             <el-table-column prop="color" label="颜色" width="100">
             </el-table-column>
+            <el-table-column prop="unit" label="单位" width="60"></el-table-column>
 
-            <el-table-column prop="barCode" label="条码" width="120">
-            </el-table-column>
-<!--            <el-table-column prop="upcA" label="UPC-A" width="150">-->
-<!--            </el-table-column>-->
+            <!--<el-table-column prop="picUrl" label="原料图片" v-if="isShowPrdPic" width="90">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--<v-image-preview v-model="row.imgUrls" :picUrl="row.picUrl"  >-->
+                    <!--</v-image-preview>-->
+                <!--</template>-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="size" label="尺寸" width="150">-->
+            <!--</el-table-column>-->
+
+            <!--<el-table-column prop="barCode" label="条码" width="120">-->
+            <!--</el-table-column> -->
             <el-table-column prop="createDate" label="建档时间" width="150">
             </el-table-column>
 
@@ -131,15 +114,6 @@
                     {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="ibQty" label="内盒数量"></el-table-column>-->
-            <!--<el-table-column prop="ibGw" label="内盒毛重(kg)" width="100"></el-table-column>-->
-            <!--<el-table-column prop="ibNw" label="内盒净重(kg)" width="100"></el-table-column>-->
-            <!--<el-table-column prop="ibSize" label="内盒尺寸"></el-table-column>-->
-
-            <!--<el-table-column prop="obQty" label="外箱数量"></el-table-column>-->
-            <!--<el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>-->
-            <!--<el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>-->
-            <!--<el-table-column prop="obSize" label="外箱尺寸"></el-table-column>-->
 
             <el-table-column prop="memo" label="备注"  >
             </el-table-column>
@@ -160,8 +134,7 @@
         <v-dialog ref="formDiag" :width="'750px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
-                <!--<el-button type="default"  @click="$refs.formDiag.clearImage()">清除图片</el-button>-->
-                <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
+                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
@@ -177,10 +150,12 @@
 </style>
 
 <script>
+    import RmTypeSelect from '@/components/widgets/dongxw/RmTypeSelect.vue';
     import SubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
+
     import FormPanel from './Form';
     export default {
-        components: { FormPanel, SubTypeSelect },
+        components: { FormPanel,RmTypeSelect, SubTypeSelect },
         data() {
             return {
                 isShowPrdPic : false,
@@ -217,15 +192,7 @@
         methods: {
 
             onDataloaded(rsp) {
-                // if (rsp.total < 1) return;
-                // let promotionIds = rsp.data.map(r => r.id);
-                // this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
-                //     let _rs = rs || [];
-                //     this.summaryMap = {}
-                //     _rs.forEach(r => {
-                //         this.summaryMap[r.promotionId] = r;
-                //     })
-                // })
+
             },
             /*
             导出
@@ -233,7 +200,7 @@
             exportRecords() {
                 let params = this.getSearchParams();
                 console.log(params);
-                this.$api.dongxw.ProductService.export(params);
+                this.$api.dongxw.ProductService.exportRm(params);
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};

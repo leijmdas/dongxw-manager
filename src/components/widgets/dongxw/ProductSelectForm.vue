@@ -126,6 +126,7 @@
                 this.loading = true
                 this.$api.dongxw.ProductService.query({
                     param: {
+                        prdFlag : 0,
                         productTypeId: this.productTypeId,
                         color: this.color,
                         size: this.size,

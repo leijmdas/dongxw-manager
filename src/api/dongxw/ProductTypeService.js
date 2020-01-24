@@ -25,16 +25,29 @@ export default {
         })
     },
     /**
-     * 导出xlsx
+     * 导出产品类型xlsx
      */
-    // export(data) {
-    //     return request({
-    //         url: '/dongxw/producttype/export',
-    //         method: 'POST',
-    //         data,
-    //         responseType: 'blob'
-    //     })
-    // },
+    export(data) {
+        return request({
+            url: '/dongxw/producttype/export',
+            method: 'POST',
+            data,
+            responseType: 'blob'
+        })
+    },
+    /**
+     * 导出原材料类型xlsx
+     */
+    exportRm(data) {
+        return request({
+            url: '/dongxw/producttype/exportRm',
+            method: 'POST',
+            data,
+            responseType: 'blob'
+        })
+    },
+
+
     findById(id) {
         return request({
             url: '/dongxw/producttype/findById/' + id,

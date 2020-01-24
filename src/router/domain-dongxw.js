@@ -22,14 +22,14 @@ let router0 = [
             },
             {
                 path: 'dongxw/rmType/manage',
-                component: require('@/pages/dongxw/rmType/Manage.vue'),
+                component: require('@/pages/dongxw/rmType/MainForm.vue'),
                 name: 'rmType:manage',
-                meta: {title: '原料类型', perm: 'product:manage'}
+                meta: {title: '物料类型', perm: 'product:manage'}
             },{
                 path: 'dongxw/rm',
                   component: require('@/pages/dongxw/rm/Manage.vue'),
                 name: 'rm:manage',
-                meta: {title: '原料清单', perm: 'product:manage'}
+                meta: {title: '物料清单', perm: 'product:manage'}
             },
             {
                 path: 'dongxw/bom',

@@ -3,15 +3,18 @@
         <p></p>
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
 
-            <el-form-item label="大类标识" prop="parentId" >
-                <el-input placeholder="parentId" v-model="parentId" disabled></el-input>
-            </el-form-item>
 
-            <el-form-item label="产品小类" prop="code" >
-                <el-input placeholder="产品小类" v-model="entity.code"></el-input>
+            <el-form-item label="大类" prop="parentId">
+                <rm-type-select v-model="entity.parentId"  clearable ></rm-type-select>
             </el-form-item>
-            <el-form-item label="产品小类说明" prop="name">
-                <el-input placeholder="产品小类说明" v-model="entity.name"></el-input>
+            <el-form-item label="小类编码" prop="code">
+                <el-input placeholder="小类编码" v-model="entity.code"></el-input>
+            </el-form-item>
+            <el-form-item label="小类名称" prop="name">
+                <el-input placeholder="小类名称" v-model="entity.name"></el-input>
+            </el-form-item>
+            <el-form-item label="描述" prop="remark">
+                <el-input placeholder="描述" v-model="entity.remark"></el-input>
             </el-form-item>
 
 
@@ -49,6 +52,7 @@
 </style>
 
 <script>
+    import RmTypeSelect from '@/components/widgets/dongxw/RmTypeSelect.vue';
 
     const defaultEntity = {
         id: null,
@@ -59,7 +63,7 @@
     };
 
     export default {
-        components: {},
+        components: {RmTypeSelect},
         props:{
             parentId:{
                 // type:Number

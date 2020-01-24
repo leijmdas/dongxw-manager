@@ -2,48 +2,47 @@
     <div>
         <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
             <el-tabs :stretch="isExp" v-model="activeName">
-                <el-tab-pane label="原料信息" name="productInfo">
+                <el-tab-pane label="物料信息" name="productInfo">
                     <el-row>
                         <el-col :span="23">
 
                             <el-row :span="24" style="margin-top: 10px">
                                 <el-col :span="12">
                                     <el-form-item label="大类" prop="parentId" :rules="[{ required: true}]">
-                                        <el-select style="width:160px" :clearable="true"
-                                                   v-model="entity.parentId">
-                                            <el-option v-for="item in $dongxwDict.store.RM_TYPE" :key="item[0]" :value="item[0]"
-                                                       :label="item[1]"></el-option>
-                                        </el-select>
+                                        <rm-type-select  style="width:100%"
+                                                          v-model="entity.parentId"
+                                                          :clearable="true">
+
+                                        </rm-type-select>
                                     </el-form-item>
-
-
                                 </el-col>
                                 <el-col :span="12">
                                     <el-form-item label="小类" prop="productTypeId" :rules="[{ required: true}]">
                                         <sub-type-select  style="width:100%" :parentTypeId="entity.parentId"
                                                                  v-model="entity.productTypeId"
-                                                                 :clearable="true"></sub-type-select>
+                                                                 :clearable="true">
+
+                                        </sub-type-select>
                                     </el-form-item>
                                 </el-col>
 
                             </el-row>
                             <el-row :span="24" style="margin-top: 10px">
                                 <el-col :span="12">
-
-                                    <el-form-item label="EP编码" prop="epCode">
-                                        <el-input placeholder="EP编码" v-model="entity.epCode"></el-input>
+                                    <el-form-item label="物料代码" prop="code">
+                                        <el-input placeholder="物料代码" v-model="entity.code"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
-
-                                    <el-form-item  label="供应商编码" prop="code">
-                                        <el-input placeholder="供编码" v-model="entity.code"></el-input>
+                                    <el-form-item label="物料名称" prop="name">
+                                        <el-input placeholder="物料名称" v-model="entity.name"></el-input>
                                     </el-form-item>
                                 </el-col>
 
+
                             </el-row>
-                            <el-form-item label="原料描述" prop="remark">
-                                <el-input placeholder="原料描述" v-model="entity.remark"></el-input>
+                            <el-form-item label="规格型号" prop="remark">
+                                <el-input placeholder="规格型号" v-model="entity.remark"></el-input>
                             </el-form-item>
                             <el-row :span="24" style="margin-top: 5px">
                                 <el-col :span="12">
@@ -51,11 +50,11 @@
                                         <el-input placeholder="颜色" v-model="entity.color"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="尺寸" prop="size">
-                                        <el-input placeholder="尺寸" v-model="entity.size"></el-input>
-                                    </el-form-item>
-                                </el-col>
+                                <!--<el-col :span="12">-->
+                                    <!--<el-form-item label="尺寸" prop="size">-->
+                                        <!--<el-input placeholder="尺寸" v-model="entity.size"></el-input>-->
+                                    <!--</el-form-item>-->
+                                <!--</el-col>-->
                             </el-row>
                             <el-row :span="24" style="margin-top: 5px">
                                 <el-col :span="12">
@@ -73,27 +72,27 @@
                                     </el-form-item>
                                 </el-col>
                             </el-row>
-                            <el-row :span="24" style="margin-top: 10px">
-                                <el-col :span="12">
-                                    <el-form-item label="条码" prop="barCode">
-                                        <el-input placeholder="条码" v-model="entity.barCode"></el-input>
-                                    </el-form-item>
-                                </el-col>
+                            <!--<el-row :span="24" style="margin-top: 10px">-->
                                 <!--<el-col :span="12">-->
-                                    <!--<el-form-item label="UPC-A" prop="upcA">-->
-                                        <!--<el-input placeholder="UPC-A" v-model="entity.upcA"></el-input>-->
+                                    <!--<el-form-item label="条码" prop="barCode">-->
+                                        <!--<el-input placeholder="条码" v-model="entity.barCode"></el-input>-->
                                     <!--</el-form-item>-->
                                 <!--</el-col>-->
-                            </el-row>
+                                <!--&lt;!&ndash;<el-col :span="12">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<el-form-item label="UPC-A" prop="upcA">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<el-input placeholder="UPC-A" v-model="entity.upcA"></el-input>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</el-form-item>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</el-col>&ndash;&gt;-->
+                            <!--</el-row>-->
 
-                            <el-form-item label="原料图片" prop="">
+                            <!--<el-form-item label="原料图片" prop="">-->
 
-                                <div :span="12" >
-                                    <v-image-uploader  :isShow="isShow" :form-data="{}" v-model="entity.picUrl"
-                                        :imgStyle="'margin-right:10px;width:160px;height:160px'"/>
+                                <!--<div :span="12" >-->
+                                    <!--<v-image-uploader  :isShow="isShow" :form-data="{}" v-model="entity.picUrl"-->
+                                        <!--:imgStyle="'margin-right:10px;width:160px;height:160px'"/>-->
 
-                                </div>
-                            </el-form-item>
+                                <!--</div>-->
+                            <!--</el-form-item>-->
 
 
                             <el-form-item label="备注" prop="memo">
@@ -258,6 +257,7 @@
 
 <script>
 
+    import RmTypeSelect from '@/components/widgets/dongxw/RmTypeSelect.vue';
     import  SubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
 
     const defaultEntity = {
@@ -296,7 +296,7 @@
 
 
     export default {
-        components: { SubTypeSelect},
+        components: { RmTypeSelect,SubTypeSelect},
         data() {
             return {
 
@@ -392,7 +392,13 @@
 
                 this.$refs["form"].validate(valid => {
                     if (valid) {
-                        this.entity.code =  this.entity.code.Trim();
+                        if (this.entity.code == null) {
+                            this.entity.code = this.entity.epCode
+                        }
+                        if (this.entity.epCode == null) {
+                            this.entity.epCode = this.entity.code
+                        }
+                        this.entity.code =  this.entity.code?this.entity.code.Trim():this.entity.code;
                         this.entity.epCode =  this.entity.epCode.Trim();
                         let params = Object.assign({}, this.entity);
 

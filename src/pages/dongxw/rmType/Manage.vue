@@ -3,70 +3,73 @@
 
         <div slot="tip" class="panel panel-default panel-search">
             <el-form :inline="true" label-width="80px">
-                <el-form-item label="大类" prop="orderType">
+                <el-form-item label="存货分类" prop="prdFlag">
                     <el-select style="width:160px" @change="search" :clearable="true"
-                               v-model="page.query.param.parentId">
-                        <el-option v-for="item in $dongxwDict.store.RM_TYPE" :key="item[0]" :value="item[0]"
+                               v-model="page.query.param.prdFlag">
+                        <el-option v-for="item in $dongxwDict.store.STORE_TYPE" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="原料类型" prop="custNo">
+                <el-form-item label="大类编码" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="类型编码" prop="custNo">
+                <el-form-item label="大类名称" prop="name">
                     <el-input v-model="page.query.param.name" clearable></el-input>
                 </el-form-item>
 
                 <el-form-item>
-                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
-                    <!--<el-button @click="cancel">取消</el-button>-->
-                    <!--&lt;!&ndash;<el-button type="primary" plain @click="create">新增</el-button>&ndash;&gt;-->
+                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                    <el-button @click="cancel">取消</el-button>
+                    <el-button plain @click="exportRecords">导出 XLS</el-button>
+                    <el-button type="primary" plain @click="create">新增</el-button>
 
                 </el-form-item>
             </el-form>
         </div>
-        <v-toolbar  title="数据列表" type="alert">
-            <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
-            <el-button type="primary" style="margin-left: 30px" slot="tip" @click="search" v-keycode="'ENTER'">查询</el-button>
-            <el-button @click="cancel" slot="tip">取消</el-button>
-            <el-button type="primary" style="margin-left: 30px" slot="tip"  plain @click="create">新增</el-button>
-        </v-toolbar>
+        <!--<v-toolbar  title="数据列表" type="alert">-->
+        <!--&lt;!&ndash;<el-button plain @click="exportRecords">导出 XLS</el-button>&ndash;&gt;-->
+        <!--<el-button type="primary" style="margin-left: 30px" slot="tip" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+        <!--<el-button @click="cancel" slot="tip">取消</el-button>-->
+        <!--<el-button type="primary" style="margin-left: 30px" slot="tip"  plain @click="create">新增</el-button>-->
+        <!--</v-toolbar>-->
         <div width="50%">
             <v-table ref="table" :page="page" :click="clickRow" :pageSize="12" :table-minheight="250"
                      @dataloaded="onDataloaded">
                 <el-table-column prop="seq" label="序号" width="50">
 
-                <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+                    <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+                </el-table-column>
 
-            </el-table-column>
+                <el-table-column prop="id" label="大类标识" width="100"></el-table-column>
+                <el-table-column prop="prdFlag" label="存货分类" width="90">
+                    <template slot-scope="{row}">
+                        <span
+                            :style="'style:red'"> {{$dongxwDict.getText(row.prdFlag,$dongxwDict.store.STORE_TYPE)}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="code" label="大类编码" width="160"></el-table-column>
+                <el-table-column prop="name" label="大类名称" width="200"></el-table-column>
+                <el-table-column prop="remark" label="描述" width="240"></el-table-column>
 
-            <!--<el-table-column  prop="id" label="类型标识" width="120"></el-table-column>-->
-            <el-table-column prop="parentId" label="大类" width="70">
-                <template slot-scope="{row}">
-                    <span :style="'style:red'"> {{$dongxwDict.getText(row.parentId,$dongxwDict.store.RM_TYPE)}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column  prop="code" label="原料类型"  width="160"></el-table-column>
-            <el-table-column  prop="name" label="类型编码" width="240"></el-table-column>
 
-            <el-table-column width="100" label="操作"  >
-                <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
-                <template slot-scope="scope">
+                <el-table-column width="100" label="操作">
+                    <!--<el-table-column width="100" label="操作" :fixed="'right'">-->
+                    <template slot-scope="scope">
 
-                    <el-button type="text" title="编辑" @click="edit(scope.row)"  >
-                        <i class="el-icon-edit"></i>
-                    </el-button>
-                    <el-button type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除"  >
-                    <i class="el-icon-delete  "></i>
-                    </el-button>
-                </template>
-            </el-table-column>
+                        <el-button type="text" title="编辑" @click="edit(scope.row)">
+                            <i class="el-icon-edit"></i>
+                        </el-button>
+                        <el-button type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除">
+                            <i class="el-icon-delete  "></i>
+                        </el-button>
+                    </template>
+                </el-table-column>
 
-        </v-table>
+            </v-table>
 
 
         </div>
-            <v-dialog ref="formDiag" :width="'400px'" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'450px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
@@ -97,7 +100,7 @@
         },
         data() {
             return {
-                metafields : [],
+                metafields: [],
 
                 formStatus: 1,
                 orderDateRange: [],
@@ -106,13 +109,15 @@
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            prdFlag : 200,
+                            prdFlag: null,
+                            parentId: 0,
+                            prdFlagNot: 0,
                             isDeleted: false
                         }
                     },
-                    getData : this.$api.dongxw.ProductTypeService.query
+                    getData: this.$api.dongxw.ProductTypeService.query
 
-        },
+                },
                 tableActions: [
                     {
                         name: "编辑",
@@ -144,13 +149,15 @@
             导出
              */
             exportRecords() {
-                let params = this.getSearchParams();
-                console.log(params);
-                // this.$api.dongxw.CustomerService.export(params);
+
+                let params = _.cloneDeep(this.getSearchParams())
+                params.param.parentId = null
+                this.$api.dongxw.ProductTypeService.export(params)
+
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};
-                if (this.dateRangeType != null && this.dateRange&&this.dateRange.length > 0) {
+                if (this.dateRangeType != null && this.dateRange && this.dateRange.length > 0) {
                     this.page.query.dateRanges[this.dateRangeType] = {
                         startDate: this.dateRange[0],
                         endDate: this.dateRange.length > 1 ? this.dateRange[1] : null
@@ -189,10 +196,11 @@
                 }).then(() => {
                     this.$api.dongxw.ProductTypeService.deleteById(row.id).then(rsp => {
                         this.search();
-                        this.$message({
-                            type: "success",
-                            message: "删除成功!"
-                        });
+                        this.$msgJsonResult(rsp)
+                        // this.$message({
+                        //     type: "success",
+                        //     message: "删除成功!"
+                        // });
                     });
                 });
             },
@@ -207,7 +215,7 @@
                 this.search();
             },
             search() {
-                this.page.query.param.prdFlag = 200
+
                 this.$refs.table.load()
                 //this.$refs.tablesub.load();
 
@@ -215,15 +223,15 @@
             cancel() {
                 this.dateRange = [];
                 this.page.query.param = {
-                    prdFlag :200 ,
+                    prdFlagNot: 0,
+                    parentId :0,
                     isDeleted: false
                 };
                 this.search();
-            }  ,
+            },
 
             clickRow(row) {
                 this.row = row;
-                console.log(JSON.stringify(row));
                 if (this.fatherMethodShowSub) {
                     this.fatherMethodShowSub(row);
                 }

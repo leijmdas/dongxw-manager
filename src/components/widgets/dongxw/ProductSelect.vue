@@ -70,6 +70,7 @@
                 this.$api.dongxw.ProductService.query({
                     param: {
                         productTypeId: this.productTypeId,
+                        prdFlag : 0,
                         isDeleted: false
                     }
                 }).then(rsp => {
