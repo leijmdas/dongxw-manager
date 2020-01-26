@@ -1,7 +1,7 @@
 {
-  "name": "ipark-manager",
+  "name": "dxw-manager",
   "version": "1.0.0",
-  "description": "ipark-manager",
+  "description": "dxw-manager",
   "author": "zz <741884588@qq.com>",
   "private": true,
   "scripts": {

@@ -197,9 +197,7 @@
 
                     </v-image-uploader>
                 </div>
-                <!--<el-form-item label="订单原件" prop="customerOrderImg">-->
-                <!--<el-input placeholder="订单原件" v-model="entity.customerOrderImg" disabled></el-input>-->
-                <!--</el-form-item>-->
+
 
             </el-tab-pane>
 
@@ -211,10 +209,8 @@
         img {
             width: 400px;
             height: 300px;
-            // height: 60% !important;
         }
     }
-
     .input-class {
         width: 500px;
         height: 40px;
@@ -253,11 +249,11 @@
 
     const defaultEntity = {
         id: null,
-        orderType:0 ,
+        orderType: 0,
         parentId: 0,
         customerId: null,
         status: 0,
-        moneyType:100,
+        moneyType: 100,
         customerOrderCode: '',
         epOrderCode: '',
         businessBy: '',

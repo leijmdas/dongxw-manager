@@ -17,7 +17,8 @@
                 <el-form-item label="日期">
 
                     <div slot="label">
-                        <el-select v-model="dateRangeType" filterable clearable style="width:120px" class="formitem-label">
+                        <el-select v-model="dateRangeType" filterable clearable style="width:120px"
+                                   class="formitem-label">
                             <el-option value="orderDate" label="下单日期"></el-option>
                             <el-option value="customerIssueDate" label="客户交货日期"></el-option>
                             <el-option value="checkDate" label="验货日期"></el-option>
@@ -30,25 +31,25 @@
                                     value-format="yyyy-MM-dd HH:mm:ss">
                     </el-date-picker>
 
-                    <el-form-item label="EP订单号" prop="epOrderCode">
-                        <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
-                    </el-form-item>
-
-
-                    <el-form-item label="客户订单号" prop="customerOrderCode">
-                        <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
-                    </el-form-item>
-
-
-                    <el-form-item label="业务员" prop="businessBy">
-                        <el-input v-model="page.query.param.businessBy" clearable></el-input>
-                    </el-form-item>
-
-
+                </el-form-item>
+                <el-form-item label="EP订单号" prop="epOrderCode">
+                    <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
                 </el-form-item>
 
+
+                <el-form-item label="客户订单号" prop="customerOrderCode">
+                    <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
+                </el-form-item>
+
+
+                <el-form-item label="业务员" prop="businessBy">
+                    <el-input v-model="page.query.param.businessBy" clearable></el-input>
+                </el-form-item>
+
+
                 <el-form-item label="订单类型" prop="orderType">
-                    <el-select @change="search" :clearable="true" v-model="page.query.param.orderType" style="width:100px">
+                    <el-select @change="search" :clearable="true" v-model="page.query.param.orderType"
+                               style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
@@ -60,16 +61,16 @@
 
             </el-form>
         </div>
-            <v-toolbar title="数据列表" type="alert">
+        <v-toolbar title="数据列表" type="alert">
                 <span slot="tip" style="margin-left:60px;">
                 <span style="color :red">  鼠标双击进入订单修改! </span>
                 </span>
-                <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
-                <!--<el-button @click="cancel">取消</el-button>-->
+            <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+            <!--<el-button @click="cancel">取消</el-button>-->
 
                 <el-button type="primary" plain @click="create">新增</el-button>
 
-                <el-button plain @click="exportRecords">导出 XLS</el-button>
+                <el-button plain @click="exportRecords">导出XLS</el-button>
                 <el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>
            </v-toolbar>
         <v-table ref="table" :page="page" :dblclick="edit" :click="clickRow" :table-minheight="450" @dataloaded="onDataloaded">
@@ -78,7 +79,7 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
 
-            <el-table-column prop="orderType" label="订单类型" width="70">
+            <el-table-column prop="orderType" label="订单类型" width="90">
                 <template slot-scope="{row}">
                     <span :style="'style:red'"> {{$dongxwDict.getText(row.orderType,$dongxwDict.store.ORDER_TYPE)}}</span>
                 </template>
@@ -359,11 +360,14 @@
                     type: "warning"
                 }).then(() => {
                     this.$api.dongxw.OrderMaster.deleteById(row.id).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "删除成功!"
-                        });
+                        this.$msgJsonResult(rsp);
+                        if (rsp.code == 0 ) {
+                            this.search();
+                            this.$message({
+                                type: "success",
+                                message: "删除成功!"
+                            });
+                        }
                     });
                 });
             },
@@ -398,7 +402,6 @@
                 });
             },
             showLine(row) {
-                console.log(JSON.stringify(row));
                 console.log("fatherMethodL: " + this.fatherMethod);
                 if (row.orderType != 100 && this.fatherMethod) {
                     this.fatherMethod(row);

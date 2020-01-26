@@ -78,7 +78,6 @@
             funShowOrderLine(row) {
 
                 console.log(this.showOrderLine);
-
                 this.activeName = 'orderLine';
                 this.$refs.orderLine.init(row);
 

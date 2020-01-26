@@ -3,51 +3,52 @@
 
         <fieldset align="top">
             <el-row :span="22">
-                <el-col :span="11">
-                    <el-form-item label="客款号" prop="code">
-                        <el-input disabled placeholder="客款号" v-model="product.code"></el-input>
-
-                    </el-form-item>
-                </el-col>
-                <el-col :span="11">
-                    <el-form-item label="EP款号" prop="epCode">
-                        <el-input disabled placeholder="EP款号" v-model="product.epCode"></el-input>
-
-                    </el-form-item>
-                </el-col>
-
-            </el-row>
-            <el-row :span="22">
                 <el-col :span="22">
-                    <el-form-item label="产品描述" prop="remark">
-                        <el-input disabled placeholder="产品描述" v-model="product.remark"></el-input>
-
-                    </el-form-item>
+                    <product-view v-model="product.id" :labelWidth="'120px'" :style="'margin-top: 20px'" ref="productView">
+                    </product-view>
                 </el-col>
-
-
             </el-row>
+            <!--<el-row :span="22">-->
+                <!--<el-col :span="11">-->
+                    <!--<el-form-item label="客款号" prop="code">-->
+                        <!--<el-input disabled placeholder="客款号" v-model="product.code"></el-input>-->
+
+                    <!--</el-form-item>-->
+                <!--</el-col>-->
+                <!--<el-col :span="11">-->
+                    <!--<el-form-item label="EP款号" prop="epCode">-->
+                        <!--<el-input disabled placeholder="EP款号" v-model="product.epCode"></el-input>-->
+
+                    <!--</el-form-item>-->
+                <!--</el-col>-->
+
+            <!--</el-row>-->
+            <!--<el-row :span="22">-->
+                <!--<el-col :span="22">-->
+                    <!--<el-form-item label="产品描述" prop="remark">-->
+                        <!--<el-input disabled placeholder="产品描述" v-model="product.remark"></el-input>-->
+
+                    <!--</el-form-item>-->
+                <!--</el-col>-->
+
+
+            <!--</el-row>-->
+            <!--<el-row :span="22">-->
+
+                <!--<el-col :span="11">-->
+                    <!--<el-form-item label="颜色" prop="color">-->
+                        <!--<el-input disabled placeholder="颜色" v-model="product.color"></el-input>-->
+
+                    <!--</el-form-item>-->
+                <!--</el-col>-->
+                <!--<el-col :span="11">-->
+                    <!--<el-form-item label="尺寸" prop="size">-->
+                        <!--<el-input disabled placeholder="尺寸" v-model="product.size"></el-input>-->
+                    <!--</el-form-item>-->
+                <!--</el-col>-->
+
+            <!--</el-row>-->
             <el-row :span="22">
-
-                <el-col :span="11">
-                    <el-form-item label="颜色" prop="color">
-                        <el-input disabled placeholder="颜色" v-model="product.color"></el-input>
-
-                    </el-form-item>
-                </el-col>
-                <el-col :span="11">
-                    <el-form-item label="尺寸" prop="size">
-                        <el-input disabled placeholder="尺寸" v-model="product.size"></el-input>
-                    </el-form-item>
-                </el-col>
-
-            </el-row>
-            <el-row :span="22">
-                <el-col :span="11">
-                    <el-form-item label="数量" prop="qty">
-                        <el-input disabled placeholder="数量" v-model="orderLine.qty"></el-input>
-                    </el-form-item>
-                </el-col>
                 <el-col :span="11">
 
                     <el-form-item label="外发标志" prop="outFlag">
@@ -55,6 +56,11 @@
                             <el-option v-for="item in $dongxwDict.store.OUT_FLAG" :key="item[0]"
                                        :value="item[0]" :label="item[1]"></el-option>
                         </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="11">
+                    <el-form-item label="数量" prop="qty">
+                        <el-input disabled placeholder="数量" v-model="orderLine.qty"></el-input>
                     </el-form-item>
                 </el-col>
 
@@ -239,6 +245,7 @@
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
     import SupplierSelect from '@/components/widgets/dongxw/SupplierSelect.vue';
+    import ProductView from '@/components/widgets/dongxw/ProductView.vue';
 
     const defaultEntity = {
 
@@ -256,7 +263,7 @@
         invoiceIdIni: 0
     };
     export default {
-        components: {OrderMasterSelect, CustomerSelect, SupplierSelect},
+        components: {ProductView,OrderMasterSelect, CustomerSelect, SupplierSelect},
         data() {
             return {
                 product: {

@@ -1,64 +1,59 @@
 <template>
     <div>
-        <el-form :model="entity"  ref="form" label-width="100px" class="dialog-form">
-            <el-tabs :stretch="isExp" v-model="activeName">
-                <el-tab-pane label="基本信息" name="orderInfo">
-                    <el-col :span="22">
-                        <el-row>
-                            <el-col :span="12">
-                                <el-form-item label="产品大类" prop="parentId">
-                                    <product-type-select style="width:100%" v-model="entity.parentId"
-                                                         :clearable="true"></product-type-select>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="12">
-                                <el-form-item label="产品小类" prop="productTypeId">
-                                    <product-sub-type-select style="width:100%" v-model="entity.productTypeId"
-                                                             :parentTypeId="entity.parentId"
-                                                             :clearable="true"></product-sub-type-select>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <product-select :productTypeId="entity.productTypeId"
-                                        v-model="entity.productId"
-                                        :clearable="true"></product-select>
-                        <!--<el-button @click="view">选择产品</el-button>-->
-                        <hr>
-                        <el-row>
-                            <el-col :span="12">
+        <el-col :span="23">
+            <el-form :model="entity" label-width="100px" :rules="rules" ref="form" class="dialog-form">
 
-                                <el-form-item label="数量" style="width:100%" prop="qty">
-                                    <el-input placeholder="数量" v-model="entity.qty"></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="12">
-                                <el-form-item label="单价" style="width:100%" prop="price">
-                                    <el-input placeholder="单价" v-model="entity.price"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+                <product-view v-model="entity.productId" :style="'margin-top: 20px'" ref="productView">
 
-                        <el-form-item label="金额" style="width:50%" prop="unit">
-                            <el-input placeholder="金额" v-model="money" disabled></el-input>
-                        </el-form-item>
+                </product-view>
+                <el-collapse>
 
-
-                        <el-form-item label="备注" style="margin-top: 10px" prop="remark">
-                            <el-input placeholder="备注" type="textarea" :rows="2" v-model="entity.remark"></el-input>
+                    <el-collapse-item title="选择产品" style="margin-left:4%;width:96%" >
+                        <product-select-complex v-model="entity.productId" :style="'margin-bottom: -20px'"
+                                                :customerId="entity.customerId" ref="productSelectDlg"
+                                                :clearable="true">
+                        </product-select-complex>
+                    </el-collapse-item>
+                </el-collapse>
+                <el-row>
+                    <!--<el-col :span="24">-->
+                        <!--<el-form-item label="产品" style="width:100%" prop="productId">-->
+                            <!--<el-input disabled placeholder="产品" v-model="entity.productId"></el-input>-->
+                        <!--</el-form-item>-->
+                    <!--</el-col>-->
+                    <el-col :span="12">
+                        <el-form-item label="数量" style="width:100%" prop="qty">
+                            <el-input placeholder="数量" v-model="entity.qty"></el-input>
                         </el-form-item>
                     </el-col>
-                </el-tab-pane>
+                    <el-col :span="12">
+                        <el-form-item label="单价" style="width:100%" prop="price">
+                            <el-input placeholder="单价" v-model="entity.price"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="12">
 
-            </el-tabs>
-        </el-form>
-        <v-dialog ref="formDiag" width="80%" title="查询">
+                        <el-form-item label="金额" prop="money">
+                            <el-input placeholder="金额" v-model="money" disabled></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
 
-            <query-form ref="queryForm"></query-form>
-            <div slot="footer">
-                <!--<el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>-->
-                <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
-            </div>
-        </v-dialog>
+                        <el-form-item label="建档时间" prop="createDate">
+                            <el-input disabled placeholder="建档时间" v-model="entity.createDate" disabled></el-input>
+
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-form-item label="备注" style="margin-top: 10px" prop="remark">
+                    <el-input placeholder="备注" type="textarea" :rows="2" v-model="entity.remark"></el-input>
+                </el-form-item>
+
+            </el-form>
+        </el-col>
+
     </div>
 </template>
 <style lang="less" scoped>
@@ -66,7 +61,6 @@
         img {
             width: 400px;
             height: 300px;
-            // height: 60% !important;
         }
     }
     .el-form-item{
@@ -100,45 +94,31 @@
 </style>
 
 <script>
+    // import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
+    // import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
+    // import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
 
-    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
-    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
-    import ProductSelect from '@/components/widgets/dongxw/ProductSelectComplex.vue';
-    //import ProductSelectForm from '@/components/widgets/dongxw/ProductSelectForm.vue';
-    import QueryForm from '@/pages/dongxw/product/ManageQuery.vue';
+    import ProductView from '@/components/widgets/dongxw/ProductView.vue';
+    import ProductSelectComplex from '@/components/widgets/dongxw/ProductSelectComplex.vue';
 
     const defaultEntity = {
         id: null,
-        customerId : null,
+        customerId: null,
         orderId : null,
         productId : null,
         productTypeId : null,
-        customerCode : '',
-        picUrl : '',
-        size: '',
-        color : '',
+
         qty : 0,
-        unit : '',
         price : 0,
         currency :'',
         money : 0,
-        supplierId :0,
-        material :'',
-        ibQty : 0,
-        ibGw : 0,
-        ibNw : 0,
-        ibSize : '',
-        obQty : 0,
-        obGw : 0,
-        obNw : 0,
-        obSize : '',
 
         createBy: 0,
         remark : '',
         status: 1
     };
     export default {
-        components: {QueryForm,ProductTypeSelect,ProductSubTypeSelect, ProductSelect},
+        components: {ProductView, ProductSelectComplex},
         data() {
             return {
                 isExp :false,
@@ -154,72 +134,14 @@
                 isDisabled: false,
                 limitTotal: false,
                 rules: {
-                    parentId: [
-                        {
-                            required: true,
-                        }
-                    ], productTypeId: [
-                        {
-                            required: true,
-                        }
-                    ], qty: [
-                        {
-                            type: "number",
-                            required: true,
-                            trigger: "change"
-                        }
-                    ],
-                    price: [
-                        {
-                            type: "number",
-                            required: true,
-                            trigger: "change"
-                        }
-                    ],
-
-                    productId: [{
-                        required: true
-                    }],
-
-
-                    name: [
-                        {required: true, message: "名称不能为空", trigger: "blur"},
-                        {
-                            min: 1,
-                            max: 128,
-                            message: "长度在 1 到 128 个字符",
-                            trigger: "blur"
-                        }
-                    ],
-
-                    customerOrderCode: [
-                        {required: true, message: "客户订单号", trigger: "blur"},
-                        {
-                            min: 1,
-                            max: 128,
-                            message: "长度在 1 到 128 个字符",
-                            trigger: "blur"
-                        }
-                    ],
-
-
-                    status: [
-                        {
-                            type: "number",
-                            required: true,
-                            message: "请选择状态",
-                            trigger: "change"
-                        }
-                    ],
-
-
 
                 }
             };
         },
         computed: {
             money: function () {
-                return this.entity.qty * this.entity.price;
+                this.entity.money = Math.round(100*this.entity.qty * this.entity.price)/100
+                return this.entity.money
             }
 
         },
@@ -227,11 +149,7 @@
 
 
         methods: {
-            view(row) {
-                this.$refs.formDiag.init({ queryForm:this.$refs.queryForm,formDiag: this.$refs.formDiag });
-                this.$refs.formDiag.show({ queryForm:this.$refs.queryForm,formDiag: this.$refs.formDiag });
 
-            },
             getProps(scope) {
                 return this.entity.props.filter(p => p.propScope == scope);
             },
@@ -239,33 +157,24 @@
                 this.ruleDefs = opts || [];
                 this.resetProps();
             },
-            onDiscountTypeChange(val) {
-                if (val == 3) {
-                    //次数只能一次
-                    this.entity.discountValue = 1;
-                }
-            },
-            resetProps() {
 
+            resetProps() {
             },
             setValues(vals) {
                 this.resetEntity = _.cloneDeep(vals);
                 this.entity = _.cloneDeep(this.resetEntity);
             },
             submitForm() {
+
                 this.$refs["form"].validate(valid => {
                     if (valid) {
-                        if ( !this.entity.customerId ) {
-                            this.entity.customerId = this.customerId;
-                            this.entity.orderId = this.orderId;
+                        if (!this.entity.id) {
+                            this.entity.orderId = this.order.id;
+                            this.entity.customerId = this.order.customerId
+
                         }
-                        let params = Object.assign({}, this.entity);
-                        console.log(JSON.stringify(params));
-                        // this.$message({
-                        //     message: '恭喜你，这是一条成功消息' +this.customerId,
-                        //     type: 'success'
-                        // });
-                        this.$api.dongxw.OrderLine.save(params).then(rsp => {
+
+                        this.$api.dongxw.OrderLine.save(this.entity).then(rsp => {
                             this.$emit("saved", rsp);
                         });
                     }
@@ -277,22 +186,29 @@
             },
             init(options) {
                 this.resetForm();
-                if (options.customerId) {
-                    this.customerId = options.customerId;
-                    this.orderId = options.orderId;
-                }
                 if (options.id) {
                     this.isDisabled = true;
                     this.$api.dongxw.OrderLine.findById(options.id).then(rr => {
                         let r = rr.data;
                         this.isDisabled = r.status > 0;
-
                         this.entity = r;
-
                     });
                 } else {
-                    this.isDisabled = false;
+                    if (options.order) {
+
+                        this.order = options.order;
+                        this.entity.orderId = this.order.id
+                        this.entity.customerId = this.order.customerId
+                        this.entity.product = {
+                            customerId: this.order.customerId,
+                            productTypeId: null,
+                            parentId : null ,
+                            id : null ,
+                        }
+                    }
+
                 }
+
             }
         },
         mounted() {

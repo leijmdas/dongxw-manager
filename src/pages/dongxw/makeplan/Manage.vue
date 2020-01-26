@@ -20,9 +20,9 @@
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="add">新增订单计划</el-dropdown-item>
-                        <el-dropdown-item command="del">删除计划多余产品</el-dropdown-item>
                         <el-dropdown-item command="check">检查订单计划</el-dropdown-item>
-                    </el-dropdown-menu>
+                        <!--<el-dropdown-item command="del">删除计划多余产品</el-dropdown-item>-->
+                     </el-dropdown-menu>
                 </el-dropdown>
                 <el-form-item label="外发标志" prop="outFlag">
                     <el-select @change="search" clearable style="width:100%" v-model="page.query.param.outFlag">
@@ -311,11 +311,17 @@
         methods: {
 
             handleCommand(command) {
-                if (command === "add") {
-                    this.makePlan();
-                } else {
-                    this.$message('click on item ' + command);
-
+                if(this.page.query.param.orderId) {
+                    if (command === "add") {
+                        this.makePlan();
+                    }
+                    if (command === "check") {
+                        this.checkPlan();
+                    } else {
+                        //this.rmPlan();
+                    }
+                }else{
+                    this.$mesage("请选择订单!")
                 }
             },
             onDataloaded(rsp) {
@@ -333,6 +339,22 @@
                         self.$msgJsonResult(rsp)
                     });
 
+                });
+            },
+            checkPlan() {
+                let self = this;
+
+                self.$api.dongxw.MakePlan.checkPlanByOrder(this.page.query.param.orderId).then(rsp => {
+
+                    self.$msgJsonResult(rsp)
+                });
+            },
+            rmPlan() {
+                let self = this;
+
+                self.$api.dongxw.MakePlan.rmPlanByOrder(this.page.query.param.orderId).then(rsp => {
+
+                    self.$msgJsonResult(rsp)
                 });
             },
             getSearchParams() {

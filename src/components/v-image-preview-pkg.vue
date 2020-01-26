@@ -2,9 +2,9 @@
     <div>
         <el-row :span="24" :removeUrl="funRemoveUrl">
 
-            <el-col :span="6" v-for="(url,index) in urlInfo" :key="url">
+            <el-col :span="8" v-for="(url,index) in urlInfo" :key="url">
 
-                <el-select v-if="url&&showRemoveBtn&&showRemark" v-model="remarks[index]" filterable
+                <el-select :span="1" v-if="url&&showRemoveBtn&&showRemark" v-model="remarks[index]" filterable
                            filterable allow-create placeholder="请选择" @change="handleChange">
                     <el-option v-for="item in options"
                                :key="item.label" :label="item.label" :value="item.label">
@@ -14,31 +14,29 @@
                            title="删除" plain>
                     <i class="el-icon-delete " style="color:red;"></i>
                 </el-button>
-
                 <el-upload :action="action" :show-file-list="false" :auto-upload="true" :data="formData"
-                           :disabled="!showRemoveBtn" :beforeUpload="beforeUpload" :on-success="updateSuccess">
-                    <img :src="url" @click="setCurUrl(url)" class="avatar" :style="imgStyle"/>
+                           :beforeUpload="beforeUpload" :on-success="updateSuccess">
+                    <el-tooltip content="点击重新上传" placement="top">
+                        <img :src="url" @click="setCurUrl(url)" class="avatar" :style="imgStyle"/>
+                    </el-tooltip>
                 </el-upload>
             </el-col>
-
-        <span v-if="showRemoveBtn" :span="24">
-
-            <el-col :span="1" style=" padding-top: 120px">
-                <el-button @click="clearAllImg" type="text" title="清除图片" plain>
+            <el-col :span="2">
+                <el-button style=" margin-left:10px" @click="clearAllImg" type="text" title="清除所有图片" plain>
                     <i class="el-icon-delete " style="color:red"></i>
                 </el-button>
-            </el-col>
-            <el-col :span="3" style="margin-left: -10px">
-                <el-upload ref="upload" :data="formData" :limit="limit" :multiple="true"
-                           :action="action" :auto-upload="true" list-type="text"
-                           :show-file-list="false" :beforeUpload="beforeUpload" :on-exceed="handleExceed"
-                           :on-preview="handlePictureCardPreview"  :on-success="handleSuccess" :on-remove="handleRemove">
-                    <i class="el-icon-plus  el-upload--picture-card"></i>
 
+                <el-upload :span="1"  v-if="showRemoveBtn" style="widht:10px;height:10px" ref="upload"
+                           :auto-upload="true" :show-file-list="false" :data="formData" :limit="limit" :multiple="true"
+                           :action="action" :beforeUpload="beforeUpload" :on-exceed="handleExceed"
+                           :disabled="!showRemoveBtn"  :on-success="handleSuccess" :on-remove="handleRemove">
+                    <el-button style="margin-left: 10px" size="small" type="primary">上传</el-button>
+                    <!--<i class="el-imargin-top: 10pxcon-plus el-upload&#45;&#45;picture-card"></i>-->
                 </el-upload>
+
             </el-col>
-        </span>
         </el-row>
+
     </div>
 </template>
 <script>
@@ -47,6 +45,7 @@
         name: 'vImageUploader',
         data() {
             return {
+                curUrl : '',
                 urls: null,
                 formData: {maxSize:500},
                 action: '/api/file/upload',
@@ -159,39 +158,6 @@
                 }
                 this.urlInfo = newurls.join(',')
             },
-            handleExceed() {
-                this.$message('最多只允许上传'+this.limit+'张图片！')
-            },
-            handleSuccess(response, file, fileList) {
-                console.log(response.path)
-                let urls = this.urlInfo
-                urls.push(response.path)
-                this.urlInfo = urls.join(',')
-                console.log(this.urlInfo)
-
-            },
-            handleRemove(file, fileList) {
-                console.log(file, fileList);
-            },
-            handlePictureCardPreview(file) {
-
-            },
-            handleDownload(file) {
-                console.log(file);
-            },
-            beforeUpload(file) {
-                // if(!this.showRemoveBtn){
-                //     return false
-                // }
-                if(file.size>500*1024){
-                    this.$message({
-                        type: 'error',
-                        message: '文件大于500k!'
-                    });
-                    return false;
-                }
-                Object.assign(this.formData,{"access-token":getToken()})
-            },
             setCurUrl(url){
                 this.curUrl=url
                 console.log(this.curUrl)
@@ -202,6 +168,35 @@
                 urls.splice(ind,1,response.path);
                 this.urlInfo = urls.join(',')
             },
+            handleExceed() {
+                this.$message('最多只允许上传'+this.limit+'张图片！')
+            },
+            handleSuccess(response, file, fileList) {
+                let urls = this.urlInfo
+                urls.push(response.path)
+                this.urlInfo = urls.join(',')
+            },
+            handleRemove(file, fileList) {
+            },
+            handlePictureCardPreview(file) {
+
+            },
+            handleDownload(file) {
+            },
+
+            beforeUpload(file) {
+                if(file.size>500*1024){
+                    this.$message({
+                        type: 'error',
+                        message: '文件大于500k!'
+                    });
+                    return false;
+                }
+                Object.assign(this.formData,{"access-token":getToken()})
+                this.loading = true
+                return true;
+            },
+
         }
 
 

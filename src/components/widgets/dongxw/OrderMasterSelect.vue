@@ -5,7 +5,7 @@
                :clearable="clearable" :disabled="disabled" @change="handleChange">
 
         <el-option  v-for="item in options" :key="item.id"
-                    :label="item.epOrderCode + '('+item.customerOrderCode+')'"  :value="item.id" :disabled="item.disabled">
+                    :label="item.epOrderCode + '--'+item.customerOrderCode"  :value="item.id" :disabled="item.disabled">
             <span style="float: left">{{ item.customerOrderCode }}</span>
             <span style="float: left">{{ item.epOrderCode }}</span>
 

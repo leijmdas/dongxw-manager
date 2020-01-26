@@ -231,20 +231,7 @@
                         message: "操作成功!"
                     });
                 });
-                // let p = {
-                //     param: {
-                //         metadataId: this.page.query.param.metadataId,
-                //         db: "dongxw",
-                //         table: "order_master"
-                //     }
-                // }
-                // this.$api.metadata.MetaData.selectTable(p).then(rsp => {
-                //     this.records = rsp.data;
-                //     this.$message({
-                //         type: "success",
-                //         message: "操作成功!"
-                //     });
-                // });
+
             },
 
 

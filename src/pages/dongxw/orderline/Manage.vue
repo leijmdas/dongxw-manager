@@ -1,4 +1,3 @@
-<!--订单产品管理-->
 <template>
     <div>
         <div class="panel panel-default panel-search">
@@ -32,9 +31,7 @@
             <el-button plain @click="exportRecords">导出XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
             <el-switch style="color: mediumpurple;margin-left:20px; margin-right: 20px"
-                       v-model="isShowPrdPic"
-                       active-text="显示产品图片"
-                       inactive-text="不显示">
+                       v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">
             </el-switch>
 
         </v-toolbar>
@@ -76,7 +73,7 @@
                     {{ row.product?row.product.code:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="epCode" label="EP款号" width="100">
+            <el-table-column prop="epCode" label="EP款号" width="120">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.epCode:'-'}}
                 </template>
@@ -90,23 +87,23 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="产品描述" label="产品描述" width="140">>
+            <el-table-column prop="remark" label="产品描述" width="140">>
                 <template slot-scope="{row}">
                     {{ row.product?row.product.remark:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="配色" label="配色" width="70">
+            <el-table-column prop="color" label="颜色" width="70">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.color:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="尺寸" label="尺寸" width="80">
+            <el-table-column prop="size" label="尺寸" width="80">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.size:'-'}}
                 </template>
             </el-table-column>
             <!--<el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>-->
-            <!--<el-table-column prop="条码" label="条码" width="115">-->
+            <!--<el-table-column prop="barCode" label="条码" width="115">-->
                 <!--<template slot-scope="{row}">-->
                     <!--{{ row.product?row.product.barCode:'-'}}-->
                 <!--</template>-->
@@ -129,8 +126,13 @@
             </el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column prop="createDate" label="建档时间" width="100"></el-table-column>
-            <!--<el-table-column prop="createBy" label="建档人" width="100">-->
+            <el-table-column prop="createDate" label="建档时间" width="100">
+                <template slot-scope="{row}">
+                {{ $dongxwDict.viewDate(row.createDate)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="createByName" label="建档人" width="100">
+            </el-table-column>
             <el-table-column prop="status" label="状态" width="80">
                 <template slot-scope="{row}">
                         <span
@@ -158,7 +160,7 @@
         <v-dialog ref="formDiag" width="50%" title="信息编辑">
 
             <form-panel @saved="onFormSaved"></form-panel>
-            <div slot="footer">
+            <div slot="footer" style="margin-right: 60px">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
@@ -250,7 +252,7 @@
 
             },
             getSearchParams() {
-                this.page.query.param.orderId = this.orderId;
+                this.page.query.param.orderId = this.order.id;
                 this.page.query.dateRanges = {};
                 if (this.dateRangeType != null && this.dateRange && this.dateRange.length > 0) {
                     this.page.query.dateRanges[this.dateRangeType] = {
@@ -275,7 +277,7 @@
 
             },
             create() {
-                this.$refs.formDiag.show({customerId: this.customerId, orderId: this.orderId});
+                this.$refs.formDiag.show({order:this.order});
             },
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});
@@ -284,34 +286,18 @@
                 this.$refs.formDiagView.show({id: row.id});
             },
             toggleStatus(row) {
-                let status = row.status;
-                let msg = '确定上架此活动吗？</br><span style="color:red">一旦上架，部分信息不允许修改!</span>';
-                if (status == 1) {
-                    msg = '确定下架此活动吗？</br><span style="color:red">一旦下架，已派发的优惠券无法使用!</span>';
-                }
-                this.$confirm(msg, "确认", {
-                    type: "warning",
-                    dangerouslyUseHTMLString: true
-                }).then(() => {
-                    this.$api.ipark.PromotionInfoService.updateStatus(row.id, status == 1 ? 2 : 1).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "操作成功!"
-                        });
-                    });
-                });
+
             },
             del(row) {
                 this.$confirm("确定删除此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
                     this.$api.dongxw.OrderLine.deleteById(row.id).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "删除成功!"
-                        });
+                        this.$msgJsonResult(rsp);
+                        if (rsp.code == 0 ) {
+                            this.search();
+
+                        }
                     });
                 });
             },
@@ -322,9 +308,6 @@
             init(options = {}) {
 
                 this.order = options;
-                this.customerId = options.customerId;
-                this.orderId = options.id;
-                console.log(JSON.toString(this.order));
                 this.search();
             },
             search() {

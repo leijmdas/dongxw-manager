@@ -16,6 +16,24 @@
                     </order-master-select>
 
                 </el-form-item>
+                <el-form-item label="日期">
+
+                    <div slot="label">
+                        <el-select v-model="dateRangeType" filterable clearable style="width:120px"
+                                   class="formitem-label">
+                            <el-option value="orderDate" label="下单日期"></el-option>
+                            <el-option value="customerIssueDate" label="客户交货日期"></el-option>
+                            <el-option value="checkDate" label="验货日期"></el-option>
+                            <el-option value="factroyIssueDate" label="工厂交货日期"></el-option>
+                        </el-select>
+                    </div>
+                    <el-date-picker style="width:270px" v-model="dateRange" type="daterange" range-separator="至"
+                                    start-placeholder="开始日期" end-placeholder="结束日期"
+                                    format="yyyy年MM月dd日"
+                                    value-format="yyyy-MM-dd HH:mm:ss">
+                    </el-date-picker>
+
+                </el-form-item>
                 <el-form-item label="产品大类" prop="parentId">
                     <product-type-select v-model="page.query.param.parentId" :clearable="true">
 
@@ -54,15 +72,13 @@
 
 
             <el-switch style="margin-left:20px; margin-right: 20px"
-                       v-model="isShowPrdPic"
-                       active-text="显示产品图片"
-                       inactive-text="不显示">
+                       v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">
             </el-switch>
 
         </v-toolbar>
-        <v-table ref="table" :page="page"   :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
 
-            <el-table-column prop="seq" label="序号" width="50">
+        <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
 
@@ -71,12 +87,12 @@
                     {{ row.customer?row.customer.custName:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="orderType" label="订单类型" width="70">
+            <el-table-column prop="orderType" label="订单类型" width="80">
                 <template slot-scope="{row}">
                     <span :style="'style:red'"> {{$dongxwDict.getText(row.orderMaster?row.orderMaster.orderType:0,$dongxwDict.store.ORDER_TYPE)}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="customerOrderCode" label="客户订单号" width="110">
+            <el-table-column prop="customerOrderCode" label="客订单号" width="110">
                 <template slot-scope="{row}">
                     {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
                 </template>
@@ -119,12 +135,12 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="产品描述" label="产品描述" width="120">
+            <el-table-column prop="产品描述" label="产品描述" width="140">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.remark:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="配色" label="配色" width="70">
+            <el-table-column prop="颜色" label="颜色" width="70">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.color:'-'}}
                 </template>
@@ -135,12 +151,7 @@
                 </template>
             </el-table-column>
             <!--<el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>-->
-            <!--<el-table-column prop="currency" label="货币" width="80"></el-table-column>-->
-            <el-table-column prop="条码" label="条码" width="115">
-                <template slot-scope="{row}">
-                    {{ row.product?row.product.barCode:'-'}}
-                </template>
-            </el-table-column>
+
             <el-table-column prop="qty" label="数量" width="100"></el-table-column>
             <el-table-column prop="unit" label="单位" width="80">
                 <template slot-scope="{row}">
@@ -154,8 +165,12 @@
                     {{ row.orderMaster?$dongxwDict.getText(row.orderMaster.moneyType,$dongxwDict.store.MONEY_TYPE):'-'}}
                 </template>
             </el-table-column>
+            <el-table-column prop="条码" label="条码" width="115">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.barCode:'-'}}
+                </template>
+            </el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
-
             <el-table-column prop="createDate" label="建档时间" width="100"></el-table-column>
             <!--<el-table-column prop="createBy" label="建档人" width="100">-->
             <el-table-column prop="status" label="状态" width="80">

@@ -140,10 +140,7 @@
                 this.resetProps();
             },
             onDiscountTypeChange(val) {
-                if (val == 3) {
-                    //次数只能一次
-                    this.entity.discountValue = 1;
-                }
+
             },
             resetProps() {
 
@@ -156,9 +153,8 @@
             submitForm() {
                 this.$refs["form"].validate(valid => {
                     if (valid) {
-                        this.entity.parentId = this.parentId;
+                        //this.entity.parentId = this.parentId;
                         let params = Object.assign({}, this.entity);
-                        console.log(this.entity);
                         this.$api.dongxw.ProductTypeService.save(params).then(rsp => {
                             this.$emit("saved", rsp);
                         });
@@ -166,19 +162,18 @@
                 });
             },
             resetForm() {
-                //this.$refs["form"].resetFields();
+
                 this.entity = _.cloneDeep(defaultEntity);
                 if (!this.entity.id) {
+                    this.entity.parentId = this.parentId;
                     this.entity.createDate = this.$dongxwDict.formatDateZero(new Date());
                 }
             },
             init(options) {
                 this.resetForm();
                 if (options.id) {
-                    console.log(JSON.stringify(this.entity));
-
                     this.$api.dongxw.ProductTypeService.findById(options.id).then(r => {
-                        console.log(JSON.stringify(r))
+
                         this.entity = r.data;
                     });
                 } else {

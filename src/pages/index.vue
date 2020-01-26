@@ -417,16 +417,16 @@
         },
         mounted() {
             this.init();
-            this.getPie3Data();
+            //this.getPie3Data();
         },
         methods: {
             init() {
-                let myCharts = this.$echarts.init(document.getElementById('pie'));
-                myCharts.setOption(this.option);
-                let myCharts1 = this.$echarts.init(document.getElementById('pie1'));
-                myCharts1.setOption(this.option1);
-                let myCharts2 = this.$echarts.init(document.getElementById('pie2'));
-                myCharts2.setOption(this.option2);
+                // let myCharts = this.$echarts.init(document.getElementById('pie'));
+                // myCharts.setOption(this.option);
+                // let myCharts1 = this.$echarts.init(document.getElementById('pie1'));
+                // myCharts1.setOption(this.option1);
+                // let myCharts2 = this.$echarts.init(document.getElementById('pie2'));
+                // myCharts2.setOption(this.option2);
             },
             getPie3Data() {
                 let that = this;

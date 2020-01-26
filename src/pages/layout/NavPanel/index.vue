@@ -40,7 +40,16 @@
                     <img style="width:50px;height:50px" src="../../../assets/logo.png" alt="k8s"/>
                 </a>
             </el-menu-item>
-
+            <el-menu-item index="5">
+                <a href="https://www.w3cschool.cn/vuejs/" target="_blank" class="go-to">
+                    <img style="width:50px;height:50px" src="../../../assets/logo.png" alt="k8s"/>
+                </a>
+            </el-menu-item>
+            <el-menu-item index="6">
+                <a href="https://cn.vuejs.org/v2/guide/" target="_blank" class="go-to">
+                    <img style="width:50px;height:50px" src="../../../assets/logo.png" alt="k8s"/>
+                </a>
+            </el-menu-item>
             <el-menu-item index="0">
                 <el-popover placement="bottom" width="300" trigger="hover">
                     <ul class="msgUL">

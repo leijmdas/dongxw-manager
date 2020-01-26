@@ -53,6 +53,18 @@ export default {
             method: 'POST'
         })
     },
+    checkPlanByOrder(orderId) {
+        return request({
+            url: '/dongxw/makeplan/checkPlanByOrder/'+orderId,
+            method: 'POST'
+        })
+    },
 
+    rmPlanByOrder(orderId) {
+        return request({
+            url: '/dongxw/makeplan/rmPlanByOrder/'+orderId,
+            method: 'POST'
+        })
+    },
 
 }

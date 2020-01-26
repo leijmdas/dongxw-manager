@@ -1,14 +1,13 @@
 <template>
     <div>
-        <el-button v-if="preview && currentValue" @click="clearImg"type="text" title="清除图片" plain>
+        <el-button v-if="preview && currentValue" @click="clearImg" type="text" title="清除图片" plain>
             <i class="el-icon-delete " style="color:red"></i>
         </el-button>
         <el-upload v-loading="loading" :drag="drag" :action="action" :data="formData" :limit="limit"
-                   :accept="accept"
-                   :before-upload="beforeUpload" :on-success="onSuccess" :on-error="onError"
+                   :accept="accept"  :before-upload="beforeUpload" :on-success="onSuccess" :on-error="onError"
                    :disabled="disabled" :show-file-list="showFileList" :multiple="multiple">
 
-             <img v-if="preview && currentValue" :src="currentValue" class="avatar"  :style="imgStyle" >
+            <img v-if="preview && currentValue" :src="currentValue" class="avatar" :style="imgStyle">
             <div v-else>
                 <slot>
                     <i class="el-icon-upload"></i>
@@ -19,7 +18,7 @@
                 </div>
             </div>
 
-         </el-upload>
+        </el-upload>
 
     </div>
 </template>
@@ -123,17 +122,16 @@
           beforeUpload(file) {
 
               Object.assign(this.formData, {"access-token": getToken()})
-              console.log(this.formData)
               this.objectUrl = URL.createObjectURL(file)
               let flag = true
               if (this.checkParams) {
                   flag = this.checkParams(this.formData)
               }
-        this.loading = flag
-        return flag;
-      },
-      onError (err, file, fileList) {
-        // let rsp = err.message.substring('5xx '.length)
+              this.loading = flag
+              return flag;
+          },
+          onError(err, file, fileList) {
+              // let rsp = err.message.substring('5xx '.length)
         let rsp = err.message
         this.objectUrl = undefined
         this.$message.error('上传失败![' + JSON.parse(rsp).msg + ']')

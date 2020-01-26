@@ -1,60 +1,75 @@
-<!-- 产品选择-->
-
+<!-- 选择产品-->
 <template>
-    <el-tabs   tab-position="top" v-model="activeName">
+    <el-form :model="entity" ref="form" label-width="80px" label-position="center":rules="rules">
+        <el-row>
 
-        <el-tab-pane style="background-color: mintcream" id="tabProduct" label="选择产品" name="tabProduct">
+            <el-col :span="12">
+                <el-form-item  label="产品大类" prop="parentId">
+                    <product-type-select style="width:100%" v-model="entity.parentId" :clearable="true">
 
-            <el-form label-width="100px"  :rules="rules">
-                <el-row :span="24">
-                    <el-col :span="24">
-                        <el-form-item label="产品描述" prop="remark" :style="'color:red'">
-                            <el-input style="width:100%" v-model="remark" clearable></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :span="24">
-                    <el-col :span="12">
-                        <el-form-item label="颜色" style="color:red;width:100%" prop="color">
-                            <el-input v-model="color" clearable></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="尺寸" style="color:red;width:100%" prop="size">
-                            <el-input v-model="size" clearable></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :span="24">
-                    <el-col :span="12">
-                        <el-form-item label="客款号" style="color:red;width:100% " prop="color">
-                            <el-input v-model="code" clearable></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="EP款号" style="color:red;width:100% " prop="size">
-                            <el-input v-model="epCode" clearable></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :span="24">
-                    <el-col :span="12">
-                    <el-form-item label="客户" prop="customerId"  >
-                    <customer-select :style="'color:red;width:100%'" v-model="customerId" clearable tyle="color:red;width:280px"></customer-select>
-                    </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                     <el-button plain :style="'margin-left:20px;color:green;width:15%'" type="primary" @click="refresh">查询</el-button>
-                     <el-button plain :style="'color:red;width:15%'" @click="cancel">取消</el-button>
+                    </product-type-select>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="产品小类" prop="productTypeId">
+                    <product-sub-type-select style="width:100%" v-model="entity.productTypeId"
+                                             :parentTypeId="entity.parentId" :clearable="true">
+                    </product-sub-type-select>
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row :span="24">
+            <el-col :span="24">
+                <el-form-item label="产品描述" prop="remark" :style="'color:red'">
+                    <el-input style="width:100%" v-model="entity.remark" clearable></el-input>
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row :span="24">
+            <el-col :span="12">
+                <el-form-item label="颜色" style="color:red;width:100%" prop="color">
+                    <el-input v-model="entity.color" clearable></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="尺寸" style="color:red;width:100%" prop="size">
+                    <el-input v-model="entity.size" clearable></el-input>
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row :span="24">
+            <el-col :span="12">
+                <el-form-item label="客款号" style="color:red;width:100% " prop="color">
+                    <el-input v-model="entity.code" clearable></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="EP款号" style="color:red;width:100% " prop="size">
+                    <el-input v-model="entity.epCode" clearable></el-input>
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row :span="24">
+            <el-col :span="12">
+                <el-form-item label="客户" prop="customerId">
+                    <customer-select disabled :style="'color:red;width:100%'" v-model="customerId" clearable
+                                     tyle="color:red;width:280px"></customer-select>
+                </el-form-item>
+            </el-col>
 
-                    </el-col>
-                </el-row>
-                    <el-form-item label="产品"  prop="currentValue" style="width:100%">
+            <el-button @click="refresh" :style="'margin-left:2%;color:green;width:23%'" plain type="primary">查询
+            </el-button>
+            <el-button @click="cancel" :style="'color:red;width:23%'" plain>取消</el-button>
 
-                     <el-select v-model="currentValue" :style="'color:red;width:100%'" placeholder="请选择" filterable
-                               :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
+        </el-row>
+        <el-row :span="24">
+            <el-col :span="24">
+                <el-form-item label="产品" prop="id" style="width:100%">
+
+                    <el-select v-model="currentValue" :style="'color:red;width: 100%'" placeholder="请选择"
+                               filterable :loading="loading" :clearable="clearable" :disabled="disabled">
                         <el-option v-for="item in options" :key="item.id"
-                                   :label="item.code+' | '+item.epCode+'|'+item.remark+'|'+item.color+'|'+item.size"
+                                   :label="item.code+' | '+item.epCode+' | '+item.remark+' | '+item.color+' | '+item.size"
                                    :value="item.id" :disabled="item.disabled">
                             <span style="float: left">{{ item.code }}</span>
                             <span style="float: left">{{ item.epCode }}</span>
@@ -63,19 +78,16 @@
                             <span style="float: right">{{ item.size }}</span>
                         </el-option>
                     </el-select>
-                </el-form-item>
 
-            </el-form>
-        </el-tab-pane>
-    </el-tabs>
+                </el-form-item>
+            </el-col>
+        </el-row>
+
+    </el-form>
 </template>
 <style lang="less" rel="stylesheet/less" scoped>
-    /*.el-selection {*/
-         /*background-color: #00438a;*/
-    /*}*/
-    .el-select-dropdown__item{
-       // max-width: 550px;
-    }
+
+
     .el-select-dropdown__item span{
         width:80px;
         text-align:center;
@@ -84,38 +96,39 @@
 
 <script>
     import {fetch} from "@/utils";
+    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
+    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
 
+    const defaultEntity = {
+        parentId: null,
+        productTypeId: null,
+        id: null,
+        remark: null,
+        size: null,
+        color: null,
+        code: null,
+        epCode: null,
+        customerId: null,
+        productTypeId: null,
+        parentId: null
+    }
     export default {
-        components:{CustomerSelect},
+        components:{ProductTypeSelect,ProductSubTypeSelect,CustomerSelect},
         data () {
             return {
+                entity: _.cloneDeep(defaultEntity),
                 isExp : true,
                 activeName:'tabProduct',
                 loading: false,
                 options: [],
-                // disOpts: [],
-                remark:null,
-                size : null,
-                color: null,
-                code : null,
-                epCode: null,
-                customerId: null,
                 rules: {
-                    currentValue: [
-                        {required: true, message: "编号不能为空", trigger: "blur"},
-                        {
-                            required: true,
-                            type: Number,
-                            trigger: "blur"
-                        }
-                    ]
                 }
             }
         },
         props: {
             value: {
-                required: true
+                required: true,
             },
             clearable: {
                 type: Boolean
@@ -123,9 +136,10 @@
             disabled: {
                 type: Boolean
             },
-            productTypeId: {
-                // type: Number,
-            }
+            customerId: {
+                type: Number
+            },
+
         },
         computed: {
             currentValue: {
@@ -138,38 +152,49 @@
             }
         },
         watch: {
-            productTypeId: {
-                handler: function(newVal, oldVal) {
-                    this.refresh();
-                },
-                deep: true
-            }
+
         },
         methods: {
-            handleChange(val) {
-                this.$emit('change', val)
+            defaultValue()
+            {
+                return  _.cloneDeep(defaultEntity)
+            },
+
+            resetForm() {
+                this.$refs["form"].resetFields();
+                this.entity = _.cloneDeep(defaultEntity);
+            },
+            init(options) {
+                this.resetForm();
+                if (options) {
+                    this.options = {
+                        prdFlag: options.prdFLag,
+                        customerId: options.customerId
+                    }
+                    Object.assign(this.entity, options)
+                }
+                this.$nextTick(() => this.refresh());
+
             },
             cancel() {
-                this.remark = null,
-                    this.size = null,
-                    this.color = null,
-                    this.code = null,
-                    this.epCode = null,
-                    this.customerId = null
-                this.refresh();
+                this.entity = this.defaultValue()
+                Object.assign(this.entity, this.options)
+
+                this.refresh()
             },
             refresh() {
                 this.loading = true
                 this.$api.dongxw.ProductService.query({
                     param: {
                         prdFlag : 0,
-                        productTypeId: this.productTypeId,
-                        color: this.color,
-                        size: this.size,
-                        code:this.code,
-                        epCode: this.epCode,
-                        remark:this.remark,
                         customerId:this.customerId,
+                        productTypeId: this.entity.productTypeId,
+                        parentId: this.entity.parentId,
+                        color: this.entity.color,
+                        size: this.entity.size,
+                        code:this.entity.code,
+                        epCode: this.entity.epCode,
+                        remark:this.entity.remark,
 
                         isDeleted: false
                     }
@@ -183,7 +208,6 @@
             this.refresh()
         },
         mounted() {
-            this.customerId=null;
         }
     }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form" label-width="95px" class="dialog-form">
-            <el-tabs :stretch="isExp" v-model="activeName">
+        <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
+            <el-tabs :stretch="false" v-model="activeName">
                 <el-tab-pane label="产品信息" name="productInfo">
                     <el-row>
                         <el-col :span="23">
@@ -188,44 +188,62 @@
                     </el-row>
                     </fieldset>
                     <!--<hr>-->
-                    <!--<fieldset  >-->
-                        <!--<legend>备注</legend>-->
 
                         <el-row  :span="24" style="margin-top: 10px">
+
+
                             <el-col :span="12">
                                 <el-form-item  label="正唛" prop="pkgFront">
-                                    <el-input type="textarea" :rows="5" placeholder="正唛" v-model="entity.pkgFront"></el-input>
+                                    <el-input type="textarea" :rows="7" placeholder="正唛"
+                                              v-model="entity.pkgFront"></el-input>
                                 </el-form-item>
                             </el-col>
 
                             <el-col :span="12">
-                                <el-form-item label="侧唛" prop="pkgSide">
-                                    <el-input type="textarea" :rows="5"  placeholder="侧唛" v-model="entity.pkgSide"></el-input>
-                                </el-form-item>
+                                <v-image-preview-pkg ref="imgViewPkg1" v-model="entity.pkgFrontImgUrls"
+                                                 :imgRemarks="entity.pkgFrontImgRemark" :showRemark="false"
+                                                 :options="options" :showRemoveBtn="true"
+                                                 :funHandleChange="funHandleChange"
+                                                 :imgStyle="'margin-right:10px;width:140px;height:120px'">
+                                </v-image-preview-pkg>
+                            </el-col> </el-row>
+                    <el-row :span="24" style="margin-top: 10px">
+                        <el-col :span="12">
+                            <el-form-item label="侧唛" prop="pkgSide">
+                                <el-input type="textarea" :rows="7" placeholder="侧唛"
+                                          v-model="entity.pkgSide"></el-input>
+                            </el-form-item>
 
-                            </el-col>
-                        </el-row>
+                        </el-col>
+                        <el-col :span="12">
+
+                            <v-image-preview-pkg ref="imgViewPkg2" v-model="entity.pkgSideImgUrls"
+                                             :imgRemarks="entity.pkgSideImgRemark" :showRemark="false"
+                                             :options="options" :showRemoveBtn="true" :funHandleChange="funHandleChange"
+                                             :imgStyle="'width:140px;height:120px'">
+                            </v-image-preview-pkg>
+                        </el-col>
+                    </el-row>
 
 
-                        <el-row :span="24">
+                    <el-row :span="24">
 
-                            <el-col :span="24">
+                        <el-col :span="24">
+                            <el-form-item label="备注" prop="pkgRemark">
+                                <el-input placeholder="备注" type="textarea" :rows="2"
+                                          v-model="entity.pkgRemark"></el-input>
+                            </el-form-item>
 
-                                <el-form-item label="备注" prop="pkgRemark">
-                                    <el-input placeholder="备注" type="textarea" :rows="2"
-                                              v-model="entity.pkgRemark"></el-input>
-                                </el-form-item>
+                        </el-col>
 
-                            </el-col>
-
-                        </el-row>
+                    </el-row>
                     <!--</fieldset>-->
                 </el-tab-pane>
                 <el-tab-pane label="产品图片" name="prdImage">
-                    <v-image-preview ref="imagePreview" v-model="entity.imgUrls" :imgRemarks = "entity.imgRemark"
-                                             :options="options" :showRemoveBtn="true" :funHandleChange = "funHandleChange"
-                                             :imgStyle="'margin-right:10px;width:140px;height:120px'">
-                            </v-image-preview>
+                    <v-image-preview ref="imagePreview" v-model="entity.imgUrls" :imgRemarks="entity.imgRemark"
+                                     :options="options" :showRemoveBtn="true" :funHandleChange="funHandleChange"
+                                     :imgStyle="'margin-right:10px;width:140px;height:120px'">
+                    </v-image-preview>
                 </el-tab-pane>
 
             </el-tabs>
@@ -398,12 +416,6 @@
                 this.ruleDefs = opts || [];
                 this.resetProps();
             },
-            onDiscountTypeChange(val) {
-                if (val == 3) {
-                    //次数只能一次
-                    this.entity.discountValue = 1;
-                }
-            },
 
             resetProps() {
 
@@ -435,8 +447,6 @@
                 }
             },
             init(options) {
-                this.$refs.imagePreview.clearFiles();
-
                 this.resetForm();
                 if (options.id) {
                     console.log(JSON.stringify(this.entity));

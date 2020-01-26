@@ -155,7 +155,7 @@
             submitForm() {
                 this.$refs["form"].validate(valid => {
                     if (valid) {
-                        this.entity.parentId = this.parentId;
+                        //this.entity.parentId = this.parentId;
                         let params = Object.assign({}, this.entity);
                         console.log(this.entity);
                         this.$api.dongxw.ProductTypeService.save(params).then(rsp => {
@@ -168,7 +168,8 @@
                 //this.$refs["form"].resetFields();
                 this.entity = _.cloneDeep(defaultEntity);
                 if (!this.entity.id) {
-                    this.entity.createDate = this.$dongxwDict.formatDateZero(new Date());
+                    this.entity.createDate = this.$dongxwDict.formatDateZero(new Date())
+                    this.entity.parentId = this.parentId
                 }
             },
             init(options) {

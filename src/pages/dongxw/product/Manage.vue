@@ -54,12 +54,12 @@
             <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
+            <el-button plain @click="exportMail" style="color:green" >发送邮件
+            </el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
 
-            <el-switch style="margin-left:20px; margin-right: 20px"
-                       v-model="isShowPrdPic"
-                       active-text="显示产品图片"
-                       inactive-text="不显示">
+            <el-switch style="margin-left:20px; margin-right: 20px" v-model="isShowPrdPic"
+                       active-text="显示产品图片" inactive-text="不显示">
             </el-switch>
 
 
@@ -96,24 +96,22 @@
                 </template>
             </el-table-column>
 
-
-            <el-table-column prop="name" label="产品名称" width="100"></el-table-column>
+            <!--<el-table-column prop="name" label="产品名称" width="100"></el-table-column>-->
             <el-table-column prop="remark" label="产品描述" width="245"></el-table-column>
-            <el-table-column prop="unit" label="单位" width="60"></el-table-column>
 
             <el-table-column prop="picUrl" label="产品图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
                     <!--<img v-if="row.picUrl" :src="row.picUrl" width="60px" height="60px" alt="">-->
-
                     <v-image-preview v-model="row.imgUrls" :picUrl="row.picUrl"  >
                     </v-image-preview>
-
                 </template>
             </el-table-column>
-            <el-table-column prop="color" label="颜色" width="100">
+            <el-table-column prop="color" label="颜色" width="160">
             </el-table-column>
-            <el-table-column prop="size" label="尺寸" width="150">
+            <el-table-column prop="size" label="尺寸" width="160">
             </el-table-column>
+            <el-table-column prop="unit" label="单位" width="60"></el-table-column>
+
             <el-table-column prop="barCode" label="条码" width="120">
             </el-table-column>
 <!--            <el-table-column prop="upcA" label="UPC-A" width="150">-->
@@ -160,7 +158,7 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag" :width="'750px'" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'800px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
                 <!--<el-button type="default"  @click="$refs.formDiag.clearImage()">清除图片</el-button>-->
@@ -264,6 +262,19 @@
                 }
                 return this.page.query;
             },
+            /*发送邮件
+           * */
+            exportMail() {
+                let self = this;
+                this.$confirm("确定要发送产品清单的邮件吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+                    let params = self.getSearchParams();
+                    self.$api.dongxw.ProductService.exportMail(params);
+
+                });
+
+            },
             create() {
                 this.$refs.formDiag.show();
             },
@@ -271,23 +282,7 @@
                 this.$refs.formDiag.show({id: row.id});
             },
             toggleStatus(row) {
-                let status = row.status;
-                let msg = '确定上架此活动吗？</br><span style="color:red">一旦上架，部分信息不允许修改!</span>';
-                if (status == 1) {
-                    msg = '确定下架此活动吗？</br><span style="color:red">一旦下架，已派发的优惠券无法使用!</span>';
-                }
-                this.$confirm(msg, "确认", {
-                    type: "warning",
-                    dangerouslyUseHTMLString: true
-                }).then(() => {
-                    this.$api.ipark.PromotionInfoService.updateStatus(row.id, status == 1 ? 2 : 1).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "操作成功!"
-                        });
-                    });
-                });
+
             },
             del(row) {
                 this.$confirm("确定删除此条记录吗?", "提示", {
