@@ -50,8 +50,8 @@
             </el-form>
         </div>
         <v-toolbar title="产品列表" type="alert">
-            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-            <el-button @click="cancel">取消</el-button>
+            <el-button style="margin-left: 40px" slot="tip" type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+            <el-button slot="tip" @click="cancel">取消</el-button>
 
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button> -->
             <!--<el-button type="primary" plain @click="create">新增</el-button>-->

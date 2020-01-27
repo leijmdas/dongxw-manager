@@ -1,8 +1,14 @@
 <!--cust管理-->
 <template>
     <div>
-        <product-master :tableRowClick="search" ref="productMaster"></product-master>
-
+        <!--<el-collapse  :v-model="'selectPrd'">-->
+            <!--<el-collapse-item name="selectPrd">-->
+                <!--<template slot="title">-->
+                    <!--选择产品<i class="header-icon el-icon-info"></i>-->
+                <!--</template>-->
+                <product-master v-show="switchShow" :tableRowClick="search" ref="productMaster"></product-master>
+            <!--</el-collapse-item>-->
+        <!--</el-collapse>-->
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
                 <!--<el-table-column prop="childId" label="父件标识" width="60"></el-table-column>-->
@@ -14,6 +20,9 @@
                     <sub-type-select @change="search" :parentTypeId="page.query.param.bigType" v-model="page.query.param.smallType" :clearable="true"></sub-type-select>
                 </el-form-item>
 
+
+                <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                <el-button @click="cancel">取消</el-button>
                 <!--<el-form-item>-->
                     <!--&lt;!&ndash;<el-button-group></el-button-group>&ndash;&gt;-->
                     <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
@@ -24,20 +33,20 @@
                 <!--</el-form-item>-->
             </el-form>
         </div>
-        <v-toolbar title="子件列表" type="alert">
-          <span  v-if="!product.code" slot="tip" style="color:red;margin-left: 40px;margin-top: 30px">
+        <v-toolbar title="物料列表" type="alert">
+            <el-switch slot="tip" style="margin-left:20px; margin-right: 20px" v-model="switchShow"
+                       active-text="显示" inactive-text="不显示产品列表">
+            </el-switch>
+            <span  v-if="!product.code" slot="tip" style="color:red;margin-left: 40px;margin-top: 30px">
                 请点击上方选中产品然后编辑BOM
             </span>
 
             <span v-if="product.code" slot="tip" style="color:green;margin-left:140px;margin-top: 30px">
                 {{ product.code +":"+product.epCode +" : "+product.remark}}
             </span>
-
-            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-            <el-button @click="cancel">取消</el-button>
+            <el-button type="primary" v-if="productId>0" plain @click="create">新增</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button type="primary" v-if="productId>0" plain @click="create">新增</el-button>
 
             <!--<el-switch style="margin-left:20px; margin-right: 20px"-->
                        <!--v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">-->
@@ -165,7 +174,7 @@
             return {
                 product : {},
                 productId: -1,
-                isShowPrdPic : false,
+                switchShow : true,
                 formStatus: 1,
                 orderDateRange: [],
                 summaryMap: {},
