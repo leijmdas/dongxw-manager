@@ -31,7 +31,7 @@
             <el-button plain @click="exportRecords">导出XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
             <el-switch style="color: mediumpurple;margin-left:20px; margin-right: 20px"
-                       v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">
+                       v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
             </el-switch>
 
         </v-toolbar>

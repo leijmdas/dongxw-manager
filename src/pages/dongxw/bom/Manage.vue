@@ -35,7 +35,7 @@
         </div>
         <v-toolbar title="物料列表" type="alert">
             <el-switch slot="tip" style="margin-left:20px; margin-right: 20px" v-model="switchShow"
-                       active-text="显示" inactive-text="不显示产品列表">
+                       active-text="显示产品列表" inactive-text="不显示">
             </el-switch>
             <span  v-if="!product.code" slot="tip" style="color:red;margin-left: 40px;margin-top: 30px">
                 请点击上方选中产品然后编辑BOM
@@ -44,7 +44,7 @@
             <span v-if="product.code" slot="tip" style="color:green;margin-left:140px;margin-top: 30px">
                 {{ product.code +":"+product.epCode +" : "+product.remark}}
             </span>
-            <el-button type="primary" v-if="productId>0" plain @click="create">新增</el-button>
+            <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
 

@@ -4,9 +4,11 @@
         <v-toolbar type="alert">
             <div slot="tip" class="panel panel-default panel-search">
                 <el-form :inline="true">
-                    <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue">
-                        {{ parentId < 0 ?'请点上方选择大类':parentRow.name }}
-                    </span></el-form-item>
+                    <el-form-item style="margin-left: 20px " label="大类标识">
+                        <span style="color:red">
+                        {{ parentId < 0 ?'请点上方大类':parentRow.name }}
+                    </span>
+                    </el-form-item>
 
                     <el-form-item label="小类编码" prop="code">
                         <el-input v-model="page.query.param.code" clearable></el-input>
@@ -18,7 +20,7 @@
                     <el-form-item>
                        <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                         <el-button @click="cancel">取消</el-button>
-                        <el-button type="primary" plain @click="create">新增</el-button>
+                        <el-button v-show="parentId>0"  type="primary" plain @click="create">新增</el-button>
 
                     </el-form-item>
                 </el-form>
