@@ -1,38 +1,17 @@
 <!--cust管理-->
 <template>
     <div>
+        <product-master :tableRowClick="search" ref="productMaster"></product-master>
+
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
+                <!--<el-table-column prop="childId" label="父件标识" width="60"></el-table-column>-->
 
                 <el-form-item label="大类" prop="orderType">
-
-                    <rm-type-select   v-model="page.query.param.parentId" :clearable="true"></rm-type-select>
+                    <rm-type-select  @change="search" v-model="page.query.param.bigType" :clearable="true"></rm-type-select>
                 </el-form-item>
                 <el-form-item label="小类">
-                    <sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></sub-type-select>
-                </el-form-item>
-
-                <el-form-item label="物料代码" prop="code">
-                    <el-input v-model="page.query.param.code" clearable></el-input>
-                </el-form-item>
-
-
-                <el-form-item label="物料名称" prop="name">
-                    <el-input v-model="page.query.param.name" clearable></el-input>
-                </el-form-item>
-
-                <el-form-item label="规格型号" prop="remark">
-                    <el-input v-model="page.query.param.remark" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="颜色" prop="color">
-                    <el-input v-model="page.query.param.color" clearable></el-input>
-                </el-form-item>
-
-                <el-form-item label="状态" prop="status">
-                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
+                    <sub-type-select @change="search" :parentTypeId="page.query.param.bigType" v-model="page.query.param.smallType" :clearable="true"></sub-type-select>
                 </el-form-item>
 
                 <!--<el-form-item>-->
@@ -45,12 +24,20 @@
                 <!--</el-form-item>-->
             </el-form>
         </div>
-        <v-toolbar title="数据列表" type="alert">
+        <v-toolbar title="子件列表" type="alert">
+          <span  v-if="!product.code" slot="tip" style="color:red;margin-left: 40px;margin-top: 30px">
+                请点击上方选中产品然后编辑BOM
+            </span>
+
+            <span v-if="product.code" slot="tip" style="color:green;margin-left:140px;margin-top: 30px">
+                {{ product.code +":"+product.epCode +" : "+product.remark}}
+            </span>
+
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button type="primary" plain @click="create">新增</el-button>
+            <el-button type="primary" v-if="productId>0" plain @click="create">新增</el-button>
 
             <!--<el-switch style="margin-left:20px; margin-right: 20px"-->
                        <!--v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">-->
@@ -63,57 +50,77 @@
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
-            <el-table-column prop="prdFlag" label="存货分类" width="100">
+            <!--<el-table-column prop="prdFlag" label="存货分类" width="100">-->
+                <!--<template slot-scope="{row}">-->
+                        <!--<span :style="'style:red'">-->
+                            <!--{{row.productType.prdFlag==null?'-':$dongxwDict.getText(row.productType.prdFlag,$dongxwDict.store.STORE_TYPE)}}</span>-->
+                <!--</template>-->
+            <!--</el-table-column>-->
+            <el-table-column prop="productId" label="产品" width="80">
                 <template slot-scope="{row}">
-                        <span :style="'style:red'">
-                            {{row.productType.prdFlag==null?'-':$dongxwDict.getText(row.productType.prdFlag,$dongxwDict.store.STORE_TYPE)}}</span>
+                    {{ row.product? row.product.code :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="parentId" label="大类" width="100">
+            <!--<el-table-column prop="parentId" label="父标识" width="80"></el-table-column>-->
 
+            <el-table-column prop="parentId" label="大类" width="100">
                 <template slot-scope="{row}">
-                    {{ row.productType? row.productType.name :'-' }}
+                    {{ row.childRm? row.childRm.productType.name :'-' }}
                 </template>
             </el-table-column>
             <el-table-column prop="productSubType" label="小类" width="120">
                 <template slot-scope="{row}">
-                    {{ row.productSubType? row.productSubType.name :'-' }}
+                    {{ row.childRm ? row.childRm.productSubType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="code" label="物料代码" width="160"></el-table-column>
-            <el-table-column prop="name" label="物料名称" width="180"></el-table-column>
-
-
-            <el-table-column prop="remark" label="规格型号" width="245"></el-table-column>
-            <el-table-column prop="color" label="颜色" width="100">
+            <el-table-column prop="code" label="物料代码" width="160">
+                <template slot-scope="{row}">
+                    {{ row.childRm? row.childRm.code :'-' }}
+                </template>
             </el-table-column>
-            <el-table-column prop="unit" label="单位" width="60"></el-table-column>
-
-            <!--<el-table-column prop="picUrl" label="原料图片" v-if="isShowPrdPic" width="90">-->
-                <!--<template slot-scope="{row}">-->
-                    <!--<v-image-preview v-model="row.imgUrls" :picUrl="row.picUrl"  >-->
-                    <!--</v-image-preview>-->
-                <!--</template>-->
+            <el-table-column prop="name" label="物料名称" width="180">
+                <template slot-scope="{row}">
+                    {{ row.childRm? row.childRm.name :'-' }}
+                </template>
+            </el-table-column>
+            <el-table-column prop="remark" label="规格型号" width="245">
+                <template slot-scope="{row}">
+                    {{ row.childRm? row.childRm.remark :'-' }}
+                </template>
+            </el-table-column>
+            <el-table-column prop="color" label="颜色" width="100">
+                <template slot-scope="{row}">
+                    {{ row.childRm? row.childRm.color :'-' }}
+                </template>
+            </el-table-column>
             <!--</el-table-column>-->
             <!--<el-table-column prop="size" label="尺寸" width="150">-->
             <!--</el-table-column>-->
-
-            <!--<el-table-column prop="barCode" label="条码" width="120">-->
-            <!--</el-table-column> -->
-            <el-table-column prop="createDate" label="建档时间" width="150">
-            </el-table-column>
-
-            <el-table-column prop="createByName" label="建档人" width="150">
-            </el-table-column>
-
-            <el-table-column prop="status" label="状态" width="60">
+            <el-table-column prop="unit" label="单位" width="120">
                 <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
+                    {{ row.childRm? row.childRm.unit :'-' }}
                 </template>
             </el-table-column>
 
-            <el-table-column prop="memo" label="备注"  >
+            <el-table-column prop="qty" label="数量" width="120"></el-table-column>
+            <el-table-column prop="price" label="单价" width="120"></el-table-column>
+            <el-table-column prop="money" label="金额" width="120"></el-table-column>
+            <el-table-column prop="lossRate" label="损耗率(%)" width="120"></el-table-column>
+            <el-table-column prop="lossQty" label="损耗数" width="120"></el-table-column>
+            <el-table-column prop="length" label="长封度" width="120"></el-table-column>
+            <el-table-column prop="width" label="宽封度" width="120"></el-table-column>
+            <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
+             <el-table-column prop="sizeL" label="尺寸(长）" width="120"></el-table-column>
+            <el-table-column prop="sizeS" label="X" width="30"></el-table-column>
+            <el-table-column prop="sizeW" label="尺寸(宽）" width="120"></el-table-column>
+
+            <el-table-column prop="createDate" label="建档时间" width="120">
             </el-table-column>
+
+            <el-table-column prop="createByName" label="建档人" width="100">
+            </el-table-column>
+            <!--<el-table-column prop="memo" label="备注"  >-->
+            <!--</el-table-column>-->
 
             <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
@@ -128,8 +135,8 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag" :width="'750px'" title="信息编辑">
-            <form-panel @saved="onFormSaved"></form-panel>
+        <v-dialog ref="formDiag"  :width="'750px'" title="信息编辑">
+            <form-panel :productId="productId" @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
                  <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
@@ -147,14 +154,17 @@
 </style>
 
 <script>
+    import ProductMaster from '@/components/widgets/dongxw/ProductMaster.vue';
     import RmTypeSelect from '@/components/widgets/dongxw/RmTypeSelect.vue';
     import SubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
 
     import FormPanel from './Form';
     export default {
-        components: { FormPanel,RmTypeSelect, SubTypeSelect },
+        components: { ProductMaster,FormPanel,RmTypeSelect, SubTypeSelect },
         data() {
             return {
+                product : {},
+                productId: -1,
                 isShowPrdPic : false,
                 formStatus: 1,
                 orderDateRange: [],
@@ -164,11 +174,11 @@
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            subjectId: undefined,
+                            productId: undefined,
                             isDeleted: false
                         }
                     },
-                    getData : this.$api.dongxw.ProductService.query
+                    getData : this.$api.dongxw.BomService.query
 
         },
                 tableActions: [
@@ -184,7 +194,9 @@
                 ]
             };
         },
-        computed: {},
+        computed: {
+
+        },
 
         methods: {
 
@@ -236,9 +248,15 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
+                this.$refs.productMaster.init()
                 this.search();
             },
-            search() {
+            search(row) {
+                if (row) {
+                    this.product = row
+                    this.productId = row.id
+                    this.page.query.param.productId = this.productId
+                }
                 this.page.query.param.customerId = 0
                 this.$refs.table.currentPage = 1
                 this.$refs.table.load()
@@ -246,7 +264,10 @@
             cancel() {
                 this.dateRange = [];
                 //this.currentPage = 1;
-                this.page.query.param = {};
+                this.page.query.param = {
+                    isDeleted: false,
+                    productId : this.productId
+                };
                 this.search();
             }
         },

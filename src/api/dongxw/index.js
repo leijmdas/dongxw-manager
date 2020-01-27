@@ -1,10 +1,11 @@
 import CustomerService from './CustomerService'
 import ProductTypeService from './ProductTypeService'
 import ProductService from './ProductService'
-import MakePlan from './MakePlan'
-import OrderMaster from './OrderMaster'
-import OrderLine from './OrderLine'
+import MakePlan from './MakePlanService'
+import OrderMaster from './OrderMasterService'
+import OrderLine from './OrderLineService'
 import SupplierService from "./SupplierService"
+import BomService from './BomService'
 
 export default {
     CustomerService,
@@ -13,6 +14,7 @@ export default {
     MakePlan,
     OrderMaster,
     OrderLine,
-    SupplierService
+    SupplierService,
+    BomService
 
 }

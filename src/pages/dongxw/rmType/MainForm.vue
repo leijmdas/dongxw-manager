@@ -15,6 +15,7 @@
         data() {
             return {
                 collapse: false,
+                parentRow : {},
                 parentId : null
             }
         },
@@ -25,9 +26,13 @@
             },
             funShowSub(row) {
                 this.parentId = row.id;
-                console.log(row.id);
-                console.log(this.parentId);
-                this.$refs.managePanelSub.init({parentId: row.id});
+                this.parentRow = row;
+                this.$refs.managePanelSub.init(
+                    {
+                        parentRow: this.parentRow,
+                        parentId: row.id
+                    }
+                );
 
             }
         },

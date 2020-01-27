@@ -49,17 +49,19 @@
                                     <el-form-item label="颜色" prop="color">
                                         <el-input placeholder="颜色" v-model="entity.color"></el-input>
                                     </el-form-item>
-                                </el-col>
-                                <!--<el-col :span="12">-->
-                                    <!--<el-form-item label="尺寸" prop="size">-->
-                                        <!--<el-input placeholder="尺寸" v-model="entity.size"></el-input>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
-                            </el-row>
-                            <el-row :span="24" style="margin-top: 5px">
+                                </el-col> <el-col :span="12">
+                                <el-form-item label="尺寸" prop="size">
+                                    <el-input placeholder="尺寸" v-model="entity.size"></el-input>
+                                </el-form-item>
+                            </el-col>
                                 <el-col :span="12">
                                     <el-form-item label="单位" prop="unit">
                                         <el-input placeholder="单位" v-model="entity.unit"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="单价" prop="price">
+                                        <el-input placeholder="单位" v-model="entity.price"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
@@ -72,18 +74,11 @@
                                     </el-form-item>
                                 </el-col>
                             </el-row>
-                            <!--<el-row :span="24" style="margin-top: 10px">-->
-                                <!--<el-col :span="12">-->
+                                  <!--<el-col :span="12">-->
                                     <!--<el-form-item label="条码" prop="barCode">-->
                                         <!--<el-input placeholder="条码" v-model="entity.barCode"></el-input>-->
                                     <!--</el-form-item>-->
                                 <!--</el-col>-->
-                                <!--&lt;!&ndash;<el-col :span="12">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<el-form-item label="UPC-A" prop="upcA">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<el-input placeholder="UPC-A" v-model="entity.upcA"></el-input>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</el-form-item>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</el-col>&ndash;&gt;-->
-                            <!--</el-row>-->
 
                             <!--<el-form-item label="原料图片" prop="">-->
 

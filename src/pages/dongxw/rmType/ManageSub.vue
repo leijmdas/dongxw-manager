@@ -4,7 +4,9 @@
         <v-toolbar type="alert">
             <div slot="tip" class="panel panel-default panel-search">
                 <el-form :inline="true">
-                    <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue"> {{ parentId }}</span></el-form-item>
+                    <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue">
+                        {{ parentId < 0 ?'请点上方选择大类':parentRow.name }}
+                    </span></el-form-item>
 
                     <el-form-item label="小类编码" prop="code">
                         <el-input v-model="page.query.param.code" clearable></el-input>
@@ -82,6 +84,7 @@
             return {
                 metafields : [],
                 parentId: -1,
+                parentRow: { parentId: -1},
                 formStatus: 1,
                 orderDateRange: [],
                 summaryMap: {},
@@ -164,13 +167,9 @@
             },
             init(options = {}) {
 
-                console.log(JSON.stringify(options));
-                this.parentId = options.parentId;
-                console.log(this.parentId);
-
+                this.parentId = options.parentId
+                this.parentRow = options.parentRow
                 this.page.query.param.parentId = this.parentId;
-                console.log(JSON.stringify(this.page));
-
                 this.search();
             },
             search() {

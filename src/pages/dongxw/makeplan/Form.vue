@@ -49,6 +49,11 @@
 
             <!--</el-row>-->
             <el-row :span="22">
+                <el-col :span="22">
+                    <el-form-item label="数量" prop="qty">
+                        <el-input disabled placeholder="数量" v-model="orderLine.qty"></el-input>
+                    </el-form-item>
+                </el-col>
                 <el-col :span="11">
 
                     <el-form-item label="外发标志" prop="outFlag">
@@ -59,9 +64,13 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="11">
-                    <el-form-item label="数量" prop="qty">
-                        <el-input disabled placeholder="数量" v-model="orderLine.qty"></el-input>
-                    </el-form-item>
+
+                <el-form-item label="状态" prop="status">
+                    <el-select style="width:100%" v-model="entity.status">
+                        <el-option v-for="item in $dongxwDict.store.AUDIT_STATUS" :key="item[0]"
+                                   :value="item[0]" :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
                 </el-col>
 
             </el-row>
@@ -287,14 +296,6 @@
                 isDisabled: false,
                 limitTotal: false,
                 rules: {
-                    startOn: [
-                        {
-                            required: true,
-                            message: "请选择开始时间",
-                            trigger: "blur"
-                        }
-                    ],
-
                     status: [
                         {
                             type: "number",
@@ -303,47 +304,11 @@
                             trigger: "change"
                         }
                     ],
-
-                    limitDays: [
-                        {
-                            required: false
-                        }
-                    ],
-                    limitTotalNum: [
-                        {
-                            required: false
-                        }
-                    ],
-                    isMerchant: [
-                        {
-                            required: true
-                        }
-                    ],
-                    tip: [
-                        {
-                            required: true,
-                            message: "活动提示不能为空",
-                            trigger: "blur"
-                        }
-                    ],
-                    limitPermanTimes: [
-                        {
-                            required: true,
-                            message: "限次不能为空",
-                        }
-                    ],
                     visibility: [
                         {
                             required: false,
                         }
                     ],
-
-                    effectRange: [
-                        {
-                            required: true,
-                            message: "请选择活动时间"
-                        }
-                    ]
                 }
             };
         },

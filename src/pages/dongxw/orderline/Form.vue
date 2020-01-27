@@ -9,10 +9,10 @@
                 <el-collapse>
 
                     <el-collapse-item title="选择产品" style="margin-left:4%;width:96%" >
-                        <product-select-complex v-model="entity.productId" :style="'margin-bottom: -20px'"
+                        <product-search v-model="entity.productId" :style="'margin-bottom: -20px'"
                                                 :customerId="entity.customerId" ref="productSelectDlg"
                                                 :clearable="true">
-                        </product-select-complex>
+                        </product-search>
                     </el-collapse-item>
                 </el-collapse>
                 <el-row>
@@ -99,7 +99,7 @@
     // import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
 
     import ProductView from '@/components/widgets/dongxw/ProductView.vue';
-    import ProductSelectComplex from '@/components/widgets/dongxw/ProductSelectComplex.vue';
+    import ProductSearch from '@/components/widgets/dongxw/ProductSearch.vue';
 
     const defaultEntity = {
         id: null,
@@ -118,7 +118,7 @@
         status: 1
     };
     export default {
-        components: {ProductView, ProductSelectComplex},
+        components: {ProductView, ProductSearch},
         data() {
             return {
                 isExp :false,
@@ -165,7 +165,10 @@
                 this.entity = _.cloneDeep(this.resetEntity);
             },
             submitForm() {
-
+                if(!this.entity.productId){
+                    this.$message("请选择产品!")
+                    return
+                }
                 this.$refs["form"].validate(valid => {
                     if (valid) {
                         if (!this.entity.id) {

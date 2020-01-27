@@ -4,72 +4,59 @@
         <el-row>
 
             <el-col :span="12">
-                <el-form-item  label="产品大类" prop="parentId">
-                    <product-type-select style="width:100%" v-model="entity.parentId" :clearable="true">
+                <el-form-item  label="大类" prop="parentId">
+                    <rm-type-select style="width:100%" v-model="entity.parentId" :clearable="true">
 
-                    </product-type-select>
+                    </rm-type-select>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="产品小类" prop="productTypeId">
-                    <product-sub-type-select style="width:100%" v-model="entity.productTypeId"
+                <el-form-item label="小类" prop="productTypeId">
+                    <rm-sub-type-select style="width:100%" v-model="entity.productTypeId"
                                              :parentTypeId="entity.parentId" :clearable="true">
-                    </product-sub-type-select>
+                    </rm-sub-type-select>
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row :span="24">
-            <el-col :span="24">
-                <el-form-item label="产品描述" prop="remark" :style="'color:red'">
-                    <el-input style="width:100%" v-model="entity.remark" clearable></el-input>
-                </el-form-item>
-            </el-col>
-        </el-row>
-        <el-row :span="24">
+
             <el-col :span="12">
-                <el-form-item label="颜色" style="color:red;width:100%" prop="color">
-                    <el-input v-model="entity.color" clearable></el-input>
-                </el-form-item>
-            </el-col>
-            <el-col :span="12">
-                <el-form-item label="尺寸" style="color:red;width:100%" prop="size">
-                    <el-input v-model="entity.size" clearable></el-input>
-                </el-form-item>
-            </el-col>
-        </el-row>
-        <el-row :span="24">
-            <el-col :span="12">
-                <el-form-item label="客款号" style="color:red;width:100% " prop="color">
+                <el-form-item label="物料代码" style="color:red;width:100% " prop="code">
                     <el-input v-model="entity.code" clearable></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="EP款号" style="color:red;width:100% " prop="size">
-                    <el-input v-model="entity.epCode" clearable></el-input>
+                <el-form-item label="物料名称" prop="name" :style="'color:red'">
+                    <el-input style="width:100%" v-model="entity.name" clearable></el-input>
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row :span="24">
             <el-col :span="12">
-                <el-form-item label="客户" prop="customerId">
-                    <customer-select disabled :style="'color:red;width:100%'" v-model="customerId" clearable
-                                     tyle="color:red;width:280px"></customer-select>
+                <el-form-item label="规格型号" style="color:red;width:100%" prop="remark">
+                    <el-input v-model="entity.remark" clearable></el-input>
+                </el-form-item>
+            </el-col>        <el-col :span="12">
+                <el-form-item label="颜色" style="color:red;width:100%" prop="color">
+                    <el-input v-model="entity.color" clearable></el-input>
                 </el-form-item>
             </el-col>
 
-            <el-button @click="refresh" :style="'margin-left:2%;color:green;width:23%'" plain type="primary">查询
-            </el-button>
-            <el-button @click="cancel" :style="'color:red;width:23%'" plain>取消</el-button>
+
+
+            <el-button @click="refresh" :style="'margin-left:2%;color:green;width:23%'"
+                       plain type="primary">搜索        </el-button>
+            <el-button @click="cancel" :style="'color:red;width:23%'" plain>重置搜索条件</el-button>
 
         </el-row>
         <el-row :span="24">
             <el-col :span="24">
-                <el-form-item label="产品" prop="id" style="width:100%">
+                <el-form-item label="物料" prop="id" style="width:100%">
 
                     <el-select v-model="currentValue" :style="'color:red;width: 100%'" placeholder="请选择"
                                filterable :loading="loading" :clearable="clearable" :disabled="disabled">
                         <el-option v-for="item in options" :key="item.id"
-                                   :label="item.code+' | '+item.epCode+' | '+item.remark+' | '+item.color+' | '+item.size"
+                                   :label="item.code+' | '+item.name+' | '+item.remark+' | '+item.color+' | '+item.size"
                                    :value="item.id" :disabled="item.disabled">
                             <span style="float: left">{{ item.code }}</span>
                             <span style="float: left">{{ item.epCode }}</span>
@@ -96,8 +83,8 @@
 
 <script>
     import {fetch} from "@/utils";
-    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
-    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
+    import RmSubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
+    import RmTypeSelect from '@/components/widgets/dongxw/RmTypeSelect.vue';
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
 
     const defaultEntity = {
@@ -114,7 +101,7 @@
         parentId: null
     }
     export default {
-        components:{ProductTypeSelect,ProductSubTypeSelect,CustomerSelect},
+        components:{RmSubTypeSelect,RmTypeSelect,CustomerSelect},
         data () {
             return {
                 entity: _.cloneDeep(defaultEntity),
@@ -168,7 +155,7 @@
                 this.resetForm();
                 if (options) {
                     this.options = {
-                        prdFlag: options.prdFLag,
+                        prdFlagNot: options.prdFLag,
                         customerId: options.customerId
                     }
                     Object.assign(this.entity, options)
@@ -186,7 +173,7 @@
                 this.loading = true
                 this.$api.dongxw.ProductService.query({
                     param: {
-                        prdFlag : 0,
+                        prdFlagNot : 0,
                         customerId:this.customerId,
                         productTypeId: this.entity.productTypeId,
                         parentId: this.entity.parentId,

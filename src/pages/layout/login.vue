@@ -110,7 +110,7 @@
                 this.$api.AppService.login({username: loginName, password, verifyCode})
                     .then(rsp => {
                         this.$msgJsonResult(rsp)
-                        if(rsp.code=="0") {
+                        if(rsp.code== 0 ) {
                             let data = rsp.data
                             this.loading = false
                             auth.setToken({access_token: data.token, expires_in: data.expiresIn});
@@ -125,9 +125,9 @@
 
                         this.loading = false;
                         if (err.code === 'account_unvalid') {
-                            this.$message({message: `用户名或密码错`, type: 'error'});
+                             this.$message({message: `用户名或密码错`, type: 'error'});
                         } else {
-                            this.$message({message: '登录异常:' + err.msg, type: 'error'});
+                             this.$message({message: '登录异常:' + err.msg, type: 'error'});
                         }
                     });
             },

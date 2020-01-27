@@ -155,17 +155,17 @@
 
                         <el-row  >
 
-                        <el-col :span="12">
+                        <el-col :span="9">
                             <el-form-item label="外箱尺寸" prop="obSize">
                                 <el-input placeholder="外箱尺寸(x*y*z)" v-model="entity.obSize"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="6">
                             <el-form-item label="CBM" prop="cbm">
                                 <el-input disabled placeholder="CBM" v-model="cbm"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="9">
 
                             <el-form-item label="外箱数量" prop="obQty">
                                 <el-input placeholder="外箱数量" v-model="entity.obQty"></el-input>
@@ -378,8 +378,53 @@
                             trigger: "change"
                         }
                     ],
-
-
+                    // obQty: [
+                    //     {
+                    //         type: "number",
+                    //         required: true,
+                    //         message: "外箱数量请输入数字",
+                    //         trigger: "change"
+                    //     }
+                    // ],
+                    // obGw: [
+                    //     {
+                    //         type: "number",
+                    //         required: true,
+                    //         message: "外箱毛重(kg)请输入数字",
+                    //         trigger: "change"
+                    //     }
+                    // ],
+                    // obNw: [
+                    //     {
+                    //         type: "number",
+                    //         required: true,
+                    //         message: "外箱净重(kg)请输入数字",
+                    //         trigger: "change"
+                    //     }
+                    // ],
+                    // ibQty: [
+                    //     {
+                    //         type: "number",
+                    //         required: true,
+                    //         message: "内盒数量请输入数字",
+                    //         trigger: "change"
+                    //     }
+                    // ],
+                    // ibGw: [
+                    //     {
+                    //         type: "number",
+                    //         required: true,
+                    //         message: "内盒毛重(kg)请输入数字",
+                    //         trigger: "change"
+                    //     }
+                    // ], ibNw: [
+                    //     {
+                    //         type: "number",
+                    //         required: true,
+                    //         message: "内箱净重(kg)请输入数字",
+                    //         trigger: "change"
+                    //     }
+                    // ],
                 }
             };
         },
@@ -394,7 +439,7 @@
                         }
                         return v.reduce(multi, 1)/1000000
                     }
-                    return 0;        //return this.entity.obSize;
+                    return 0;
                 }
             }
         },
@@ -449,10 +494,10 @@
             init(options) {
                 this.resetForm();
                 if (options.id) {
-                    console.log(JSON.stringify(this.entity));
+                    //console.log(JSON.stringify(this.entity));
 
                     this.$api.dongxw.ProductService.findById(options.id).then(r => {
-                        console.log(JSON.stringify(r))
+                        //console.log(JSON.stringify(r))
                         this.entity = r.data;
 
                     });

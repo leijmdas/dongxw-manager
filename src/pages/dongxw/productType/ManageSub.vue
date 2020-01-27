@@ -4,6 +4,10 @@
         <v-toolbar type="alert">
             <div slot="tip" class="panel panel-default panel-search">
                 <el-form :inline="true">
+                    <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue">
+                            {{ parent?parent.code:'请上方点大类' }}</span>
+                    </el-form-item>
+
                     <el-form-item label="小类编码" prop="code">
                         <el-input v-model="page.query.param.code" clearable></el-input>
                     </el-form-item>
@@ -11,15 +15,11 @@
                         <el-input v-model="page.query.param.name" clearable></el-input>
                     </el-form-item>
 
-                    <el-form-item>
-                       <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                        <el-button @click="cancel">取消</el-button>
+                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                    <el-button @click="cancel">取消</el-button>
 
-                        <el-button type="primary" plain @click="create">新增</el-button>
-                        <el-form-item style="margin-left: 20px " label="大类标识"><span style="color:blue">
-                            {{ parentId }}</span></el-form-item>
+                    <el-button type="primary" plain @click="create">新增</el-button>
 
-                    </el-form-item>
                 </el-form>
             </div>
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
@@ -84,6 +84,7 @@
             return {
                 metafields : [],
                 parentId: -1,
+                parent:{},
                 formStatus: 1,
                 orderDateRange: [],
                 summaryMap: {},
@@ -192,12 +193,10 @@
             },
             init(options = {}) {
 
-                console.log(JSON.stringify(options));
                 this.parentId = options.parentId;
-                console.log(this.parentId);
+                this.parent = options.parent;
 
                 this.page.query.param.parentId = this.parentId;
-                console.log(JSON.stringify(this.page));
 
                 this.search();
             },

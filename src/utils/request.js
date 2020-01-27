@@ -97,7 +97,7 @@ service.interceptors.response.use(
     return Promise.reject(wrapError);
   })
 function defaultHandler(reqError) {
-  console.log(reqError)
+  //console.log(reqError)
   let msg = '';
   switch (reqError.httpCode) {
     case 400: msg = '请求错误(400)'; break;

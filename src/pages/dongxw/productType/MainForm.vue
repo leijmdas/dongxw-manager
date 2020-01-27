@@ -25,9 +25,7 @@
             },
             funShowSub(row) {
                 this.parentId = row.id;
-                console.log(row.id);
-                console.log(this.parentId);
-                this.$refs.managePanelSub.init({parentId: row.id});
+                this.$refs.managePanelSub.init({parent :row,parentId: row.id});
 
             }
         },

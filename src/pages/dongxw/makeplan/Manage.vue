@@ -15,8 +15,8 @@
                 </el-form-item>
                 <!--<el-button type="primary"   v-if="page.query.param.orderId>0"  @click="makePlan" plain >新增订单计划</el-button>-->
                 <el-dropdown @command="handleCommand">
-                    <el-button type="primary" :disabled="disabledAddBtn" >
-                        同步订单计划<i class="el-icon-arrow-down el-icon--right"></i>
+                    <el-button type="primary" :disabled="disabledAddBtn" >  同步订单计划
+                        <i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="add">新增订单计划</el-dropdown-item>
@@ -49,10 +49,15 @@
                                     value-format="yyyy-MM-dd HH:mm:ss">
                     </el-date-picker>
 
-
+                    <el-form-item label="完成标识" prop="finishFlag">
+                        <el-select @change="search" :clearable="true" v-model="page.query.param.finishFlag" style="width:100px">
+                            <el-option v-for="item in $dongxwDict.store.FINISH_FLAG" :key="item[0]" :value="item[0]"
+                                       :label="item[1]"></el-option>
+                        </el-select>
+                    </el-form-item>
 
                 </el-form-item>
-                <el-form-item label="状态" prop="status">
+                <el-form-item label="订单状态" prop="status">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
@@ -90,14 +95,6 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
 
-            <!--<el-table-column prop="orderType" label="订单类型" width="70">-->
-                <!--<template slot-scope="{row}">-->
-                    <!--<span :style="'style:red'">-->
-                        <!--{{$dongxwDict.getText(row.orderMaster?row.orderMaster.orderType:-1,$dongxwDict.store.ORDER_TYPE)}}-->
-                    <!--</span>-->
-                <!--</template>-->
-            <!--</el-table-column>-->
-
             <el-table-column prop="outFlag" label="外发标志" width="70">
                 <template slot-scope="{row}">
                     <span :style="row.outFlag==1?'color:blue':''">
@@ -105,11 +102,14 @@
                         </span>
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="customerId" label="客户代码" width="80">-->
-                <!--<template slot-scope="{row}">-->
-                    <!--{{ row.customer?row.customer.custNo:'-'}}-->
-                 <!--</template>-->
-            <!--</el-table-column>-->
+
+            <el-table-column prop="status" label="状态" width="80">
+                <template slot-scope="{row}">
+                    <span :style="row.status==0?'color:blue':''">
+                    {{$dongxwDict.getText(row.status,$dongxwDict.store.AUDIT_STATUS)}}
+                        </span>
+                </template>
+            </el-table-column>
             <el-table-column prop="customerId" label="客户名称" width="110">
                 <template slot-scope="{row}">
                     {{ row.customer?row.customer.custName:'-'}}
@@ -127,6 +127,16 @@
             <el-table-column prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.code:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="epCode" label="EP款号" width="100">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.epCode:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="remark" label="产品描述" width="190">
+                <template slot-scope="{row}">
+                    {{ row.product?row.product.remark:'-'}}
                 </template>
             </el-table-column>
             <el-table-column prop="color" label="颜色" width="100">

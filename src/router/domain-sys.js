@@ -72,14 +72,21 @@ let sysRouter = [{
       name: 'appVersion:manage',
       meta: {title: 'APP版本升级',perm: 'appVersion:manage'}
   },
-  {
-      path: 'datadict/manage',
-      component: require('@/pages/common/datadict/Manage.vue'),
-      name: 'datadict:manage',
-      meta: {title: '元数据管理',perm: 'sysRole:manage'}
-  }
 
+      {
+          path: 'datadict/manage',
+          component: require('@/pages/common/datadict/Manage.vue'),
+          name: 'datadict:manage',
+          meta: {title: '元数据管理',perm: 'sysRole:manage'}
+      },
 
-  ]
+      {
+          path:  'https://panjiachen.github.io/vue-element-admin-site/#/',
+          //component: require('@/pages/common/datadict/Manage.vue'),
+          name: 'datadict:managehtml',
+          meta: {title: 'vue',perm: 'sysRole:manage'}
+      }
+
+]
 }]
 export default sysRouter;

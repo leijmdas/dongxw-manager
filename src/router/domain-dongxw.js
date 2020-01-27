@@ -33,8 +33,8 @@ let router0 = [
             },
             {
                 path: 'dongxw/bom',
-                component: require('@/pages/dongxw/product/Manage.vue'),
-                name: 'bom:manage',
+                component: require('@/pages/dongxw/bom/Manage.vue'),
+                name: 'bom:Manage',
                 meta: {title: 'BOM表', perm: 'product:manage'}
             },
 
