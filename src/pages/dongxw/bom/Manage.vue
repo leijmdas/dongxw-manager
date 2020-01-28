@@ -12,7 +12,9 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
                 <!--<el-table-column prop="childId" label="父件标识" width="60"></el-table-column>-->
-
+                <el-switch style="margin-left:20px; margin-right: 20px" v-model="switchShow"
+                           active-text="显示产品列表" inactive-text="不显示">
+                </el-switch>
                 <el-form-item label="大类" prop="orderType">
                     <rm-type-select  @change="search" v-model="page.query.param.bigType" :clearable="true"></rm-type-select>
                 </el-form-item>
@@ -34,22 +36,20 @@
             </el-form>
         </div>
         <v-toolbar title="物料列表" type="alert">
-            <el-switch slot="tip" style="margin-left:20px; margin-right: 20px" v-model="switchShow"
-                       active-text="显示产品列表" inactive-text="不显示">
-            </el-switch>
+
             <span  v-if="!product.code" slot="tip" style="color:red;margin-left: 40px;margin-top: 30px">
-                请点击上方选中产品然后编辑BOM
+                请点上方产品后编辑BOM
             </span>
 
-            <span v-if="product.code" slot="tip" style="color:green;margin-left:140px;margin-top: 30px">
-                {{ product.code +":"+product.epCode +" : "+product.remark}}
+            <span v-if="product.code" slot="tip" style="color:blue;margin-left:40px;margin-top: 40px">
+                {{  product.code +":"+product.epCode +" : "+product.remark}}
             </span>
             <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
 
             <!--<el-switch style="margin-left:20px; margin-right: 20px"-->
-                       <!--v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">-->
+                       <!--v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">-->
             <!--</el-switch>-->
 
         </v-toolbar>
@@ -126,7 +126,7 @@
             <el-table-column prop="createDate" label="建档时间" width="120">
             </el-table-column>
 
-            <el-table-column prop="createByName" label="建档人" width="100">
+            <el-table-column prop="createByName" label="建档人" width="80">
             </el-table-column>
             <!--<el-table-column prop="memo" label="备注"  >-->
             <!--</el-table-column>-->

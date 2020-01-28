@@ -222,7 +222,7 @@
                 this.$confirm("确定删除此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    this.$api.dongxw.BomService.deleteById(row.id).then(rsp => {
+                    this.$api.dongxw.ProductService.deleteById(row.id).then(rsp => {
                         this.search();
                         this.$message({
                             type: "success",

@@ -2,7 +2,7 @@
     <div>
         <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
             <el-tabs :stretch="isExp" v-model="activeName">
-                <el-tab-pane label="物料信息" name="productInfo">
+                <el-tab-pane label="物料用量" name="productInfo">
                     <rm-view v-model="entity.childId"></rm-view>
                     <el-collapse>
 
@@ -13,7 +13,6 @@
                         </el-collapse-item>
                     </el-collapse>
                     <el-row>
-                        <el-col :span="23">
                             <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
 
                             <el-row :span="24" style="margin-top: 10px">
@@ -67,29 +66,41 @@
                                 </el-col>
 
                             </el-row>
-                            <el-row :span="24" style="margin-top: 5px">
-                                <el-col :span="12">
-                                    <el-form-item label="损耗率(%)" prop="lossRate">
-                                        <el-input placeholder="损耗率(%)" v-model="entity.lossRate"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="损耗数" prop="lossQty">
-                                        <el-input placeholder="损耗数" v-model="entity.lossQty"></el-input>
-                                    </el-form-item>
-                                </el-col>
+                            <fieldset>
+                                <legend>损耗合计</legend>
 
+                                <el-row :span="24">
 
-                            </el-row>
+                                    <el-col :span="12" >
+                                        <el-form-item v-if="switchLossRate" label="损耗率(%)" prop="lossRate">
+                                            <el-input placeholder="损耗率(%)" v-model="entity.lossRate"></el-input>
+                                        </el-form-item>
+                                        <el-form-item v-else label="损耗数" prop="lossQty">
+                                            <el-input placeholder="损耗数" v-model="entity.lossQty"></el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="12" >
+                                        <el-switch style="margin-left: 50px" v-model="switchLossRate"
+                                                   active-text="损耗率(%)" inactive-text="损耗数">
+                                        </el-switch>
+                                    </el-col>
+                                </el-row>
+                                <el-row :span="24">
+                                    <el-col :span="12">
+                                        <el-form-item label="数量" prop="qty">
+                                            <el-input disabled placeholder="数量" v-model="lossqty"></el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="12">
+                                        <el-form-item label="金额" prop="money">
+                                            <el-input disabled placeholder="金额" v-model="lossmoney"></el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
 
+                            </fieldset>
 
                             <el-row :span="24" style="margin-top: 10px">
-                                <!--<el-col :span="12">-->
-                                    <!--<el-form-item label="productId" prop="productId">-->
-                                        <!--<el-input disabled placeholder="productId" v-model="productId"></el-input>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
-
                                 <el-col :span="12">
 
                                     <el-form-item label="建档时间" prop="createDate">
@@ -103,7 +114,6 @@
                                     </el-form-item>
                                 </el-col>
                             </el-row>
-                        </el-col>
                     </el-row>
                 </el-tab-pane>
 
@@ -193,7 +203,7 @@
         },
         data() {
             return {
-
+                switchLossRate:true,
                 options: [
 
                     {label: '', value: '0'},
@@ -234,12 +244,31 @@
         },
         computed: {
             money: function () {
-                this.entity.money = Math.round(100*this.entity.qty * this.entity.price)/100
+                this.entity.money = Math.round(100 * this.entity.qty * this.entity.price) / 100
                 return this.entity.money
-            }
+            },
+
+            lossmoney: function () {
+                let money = Math.round(100 * parseFloat(this.lossqty) * this.entity.price)  / 100
+                return  money
+
+            },
+
+            lossqty: function () {
+                let qty = parseFloat(this.entity.qty)
+                if (this.switchLossRate) {
+                    this.entity.lossQty=0
+                    qty = (100 + parseFloat(this.entity.lossRate)) * qty / 100
+                } else {
+                    this.entity.lossRate=0
+                    qty = qty + parseFloat(this.entity.lossQty)
+                }
+                return qty
+            },
+        },
+        watch: {
 
         },
-
         methods: {
 
             clearImg() {

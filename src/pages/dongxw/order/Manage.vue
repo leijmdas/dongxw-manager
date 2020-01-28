@@ -159,7 +159,7 @@
                     {{ $dongxwDict.viewDate(row.createDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="createByName" label="建档人" width="150">
+            <el-table-column prop="createByName" label="建档人" width="80">
             </el-table-column>
 
             <el-table-column prop="remark" label="备注"></el-table-column>

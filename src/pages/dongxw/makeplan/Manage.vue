@@ -78,7 +78,7 @@
 
             </el-form>
         </div>
-            <v-toolbar title="数据列表" type="alert">
+            <v-toolbar title="计划列表" type="alert">
 
                 <el-button style="margin-left: 30px" slot="tip" type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                 <el-button slot="tip" @click="cancel">取消</el-button>
@@ -209,7 +209,7 @@
                     {{ $dongxwDict.viewDate(row.createDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="createByName" label="建档人" width="100">
+            <el-table-column prop="createByName" label="建档人" width="80">
             </el-table-column>
 
 

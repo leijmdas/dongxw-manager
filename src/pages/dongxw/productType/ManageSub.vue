@@ -5,7 +5,7 @@
             <div slot="tip" class="panel panel-default panel-search">
                 <el-form :inline="true">
                     <el-form-item style="margin-left: 20px " label="大类标识">
-                        <span style="color:red"> {{ parent?parent.code:'请上方点大类' }}</span>
+                        <span style="color:red"> {{ parent?parent.code:'请点上方大类' }}</span>
                     </el-form-item>
 
                     <el-form-item label="小类编码" prop="code">

@@ -118,7 +118,7 @@
             <el-table-column prop="createDate" label="建档时间" width="150">
             </el-table-column>
 
-            <el-table-column prop="createByName" label="建档人" width="150">
+            <el-table-column prop="createByName" label="建档人" width="80">
             </el-table-column>
 
             <el-table-column prop="status" label="状态" width="60">

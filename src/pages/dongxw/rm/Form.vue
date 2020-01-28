@@ -61,7 +61,7 @@
                                 </el-col>
                                 <el-col :span="12">
                                     <el-form-item label="单价" prop="price">
-                                        <el-input placeholder="单位" v-model="entity.price"></el-input>
+                                        <el-input placeholder="单价" v-model="entity.price"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
