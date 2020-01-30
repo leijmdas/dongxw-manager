@@ -69,22 +69,27 @@
                             {{row.productType.prdFlag==null?'-':$dongxwDict.getText(row.productType.prdFlag,$dongxwDict.store.STORE_TYPE)}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="parentId" label="大类" width="100">
+            <el-table-column prop="parentId" label="大类" width="90">
 
                 <template slot-scope="{row}">
                     {{ row.productType? row.productType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="productSubType" label="小类" width="120">
+            <el-table-column prop="productSubType" label="小类" width="90">
                 <template slot-scope="{row}">
                     {{ row.productSubType? row.productSubType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="code" label="物料代码" width="160"></el-table-column>
-            <el-table-column prop="name" label="物料名称" width="180"></el-table-column>
+            <el-table-column prop="code" label="物料代码" width="100">
+                <template slot-scope="{row}">
+                    <span style="color:green"> {{row.code }} </span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="name" label="物料名称" width="160"></el-table-column>
 
 
-            <el-table-column prop="remark" label="规格型号" width="245"></el-table-column>
+
+            <el-table-column prop="remark" label="规格型号" width="200"></el-table-column>
             <el-table-column prop="color" label="颜色" width="100">
             </el-table-column>
             <el-table-column prop="unit" label="单位" width="60"></el-table-column>

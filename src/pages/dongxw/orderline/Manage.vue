@@ -41,7 +41,22 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
+            <el-table-column prop="customerId" label="客户名称" width="120">
+                <template slot-scope="{row}">
+                    {{ row.customer?row.customer.custName:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="customerOrderCode" label="客户订单号" width="120">
+                <template slot-scope="{row}">
+                   <span style="color:green"> {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}} </span>
+                </template>
+            </el-table-column>
 
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
+                <template slot-scope="{row}">
+                    {{ row.orderMaster?row.orderMaster.epOrderCode:'-'}}
+                </template>
+            </el-table-column>
             <el-table-column prop="parentId" label="产品大类" width="100">
                 <template slot-scope="{row}">
                     {{ row.parentProductType?row.parentProductType.code:'-'}}
@@ -52,22 +67,7 @@
                     {{ row.productType?row.productType.code:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="customerId" label="客户名称" width="120">
-                <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custName:'-'}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="customerOrderCode" label="客户订单号" width="120">
-                <template slot-scope="{row}">
-                    {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
-                </template>
-            </el-table-column>
 
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
-                <template slot-scope="{row}">
-                    {{ row.orderMaster?row.orderMaster.epOrderCode:'-'}}
-                </template>
-            </el-table-column>
             <el-table-column prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.code:'-'}}

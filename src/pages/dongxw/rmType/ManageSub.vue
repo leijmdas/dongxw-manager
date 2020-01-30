@@ -36,7 +36,7 @@
             </el-table-column>
             <el-table-column  prop="parentId" label="大类" width="190">
                 <template slot-scope="{row}">
-                    {{ row.pProductType?row.pProductType.name:'-'}}
+                    <span style="color:green">   {{ row.pProductType?row.pProductType.name:'-'}} </span>
                 </template>
             </el-table-column>
             <el-table-column prop="code" label="小类编码" width="160"></el-table-column>

@@ -79,7 +79,7 @@
 
             <el-table-column prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
-                   <span   > {{row.code }} </span>
+                    <span style="color:green"> {{row.code }} </span>
                 </template>
             </el-table-column>
 

@@ -94,7 +94,7 @@
             </el-table-column>
             <el-table-column prop="customerOrderCode" label="客订单号" width="110">
                 <template slot-scope="{row}">
-                    {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
+                    <span style="color:green">{{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="epOrderCode" label="EP订单号" width="110">

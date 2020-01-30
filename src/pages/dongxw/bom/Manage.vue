@@ -13,7 +13,7 @@
             <el-form :inline="true">
                 <!--<el-table-column prop="childId" label="父件标识" width="60"></el-table-column>-->
                 <el-switch style="margin-left:20px; margin-right: 20px" v-model="switchShow"
-                           active-text="显示产品列表" inactive-text="不显示">
+                           active-text="显示产品清单" inactive-text="不显示">
                 </el-switch>
                 <el-form-item label="大类" prop="orderType">
                     <rm-type-select  @change="search" v-model="page.query.param.bigType" :clearable="true"></rm-type-select>
@@ -43,7 +43,7 @@
                 请点上方产品后编辑BOM
             </span>
 
-            <span v-if="product.code" slot="tip" style="color:blue;margin-left: 40px;margin-top: 40px">
+            <span v-if="product.code" slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
                 {{  product.code +" : "+product.epCode +" : "+product.remark}}
             </span>
             <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
@@ -69,7 +69,7 @@
             <!--</el-table-column>-->
             <el-table-column prop="productId" label="产品" width="80">
                 <template slot-scope="{row}">
-                    {{ row.product? row.product.code :'-' }}
+                   <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
                 </template>
             </el-table-column>
             <!--<el-table-column prop="parentId" label="父标识" width="80"></el-table-column>-->

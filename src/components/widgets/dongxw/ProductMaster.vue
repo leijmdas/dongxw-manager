@@ -49,7 +49,7 @@
                 <!--</el-form-item>-->
             </el-form>
         </div>
-        <v-toolbar title="产品列表" type="alert">
+        <v-toolbar title="产品清单" type="alert">
             <el-button style="margin-left: 40px" slot="tip" type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button slot="tip" @click="cancel">取消</el-button>
 
@@ -77,7 +77,7 @@
 
             <el-table-column prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
-                   <span   > {{row.code }} </span>
+                   <span   style="color:green"> {{row.code }} </span>
                 </template>
             </el-table-column>
 
