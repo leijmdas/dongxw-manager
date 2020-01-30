@@ -31,7 +31,7 @@
                 </el-form-item>
             </el-form>
         </div>
-        <v-toolbar title="数据列表" type="alert">
+        <v-toolbar title="客户列表" type="alert">
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
             <el-switch style="margin-left:20px; margin-right: 20px"

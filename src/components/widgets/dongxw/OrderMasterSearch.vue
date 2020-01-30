@@ -8,12 +8,7 @@
                                      :clearable="true"></customer-select>
 
                 </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
+
                 <el-form-item label="日期">
 
                     <div slot="label">
@@ -31,6 +26,12 @@
                                     value-format="yyyy-MM-dd HH:mm:ss">
                     </el-date-picker>
 
+                </el-form-item>
+                <el-form-item label="状态" prop="status">
+                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="EP订单号" prop="epOrderCode">
                     <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
@@ -54,43 +55,46 @@
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                    <el-button @click="cancel">取消</el-button>
-                </el-form-item>
+                <!--<el-form-item>-->
+                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+                    <!--<el-button @click="cancel">取消</el-button>-->
+                <!--</el-form-item>-->
 
             </el-form>
         </div>
         <v-toolbar title="订单列表" type="alert">
                 <span slot="tip" style="margin-left:60px;">
-                <span style="color :red">  鼠标双击进入订单修改! </span>
+                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                    <el-button @click="cancel">取消</el-button>
+                <span style="margin-left:60px;color :red">  草稿状态不能新增计划! </span>
                 </span>
             <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
             <!--<el-button @click="cancel">取消</el-button>-->
 
-                <el-button type="primary" plain @click="create">新增</el-button>
+                <!--<el-button type="primary" plain @click="create">新增</el-button>-->
 
-                <el-button plain @click="exportRecords">导出XLS</el-button>
-                <el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>
+                <!--<el-button plain @click="exportRecords">导出XLS</el-button>-->
+                <!--<el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>-->
            </v-toolbar>
-        <v-table ref="table" :page="page" :dblclick="edit" :click="clickRow" :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page"  :pageSize="12" :dblclick="edit"
+                 :click="tableRowClick"   :table-minheight="300" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
 
-            <el-table-column prop="orderType" label="订单类型" width="90">
+            <el-table-column prop="orderType" label="订单类型" width="85">
                 <template slot-scope="{row}">
                     <span :style="'style:red'"> {{$dongxwDict.getText(row.orderType,$dongxwDict.store.ORDER_TYPE)}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="parentId" label="父订单" width="80">
-                <template slot-scope="{row}">
-                    {{ row.orderMasterParent? row.orderMasterParent.epOrderCode:'-'}}
+            <!--<el-table-column prop="parentId" label="父订单" width="80">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{ row.orderMasterParent? row.orderMasterParent.epOrderCode:'-'}}-->
 
-                </template>
-            </el-table-column>
+                <!--</template>-->
+            <!--</el-table-column>-->
 
             <el-table-column prop="customerId" label="客户代码" width="80">
                 <template slot-scope="{row}">
@@ -103,24 +107,15 @@
                 </template>
             </el-table-column>
 
-            <el-table-column  prop="status" label="订单状态" width="80">
-                <template slot-scope="{row}">
-                    <span :style="row.status==0?'color:green':''"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
-                </template>
-            </el-table-column>
 
-             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号+原件" width="120">
+
+             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号" width="120">
                 <template slot-scope="scope">
-                    <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
-                    <span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>
+                    <el-button type="text"  v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
+                    <!--<span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>-->
                 </template>
             </el-table-column>
             <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
-            <!--<el-table-column  prop="customerOrderImg" label="订单原件" width="78">-->
-                <!--<template slot-scope="scope">-->
-                    <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a> -->
-                <!--</template>-->
-            <!--</el-table-column>-->
 
             <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">
@@ -134,7 +129,7 @@
                 {{ $dongxwDict.viewDate(row.orderDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="customerIssueDate" label="客户交货日期" width="100">
+            <el-table-column prop="customerIssueDate" label="客户交货日期" width="120">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.customerIssueDate)}}
                 </template>
@@ -144,67 +139,54 @@
                     {{ $dongxwDict.viewDate(row.checkDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="factroyIssueDate" label="工厂交货日期" width="100">
+            <el-table-column prop="factroyIssueDate" label="工厂交货日期" width="120">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.factroyIssueDate)}}
                 </template>
             </el-table-column>
 
-            <el-table-column prop="invoiceNoIni" label="预收发票编号" width="120"></el-table-column>
-            <el-table-column prop="invoiceNo" label="正式发票编号" width="120"></el-table-column>
+            <!--<el-table-column prop="invoiceNoIni" label="预收发票编号" width="120"></el-table-column>-->
+            <!--<el-table-column prop="invoiceNo" label="正式发票编号" width="120"></el-table-column>-->
 
 
-            <el-table-column prop="createDate" label="建档时间" width="100">
+            <!--<el-table-column prop="createDate" label="建档时间" width="100">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{ $dongxwDict.viewDate(row.createDate)}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
+            <el-table-column prop="createByName" label="建档人" width="100">
+            </el-table-column>
+            <el-table-column  prop="status" label="订单状态" width="80">
                 <template slot-scope="{row}">
-                    {{ $dongxwDict.viewDate(row.createDate)}}
+                    <span :style="row.status==0?'color:green':''"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="createByName" label="建档人" width="80">
-            </el-table-column>
-
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column width="140" label="操作" :fixed="'right'">
+            <el-table-column width="150" label="同步订单计划" :fixed="'right'">
                 <template slot-scope="scope">
-                    <el-button    @click="showLine(scope.row)"v-if="scope.row.orderType!=100"
-                                  style="color:green"  type="info" plain title="产品"    >
-                        产品
+
+                    <el-button @click="makePlan(scope.row)" title="新增" plain type="primary" v-if="scope.row.status>0">
+                        新增
                     </el-button>
-                    <el-button type="text" title="编辑" @click="edit(scope.row)">
-                        <i class="el-icon-edit"></i>
+                    <el-button @click="checkPlan(scope.row)" title="检查" plain v-if="scope.row.status>0">
+                        检查
                     </el-button>
 
-
-                    <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
-                        <el-button type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除"
-                                   v-if="scope.row.status==0">
-                            <i style = "color:red" class="el-icon-delete"></i>
-                        </el-button>
-                    </el-tooltip>
-                    <!--<el-button  type="primary"  v-if="scope.row.status>0" title="生成计划(不会重复生成)" @click="makePlan(scope.row)">-->
-                        <!--生成计划-->
-                    <!--</el-button>-->
-
+                    <slot name="useBtn"></slot>
                 </template>
             </el-table-column>
 
         </v-table>
 
+        <!--<v-dialog ref="formDiag" title="信息编辑" :width="'50%'">-->
+            <!--<form-panel @saved="onFormSaved"></form-panel>-->
+            <!--<div slot="footer">-->
+                <!--<el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>-->
+                <!--<el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>-->
+            <!--</div>-->
+        <!--</v-dialog>-->
 
-        <v-dialog ref="formDiag" title="信息编辑" :width="'50%'">
-            <form-panel @saved="onFormSaved"></form-panel>
-            <div slot="footer">
-                <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
-                <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
-            </div>
-        </v-dialog>
-        <v-dialog ref="formDiagView" title="订单原件">
-            <form-view-panel @saved="onFormSaved"></form-view-panel>
-            <div slot="footer">
-                <!--<el-button type="primary" @click="$refs.formDiagView.dispatch('submit')">保存</el-button>-->
-                <el-button type="default" @click="()=>{$refs.formDiagView.hide()}">关闭</el-button>
-            </div>
-        </v-dialog>
 
     </div>
 </template>
@@ -215,11 +197,10 @@
 </style>
 <script>
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
-    import FormPanel from './Form';
-    import FormViewPanel from './FormViewPic';
+    //import FormPanel from './Form';
 
     export default {
-        components: {FormPanel, FormViewPanel, CustomerSelect},
+        components: { CustomerSelect},
         props: {
             fatherMethod: {
                 type: Function,
@@ -229,6 +210,10 @@
                 type: Function,
                 default: null
             },
+                tableRowClick: {
+                    type: Function,
+                    required: false
+                },
 
         },
         data() {
@@ -315,14 +300,29 @@
             create() {
                 this.$refs.formDiag.show();
             },
+            checkPlan(row) {
+                let self = this;
 
+                self.$api.dongxw.MakePlan.checkPlanByOrder(row.id).then(rsp => {
+
+                    self.$msgJsonResult(rsp)
+                });
+            },
             makePlan(row) {
-                this.$api.dongxw.MakePlan.makePlanByOrder(row.id).then(rsp => {
-                    //this.search();
-                    this.$message({
-                        type: "success",
-                        message: "生成成功!"
+                let self = this;
+
+                this.$confirm("确定要新增订单计划吗?", "提示：可多次操作， 不会重复增加!", {
+                    type: "warning"
+                }).then(() => {
+
+                    self.$api.dongxw.MakePlan.makePlanByOrder(row.id).then(rsp => {
+
+                        self.$msgJsonResult(rsp)
+                        if(self.tableRowClick) {
+                            self.tableRowClick(row)
+                        }
                     });
+
                 });
             },
             edit(row) {
@@ -337,23 +337,7 @@
                 this.$refs.formDiagView.show({id: row.id});
             },
             toggleStatus(row) {
-                let status = row.status;
-                let msg = '确定上架此活动吗？</br><span style="color:red">一旦上架，部分信息不允许修改!</span>';
-                if (status == 1) {
-                    msg = '确定下架此活动吗？</br><span style="color:red">一旦下架，已派发的优惠券无法使用!</span>';
-                }
-                this.$confirm(msg, "确认", {
-                    type: "warning",
-                    dangerouslyUseHTMLString: true
-                }).then(() => {
-                    this.$api.ipark.PromotionInfoService.updateStatus(row.id, status == 1 ? 2 : 1).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "操作成功!"
-                        });
-                    });
-                });
+
             },
             del(row) {
                 this.$confirm("确定删除此条记录吗?", "提示", {
