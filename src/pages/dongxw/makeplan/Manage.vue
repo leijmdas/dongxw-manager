@@ -30,6 +30,12 @@
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
+                <!--<el-form-item label="外发备料" prop="outPrepareRm">-->
+                    <!--<el-select @change="search" clearable style="width:100%" v-model="page.query.param.outPrepareRm">-->
+                        <!--<el-option v-for="item in $dongxwDict.store.YESNO_TYPE" :key="item[0]" :value="item[0]"-->
+                                   <!--:label="item[1]"></el-option>-->
+                    <!--</el-select>-->
+                <!--</el-form-item>-->
                 <el-form-item label="日期">
 
                     <div slot="label">
@@ -95,14 +101,20 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
 
-            <el-table-column prop="outFlag" label="外发标志" width="70">
+            <el-table-column prop="outFlag" label="外发标志" width="90">
                 <template slot-scope="{row}">
                     <span :style="row.outFlag==1?'color:blue':''">
                     {{$dongxwDict.getText(row.outFlag,$dongxwDict.store.OUT_FLAG)}}
                         </span>
                 </template>
             </el-table-column>
-
+            <el-table-column prop="outPrepareRm" label="外发备料" width="90">
+                <template slot-scope="{row}">
+                    <span :style="row.outPrepareRm==1?'color:blue':''">
+                    {{$dongxwDict.getText(row.outPrepareRm,$dongxwDict.store.YESNO_TYPE)}}
+                        </span>
+                </template>
+            </el-table-column>
             <el-table-column prop="status" label="状态" width="80">
                 <template slot-scope="{row}">
                     <span :style="row.status==0?'color:blue':''">

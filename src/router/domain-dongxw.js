@@ -20,24 +20,24 @@ let router0 = [
                 name: 'product:manage',
                 meta: {title: '产品清单', perm: 'product:manage'}
             },
+
             {
                 path: 'dongxw/rmType/manage',
                 component: require('@/pages/dongxw/rmType/MainForm.vue'),
                 name: 'rmType:manage',
-                meta: {title: '物料类型', perm: 'product:manage'}
+                meta: {title: '物料类型', perm: 'rmType:manage'}
             },{
                 path: 'dongxw/rm',
                   component: require('@/pages/dongxw/rm/Manage.vue'),
                 name: 'rm:manage',
-                meta: {title: '物料清单', perm: 'product:manage'}
+                meta: {title: '物料清单', perm: 'rm:manage'}
             },
             {
                 path: 'dongxw/bom',
                 component: require('@/pages/dongxw/bom/Manage.vue'),
                 name: 'bom:Manage',
-                meta: {title: 'BOM表', perm: 'product:manage'}
+                meta: {title: 'BOM表', perm: 'bom:manage'}
             },
-
 
         ]
     },
@@ -62,10 +62,9 @@ let router0 = [
             {
                 path: 'dongxw/orderline/ManageQuery',
                 component: require('@/pages/dongxw/orderline/ManageQuery.vue'),
-                name: 'orderlst:manage',
-                meta: {title: '查询订单', perm: 'orderProduct:manage'}
+                name: 'queryOrder:manage',
+                meta: {title: '查询订单', perm: 'queryOrder:manage'}
             }
-
         ]
     },
     {
@@ -75,24 +74,23 @@ let router0 = [
         children: [
 
             {
-                path: 'makePlan/manage',
+                path: 'makeplan/manage',
                 component: require('@/pages/dongxw/makeplan/Manage.vue'),
-                name: 'makePlan:manage',
+                name: 'makeplan:manage',
                 meta: {title: '生产计划表', perm: 'makeplan:manage'}
             },
             {
                 path: 'makesheet/manage',
                 component: require('@/pages/dongxw/makeplan/Manage.vue'),
                 name: 'makesheet:manage',
-                meta: {title: '生产制造单', perm: 'makeplan:manage'}
+                meta: {title: '生产制造单', perm: 'makesheet:manage'}
             },
             {
-                path: 'makePlanOut/manage',
+                path: 'outpurchase/manage',
                 component: require('@/pages/dongxw/makeplan/Manage.vue'),
-                name: 'makePlanOut:manage',
-                meta: {title: '外发加工单', perm: 'makeplan:manage'}
+                name: 'outpurchase:manage',
+                meta: {title: '外发加工单', perm: 'outpurchase:manage'}
             },
-
         ]
     },
     {
@@ -110,8 +108,8 @@ let router0 = [
             {
                 path: 'userInfo/manage3',
                 //   component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'userInfo:manage3',
-                meta: {title: '采购单', perm: 'user:manage'}
+                name: 'purchase:manage',
+                meta: {title: '采购订单', perm: 'purchase:manage'}
             },
 
         ]

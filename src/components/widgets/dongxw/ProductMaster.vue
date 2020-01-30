@@ -69,20 +69,20 @@
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
 
-            <el-table-column prop="customerId" label="客户名称" width="120">
+            <el-table-column prop="customerId" label="客户名称" width="100">
                 <template slot-scope="{row}">
                     {{ row.customer?row.customer.custName:'-'}}
                 </template>
             </el-table-column>
-
-            <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
-            <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
 
             <el-table-column prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
                    <span   > {{row.code }} </span>
                 </template>
             </el-table-column>
+
+            <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
+
             <el-table-column prop="parentId" label="产品大类" width="120">
                 <template slot-scope="{row}">
                     {{ row.productType? row.productType.code :'-' }}

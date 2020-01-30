@@ -66,39 +66,41 @@
                                 </el-col>
 
                             </el-row>
-                            <fieldset>
-                                <legend>损耗合计</legend>
+                            <!--<fieldset>-->
+                                <!--<legend>损耗合计</legend>-->
 
                                 <el-row :span="24">
 
                                     <el-col :span="12" >
-                                        <el-form-item v-if="switchLossRate" label="损耗率(%)" prop="lossRate">
-                                            <el-input placeholder="损耗率(%)" v-model="entity.lossRate"></el-input>
-                                        </el-form-item>
-                                        <el-form-item v-else label="损耗数" prop="lossQty">
-                                            <el-input placeholder="损耗数" v-model="entity.lossQty"></el-input>
+
+                                        <el-form-item  label="损耗类型" prop="lossType">
+
+                                            <el-select  style="width:100%" v-model="entity.lossType"  >
+                                                <el-option v-for="item in $dongxwDict.store.LOSS_TYPE" :key="item[0]"
+                                                           :value="item[0]" :label="item[1]"></el-option>
+                                            </el-select>
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="12" >
-                                        <el-switch style="margin-left: 50px" v-model="switchLossRate"
-                                                   active-text="损耗率(%)" inactive-text="损耗数">
-                                        </el-switch>
+
+                                        <el-form-item  :label="entity.lossType==0?'损耗数':'损耗率(%)'" prop="lossQty">
+                                            <el-input placeholder="损耗" v-model="entity.lossQty"></el-input>
+                                        </el-form-item>
                                     </el-col>
+
                                 </el-row>
                                 <el-row :span="24">
                                     <el-col :span="12">
-                                        <el-form-item label="数量" prop="qty">
-                                            <el-input disabled placeholder="数量" v-model="lossqty"></el-input>
+                                        <el-form-item label="总数量" prop="totalQty">
+                                            <el-input disabled placeholder="总数量" v-model="totalQty"></el-input>
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="12">
-                                        <el-form-item label="金额" prop="money">
-                                            <el-input disabled placeholder="金额" v-model="lossmoney"></el-input>
+                                        <el-form-item label="总金额" prop="totalMoney">
+                                            <el-input disabled placeholder="总金额" v-model="totalMoney"></el-input>
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
-
-                            </fieldset>
 
                             <el-row :span="24" style="margin-top: 10px">
                                 <el-col :span="12">
@@ -162,17 +164,19 @@
     import SubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
 
     const defaultEntity = {
+        depth : 1,
+        source : 1,
+
+        lossType :1,
+        lossQty : 0,
         customerId: 0,
         id: null,
         qty: 0,
         price: 0,
         money: 0,
         parentId: 0,
-        depth : 1,
         productId: null,
-        source : 1,
-        lossRate :0,
-        lossQty : 0,
+
         sizeL:0,
         sizeW:0,
         sizeX:'',
@@ -203,7 +207,7 @@
         },
         data() {
             return {
-                switchLossRate:true,
+                //switchLossRate:true,
                 options: [
 
                     {label: '', value: '0'},
@@ -248,22 +252,20 @@
                 return this.entity.money
             },
 
-            lossmoney: function () {
-                let money = Math.round(100 * parseFloat(this.lossqty) * this.entity.price)  / 100
+            totalMoney: function () {
+                let money = Math.round(100 * parseFloat(this.totalQty) * this.entity.price)  / 100
                 return  money
 
             },
 
-            lossqty: function () {
-                let qty = parseFloat(this.entity.qty)
-                if (this.switchLossRate) {
-                    this.entity.lossQty=0
-                    qty = (100 + parseFloat(this.entity.lossRate)) * qty / 100
+            totalQty: function () {
+                let type = parseInt(this.entity.lossType)
+                if (type == 1) {
+                    return (100 + parseFloat(this.entity.lossQty)) * this.entity.qty / 100
                 } else {
-                    this.entity.lossRate=0
-                    qty = qty + parseFloat(this.entity.lossQty)
+
+                    return parseFloat(this.entity.qty)+ parseInt(this.entity.lossQty)
                 }
-                return qty
             },
         },
         watch: {

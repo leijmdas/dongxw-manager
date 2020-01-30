@@ -135,7 +135,7 @@ Vue.component("action-column", {
 
 import { assistance } from "../utils";
 export default {
-  name: "vTable",
+    name: "vTable",
     props: {
         dblclick: {
             type: Function,
@@ -146,14 +146,14 @@ export default {
             default: null
         },
         selection: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    showSummary:{
-      type:Boolean,
-      default: false
-    },
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        showSummary: {
+            type: Boolean,
+            default: false
+        },
     multi: {
       type: Boolean,
       required: false,

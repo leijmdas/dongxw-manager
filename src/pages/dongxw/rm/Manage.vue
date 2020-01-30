@@ -6,7 +6,7 @@
 
                 <el-form-item label="大类" prop="orderType">
 
-                    <rm-type-select   v-model="page.query.param.parentId" :clearable="true"></rm-type-select>
+                    <rm-type-select   @change="search"v-model="page.query.param.parentId" :clearable="true"></rm-type-select>
                 </el-form-item>
                 <el-form-item label="小类">
                     <sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></sub-type-select>
@@ -45,7 +45,7 @@
                 <!--</el-form-item>-->
             </el-form>
         </div>
-        <v-toolbar title="数据列表" type="alert">
+        <v-toolbar title="物料清单" type="alert">
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
@@ -53,7 +53,7 @@
             <el-button type="primary" plain @click="create">新增</el-button>
 
             <!--<el-switch style="margin-left:20px; margin-right: 20px"-->
-                       <!--v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">-->
+            <!--v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">-->
             <!--</el-switch>-->
 
         </v-toolbar>

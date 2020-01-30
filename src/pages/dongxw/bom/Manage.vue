@@ -9,7 +9,7 @@
                 <product-master v-show="switchShow" :tableRowClick="search" ref="productMaster"></product-master>
             <!--</el-collapse-item>-->
         <!--</el-collapse>-->
-        <div class="panel panel-default panel-search">
+        <div v-show="showQryBar" class="panel panel-default panel-search">
             <el-form :inline="true">
                 <!--<el-table-column prop="childId" label="父件标识" width="60"></el-table-column>-->
                 <el-switch style="margin-left:20px; margin-right: 20px" v-model="switchShow"
@@ -35,14 +35,16 @@
                 <!--</el-form-item>-->
             </el-form>
         </div>
-        <v-toolbar title="物料列表" type="alert">
-
-            <span  v-if="!product.code" slot="tip" style="color:red;margin-left: 40px;margin-top: 30px">
+        <v-toolbar title="BOM清单" type="alert">
+            <el-switch slot="tip" style="margin-left:20px; margin-right: 30px"
+                       v-model="showQryBar" active-text="显示查询框" inactive-text="不显示">
+            </el-switch>
+            <span v-if="!product.code" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
                 请点上方产品后编辑BOM
             </span>
 
-            <span v-if="product.code" slot="tip" style="color:blue;margin-left:40px;margin-top: 40px">
-                {{  product.code +":"+product.epCode +" : "+product.remark}}
+            <span v-if="product.code" slot="tip" style="color:blue;margin-left: 40px;margin-top: 40px">
+                {{  product.code +" : "+product.epCode +" : "+product.remark}}
             </span>
             <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
 
@@ -102,10 +104,8 @@
                     {{ row.childRm? row.childRm.color :'-' }}
                 </template>
             </el-table-column>
-            <!--</el-table-column>-->
-            <!--<el-table-column prop="size" label="尺寸" width="150">-->
-            <!--</el-table-column>-->
-            <el-table-column prop="unit" label="单位" width="120">
+
+            <el-table-column prop="unit" label="单位" width="80">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.unit :'-' }}
                 </template>
@@ -114,8 +114,16 @@
             <el-table-column prop="qty" label="数量" width="120"></el-table-column>
             <el-table-column prop="price" label="单价" width="120"></el-table-column>
             <el-table-column prop="money" label="金额" width="120"></el-table-column>
-            <el-table-column prop="lossRate" label="损耗率(%)" width="120"></el-table-column>
-            <el-table-column prop="lossQty" label="损耗数" width="120"></el-table-column>
+            <el-table-column prop="lossQty" label="损耗率(%)" width="120">
+                <template slot-scope="{row}">
+                   {{ row.lossType==1?row.lossQty:'0'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="lossQty" label="损耗数" width="120">
+                <template slot-scope="{row}">
+                   {{ row.lossType==0?row.lossQty:'0'}}
+                </template>
+            </el-table-column>
             <el-table-column prop="length" label="长封度" width="120"></el-table-column>
             <el-table-column prop="width" label="宽封度" width="120"></el-table-column>
             <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
@@ -128,8 +136,6 @@
 
             <el-table-column prop="createByName" label="建档人" width="80">
             </el-table-column>
-            <!--<el-table-column prop="memo" label="备注"  >-->
-            <!--</el-table-column>-->
 
             <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
@@ -172,10 +178,13 @@
         components: { ProductMaster,FormPanel,RmTypeSelect, SubTypeSelect },
         data() {
             return {
-                product : {},
-                productId: -1,
-                switchShow : true,
+                switchShow: true,
+                showQryBar: true,
                 formStatus: 1,
+
+                productId: -1,
+                product : {},
+
                 orderDateRange: [],
                 summaryMap: {},
                 currentPage : 1 ,

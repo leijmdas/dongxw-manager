@@ -14,12 +14,12 @@
                 <el-form-item label="产品小类">
                     <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
                 </el-form-item>
-                <el-form-item label="EP款号" prop="epCode">
-                    <el-input v-model="page.query.param.epCode" clearable></el-input>
-                </el-form-item>
 
                 <el-form-item label="客款号" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="EP款号" prop="epCode">
+                    <el-input v-model="page.query.param.epCode" clearable></el-input>
                 </el-form-item>
 
                 <el-form-item label="产品描述" prop="remark">
@@ -49,7 +49,7 @@
                 <!--</el-form-item>-->
             </el-form>
         </div>
-        <v-toolbar title="数据列表" type="alert">
+        <v-toolbar title="产品清单" type="alert">
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
@@ -77,14 +77,14 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
-            <!--<el-table-column prop="code" label="客款号" width="120"></el-table-column>-->
-
             <el-table-column prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
                    <span   > {{row.code }} </span>
                 </template>
             </el-table-column>
+
+            <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
+
             <el-table-column prop="parentId" label="产品大类" width="120">
                 <template slot-scope="{row}">
                     {{ row.productType? row.productType.code :'-' }}

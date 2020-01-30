@@ -63,6 +63,15 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
+                <el-col :span="11" v-if="entity.outFlag>0">
+
+                    <el-form-item label="外发备料" prop="outPrepareRm">
+                        <el-select style="width:100%" v-model="entity.outPrepareRm">
+                            <el-option v-for="item in $dongxwDict.store.YESNO_TYPE" :key="item[0]"
+                                       :value="item[0]" :label="item[1]"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
                 <el-col :span="11">
 
                 <el-form-item label="状态" prop="status">
