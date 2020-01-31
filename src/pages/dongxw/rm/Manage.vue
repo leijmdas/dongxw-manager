@@ -37,7 +37,7 @@
 
                 <!--<el-form-item>-->
                     <!--&lt;!&ndash;<el-button-group></el-button-group>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER1'">查询</el-button>&ndash;&gt;-->
                     <!--&lt;!&ndash;<el-button @click="cancel">取消</el-button>&ndash;&gt;-->
                     <!--&lt;!&ndash;<el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>&ndash;&gt;-->
                     <!--&lt;!&ndash;<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>&ndash;&gt;-->
@@ -46,7 +46,7 @@
             </el-form>
         </div>
         <v-toolbar title="物料清单" type="alert">
-            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+            <el-button type="primary" @click="search"  >查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>

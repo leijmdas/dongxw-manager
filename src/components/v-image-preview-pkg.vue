@@ -3,26 +3,25 @@
         <el-row :span="24" :removeUrl="funRemoveUrl">
 
             <el-col :span="8" v-for="(url,index) in urlInfo" :key="url">
-
-                <el-select :span="1" v-if="url&&showRemoveBtn&&showRemark" v-model="remarks[index]" filterable
-                           filterable allow-create placeholder="请选择" @change="handleChange">
-                    <el-option v-for="item in options"
-                               :key="item.label" :label="item.label" :value="item.label">
-                    </el-option>
-                </el-select>
-                <el-button v-if="url && showRemoveBtn" @click="removeUrl(url)" style="margin-left:5px" type="text"
-                           title="删除" plain>
-                    <i class="el-icon-delete " style="color:red;"></i>
-                </el-button>
-                <el-upload :action="action" :show-file-list="false" :auto-upload="true" :data="formData"
-                           :beforeUpload="beforeUpload" :on-success="updateSuccess">
+                <!--<el-select v-if="url&&showRemoveBtn&&showRemark" v-model="remarks[index]" filterable-->
+                <!--filterable allow-create placeholder="请选择" @change="handleChange">-->
+                <!--<el-option v-for="item in options"-->
+                <!--:key="item.label" :label="item.label" :value="item.label">-->
+                <!--</el-option>-->
+                <!--</el-select>-->
+                <!--<el-button v-if="url && showRemoveBtn" @click="removeUrl(url)" style="margin-left:5px" type="text"-->
+                           <!--title="删除" plain>-->
+                    <!--<i class="el-icon-delete " style="color:red;"></i>-->
+                <!--</el-button>-->
+                <el-upload :action="action" :show-file-list="false" :auto-upload="true"
+                           :data="formData" :beforeUpload="beforeUpload" :on-success="updateSuccess">
                     <el-tooltip content="点击重新上传" placement="top">
-                        <img :src="url" @click="setCurUrl(url)" class="avatar" :style="imgStyle"/>
+                        <img :src="url" @click="setCurUrl(url)" :style="imgStyle"/>
                     </el-tooltip>
                 </el-upload>
             </el-col>
-            <el-col :span="2">
-                <el-button style=" margin-left:10px" @click="clearAllImg" type="text" title="清除所有图片" plain>
+            <el-col :span="1">
+                <el-button :span="1"  class="upBtn" @click="clearAllImg" type="text" title="清除所有图片" plain>
                     <i class="el-icon-delete " style="color:red"></i>
                 </el-button>
 
@@ -30,7 +29,7 @@
                            :auto-upload="true" :show-file-list="false" :data="formData" :limit="limit" :multiple="true"
                            :action="action" :beforeUpload="beforeUpload" :on-exceed="handleExceed"
                            :disabled="!showRemoveBtn"  :on-success="handleSuccess" :on-remove="handleRemove">
-                    <el-button style="margin-left: 10px" size="small" type="primary">上传</el-button>
+                    <el-button  class="upBtn" size="small" type="primary">上传</el-button>
                     <!--<i class="el-imargin-top: 10pxcon-plus el-upload&#45;&#45;picture-card"></i>-->
                 </el-upload>
 
@@ -39,6 +38,16 @@
 
     </div>
 </template>
+<style rel="stylesheet/less" lang="less" scoped>
+
+    .upBtn{
+        margin-left: 20px
+    }
+    .showImg{
+        margin-left:10px;
+        margin-right:10px;
+    }
+</style>
 <script>
     import {getToken} from '@/utils/auth'
     export default {

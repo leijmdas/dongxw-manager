@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
+        <el-form :model="entity" :rules="rules" ref="form" label-width="110px" class="dialog-form">
             <el-tabs :stretch="false" v-model="activeName">
                 <el-tab-pane label="产品信息" name="productInfo">
                     <el-row>
@@ -102,140 +102,132 @@
                                           v-model="entity.memo"></el-input>
                             </el-form-item>
                             <el-row :span="24" style="margin-top: 10px">
-                                <el-col :span="12">
-                                    <el-form-item label="建档人" prop="createByName">
-                                        <el-input placeholder="建档人" disabled v-model="entity.createByName"></el-input>
 
-                                    </el-form-item>
-                                </el-col>
                                 <el-col :span="12">
 
                                     <el-form-item label="建档时间" prop="createDate">
                                         <el-input placeholder="建档时间" disabled v-model="entity.createDate"></el-input>
                                     </el-form-item>
                                 </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="建档人" prop="createByName">
+                                        <el-input placeholder="建档人" disabled v-model="entity.createByName"></el-input>
+
+                                    </el-form-item>
+                                </el-col>
                             </el-row>
 
-                </el-col>
-                </el-row>
+                        </el-col>
+                    </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="包装信息" name="packageInfo">
-                    <fieldset  >
-                        <legend>内盒包装</legend>
 
-                        <el-row :span="24">
-                        <el-col :span="12">
-                            <el-form-item label="内盒尺寸" prop="ibSize">
-                                <el-input placeholder="内盒尺寸" v-model="entity.ibSize"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-form-item label="内盒数量" prop="ibQty">
-                                <el-input placeholder="内盒数量" v-model="entity.ibQty"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :span="24">
-                        <el-col :span="12">
-                            <el-form-item label="内盒毛重(kg)" prop="ibGw">
-                                <el-input placeholder="内盒毛重(kg)" v-model="entity.ibGw"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-
-                            <el-form-item label="内盒净重(kg)" prop="ibNw">
-                                <el-input placeholder="内盒净重(kg)" v-model="entity.ibNw"></el-input>
-                            </el-form-item>
-                        </el-col>
-
-                    </el-row>
-                    </fieldset>
-                    <fieldset >
-                        <legend>外箱包装</legend>
-
-                        <el-row  >
-
-                        <el-col :span="9">
-                            <el-form-item label="外箱尺寸" prop="obSize">
-                                <el-input placeholder="外箱尺寸(x*y*z)" v-model="entity.obSize"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-form-item label="CBM" prop="cbm">
-                                <el-input disabled placeholder="CBM" v-model="cbm"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="9">
-
-                            <el-form-item label="外箱数量" prop="obQty">
-                                <el-input placeholder="外箱数量" v-model="entity.obQty"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="12">
-                            <el-form-item label="外箱毛重(kg)" prop="obGw">
-                                <el-input placeholder="外箱毛重(kg)" v-model="entity.obGw"></el-input>
-                            </el-form-item>
-                        </el-col>
-
-                        <el-col :span="12">
-                            <el-form-item label="外箱净重(kg)" prop="obNw">
-                                <el-input placeholder="外箱净重(kg)" v-model="entity.obNw"></el-input>
-                            </el-form-item>
-
-                        </el-col>
-                    </el-row>
-                    </fieldset>
-                    <!--<hr>-->
-
-                        <el-row  :span="24" style="margin-top: 10px">
-
-
-                            <el-col :span="12">
-                                <el-form-item  label="正唛" prop="pkgFront">
-                                    <el-input type="textarea" :rows="7" placeholder="正唛"
-                                              v-model="entity.pkgFront"></el-input>
+                    <el-row :span="24" class="clsCommon">
+                        <el-col :span="11">
+                            <el-row :span="12">
+                                <el-form-item label="内盒尺寸" prop="ibSize">
+                                    <el-input placeholder="内盒尺寸" v-model="entity.ibSize"></el-input>
                                 </el-form-item>
-                            </el-col>
+                            </el-row>
+                            <el-row :span="12">
+                                <el-form-item label="内盒数量" prop="ibQty">
+                                    <el-input placeholder="内盒数量" v-model="entity.ibQty"></el-input>
+                                </el-form-item>
+                            </el-row>
+                            <el-row :span="12">
+                                <el-form-item label="内盒毛重(kg)" prop="ibGw">
+                                    <el-input placeholder="内盒毛重(kg)" v-model="entity.ibGw"></el-input>
+                                </el-form-item>
 
-                            <el-col :span="12">
-                                <v-image-preview-pkg ref="imgViewPkg1" v-model="entity.pkgFrontImgUrls"
+                                <el-form-item label="内盒净重(kg)" prop="ibNw">
+                                    <el-input placeholder="内盒净重(kg)" v-model="entity.ibNw"></el-input>
+                                </el-form-item>
+                            </el-row>
+                        </el-col>
+                        <el-col :span="12" style="margin-left: 20px">
+                            <span>内箱箱唛</span>
+                            <el-input type="textarea" :rows="5" placeholder="内箱箱唛"
+                                      v-model="entity.pkgSideImgRemark"></el-input>
+                        </el-col>
+                    </el-row>
+                    <el-row :span="24" class="clsCommon">
+                        <el-col :span="11">
+                            <el-row>
+                                <el-form-item label="外箱尺寸" prop="obSize">
+                                    <el-input placeholder="外箱尺寸(x*y*z)" v-model="entity.obSize"></el-input>
+                                </el-form-item>
+                                <el-form-item label="CBM" prop="cbm">
+                                    <el-input disabled placeholder="CBM" v-model="cbm"></el-input>
+                                </el-form-item>
+                                <el-form-item label="外箱数量" prop="obQty">
+                                    <el-input placeholder="外箱数量" v-model="entity.obQty"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="外箱毛重(kg)" prop="obGw">
+                                    <el-input placeholder="外箱毛重(kg)" v-model="entity.obGw"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="外箱净重(kg)" prop="obNw">
+                                    <el-input placeholder="外箱净重(kg)" v-model="entity.obNw"></el-input>
+                                </el-form-item>
+
+                            </el-row>
+                        </el-col>
+                        <el-col :span="12" style="margin-left: 20px">
+                            <span>外箱箱唛</span>
+
+                            <v-image-preview-pkg ref="imgViewPkgOut" v-model="entity.pkgFrontImgRemark"
                                                  :imgRemarks="entity.pkgFrontImgRemark" :showRemark="false"
                                                  :options="options" :showRemoveBtn="true"
                                                  :funHandleChange="funHandleChange"
-                                                 :imgStyle="'margin-right:10px;width:140px;height:120px'">
-                                </v-image-preview-pkg>
-                            </el-col> </el-row>
-                    <el-row :span="24" style="margin-top: 10px">
+                                                 :imgStyle="'width:130px;height:120px'">
+                            </v-image-preview-pkg>
+                        </el-col>
+                    </el-row>
+
+                    <el-row :span="24" class="clsCommon">
+
+                        <el-col :span="12">
+                            <el-form-item label="正唛" prop="pkgFront">
+                                <el-input type="textarea" :rows="6" placeholder="正唛"
+                                          v-model="entity.pkgFront"></el-input>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="12">
+                            <v-image-preview-pkg ref="imgViewPkgFront" v-model="entity.pkgFrontImgUrls"
+                                                 :imgRemarks="entity.pkgFrontImgRemark" :showRemark="false"
+                                                 :options="options" :showRemoveBtn="true"
+                                                 :funHandleChange="funHandleChange"
+                                                 :imgStyle="'width:130px;height:120px'">
+                            </v-image-preview-pkg>
+                        </el-col>
+                    </el-row>
+                    <el-row :span="24" class="clsCommon">
                         <el-col :span="12">
                             <el-form-item label="侧唛" prop="pkgSide">
-                                <el-input type="textarea" :rows="7" placeholder="侧唛"
+                                <el-input type="textarea" :rows="6" placeholder="侧唛"
                                           v-model="entity.pkgSide"></el-input>
                             </el-form-item>
 
                         </el-col>
                         <el-col :span="12">
 
-                            <v-image-preview-pkg ref="imgViewPkg2" v-model="entity.pkgSideImgUrls"
-                                             :imgRemarks="entity.pkgSideImgRemark" :showRemark="false"
-                                             :options="options" :showRemoveBtn="true" :funHandleChange="funHandleChange"
-                                             :imgStyle="'width:140px;height:120px'">
+                            <v-image-preview-pkg ref="imgViewPkgSide" v-model="entity.pkgSideImgUrls"
+                                                 :imgRemarks="entity.pkgSideImgRemark" :showRemark="false"
+                                                 :options="options" :showRemoveBtn="true"
+                                                 :funHandleChange="funHandleChange"
+                                                 :imgStyle="'width:130px;height:120px'">
                             </v-image-preview-pkg>
                         </el-col>
                     </el-row>
 
 
-                    <el-row :span="24">
-
-                        <el-col :span="24">
+                    <el-row :span="24" class="clsCommon">
                             <el-form-item label="备注" prop="pkgRemark">
                                 <el-input placeholder="备注" type="textarea" :rows="2"
                                           v-model="entity.pkgRemark"></el-input>
                             </el-form-item>
-
-                        </el-col>
-
                     </el-row>
                     <!--</fieldset>-->
                 </el-tab-pane>
@@ -258,7 +250,11 @@
             height: 100px !important;
         }
     }
-
+    .clsCommon{
+        margin-top: 10px;
+        margin-left: -15px;
+        margin-right: 15px;
+    }
     .dialog-form {
         .el-radio-group {
             .el-radio {

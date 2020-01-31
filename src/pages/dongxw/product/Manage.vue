@@ -50,7 +50,7 @@
             </el-form>
         </div>
         <v-toolbar title="产品清单" type="alert">
-            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+            <el-button type="primary" @click="search"  >查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>

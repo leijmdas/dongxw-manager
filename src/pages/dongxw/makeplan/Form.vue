@@ -1,60 +1,25 @@
 <template>
-    <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form">
+    <el-form  :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
 
-        <fieldset align="top">
-            <el-row :span="22">
-                <el-col :span="22">
-                    <product-view v-model="product.id" :labelWidth="'120px'" :style="'margin-top: 20px'" ref="productView">
+        <fieldset align="top" style="margin-left:10px; margin-right: 10px">
+            <legend>产品</legend>
+            <el-row :span="24">
+                <el-col :span="24">
+                    <product-view :qty="orderLine.qty" v-model="product.id" :labelWidth="'100px'"
+                                  :style="'margin-top: 5px'" ref="productView">
+
+
                     </product-view>
                 </el-col>
             </el-row>
-            <!--<el-row :span="22">-->
-                <!--<el-col :span="11">-->
-                    <!--<el-form-item label="客款号" prop="code">-->
-                        <!--<el-input disabled placeholder="客款号" v-model="product.code"></el-input>-->
 
-                    <!--</el-form-item>-->
-                <!--</el-col>-->
-                <!--<el-col :span="11">-->
-                    <!--<el-form-item label="EP款号" prop="epCode">-->
-                        <!--<el-input disabled placeholder="EP款号" v-model="product.epCode"></el-input>-->
-
-                    <!--</el-form-item>-->
-                <!--</el-col>-->
-
-            <!--</el-row>-->
-            <!--<el-row :span="22">-->
+            <el-row :span="24">
                 <!--<el-col :span="22">-->
-                    <!--<el-form-item label="产品描述" prop="remark">-->
-                        <!--<el-input disabled placeholder="产品描述" v-model="product.remark"></el-input>-->
-
+                    <!--<el-form-item label="数量" prop="qty">-->
+                        <!--<el-input disabled placeholder="数量" v-model="orderLine.qty"></el-input>-->
                     <!--</el-form-item>-->
                 <!--</el-col>-->
-
-
-            <!--</el-row>-->
-            <!--<el-row :span="22">-->
-
-                <!--<el-col :span="11">-->
-                    <!--<el-form-item label="颜色" prop="color">-->
-                        <!--<el-input disabled placeholder="颜色" v-model="product.color"></el-input>-->
-
-                    <!--</el-form-item>-->
-                <!--</el-col>-->
-                <!--<el-col :span="11">-->
-                    <!--<el-form-item label="尺寸" prop="size">-->
-                        <!--<el-input disabled placeholder="尺寸" v-model="product.size"></el-input>-->
-                    <!--</el-form-item>-->
-                <!--</el-col>-->
-
-            <!--</el-row>-->
-            <el-row :span="22">
-                <el-col :span="22">
-                    <el-form-item label="数量" prop="qty">
-                        <el-input disabled placeholder="数量" v-model="orderLine.qty"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="11">
+                <el-col :span="12">
 
                     <el-form-item label="外发标志" prop="outFlag">
                         <el-select style="width:100%" v-model="entity.outFlag">
@@ -63,7 +28,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="11" v-if="entity.outFlag>0">
+                <el-col :span="12" v-if="entity.outFlag>0">
 
                     <el-form-item label="外发备料" prop="outPrepareRm">
                         <el-select style="width:100%" v-model="entity.outPrepareRm">
@@ -72,7 +37,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="11">
+                <el-col :span="12">
 
                 <el-form-item label="状态" prop="status">
                     <el-select style="width:100%" v-model="entity.status">
@@ -85,8 +50,8 @@
             </el-row>
 
 
-            <el-row :span="22" style="margin-top: 5px ">
-                <el-col :span="11">
+            <el-row :span="24" style="margin-top: 5px ">
+                <el-col :span="12">
                     <el-form-item label="接单日期" prop="orderDate" :rules="[{ required: true}]">
                         <el-date-picker style="width:100%" :disabled="disables"
                                         v-model="entity.orderDate"
@@ -98,7 +63,7 @@
                     </el-form-item>                            <!--format="yyyy-MM-dd"-->
                 </el-col>
 
-                <el-col :span="11">
+                <el-col :span="12">
                     <el-form-item label="要求交期" prop="issueDate" :rules="[{ required: true}]">
                         <el-date-picker style="width:100%" :disabled="disables"
                                         v-model="entity.issueDate"
@@ -110,8 +75,8 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row :span="22" style="margin-top: 10px ">
-                <el-col :span="11">
+            <el-row :span="24" style="margin-top: 10px ">
+                <el-col :span="12">
                     <el-form-item label="物料到位日期" prop="rmDate">
                         <el-date-picker style="width:100%"
                                         :disabled="disables"
@@ -123,7 +88,7 @@
                         </el-date-picker>
                     </el-form-item>
                 </el-col>
-                <el-col :span="11">
+                <el-col :span="12">
 
                     <el-form-item label="包材到位日期" prop="pkgDate">
                         <el-date-picker style="width:100%"
@@ -137,8 +102,8 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row :span="22" style="margin-top: 10px ">
-                <el-col :span="11">
+            <el-row :span="24" style="margin-top: 10px ">
+                <el-col :span="12">
                     <el-form-item label="计划上线日期" prop="planStart">
                         <el-date-picker style="width:100%"
                                         :disabled="disables"
@@ -150,7 +115,7 @@
                         </el-date-picker>
                     </el-form-item>
                 </el-col>
-                <el-col :span="11">
+                <el-col :span="12">
 
                     <el-form-item label="计划完成日期" prop="planEnd">
                         <el-date-picker style="width:100%"
@@ -164,8 +129,8 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row :span="22" style="margin-top: 10px ">
-                <el-col :span="11">
+            <el-row :span="24" style="margin-top: 10px ">
+                <el-col :span="12">
 
                     <el-form-item label="完成标志" prop="finishFlag">
                         <el-select style="width:100%" v-model="entity.finishFlag">
@@ -174,7 +139,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="11">
+                <el-col :span="12">
                     <el-form-item label="实际完成日期" prop="realEnd">
                         <el-date-picker style="width:100%"
                                         :disabled="disables"
@@ -191,21 +156,21 @@
             </el-row>
 
 
-            <el-row :span="22" style="margin-top: 10px ">
-                <el-col :span="22">
+            <el-row :span="24" style="margin-top: 10px ">
+                <el-col :span="24">
                     <el-form-item label="备注" prop="remark">
                         <el-input placeholder="备注" type="textarea" :rows="3" v-model="entity.remark"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row :span="22">
-                <el-col :span="11">
+            <el-row :span="24">
+                <el-col :span="12">
                     <el-form-item label="建档人" prop="createByName">
                         <el-input disabled placeholder="建档人" v-model="entity.createByName"></el-input>
 
                     </el-form-item>
                 </el-col>
-                <el-col :span="11">
+                <el-col :span="12">
                     <el-form-item label="建档时间" prop="createDate">
                         <el-input disabled placeholder="建档时间" v-model="entity.createDate"></el-input>
 
@@ -423,6 +388,9 @@
         mounted() {
             this.$on("init", this.init);
             this.$on("submit", this.submitForm);
+            // document.getElementById('app').addEventListener('keydown',function () {
+            //     alert('按键触发')
+            // })
         }
     };
 </script>

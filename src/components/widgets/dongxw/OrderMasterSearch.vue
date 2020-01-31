@@ -64,7 +64,7 @@
         </div>
         <v-toolbar title="订单列表" type="alert">
                 <span slot="tip" style="margin-left:60px;">
-                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                    <el-button type="primary" @click="search"  >查询</el-button>
                     <el-button @click="cancel">取消</el-button>
                 <span style="margin-left:60px;color :red">  草稿状态不能新增计划! </span>
                 </span>
@@ -108,13 +108,7 @@
             </el-table-column>
 
 
-
-             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号" width="120">
-                <template slot-scope="scope">
-                    <el-button type="text"  v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
-                    <!--<span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>-->
-                </template>
-            </el-table-column>
+            <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号" width="120">   </el-table-column>
             <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
 
             <el-table-column prop="moneyType" label="结算币种" width="80">
@@ -163,7 +157,7 @@
             </el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column width="150" label="同步订单计划" :fixed="'right'">
+            <el-table-column width="150" label="同步计划" :fixed="'right'">
                 <template slot-scope="scope">
 
                     <el-button @click="makePlan(scope.row)" title="新增" plain type="primary" v-if="scope.row.status>0">

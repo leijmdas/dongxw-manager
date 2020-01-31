@@ -4,11 +4,11 @@
     <el-form  :model="entity" ref="form" :label-width="labelWidth" class="dialog-form" :rules="rules">
 
         <el-row :span="24">
-            <!--<el-col :span="12">-->
-                <!--<el-form-item label="产品标识" prop="customerId">-->
-                    <!--<el-input disabled placeholder="产品标识" disabled v-model="value"></el-input>-->
-                <!--</el-form-item>-->
-            <!--</el-col>-->
+            <el-col :span="24">
+                <el-form-item label="客户" prop="customerName">
+                    <el-input disabled placeholder="客户" disabled v-model="entity.customerName"></el-input>
+                </el-form-item>
+            </el-col>
 
             <el-col :span="12">
                 <el-form-item label="大类" prop="parentId">
@@ -46,17 +46,16 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="客户" prop="customerName">
-                    <el-input disabled placeholder="客户" disabled v-model="entity.customerName"></el-input>
-                </el-form-item>
-            </el-col>
-
-            <el-col :span="12">
                 <el-form-item label="单位" prop="unit">
                     <el-input disabled placeholder="单位" disabled v-model="entity.unit"></el-input>
                 </el-form-item>
             </el-col>
-
+            <el-col :span="12">
+                <el-form-item v-if="qty>=0" label="数量" prop="qty">
+                    <el-input disabled placeholder="数量" v-model="qty"></el-input>
+                </el-form-item>
+            </el-col>
+            <slot slot="view"></slot>
         </el-row>
         <slot name="selectPrd"> </slot>
     </el-form>
@@ -105,6 +104,10 @@
             }
         },
         props: {
+            qty: {
+                required: false,
+                default : -1
+            },
             value: {
                 required: true
             },

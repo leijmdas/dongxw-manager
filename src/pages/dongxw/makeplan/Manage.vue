@@ -76,21 +76,9 @@
                     </el-form-item>
 
                 </el-form-item>
-                <!--<el-form-item label="订单状态" prop="status">-->
-                    <!--<el-select :clearable="true" v-model="page.query.param.status" style="width:100px">-->
-                        <!--<el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"-->
-                                   <!--:label="item[1]"></el-option>-->
-                    <!--</el-select>-->
-                <!--</el-form-item>-->
 
-                <!--<el-form-item label="订单类型" prop="orderType">-->
-                    <!--<el-select @change="search" :clearable="true" v-model="page.query.param.orderType" style="width:100px">-->
-                        <!--<el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"-->
-                                   <!--:label="item[1]"></el-option>-->
-                    <!--</el-select>-->
-                <!--</el-form-item>-->
                 <!--<el-form-item>-->
-                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER1'">查询</el-button>-->
                     <!--<el-button @click="cancel">取消</el-button>-->
                 <!--</el-form-item>-->
 
@@ -98,7 +86,7 @@
         </div>
             <v-toolbar title="计划列表" type="alert">
 
-                <el-button style="margin-left: 30px" slot="tip" type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                <el-button style="margin-left: 30px" slot="tip" type="primary" @click="search"  >查询</el-button>
                 <el-button slot="tip" @click="cancel">取消</el-button>
                 <!--<span  slot="tip" style="color:red;margin-left: 40px;margin-top: 30px">-->
                     <!--请点上方订单后编辑计费-->
@@ -128,9 +116,9 @@
                         </span>
                 </template>
             </el-table-column>
-            <el-table-column prop="status" label="状态" width="80">
+            <el-table-column prop="status" label="状态" width="100">
                 <template slot-scope="{row}">
-                    <span :style="row.status==0?'color:blue':''">
+                    <span :style="checkColor(row)">
                     {{$dongxwDict.getText(row.status,$dongxwDict.store.AUDIT_STATUS)}}
                         </span>
                 </template>
@@ -207,7 +195,7 @@
                     {{ $dongxwDict.viewDate(row.planEnd)}}
                 </template>
             </el-table-column>
-            <el-table-column  prop="finishFlag" label="是否完成" width="75">
+            <el-table-column  prop="finishFlag" label="完成?" width="75">
                 <template slot-scope="{row}">
                     <span :style="row.finishFlag==0?'color: red':'color: green'">
                         {{$dongxwDict.getText(row.finishFlag,$dongxwDict.store.FINISH_FLAG)}}
@@ -245,14 +233,11 @@
                         <i class="el-icon-edit"></i>
                     </el-button>
 
-
                     <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
-                        <el-button type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除"   >
+                        <el-button v-if="scope.row.status!=20" type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除"   >
                             <i style = "color:red" class="el-icon-delete"></i>
                         </el-button>
                     </el-tooltip>
-
-                    <!--<el-button v-if="scope.row.orderType==20" type="info" @click="showLine(scope.row)" >增加子订单</el-button>-->
 
                 </template>
             </el-table-column>
@@ -343,8 +328,20 @@
         },
 
         methods: {
-            demo: function (row) {
-                this.$message(JSON.stringify(row))
+            checkColor(row) {
+                if(row.status===0)
+                {
+                    return 'color:darkblue'
+                }
+                if(row.status===20)
+                {
+                    return 'color:green'
+                }
+                if(row.status===30)
+                {
+                    return 'color:red'
+                }
+                return ''
             },
             handleCommand(command) {
                 if(this.page.query.param.orderId) {
@@ -533,6 +530,9 @@
         },
         mounted() {
             this.$on("init", this.init);
+            // document.getElementById('app').addEventListener('keydown',function () {
+            //     alert('按键触发')
+            // })
         }
     };
 </script>
