@@ -6,6 +6,7 @@ import OrderMaster from './OrderMasterService'
 import OrderLine from './OrderLineService'
 import SupplierService from "./SupplierService"
 import BomService from './BomService'
+import BomCostService from './BomCostService'
 
 export default {
     CustomerService,
@@ -15,6 +16,7 @@ export default {
     OrderMaster,
     OrderLine,
     SupplierService,
-    BomService
+    BomService,
+    BomCostService
 
 }

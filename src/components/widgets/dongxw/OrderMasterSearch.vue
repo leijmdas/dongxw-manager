@@ -369,7 +369,7 @@
                 this.search();
             },
             clickbtn() {
-                this.$alert('这是一段内容', '标题名称', {
+                this.$alert('这是内容', '标题名称', {
                     confirmButtonText: '确定',
                     callback: action => {
                         this.$message({
@@ -398,13 +398,11 @@
 
             },
             getRow() {
-                console.log(this.row);
 
                 if (this.row) {
                     return this.row;
                 }else{
                 }
-                console.log(this.$refs.table.tableData);
                 if (this.$refs.table.tableData) {
                     this.row = this.$refs.table.tableData[0];
                 }

@@ -1,40 +1,31 @@
 <!--cust管理-->
 <template>
     <div>
-        <!--<el-collapse  :v-model="'selectPrd'">-->
-            <!--<el-collapse-item name="selectPrd">-->
-                <!--<template slot="title">-->
-                    <!--选择产品<i class="header-icon el-icon-info"></i>-->
-                <!--</template>-->
-                <product-master v-show="switchShow" :tableRowClick="search" ref="productMaster"></product-master>
-            <!--</el-collapse-item>-->
-        <!--</el-collapse>-->
+
+        <product-master v-show="switchShow" :tableRowClick="search" ref="productMaster"></product-master>
         <div v-show="showQryBar" class="panel panel-default panel-search">
             <el-form :inline="true">
-                <!--<el-table-column prop="childId" label="父件标识" width="60"></el-table-column>-->
+
+                <span style="color:palevioletred">成本估价单</span>
                 <el-switch style="margin-left:20px; margin-right: 20px" v-model="switchShow"
                            active-text="显示产品清单" inactive-text="不显示">
                 </el-switch>
                 <el-form-item label="大类" prop="orderType">
-                    <rm-type-select  @change="search" v-model="page.query.param.bigType" :clearable="true"></rm-type-select>
+                    <rm-type-select @change="search" v-model="page.query.param.bigType"
+                                    :clearable="true"></rm-type-select>
                 </el-form-item>
                 <el-form-item label="小类">
-                    <sub-type-select @change="search" :parentTypeId="page.query.param.bigType" v-model="page.query.param.smallType" :clearable="true"></sub-type-select>
+                    <sub-type-select @change="search" :parentTypeId="page.query.param.bigType"
+                                     v-model="page.query.param.smallType" :clearable="true"></sub-type-select>
                 </el-form-item>
 
 
                 <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                 <el-button @click="cancel">取消</el-button>
-                <!--<el-form-item>-->
-                    <!--&lt;!&ndash;<el-button-group></el-button-group>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button @click="cancel">取消</el-button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>&ndash;&gt;-->
 
-                <!--</el-form-item>-->
             </el-form>
         </div>
+        <cost-panel v-model="product" ref="costPanel" ></cost-panel>
         <v-toolbar title="BOM清单" type="alert">
             <el-switch slot="tip" style="margin-left:20px; margin-right: 30px"
                        v-model="showQryBar" active-text="显示查询框" inactive-text="不显示">
@@ -46,12 +37,9 @@
             <span v-if="product.code" slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
                 {{  product.code +" : "+product.epCode +" : "+product.remark}}
             </span>
-            <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <!--<el-switch style="margin-left:20px; margin-right: 20px"-->
-                       <!--v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">-->
-            <!--</el-switch>-->
+            <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
 
         </v-toolbar>
 
@@ -123,6 +111,9 @@
                    {{ row.lossType==0?row.lossQty:'0'}}
                 </template>
             </el-table-column>
+            <el-table-column prop="lossMoney" label="损耗金额" width="100"></el-table-column>
+            <el-table-column prop="totalMoney" label="总金额" width="120"></el-table-column>
+
             <el-table-column prop="width" label="宽封度" width="120"></el-table-column>
             <el-table-column prop="length" label="长封度" width="120"></el-table-column>
             <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
@@ -172,9 +163,10 @@
     import RmTypeSelect from '@/components/widgets/dongxw/RmTypeSelect.vue';
     import SubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
 
+    import CostPanel from './BomCostForm';
     import FormPanel from './Form';
     export default {
-        components: { ProductMaster,FormPanel,RmTypeSelect, SubTypeSelect },
+        components: {CostPanel, ProductMaster,FormPanel,RmTypeSelect, SubTypeSelect },
         data() {
             return {
                 switchShow: true,
@@ -186,7 +178,7 @@
 
                 orderDateRange: [],
                 summaryMap: {},
-                currentPage : 1 ,
+                currentPage: 1,
                 page: {
                     query: {
                         orderBys: 'id|desc',
@@ -195,9 +187,9 @@
                             isDeleted: false
                         }
                     },
-                    getData : this.$api.dongxw.BomService.query
+                    getData: this.$api.dongxw.BomService.query
 
-        },
+                },
                 tableActions: [
                     {
                         name: "编辑",
@@ -225,7 +217,6 @@
              */
             exportRecords() {
                 let params = this.getSearchParams();
-                console.log(params);
                 this.$api.dongxw.ProductService.exportRm(params);
             },
             getSearchParams() {
@@ -261,18 +252,20 @@
                 });
             },
             onFormSaved() {
-                this.$refs.formDiag.hide();
-                this.$nextTick(this.search);
+                this.$refs.formDiag.hide()
+                this.$refs.costPanel.$emit("init",{})
+                this.$nextTick(this.search)
             },
             init(options = {}) {
                 this.$refs.productMaster.init()
                 this.search();
             },
             search(row) {
-                if (row) {
+                if (row && row.id) {
                     this.product = row
                     this.productId = row.id
                     this.page.query.param.productId = this.productId
+
                 }
                 this.page.query.param.customerId = 0
                 this.$refs.table.currentPage = 1
@@ -280,10 +273,8 @@
             },
             cancel() {
                 this.dateRange = [];
-                //this.currentPage = 1;
                 this.page.query.param = {
                     isDeleted: false,
-                    productId : this.productId
                 };
                 this.search();
             }
@@ -291,9 +282,7 @@
         created() {
         },
         mounted() {
-            this.$on("init", this.init);
-            //let ret=this.$api.dongxw.CustomerService.findById(1);
-            //console.log(JSON.stringify(ret));
+            this.$on("init", this.init)
         }
     };
 </script>

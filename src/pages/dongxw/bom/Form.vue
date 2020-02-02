@@ -166,7 +166,6 @@
     const defaultEntity = {
         depth : 1,
         source : 1,
-
         lossType :1,
         lossQty : 0,
         customerId: 0,

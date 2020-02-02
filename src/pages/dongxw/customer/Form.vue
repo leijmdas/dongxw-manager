@@ -276,11 +276,9 @@
             init(options) {
                 this.resetForm();
                 if (options.id) {
-                    console.log(JSON.stringify(this.entity));
-                    //this.isDisabled = true;//this.entity.status > 0;
 
                     this.$api.dongxw.CustomerService.findById(options.id).then(r => {
-                        console.log(JSON.stringify(r))
+
                         this.entity = r.data;
                     });
                 } else {
