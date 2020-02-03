@@ -73,8 +73,16 @@
     </el-form>
 </template>
 <style lang="less" rel="stylesheet/less" scoped>
-
-
+    .el-input  /deep/ .el-input__inner {
+        color: darkmagenta;
+        background-color: ghostwhite;
+        /*rgba(255, 255, 255, 0.8);*/
+    }
+    .el-selection  {
+        color: darkmagenta;
+        background-color: darkgrey;
+        /*rgba(255, 255, 255, 0.8);*/
+    }
     .el-select-dropdown__item span{
         width:80px;
         text-align:center;

@@ -84,6 +84,11 @@
     .el-select-dropdown__item{
 
     }
+    .el-input.is-disabled /deep/ .el-input__inner {
+        color: darkmagenta;
+        background-color:  ghostwhite;  /*rgba(255, 255, 255, 0.8);*/
+    }
+
 </style>
 <script>
     import {fetch } from "@/utils";

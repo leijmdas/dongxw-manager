@@ -10,8 +10,8 @@
                 </el-col>
 
                 <el-col :span="5">
-                    <el-form-item label="总材料费用" prop="rmFee">
-                        <el-input disabled placeholder="总材料费用" v-model="entity.rmFee"></el-input>
+                    <el-form-item label="材料费用" prop="rmFee">
+                        <el-input disabled placeholder="材料费用" v-model="entity.rmFee"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="5">
@@ -45,10 +45,8 @@
                         <el-input placeholder="运输" v-model="entity.shippingFee"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="3">
-                    <el-form-item label=" " prop=" ">
-                        <el-button @click="save" v-if="product.id">保存</el-button>
-                    </el-form-item>
+                <el-col :span="2">
+                    <el-button type="primary" @click="save" v-if="product.id">保存</el-button>
                 </el-col>
             </el-row>
         </el-form>
@@ -56,6 +54,12 @@
     </div>
 </template>
 <style lang="less" scoped>
+    .el-input.is-disabled /deep/ .el-input__inner {
+        color: darkmagenta;
+        background-color:ghostwhite  ;  /*#d0e9c6 rgba(255, 255, 255, 0.8);*/
+    }
+
+
     .productLogo .el-upload-dragger {
         img {
             width: 200px;
