@@ -33,13 +33,13 @@
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="EP订单号" prop="epOrderCode">
-                    <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
-                </el-form-item>
-
 
                 <el-form-item label="客户订单号" prop="customerOrderCode">
                     <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
+                </el-form-item>
+
+                <el-form-item label="EP订单号" prop="epOrderCode">
+                    <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
                 </el-form-item>
 
 
@@ -76,7 +76,7 @@
                 <!--<el-button plain @click="exportRecords">导出XLS</el-button>-->
                 <!--<el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>-->
            </v-toolbar>
-        <v-table ref="table" :page="page"  :pageSize="12" :dblclick="edit"
+        <v-table ref="table" :page="page"  :pageSize="10" :dblclick="edit"
                  :click="tableRowClick"   :table-minheight="300" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
@@ -157,7 +157,7 @@
             </el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column width="150" label="同步计划" :fixed="'right'">
+            <el-table-column v-if="showBtn" width="150" label="同步计划" :fixed="'right'">
                 <template slot-scope="scope">
 
                     <el-button @click="makePlan(scope.row)" title="新增" plain type="primary" v-if="scope.row.status>0">
@@ -196,6 +196,10 @@
     export default {
         components: { CustomerSelect},
         props: {
+            showBtn  :{
+                type: Boolean,
+                default : false ,
+            },
             fatherMethod: {
                 type: Function,
                 default: null
@@ -204,10 +208,10 @@
                 type: Function,
                 default: null
             },
-                tableRowClick: {
-                    type: Function,
-                    required: false
-                },
+            tableRowClick: {
+                type: Function,
+                required: false
+            },
 
         },
         data() {

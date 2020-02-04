@@ -1,18 +1,19 @@
 <template>
-
-    <el-tabs :stretch="isExp" tab-position="top" v-model="activeName" @tab-click="tabClick"
-             @tab-remove="removeTab">
-        <el-tab-pane id="tabOrder" label="订单管理" name="orderInfo">
-            <order-form ref="orderDlg" :funShowPic="funShowPic" :fatherMethod="funShowOrderLine"></order-form>
-        </el-tab-pane>
-        <el-tab-pane id="tabLine" label="订单产品" name="orderLine">
-            <order-line ref="orderLine"></order-line>
-        </el-tab-pane>
-        <el-tab-pane id="tabPic" label="订单原件" name="tabPic">
-            <form-view-panel ref="viewPanel"></form-view-panel>
-        </el-tab-pane>
-
-    </el-tabs>
+<div>
+    <!--<el-tabs :stretch="isExp" tab-position="top" v-model="activeName" @tab-click="tabClick"-->
+             <!--@tab-remove="removeTab">-->
+        <!--<el-tab-pane id="tabOrder" label="订单管理" name="orderInfo">-->
+    <order-form ref="orderDlg" :funShowPic="funShowPic" :fatherMethod="funShowOrderLine"></order-form>
+        <!--</el-tab-pane>-->
+        <!--<el-tab-pane id="tabLine" label="订单产品" name="orderLine">-->
+            <!--<order-line ref="orderLine"></order-line>-->
+        <!--</el-tab-pane>-->
+        <!--<el-tab-pane id="tabPic" label="订单原件" name="tabPic">-->
+            <!--<form-view-panel ref="viewPanel"></form-view-panel>-->
+        <!--</el-tab-pane>-->
+    <!--</el-tabs>-->
+    <order-line ref="orderLine"></order-line>
+</div>
 </template>
 
 
@@ -77,8 +78,7 @@
             },
             funShowOrderLine(row) {
 
-                console.log(this.showOrderLine);
-                this.activeName = 'orderLine';
+                // this.activeName = 'orderLine';
                 this.$refs.orderLine.init(row);
 
             },

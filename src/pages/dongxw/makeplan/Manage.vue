@@ -1,54 +1,29 @@
-<!--订单生产计划管理-->
+<!--生产计划管理-->
 <template>
     <div>
         <div class="panel panel-default panel-search">
-            <order-search :tableRowClick="searchByOrder"  ref="orderSearch">
-
-                <!--<el-dropdown slot="useBtn" @command="handleCommand">-->
-                    <!--<el-button type="primary" > 同步订单计划-->
-                        <!--<i class="el-icon-arrow-down el-icon&#45;&#45;left"></i>-->
-                    <!--</el-button>-->
-                    <!--<el-dropdown-menu slot="dropdown">-->
-                        <!--<el-dropdown-item command="add">新增订单计划</el-dropdown-item>-->
-                        <!--<el-dropdown-item command="check">检查订单计划</el-dropdown-item>-->
-                    <!--</el-dropdown-menu>-->
-                <!--</el-dropdown>-->
+            <order-search :showBtn="true" :tableRowClick="searchByOrder" ref="orderSearch">
 
             </order-search>
-            <el-form :inline="true">
+            <el-form v-show="false" :inline="true">
                 <el-form-item label="客户" prop="customerId">
                     <customer-select :fnChange="search" v-model="page.query.param.customerId"
                                      :clearable="true"></customer-select>
 
                 </el-form-item>
                 <el-form-item label="订单" prop="orderId">
-                    <order-master-select :fnChange="search"    v-model="page.query.param.orderId"
-                                  :customerId="page.query.param.customerId" :clearable="true">
+                    <order-master-select :fnChange="search" v-model="page.query.param.orderId"
+                                         :customerId="page.query.param.customerId" :clearable="true">
                     </order-master-select>
                 </el-form-item>
 
-                 <!--<el-dropdown @command="handleCommand">-->
-                    <!--<el-button type="primary" :disabled="disabledAddBtn" >  同步订单计划-->
-                        <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-                    <!--</el-button>-->
-                    <!--<el-dropdown-menu slot="dropdown">-->
-                        <!--<el-dropdown-item command="add">新增订单计划</el-dropdown-item>-->
-                        <!--<el-dropdown-item command="check">检查订单计划</el-dropdown-item>-->
-                        <!--&lt;!&ndash;<el-dropdown-item command="del">删除计划多余产品</el-dropdown-item>&ndash;&gt;-->
-                     <!--</el-dropdown-menu>-->
-                <!--</el-dropdown>-->
                 <el-form-item label="外发标志" prop="outFlag">
                     <el-select @change="search" clearable style="width:100%" v-model="page.query.param.outFlag">
                         <el-option v-for="item in $dongxwDict.store.OUT_FLAG" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-                <!--<el-form-item label="外发备料" prop="outPrepareRm">-->
-                    <!--<el-select @change="search" clearable style="width:100%" v-model="page.query.param.outPrepareRm">-->
-                        <!--<el-option v-for="item in $dongxwDict.store.YESNO_TYPE" :key="item[0]" :value="item[0]"-->
-                                   <!--:label="item[1]"></el-option>-->
-                    <!--</el-select>-->
-                <!--</el-form-item>-->
+
                 <el-form-item label="日期">
 
                     <div slot="label">
@@ -77,25 +52,22 @@
 
                 </el-form-item>
 
-                <!--<el-form-item>-->
-                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER1'">查询</el-button>-->
-                    <!--<el-button @click="cancel">取消</el-button>-->
-                <!--</el-form-item>-->
 
             </el-form>
         </div>
             <v-toolbar title="计划列表" type="alert">
 
-                <el-button style="margin-left: 30px" slot="tip" type="primary" @click="search"  >查询</el-button>
-                <el-button slot="tip" @click="cancel">取消</el-button>
-                <!--<span  slot="tip" style="color:red;margin-left: 40px;margin-top: 30px">-->
-                    <!--请点上方订单后编辑计费-->
-                <!--</span> -->
-                <!--<el-button slot="tip" @click="cancel" title="检查订单与计划产品一致!">检查订单计划</el-button>-->
-                <!--<el-button type="primary" slot="tip"  plain @click="create">新增订单产品计划</el-button>-->
-                <el-button plain @click="exportRecords">导出 XLS</el-button>
-                <el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>
-           </v-toolbar>
+               <span v-if="!order.epOrderCode" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
+                请点上方订单后编辑计划
+            </span>
+                <span v-else slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
+                {{  order.customerOrderCode +" : "+order.epOrderCode  }}
+            </span>
+                <!--<el-button style="margin-left: 30px" slot="tip" type="primary" @click="search">查询</el-button>-->
+                <!--<el-button slot="tip" @click="cancel">取消</el-button>-->
+                <!--<el-button plain v-if="page.query.param.orderId>0" @click="makeSheet">生成制造单</el-button>-->
+                <el-button plain @click="exportMail" style="color:green">发送邮件</el-button>
+            </v-toolbar>
         <v-table ref="table" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
@@ -139,7 +111,7 @@
 
             <el-table-column prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
-                    {{ row.product?row.product.code:'-'}}
+                    <span style="color:green">      {{ row.product?row.product.code:'-'}} </span>
                 </template>
             </el-table-column>
             <el-table-column prop="epCode" label="EP款号" width="100">
@@ -163,7 +135,7 @@
                 </template>
             </el-table-column>
 
-            <!--<el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>-->
+            <el-table-column prop="backupQty" label="备品" width="100"></el-table-column>
 
             <el-table-column prop="orderDate" label="接单日期" width="100">
                 <template slot-scope="{row}">
@@ -277,7 +249,7 @@
     import FormPanel from './Form';
 
     export default {
-        components: {OrderSearch,OrderMasterSelect,FormPanel,   CustomerSelect},
+        components: {OrderSearch, OrderMasterSelect, FormPanel, CustomerSelect},
         props: {
             fatherMethod: {
                 type: Function,
@@ -292,6 +264,7 @@
         data() {
             return {
                 dateRangeType: 'orderDate',
+                order : {},
                 row : null,
                 formStatus: 1,
                 dateRange: [],
@@ -413,7 +386,10 @@
 
                 });
 
+            },makeSheet(){
+
             },
+
              /*发送邮件
              * */
             exportMail() {
@@ -434,7 +410,7 @@
                 this.$refs.formDiag.show({id: row.id});
             },
             clickRow(row) {
-                //this.row = row;
+                 this.row = row;
                 //console.log(row);
             },
 
@@ -467,7 +443,8 @@
                 this.search()
             },
             searchByOrder(row) {
-                this.page.query.param.orderId=row.id
+                this.order = row
+                this.page.query.param.orderId = row.id
                 this.search();
             },
             search() {

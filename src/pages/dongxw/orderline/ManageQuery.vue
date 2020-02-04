@@ -295,11 +295,10 @@
         components: {CustomerSelect,OrderMasterSelect,ProductTypeSelect,ProductSubTypeSelect,ProductSelect,FormPanel},
         data() {
             return {
-                row : [],
                 isShowPrdPic:false,
                 dateRangeType: 'orderDate',
-                order: [],
-                formStatus: 1,
+                order: {},
+
                 dateRange: [],
                 summaryMap: {},
                 page: {

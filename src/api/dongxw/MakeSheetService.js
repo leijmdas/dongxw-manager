@@ -9,7 +9,7 @@ export default {
      */
     save(data) {
         return request({
-            url: '/dongxw/makeplan/save',
+            url: '/dongxw/makesheet/save',
             method: 'POST',
             data
         })
@@ -19,7 +19,7 @@ export default {
      */
     query(data) {
         return request({
-            url: '/dongxw/makeplan/query',
+            url: '/dongxw/makesheet/query',
             method: 'POST',
             data
         })
@@ -29,7 +29,7 @@ export default {
      */
     export(data) {
         return request({
-            url: '/dongxw/makeplan/export',
+            url: '/dongxw/makesheet/export',
             method: 'POST',
             data,
             responseType: 'blob'
@@ -37,40 +37,34 @@ export default {
     },
     findById(id) {
         return request({
-            url: '/dongxw/makeplan/findById/'+id,
+            url: '/dongxw/makesheet/findById/'+id,
             method: 'POST'
         })
     },
     deleteById(id) {
         return request({
-            url: '/dongxw/makeplan/deleteById/'+id,
-            method: 'POST'
-        })
-    },
-    makePlanByOrder(orderId) {
-        return request({
-            url: '/dongxw/makeplan/makePlanByOrder/'+orderId,
-            method: 'POST'
-        })
-    },
-    checkPlanByOrder(orderId) {
-        return request({
-            url: '/dongxw/makeplan/checkPlanByOrder/'+orderId,
+            url: '/dongxw/makesheet/deleteById/'+id,
             method: 'POST'
         })
     },
 
-    rmPlanByOrder(orderId) {
+    makeSheetByPlanOrder(orderId) {
         return request({
-            url: '/dongxw/makeplan/rmPlanByOrder/'+orderId,
-            method: 'POST'
-        })
-    },
-    makeSheetByOrder(orderId) {
-        return request({
-            url: '/dongxw/makeplan/makeSheetByOrder/'+orderId,
+            url: '/dongxw/makesheet/makeSheetByPlanOrder/'+orderId,
             method: 'POST'
         })
     },
 
+    makeSheetByPlan (planId) {
+        return request({
+            url: '/dongxw/makesheet/makeSheetByPlan/'+planId,
+            method: 'POST'
+        })
+    },
+    findSheetByPlan(planId) {
+        return request({
+            url: '/dongxw/makesheet/findSheetByPlan/'+planId,
+            method: 'POST'
+        })
+    },
 }

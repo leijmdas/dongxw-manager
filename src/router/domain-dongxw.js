@@ -81,7 +81,7 @@ let router0 = [
             },
             {
                 path: 'makesheet/manage',
-                component: require('@/pages/dongxw/makeplan/Manage.vue'),
+                component: require('@/pages/dongxw/makesheet/Manage.vue'),
                 name: 'makesheet:manage',
                 meta: {title: '生产制造单', perm: 'makesheet:manage'}
             },

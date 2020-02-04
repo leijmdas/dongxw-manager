@@ -29,11 +29,20 @@
       background-color: #bbb;
     }
   }
-  
+
   #app {
     height: 100%;
   }
+
+  .el-input.is-disabled /deep/ .el-input__inner {
+      color: darkmagenta;
+      background-color: ghostwhite; /*#d0e9c6 rgba(255, 255, 255, 0.8);*/
+  }
+
+
+
 </style>
+
 <script>
   import {
     KeyCode,
@@ -45,7 +54,7 @@
   import router, {
     routers
   } from './router';
-  
+
   // function getPermissionRouters (allRouters, resGroups) {}
   export default {
     name:'app',
@@ -55,7 +64,7 @@
         }
     },
     data () {
-      return {       
+      return {
         isRouterAlive:true
       }
     },
@@ -64,7 +73,7 @@
         const code = KeyCode.getKeyCode(e)
         if (code) {
           let el = document.querySelector('[keycode=' + code + ']');
-  
+
           if (el) {
             el.click()
           }
@@ -100,7 +109,7 @@
       document.addEventListener('keyup', this.keysEvent)
 
       // 错误提示(后期去Jquery)
-  
+
       $(document).on('mouseover', '.el-form-item', function (event) {
         let $this = $(this);
         let flag = $this.hasClass('is-error');

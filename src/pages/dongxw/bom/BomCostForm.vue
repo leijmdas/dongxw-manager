@@ -54,10 +54,10 @@
     </div>
 </template>
 <style lang="less" scoped>
-    .el-input.is-disabled /deep/ .el-input__inner {
-        color: darkmagenta;
-        background-color:ghostwhite  ;  /*#d0e9c6 rgba(255, 255, 255, 0.8);*/
-    }
+    /*.el-input.is-disabled /deep/ .el-input__inner {*/
+        /*color: darkmagenta;*/
+        /*background-color:ghostwhite  ;  !*#d0e9c6 rgba(255, 255, 255, 0.8);*!*/
+    /*}*/
 
 
     .productLogo .el-upload-dragger {
@@ -149,7 +149,7 @@
                     + parseFloat(this.entity.knifeModel)
                     + parseFloat(this.entity.lossRm)
                     + parseFloat(this.entity.workFee)
-                return Math.round(total*100)/100
+                return total.toFixed(2)
             },
             product: {
                 get () {

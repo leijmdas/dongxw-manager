@@ -14,12 +14,13 @@
                 <el-form-item label="产品小类">
                     <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
                 </el-form-item>
-                <el-form-item label="EP款号" prop="epCode">
-                    <el-input v-model="page.query.param.epCode" clearable></el-input>
-                </el-form-item>
 
                 <el-form-item label="客款号" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
+                </el-form-item>
+
+                <el-form-item label="EP款号" prop="epCode">
+                    <el-input v-model="page.query.param.epCode" clearable></el-input>
                 </el-form-item>
 
                 <el-form-item label="产品描述" prop="remark">

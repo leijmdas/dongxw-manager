@@ -38,6 +38,11 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
+                    <el-form-item label="备品" prop="backupQty">
+                        <el-input placeholder="备品" v-model="orderLine.backupQty"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
 
                 <el-form-item label="状态" prop="status">
                     <el-select style="width:100%" v-model="entity.status">

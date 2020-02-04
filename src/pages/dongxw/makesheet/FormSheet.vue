@@ -2,44 +2,17 @@
 <template>
     <div>
 
-        <product-master v-show="switchShow" :tableRowClick="search" ref="productMaster"></product-master>
-        <div v-show="showQryBar" class="panel panel-default panel-search">
-            <el-form :inline="true">
+    <v-toolbar title="制造清单" type="alert">
 
-                <span style="color:palevioletred">成本估价单</span>
-                <el-switch style="margin-left:20px; margin-right: 20px" v-model="switchShow"
-                           active-text="显示产品清单" inactive-text="不显示">
-                </el-switch>
-                <el-form-item label="大类" prop="orderType">
-                    <rm-type-select @change="search" v-model="page.query.param.bigType"
-                                    :clearable="true"></rm-type-select>
-                </el-form-item>
-                <el-form-item label="小类">
-                    <sub-type-select @change="search" :parentTypeId="page.query.param.bigType"
-                                     v-model="page.query.param.smallType" :clearable="true"></sub-type-select>
-                </el-form-item>
-
-
-                <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                <el-button @click="cancel">取消</el-button>
-
-            </el-form>
-        </div>
-        <cost-panel v-model="product" ref="costPanel" ></cost-panel>
-        <v-toolbar title="BOM清单" type="alert">
-            <el-switch slot="tip" style="margin-left:20px; margin-right: 30px"
-                       v-model="showQryBar" active-text="显示查询框" inactive-text="不显示">
-            </el-switch>
             <span v-if="!product.code" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
-                请点上方产品后编辑BOM
+                请点左方产品后编辑
             </span>
             <span v-else slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
-                {{  product.code +" : "+product.epCode +" ( "+product.remark +" )"}}
+                {{  product.code +" : "+product.epCode +" ( "+product.remark + " )"}}
             </span>
 
-            <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
-
+            <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
+            <!--<el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>-->
         </v-toolbar>
 
 
@@ -47,18 +20,55 @@
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
-            <!--<el-table-column prop="prdFlag" label="存货分类" width="100">-->
-                <!--<template slot-scope="{row}">-->
-                        <!--<span :style="'style:red'">-->
-                            <!--{{row.productType.prdFlag==null?'-':$dongxwDict.getText(row.productType.prdFlag,$dongxwDict.store.STORE_TYPE)}}</span>-->
-                <!--</template>-->
-            <!--</el-table-column>-->
+            <el-table-column prop="orderId" label="订单" width="110">
+                <span style="color:green"> {{ order? order.customerOrderCode :'-' }} </span>
+            </el-table-column>
             <el-table-column prop="productId" label="产品" width="80">
                 <template slot-scope="{row}">
-                   <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
+                    <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="parentId" label="父标识" width="80"></el-table-column>-->
+
+            <el-table-column prop="code" label="物料代码" width="80">
+                <template slot-scope="{row}">
+                    {{ row.childRm? row.childRm.code :'-' }}
+                </template>
+            </el-table-column>
+            <el-table-column prop="name" label="物料名称" width="120">
+                <template slot-scope="{row}">
+                    {{ row.childRm? row.childRm.name :'-' }}
+                </template>
+            </el-table-column>  <!--{{ row.childRm? row.childRm.remark :'-' }}-->
+
+            <el-table-column prop="color" label="颜色" width="100">
+                <template slot-scope="{row}">
+                    {{ row.childRm? row.childRm.color :'-' }}
+                </template>
+            </el-table-column>
+
+
+            <el-table-column prop="lossQty" label="损耗" width="60">
+                <template slot-scope="{row}">
+                    {{(row.lossQty/row.qty*100).toFixed(0)+'%'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="pQty" label="每个用量" width="90"></el-table-column>
+            <el-table-column prop="qty" label="用量" width="90"></el-table-column>
+
+            <el-table-column prop="unit" label="单位" width="60">
+                <template slot-scope="{row}">
+                    {{ row.childRm? row.childRm.unit :'-' }}
+                </template>
+            </el-table-column>
+            <el-table-column prop="totalQty" label="总用量" width="100"></el-table-column>
+
+            <el-table-column prop="width" label="宽封度" width="120"></el-table-column>
+            <el-table-column prop="length" label="长封度" width="120"></el-table-column>
+            <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
+            <el-table-column prop="sizeL" label="尺寸(长）" width="120"></el-table-column>
+            <el-table-column prop="sizeX" label="X" width="30"></el-table-column>
+            <el-table-column prop="sizeW" label="尺寸(宽）" width="120"></el-table-column>
+
 
             <el-table-column prop="parentId" label="大类" width="80">
                 <template slot-scope="{row}">
@@ -70,56 +80,6 @@
                     {{ row.childRm ? row.childRm.productSubType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="code" label="物料代码" width="90">
-                <template slot-scope="{row}">
-                    {{ row.childRm? row.childRm.code :'-' }}
-                </template>
-            </el-table-column>
-            <el-table-column prop="name" label="物料名称" width="160">
-                <template slot-scope="{row}">
-                    {{ row.childRm? row.childRm.name :'-' }}
-                </template>
-            </el-table-column>
-            <el-table-column prop="remark" label="规格型号" width="120">
-                <template slot-scope="{row}">
-                    {{ row.childRm? row.childRm.remark :'-' }}
-                </template>
-            </el-table-column>
-            <el-table-column prop="color" label="颜色" width="100">
-                <template slot-scope="{row}">
-                    {{ row.childRm? row.childRm.color :'-' }}
-                </template>
-            </el-table-column>
-
-            <el-table-column prop="unit" label="单位" width="80">
-                <template slot-scope="{row}">
-                    {{ row.childRm? row.childRm.unit :'-' }}
-                </template>
-            </el-table-column>
-
-            <el-table-column prop="qty" label="数量" width="100"></el-table-column>
-            <el-table-column prop="price" label="单价" width="100"></el-table-column>
-            <el-table-column prop="money" label="金额" width="120"></el-table-column>
-            <el-table-column prop="lossQty" label="损耗率(%)" width="80">
-                <template slot-scope="{row}">
-                   {{ row.lossType==1?row.lossQty:'0'}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="lossQty" label="损耗数" width="80">
-                <template slot-scope="{row}">
-                   {{ row.lossType==0?row.lossQty:'0'}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="lossMoney" label="损耗金额" width="100"></el-table-column>
-            <el-table-column prop="totalMoney" label="总金额" width="120"></el-table-column>
-
-            <el-table-column prop="width" label="宽封度" width="120"></el-table-column>
-            <el-table-column prop="length" label="长封度" width="120"></el-table-column>
-            <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
-            <el-table-column prop="sizeL" label="尺寸(长）" width="120"></el-table-column>
-            <el-table-column prop="sizeX" label="X" width="30"></el-table-column>
-            <el-table-column prop="sizeW" label="尺寸(宽）" width="120"></el-table-column>
-
             <el-table-column prop="createDate" label="建档时间" width="120">
             </el-table-column>
 
@@ -129,11 +89,12 @@
             <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
-                    <el-button type="text" title="编辑" @click="edit(scope.row)">
-                        <i class="el-icon-edit"></i>
-                    </el-button>
+                    <!--<el-button type="text" title="编辑" @click="edit(scope.row)">-->
+                        <!--<i class="el-icon-edit"></i>-->
+                    <!--</el-button>-->
 
-                    <el-button type="text"  style="color:red" @click="del(scope.row,scope.$index)" title="删除"  >
+                    <el-button v-if="order.id" type="text"  style="color:red"
+                               @click="del(scope.row,scope.$index)" title="删除"  >
                         <i class="el-icon-delete red"></i>
                     </el-button>
                 </template>
@@ -162,18 +123,16 @@
     import RmTypeSelect from '@/components/widgets/dongxw/RmTypeSelect.vue';
     import SubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
 
-    import CostPanel from './BomCostForm';
     import FormPanel from './Form';
     export default {
-        components: {CostPanel, ProductMaster,FormPanel,RmTypeSelect, SubTypeSelect },
+        components: { ProductMaster,FormPanel,RmTypeSelect, SubTypeSelect },
         data() {
             return {
+
                 switchShow: true,
                 showQryBar: true,
-                formStatus: 1,
 
                 productId: -1,
-                product : {},
 
                 orderDateRange: [],
                 summaryMap: {},
@@ -186,7 +145,7 @@
                             isDeleted: false
                         }
                     },
-                    getData: this.$api.dongxw.BomService.query
+                    getData: this.$api.dongxw.MakeSheetService.query
 
                 },
                 tableActions: [
@@ -202,10 +161,40 @@
                 ]
             };
         },
-        computed: {
+        props: {
+            value: {
+                required: true
+            },
 
         },
-
+        computed: {
+            order:{
+                get () {
+                    return this.makeplan.order
+                }
+            },
+            makeplan: {
+                get () {
+                    return this.value
+                },
+                set (val) {
+                    this.$emit('input', val)
+                }
+            } ,
+            product:{
+                get () {
+                    return this.makeplan.product
+                }
+            },
+        },
+        watch: {
+            makeplan : {
+                handler: function(newVal, oldVal) {
+                    this.search();
+                },
+                deep: true
+            }
+        },
         methods: {
 
             onDataloaded(rsp) {
@@ -216,7 +205,7 @@
              */
             exportRecords() {
                 let params = this.getSearchParams();
-                this.$api.dongxw.ProductService.exportRm(params);
+                this.$api.dongxw.MakeSheetService.exportRm(params);
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};
@@ -232,7 +221,7 @@
                 this.$refs.formDiag.show();
             },
             edit(row) {
-                this.$refs.formDiag.show({id: row.id});
+                //this.$refs.formDiag.show({id: row.id});
             },
             toggleStatus(row) {
 
@@ -241,7 +230,7 @@
                 this.$confirm("确定删除此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    this.$api.dongxw.BomService.deleteById(row.id).then(rsp => {
+                    this.$api.dongxw.MakeSheetService.deleteById(row.id).then(rsp => {
                         this.search();
                         this.$message({
                             type: "success",
@@ -256,17 +245,14 @@
                 this.$nextTick(this.search)
             },
             init(options = {}) {
-                this.$refs.productMaster.init()
+
                 this.search();
             },
-            search(row) {
-                if (row && row.id) {
-                    this.product = row
-                    this.productId = row.id
-                    this.page.query.param.productId = this.productId
 
-                }
-                this.page.query.param.customerId = 0
+            search() {
+
+                this.page.query.param.planId = this.makeplan.id
+                this.page.query.param.orderId = this.order.id
                 this.$refs.table.currentPage = 1
                 this.$refs.table.load()
             },

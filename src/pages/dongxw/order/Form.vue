@@ -169,19 +169,19 @@
                         </el-col>
                     </el-row>
                     <el-row :span="22">
-                        <el-col :span="11">
-                            <el-form-item label="建档人" prop="createByName">
-                                <el-input disabled placeholder="建档人" v-model="entity.createByName"></el-input>
 
-                            </el-form-item>
-                        </el-col>
                         <el-col :span="11">
                             <el-form-item label="建档时间" prop="createDate">
                                 <el-input disabled placeholder="建档时间" v-model="entity.createDate"></el-input>
 
                             </el-form-item>
                         </el-col>
+                        <el-col :span="11">
+                            <el-form-item label="建档人" prop="createByName">
+                                <el-input disabled placeholder="建档人" v-model="entity.createByName"></el-input>
 
+                            </el-form-item>
+                        </el-col>
                     </el-row>
 
 

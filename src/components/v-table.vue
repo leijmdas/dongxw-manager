@@ -182,7 +182,7 @@ export default {
     pageSizeOpts: {
       type: Array,
       required: false,
-      default: () => [10, 20, 50, 100]
+      default: () => [10, 15, 20, 30, 50,80, 100]
     },
     pageSize: {
       type: Number,

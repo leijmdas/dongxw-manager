@@ -1,209 +1,213 @@
-<!--cust管理-->
+<!--生产计划管理-->
 <template>
-    <div>
-        <div class="panel panel-default panel-search">
-            <el-form :inline="true">
-                <el-form-item label="日期">
+    <div class="panel panel-default panel-search">
+        <el-container>
+            <el-header height="30%">
+                <order-search ref="orderSearch" :tableRowClick="orderChange" ></order-search>
+            </el-header>
+            <el-container>
+                <el-aside width="40%">
+                    <v-toolbar title="计划列表" type="alert">
 
-                    <div slot="label">
-                        <el-select v-model="dateRangeType" filterable clearable style="width:160px" class="formitem-label">
-                            <el-option value="orderDate" label="接单日期"></el-option>
-                            <el-option value="issueDate" label="要求交期"></el-option>
-                            <el-option value="preItemDate" label="物料到位日期"></el-option>
-                            <el-option value="prePackageDate" label="包装到位日期"></el-option>
-                            <el-option value="planOnlineDate" label="计划上线"></el-option>
-                            <el-option value="planFinishDate" label="计划完成"></el-option>
-                            <el-option value="planOnlineDate" label="实际上线"></el-option>
-                            <el-option value="planFinishDate" label="实际完成"></el-option>
-                        </el-select>
-                    </div>
+                        <span v-if="!order.epOrderCode" slot="tip"
+                              style="color:red;margin-left:  40px;margin-top: 30px"> 请点上方订单后编辑计划  </span>
+                        <span v-else slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
+                {{(order.customer||{}).custName+ ' => ' +order.customerOrderCode + " ( "+order.epOrderCode  +" )"}}   </span>
+                        <!--<el-button style="margin-left: 30px" slot="tip" type="primary" @click="search">查询</el-button>-->
+                        <!--<el-button slot="tip" @click="cancel">取消</el-button>-->
+                        <el-tooltip slot="tip"  style="color:green; margin-left: 40px" > class="item" effect="dark" content="生成制造单,可多次执行, 不会重复!" placement="top-start">
+                            <el-button plain v-if="page.query.param.orderId>0" @click="makeSheet">生成制造单</el-button>
+                        </el-tooltip>
+                        <!--<el-button plain @click="exportMail" style="color:green">发送邮件</el-button>-->
+                    </v-toolbar>
+                    <v-table ref="table" :page="page" :click="searchSheet" :pageSize="20" :table-minheight="450"
+                             @dataloaded="onDataloaded">
 
-                    <el-date-picker v-model="dateRangeOrder" type="daterange" range-separator="至"
-                                    start-placeholder="开始日期" end-placeholder="结束日期"
-                                    value-format="yyyy-MM-dd">
+                        <el-table-column prop="seq" label="序号" width="50">
+                            <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+                        </el-table-column>
 
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item style="color: rebeccapurple" label="状态">
-                    <el-select v-model="page.query.param.status" :clearable="true">
-                        <el-option v-for="item in $dongxwDict.store.PLAN_STATUS" :key="item[0]" :value="item[0]"
-                                   :label="item[1]+' :'+item[0]">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-
-
-                <el-form-item label="客户">
-                    <customer-select v-model="page.query.param.custId" :clearable="true"></customer-select>
-                </el-form-item>
-                <el-form-item label="订单">
-                    <customer-select v-model="page.query.param.custId" :clearable="true"></customer-select>
-                </el-form-item>
-                <el-form-item label="款号">
-                    <customer-select v-model="page.query.param.custId" :clearable="true"></customer-select>
-                </el-form-item>
+                        <el-table-column prop="outFlag" label="外发标志" width="90">
+                            <template slot-scope="{row}">
+                         <span :style="row.outFlag==1?'color:blue':''">
+                                 {{$dongxwDict.getText(row.outFlag,$dongxwDict.store.OUT_FLAG)}}
+                         </span>
+                            </template>
+                        </el-table-column>
 
 
-                <!--<el-form-item label="接单日期">-->
-                    <!--<el-date-picker v-model="dateRangeOrder" type="daterange" range-separator="至"-->
-                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
-                                    <!--value-format="yyyy-MM-dd"></el-date-picker>-->
-                <!--</el-form-item>-->
-                <!--<el-form-item label="要求交期">-->
-                    <!--<el-date-picker v-model="dateRangeOrder" type="daterange" range-separator="至"-->
-                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
-                                    <!--value-format="yyyy-MM-dd"></el-date-picker>-->
-                <!--</el-form-item>-->
-                <!--<el-form-item label="物料到位日期">-->
-                    <!--<el-date-picker v-model="dateRangeOrder" type="daterange" range-separator="至"-->
-                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
-                                    <!--value-format="yyyy-MM-dd"></el-date-picker>-->
-                <!--</el-form-item>-->
-                <!--<el-form-item label="包装到位日期">-->
-                    <!--<el-date-picker v-model="dateRangeOrder" type="daterange" range-separator="至"-->
-                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
-                                    <!--value-format="yyyy-MM-dd"></el-date-picker>-->
-                <!--</el-form-item>-->
-                <!--<el-form-item label="计划上线">-->
-                    <!--<el-date-picker v-model="dateRangeOrder" type="daterange" range-separator="至"-->
-                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
-                                    <!--value-format="yyyy-MM-dd"></el-date-picker>-->
-                <!--</el-form-item>-->
-                <!--<el-form-item label="计划完成">-->
-                    <!--<el-date-picker v-model="dateRangeOrder" type="daterange" range-separator="至"-->
-                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
-                                    <!--value-format="yyyy-MM-dd"></el-date-picker>-->
-                <!--</el-form-item>-->
+                        <el-table-column prop="customerOrderCode" label="客订单号" width="110">
+                            <template slot-scope="{row}">
+                                {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
+                            </template>
+                        </el-table-column>
 
-                <el-form-item>
-                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                    <el-button @click="cancel">取消</el-button>
+                        <el-table-column prop="code" label="客款号" width="100">
+                            <template slot-scope="{row}">
+                                <span style="color:green"> {{ row.product?row.product.code:'-'}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="epCode" label="EP款号" width="100">
+                            <template slot-scope="{row}">
+                                {{ row.product?row.product.epCode:'-'}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="qty" label="数量" width="100">
+                            <template slot-scope="{row}">
+                                {{ row.orderLine?row.orderLine.qty:'-'}}
+                            </template>
+                        </el-table-column>
 
-                </el-form-item>
-            </el-form>
-        </div>
-        <v-toolbar title="数据列表" type="alert">
-            <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button type="primary" plain @click="create">新增单品</el-button>
-            <el-button type="primary" plain @click="create">按订单新增</el-button>
-        </v-toolbar>
+                        <el-table-column prop="backupQty" label="备品" width="100"></el-table-column>
+                        <el-table-column prop="color" label="颜色" width="100">
+                            <template slot-scope="{row}">
+                                {{ row.product?row.product.color:'-'}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="remark" label="产品描述" width="120">
+                            <template slot-scope="{row}">
+                                {{ row.product?row.product.remark:'-'}}
+                            </template>
+                        </el-table-column>
 
 
-        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
-            <el-table-column prop="seq" label="序号" width="50">
+                        <el-table-column prop="orderDate" label="接单日期" width="100">
+                            <template slot-scope="{row}">
+                                {{ $dongxwDict.viewDate(row.orderDate)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="issueDate" label="要求交期" width="100">
+                            <template slot-scope="{row}">
+                                {{ $dongxwDict.viewDate(row.issueDate)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="rmDate" label="物料到位日期" width="100">
+                            <template slot-scope="{row}">
+                                {{ $dongxwDict.viewDate(row.rmDate)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="pkgDate" label="包材到位日期" width="100">
+                            <template slot-scope="{row}">
+                                {{ $dongxwDict.viewDate(row.pkgDate)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="planStart" label="计划上线日期" width="100">
+                            <template slot-scope="{row}">
+                                {{ $dongxwDict.viewDate(row.planStart)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="planEnd" label="计划完成日期" width="100">
+                            <template slot-scope="{row}">
+                                {{ $dongxwDict.viewDate(row.planEnd)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="finishFlag" label="完成?" width="75">
+                            <template slot-scope="{row}">
+                    <span :style="row.finishFlag==0?'color: red':'color: green'">
+                        {{$dongxwDict.getText(row.finishFlag,$dongxwDict.store.FINISH_FLAG)}}
+                    </span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="realEnd" label="实际完成日期" width="100">
+                            <template slot-scope="{row}">
+                                {{ $dongxwDict.viewDate(row.realEnd)}}
+                            </template>
+                        </el-table-column>
 
-                <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+                        <el-table-column prop="status" label="订单状态" width="80">
+                            <template slot-scope="{row}">
+                    <span :style="row.status==0?'color: red':''">
+                        {{$dongxwDict.getText(row.orderMaster?row.orderMaster.status:-1,$dongxwDict.store.ORDER_STATUS)}}
+                    </span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="remark" label="备注"></el-table-column>
 
-            </el-table-column>
-            <el-table-column prop="status" label="状态" width="80">
-                        <template slot-scope="{row}">
-                            {{$dongxwDict.getText (row.status,$dongxwDict.store.PLAN_STATUS)}}
-                        </template>
-            </el-table-column>
-            <el-table-column  prop="custId" label="客户" width="120"></el-table-column>
-            <el-table-column prop="orderId" label="订单号" width="120"></el-table-column>
-
-            <el-table-column prop="productId" label="款号" width="245">      </el-table-column>
-
-            <el-table-column prop="qty" label="数量" width="80">            </el-table-column>
-            <el-table-column prop="color" label="颜色" width="80">            </el-table-column>
+                        <el-table-column prop="createDate" label="建档时间" width="100">
+                            <template slot-scope="{row}">
+                                {{ $dongxwDict.viewDate(row.createDate)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="createByName" label="建档人" width="80">
+                        </el-table-column>
 
 
-            <el-table-column prop="orderDate" label="接单日期" width="100">
-                <template slot-scope="{row}">
-                    {{row.orderDate.substr(0,10)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="issueDate" label="要求交期" width="100">
-                <template slot-scope="{row}">
-                   <span style="color:red"> {{row.issueDate.substr(0,10)}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="preItemDate" label="物料到位日期" width="100">
-                <template slot-scope="{row}">
-                    {{row.preItemDate.substr(0,10)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="prePackageDate" label="包装到位日期" width="100">
-                <template slot-scope="{row}">
-                    {{row.prePackageDate.substr(0,10)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="planOnlineDate" label="计划上线" width="100">
-                <template slot-scope="{row}">
-                    {{row.planOnlineDate.substr(0,10)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="planFinishDate" label="计划完成" width="100">
-                <template slot-scope="{row}">
-                    {{row.planFinishDate.substr(0,10)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="planOnlineDate" label="实际上线" width="100">
-                <template slot-scope="{row}">
-                    <span style="color: darkgreen"> {{row.planOnlineDate.substr(0,10)}} </span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="planFinishDate" label="实际完成" width="100">
-                <template slot-scope="{row}">
-                    {{row.planFinishDate.substr(0,10)}}
-                </template>
-            </el-table-column>
+                    </v-table>
 
-            <el-table-column prop="remark" label="备注"  >
-            </el-table-column>
 
-            <el-table-column width="80" label="操作" :fixed="'right'">
-                <template slot-scope="scope">
+                    <v-dialog ref="formDiag" title="信息编辑" :width="'50%'">
+                        <form-panel @saved="onFormSaved"></form-panel>
+                        <div slot="footer">
+                            <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
+                            <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
+                        </div>
+                    </v-dialog>
+                </el-aside>
+                <el-main width="60%">
+                    <form-sheet v-model="makeplan" ref="formSheet"></form-sheet>
 
-                    <el-button type="text" title="编辑" @click="edit(scope.row)"  >
-                        <i class="el-icon-edit"></i>
-                    </el-button>
-                     <el-button type="danger" @click="del(scope.row,scope.$index)" title="删除" v-if="scope.row.status==0">
-                      <i class="el-icon-delete red"></i>
-                    </el-button>
-                </template>
-            </el-table-column>
-        </v-table>
-        <v-dialog ref="formDiag" :width="'600px'" title="信息编辑">
-            <form-panel @saved="onFormSaved"></form-panel>
-            <div slot="footer">
-                <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
-                <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
-            </div>
-        </v-dialog>
+                </el-main>
+            </el-container>
+        </el-container>
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
+    .el-input {
+        width: 160px;
+    }
 
-    .status_green {
-        color: green;
+    .el-dropdown {
+        vertical-align: top;
+    }
+    .el-dropdown + .el-dropdown {
+        margin-left: 15px;
+    }
+    .el-icon-arrow-down {
+        font-size: 12px;
     }
 </style>
-
 <script>
+    import OrderSearch from '@/components/widgets/dongxw/OrderMasterSearch.vue';
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
+    import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
     import FormPanel from './Form';
-
+    import FormSheet from './FormSheet';
+    const defaultMakeplan= {
+        product : {},
+        // id : -1
+    }
     export default {
-        components: {FormPanel ,CustomerSelect},
+        components: { FormSheet, OrderSearch, OrderMasterSelect, FormPanel, CustomerSelect},
+        props: {
+            fatherMethod: {
+                type: Function,
+                default: null
+            },
+            funShowPic: {
+                type: Function,
+                default: null
+            },
+
+        },
         data() {
             return {
-                dateRangeType: "orderDate",
-                dateRangeOrder : [],
+                dateRangeType: 'orderDate',
+                order: {},
+                makeplan : _.cloneDeep(defaultMakeplan),
+
                 formStatus: 1,
-                //orderDateRange: [],
+                dateRange: [],
                 summaryMap: {},
                 page: {
                     query: {
                         orderBys: 'id|desc',
                         param: {
+                            customerId: undefined,
                             isDeleted: false
                         }
                     },
-                    getData : this.$api.dongxw.MakePlan.query
-
-        },
+                    getData: this.$api.dongxw.MakePlan.query
+                },
                 tableActions: [
                     {
                         name: "编辑",
@@ -217,36 +221,118 @@
                 ]
             };
         },
-        computed: {},
-
+        computed: {
+            disabledAddBtn: {
+                get() {
+                    return this.page.query.param.orderId <= 0
+                },
+            },
+        },
+        watch: {
+            order : {
+                handler: function(newVal, oldVal) {
+                    this.page.query.param.orderId = this.order.id
+                    this.search();
+                },
+                deep: true
+            }
+        },
         methods: {
+            searchSheet(row) {
+
+                this.makeplan = row
+                this.makeplan.order = this.order
+
+            },
+            checkColor(row) {
+                if (row.status === 0) {
+                    return 'color:darkblue'
+                }
+                if(row.status===20)
+                {
+                    return 'color:green'
+                }
+                if(row.status===30)
+                {
+                    return 'color:red'
+                }
+                return ''
+            },
+            handleCommand(command) {
+                if(this.page.query.param.orderId) {
+                    if (command === "add") {
+                        this.makePlan();
+                    }
+                    if (command === "check") {
+                        this.checkPlan();
+                    } else {
+                        //this.rmPlan();
+                    }
+                }else{
+                    this.$mesage("请选择订单!")
+                }
+            },
             onDataloaded(rsp) {
-                // if (rsp.total < 1) return;
-                // let promotionIds = rsp.data.map(r => r.id);
-                // this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
-                //     let _rs = rs || [];
-                //     this.summaryMap = {}
-                //     _rs.forEach(r => {
-                //         this.summaryMap[r.promotionId] = r;
-                //     })
-                // })
+
+            },
+
+            checkPlan() {
+                let self = this;
+
+                self.$api.dongxw.MakePlan.checkPlanByOrder(this.page.query.param.orderId).then(rsp => {
+
+                    self.$msgJsonResult(rsp)
+                });
+            },
+
+            getSearchParams() {
+                this.page.query.dateRanges = {};
+                if (this.dateRangeType != null && this.dateRange && this.dateRange.length > 0) {
+                    this.page.query.dateRanges[this.dateRangeType] = {
+                        startDate: this.dateRange[0],
+                        endDate: this.dateRange.length > 1 ? this.dateRange[1] : null
+                    };
+                }
+                this.page.query.param.outFlag = 0;
+                return this.page.query;
             },
             /*
             导出
-             */
+            */
             exportRecords() {
-                let params = this.getSearchParams();
-                this.$api.dongxw.MakePlan.export(params);
+                let self = this;
+                this.$confirm("确定要导出所有查询的记录吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+                    let params = self.getSearchParams();
+                    self.$api.dongxw.MakePlan.export(params);
+
+                });
+
             },
-            getSearchParams() {
-                this.page.query.dateRanges = {};
-                if (this.dateRangeType != null && this.dateRangeOrder&&this.dateRangeOrder.length > 0) {
-                    this.page.query.dateRanges[this.dateRangeType] = {
-                        startDate: this.dateRangeOrder[0],
-                        endDate: this.dateRangeOrder.length > 1 ? this.dateRangeOrder[1] : null
-                    };
+
+            makeSheet() {
+                if (this.order.id) {
+                    this.$api.dongxw.MakeSheetService.makeSheetByPlanOrder(this.order.id).then(rsp => {
+                        this.$msgJsonResult(rsp)
+                        this.search();
+
+                    });
                 }
-                return this.page.query;
+            },
+
+             /*发送邮件
+             * */
+            exportMail() {
+                let self = this;
+                this.$confirm("确定要发送订单记录的邮件吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+                    let params = self.getSearchParams();
+                    self.$api.dongxw.MakePlan.exportMail(params);
+
+                });
+
             },
             create() {
                 this.$refs.formDiag.show();
@@ -254,30 +340,22 @@
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});
             },
+            clickRow(row) {
+                 this.row = row;
+                //console.log(row);
+            },
+
+            view(row) {
+                this.$refs.formDiagView.show({id: row.id});
+            },
             toggleStatus(row) {
-                let status = row.status;
-                let msg = '确定上架此活动吗？</br><span style="color:red">一旦上架，部分信息不允许修改!</span>';
-                if (status == 1) {
-                    msg = '确定下架此活动吗？</br><span style="color:red">一旦下架，已派发的优惠券无法使用!</span>';
-                }
-                this.$confirm(msg, "确认", {
-                    type: "warning",
-                    dangerouslyUseHTMLString: true
-                }).then(() => {
-                    this.$api.ipark.PromotionInfoService.updateStatus(row.id, status == 1 ? 2 : 1).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "操作成功!"
-                        });
-                    });
-                });
+
             },
             del(row) {
                 this.$confirm("确定删除此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    this.$api.ipark.PromotionInfoService.delete(row.id).then(rsp => {
+                    this.$api.dongxw.MakePlan.deleteById(row.id).then(rsp => {
                         this.search();
                         this.$message({
                             type: "success",
@@ -291,23 +369,85 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
+                this.$refs.orderSearch.search()
+                this.search()
+            },
+            searchByOrder(row) {
+                this.order = row
+                this.page.query.param.orderId = this.order.id
                 this.search();
             },
+            orderChange(row) {
+                this.order = row
+            },
+
             search() {
+
+                this.makeplan = _.cloneDeep(defaultMakeplan)
+                this.makeplan.order = this.order
+
                 this.getSearchParams();
-                this.$refs.table.load();
+                this.$refs.table.currentPage = 1;
+                this.$nextTick(this.$refs.table.load());
+                // if (this.$refs.orderSearch.$refs.table.getTableData().length > 0) {
+                //     this.order = this.$refs.orderSearch.$refs.table.getTableData()[0]
+                // }
             },
             cancel() {
-                this.dateRangeType = null;
-                this.dateRangeOrder = [];
-                this.page.query.param = {};
+                this.makeplan = _.cloneDeep(defaultMakeplan)
+                this.makeplan.order = this.order
+
+                this.dateRangeType = null
+                this.dateRange = [];
+                this.page.query.param = {}
                 this.search();
+            },
+            clickbtn() {
+                this.$alert('这是一段内容', '标题名称', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                        this.$message({
+                            type: 'info',
+                            message: `action: ${ action }`
+                        });
+                    }
+                });
+            },
+            showLine(row) {
+                console.log(JSON.stringify(row));
+                console.log("fatherMethodL: " + this.fatherMethod);
+                if (row.orderType != 100 && this.fatherMethod) {
+                    this.fatherMethod(row);
+                }
+                if (row.orderType == 100){
+                    this.$message("父订单没有产品清单！")
+                }
+            },
+            showPic(row) {
+                //console.log(JSON.stringify(row));
+                console.log("funShowPic: " + this.funShowPic);
+                if (this.funShowPic) {
+                    this.funShowPic(row);
+                }
+
+            },
+            getRow() {
+                if (this.row) {
+                    return this.row;
+                }else{
+                }
+                if (this.$refs.table.tableData) {
+                    this.row = this.$refs.table.tableData[0];
+                }
+                return this.row;
             }
         },
+
         created() {
         },
         mounted() {
             this.$on("init", this.init);
+
         }
     };
 </script>

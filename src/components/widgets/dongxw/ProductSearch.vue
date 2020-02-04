@@ -50,16 +50,21 @@
             </el-col>
         </el-row>
         <el-row :span="24">
+
+            <el-col :span="12">
+                <el-form-item prop="s">
+                    <el-button @click="refresh" :style="'color:green;width:48%'"
+                               plain type="primary">搜索
+                    </el-button>
+                    <el-button @click="cancel" :style="'color:red;width:48%'" plain>重置搜索条件</el-button>
+                </el-form-item>
+            </el-col>
             <el-col :span="12">
                 <el-form-item label="客户" prop="customerId">
                     <customer-select disabled :style="'color:red;width:100%'" v-model="customerId" clearable
                                      tyle="color:red;width:280px"></customer-select>
                 </el-form-item>
             </el-col>
-
-            <el-button @click="refresh" :style="'margin-left:2%;color:green;width:23%'"
-                       plain type="primary">搜索        </el-button>
-            <el-button @click="cancel" :style="'color:red;width:23%'" plain>重置搜索条件</el-button>
 
         </el-row>
         <el-row :span="24">

@@ -11,25 +11,27 @@
                     <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
 
                 </el-form-item>
-
                 <!--<el-form-item label="产品" prop="productId" >-->
                     <!--<order-product-select style="width:300px" :orderId="page.query.param.orderId"-->
                                              <!--v-model="page.query.param.productId" :clearable="true"></order-product-select>-->
-
                 <!--</el-form-item>-->
 
-                <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                <el-button @click="cancel">取消</el-button>
-            </el-form>
+        <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+        <el-button @click="cancel">取消</el-button>
+        </el-form>
         </div>
-        <v-toolbar title="数据列表" type="alert">
-            <span slot="tip" style="color: red ;padding-left: 180px"> 客户订单号:   {{order?order.customerOrderCode:'-'}}</span>
-            <span slot="tip" style="color: red ; padding-left: 20px"> EP订单号:   {{order?order.epOrderCode:'-'}}</span>
+        <v-toolbar title="产品列表" type="alert">
+            <span v-if="!order.id" slot="tip"  style="color: red ; padding-left: 20px"> 请点上方订单然后编辑</span>
+            <span  v-if="order.id" slot="tip" style="color: red ; padding-left: 20px">
+                客户订单号: {{ order?order.customerOrderCode:'-' }}</span>
+            <span  v-if="order.id" slot="tip" style="color: red ; padding-left: 80px">
+                {{ order?order.epOrderCode:'-'}}</span>
+
+
 
             <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
-
             <el-button plain @click="exportRecords">导出XLS</el-button>
-            <el-button type="primary" plain @click="create">新增</el-button>
+            <el-button type="primary" v-if="order.id" plain @click="create">新增</el-button>
             <el-switch style="color: mediumpurple;margin-left:20px; margin-right: 20px"
                        v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
             </el-switch>
@@ -150,7 +152,7 @@
                     </el-button>
 
                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除">
-                        <i class="el-icon-delete red"></i>
+                        <i style="color:red" class="el-icon-delete red"></i>
                     </el-button>
 
                 </template>

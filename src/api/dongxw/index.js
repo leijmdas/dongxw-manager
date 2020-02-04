@@ -7,12 +7,14 @@ import OrderLine from './OrderLineService'
 import SupplierService from "./SupplierService"
 import BomService from './BomService'
 import BomCostService from './BomCostService'
+import MakeSheetService from './MakeSheetService'
 
 export default {
     CustomerService,
     ProductTypeService,
     ProductService,
     MakePlan,
+    MakeSheetService,
     OrderMaster,
     OrderLine,
     SupplierService,
