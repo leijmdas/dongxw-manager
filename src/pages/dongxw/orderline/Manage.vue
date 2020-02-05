@@ -1,25 +1,26 @@
 <template>
     <div>
-        <div class="panel panel-default panel-search">
-            <el-form :inline="true">
+        <!--<div class="panel panel-default panel-search">-->
+            <!--<el-form :inline="true">-->
 
-                <el-form-item label="产品大类" prop="parentId">
-                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
+                <!--<el-form-item label="产品大类" prop="parentId">-->
+                    <!--<product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>-->
 
-                </el-form-item>
-                <el-form-item label="产品小类" prop="productTypeId">
-                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
-
-                </el-form-item>
-                <!--<el-form-item label="产品" prop="productId" >-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="产品小类" prop="productTypeId">-->
+                    <!--<product-sub-type-select :parentTypeId="page.query.param.parentId"-->
+                                             <!--v-model="page.query.param.productTypeId"-->
+                                             <!--:clearable="true"></product-sub-type-select>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="产品" prop="productId">-->
                     <!--<order-product-select style="width:300px" :orderId="page.query.param.orderId"-->
-                                             <!--v-model="page.query.param.productId" :clearable="true"></order-product-select>-->
+                                          <!--v-model="page.query.param.productId" :clearable="true"></order-product-select>-->
                 <!--</el-form-item>-->
 
-        <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-        <el-button @click="cancel">取消</el-button>
-        </el-form>
-        </div>
+                <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+                <!--<el-button @click="cancel">取消</el-button>-->
+            <!--</el-form>-->
+        <!--</div>-->
         <v-toolbar title="产品列表" type="alert">
             <span v-if="!order.id" slot="tip"  style="color: red ; padding-left: 20px"> 请点上方订单然后编辑</span>
             <span  v-if="order.id" slot="tip" style="color: red ; padding-left: 20px">
@@ -27,14 +28,13 @@
             <span  v-if="order.id" slot="tip" style="color: red ; padding-left: 80px">
                 {{ order?order.epOrderCode:'-'}}</span>
 
-
-
             <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
-            <el-button plain @click="exportRecords">导出XLS</el-button>
-            <el-button type="primary" v-if="order.id" plain @click="create">新增</el-button>
             <el-switch style="color: mediumpurple;margin-left:20px; margin-right: 20px"
                        v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
             </el-switch>
+            <el-button plain @click="exportRecords">导出XLS</el-button>
+            <el-button type="primary" v-if="order.id" plain @click="create">新增</el-button>
+
 
         </v-toolbar>
         <v-table ref="table" :page="page"  :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
@@ -104,7 +104,7 @@
                     {{ row.product?row.product.size:'-'}}
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="UPC-A" label="UPC-A" width="60"></el-table-column>-->
+
             <!--<el-table-column prop="barCode" label="条码" width="115">-->
                 <!--<template slot-scope="{row}">-->
                     <!--{{ row.product?row.product.barCode:'-'}}-->
@@ -143,7 +143,7 @@
             </el-table-column>
 
 
-            <el-table-column width="140" label="操作" :fixed="'right'">
+            <el-table-column width="80" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
                     <el-button type="text" title="编辑" @click="edit(scope.row)">

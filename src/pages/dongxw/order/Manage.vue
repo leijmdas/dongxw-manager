@@ -62,18 +62,17 @@
             </el-form>
         </div>
         <v-toolbar title="订单列表" type="alert">
-                <span slot="tip" style="margin-left:60px;">
-                <span style="color :red">  鼠标双击进入订单修改! </span>
-                </span>
+            <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
+
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
-                <el-button type="primary" plain @click="create">新增</el-button>
 
-                <el-button plain @click="exportRecords">导出XLS</el-button>
-                <el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>
-           </v-toolbar>
-        <v-table ref="table" :click="fatherMethod"  :dblclick="edit" :page="page"
+            <el-button plain @click="exportRecords">导出XLS</el-button>
+            <el-button plain @click="exportMail" style="color:green">发送邮件</el-button>
+            <el-button type="primary" plain @click="create">新增</el-button>
+        </v-toolbar>
+        <v-table ref="table" :click="fatherMethod" :dblclick="edit" :page="page"
                  :table-minheight="250" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
@@ -165,7 +164,7 @@
 
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column width="140" label="操作" :fixed="'right'">
+            <el-table-column width="80" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
                     <!--<el-button    @click="showLine(scope.row)"v-if="scope.row.orderType!=100"-->
                                   <!--style="color:green"  type="info" plain title="产品"  >    产品-->
