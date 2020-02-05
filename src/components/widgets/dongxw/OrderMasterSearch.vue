@@ -34,7 +34,7 @@
                     </el-select>
                 </el-form-item>
 
-                <el-form-item label="客户订单号" prop="customerOrderCode">
+                <el-form-item label="客订单号" prop="customerOrderCode">
                     <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
                 </el-form-item>
 
@@ -108,8 +108,11 @@
             </el-table-column>
 
 
-            <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号" width="120">   </el-table-column>
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
+            <el-table-column prop="customerOrderCode" label="客订单号" @clic111k="view(scope.row)"  width="120">
+            </el-table-column>
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
+
+            </el-table-column>
 
             <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">

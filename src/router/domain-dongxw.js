@@ -129,19 +129,19 @@ let router0 = [
                 path: 'userInfo/manage5',
                 //  component: require('@/pages/app/userInfo/Manage.vue'),
                 name: 'userInfo:manage5',
-                meta: {title: '原料库存', perm: 'purchase:manage'}
+                meta: {title: '物料库存', perm: 'purchase:manage'}
             }, {
                 path: 'userInfo/userGrade2',
                 //   component: require('@/pages/app/userGrade/Manage.vue'),
                 name: 'userGrade:manage2',
-                meta: {title: '原料入库单', perm: 'purchase:manage'}
+                meta: {title: '物料入库单', perm: 'purchase:manage'}
             },
 
             {
                 path: 'userInfo/recharge',
                 //      component: require('@/pages/app/userInfo/Manage.vue'),
                 name: 'recharge:manage',
-                meta: {title: '原料出库单', perm: 'purchase:manage'}
+                meta: {title: '物料出库单', perm: 'purchase:manage'}
             },
             {
                 path: 'userInfo/manage6',
@@ -177,7 +177,7 @@ let router0 = [
                 path: 'userInfo/userGrade8',
                 //      component: require('@/pages/app/userGrade/Manage.vue'),
                 name: 'userGrade:manage8',
-                meta: {title: '原料应付款', perm: 'purchase:manage'}
+                meta: {title: '物料应付款', perm: 'purchase:manage'}
             },
             {
                 path: 'userInfo/manage8',
@@ -188,7 +188,7 @@ let router0 = [
                 path: 'userInfo/userGrade9',
                 //    component: require('@/pages/app/userGrade/Manage.vue'),
                 name: 'userGrade:manage9',
-                meta: {title: '原料发票', perm: 'purchase:manage'}
+                meta: {title: '物料发票', perm: 'purchase:manage'}
             },
         ]
     },

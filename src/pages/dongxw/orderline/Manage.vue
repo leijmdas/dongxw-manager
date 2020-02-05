@@ -48,7 +48,7 @@
                     {{ row.customer?row.customer.custName:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="customerOrderCode" label="客户订单号" width="120">
+            <el-table-column prop="customerOrderCode" label="客订单号" width="120">
                 <template slot-scope="{row}">
                    <span style="color:green"> {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}} </span>
                 </template>

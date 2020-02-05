@@ -37,7 +37,7 @@
                 </el-form-item>
 
 
-                <el-form-item label="客户订单号" prop="customerOrderCode">
+                <el-form-item label="客订单号" prop="customerOrderCode">
                     <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
                 </el-form-item>
 
@@ -110,7 +110,7 @@
                 </template>
             </el-table-column>
 
-             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客户订单号+原件" width="120">
+             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客订单号" width="120">
                 <template slot-scope="scope">
                     <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
                     <span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>
@@ -123,19 +123,12 @@
                 <!--</template>-->
             <!--</el-table-column>-->
 
-            <el-table-column prop="moneyType" label="结算币种" width="80">
-                <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>
-
             <el-table-column prop="orderDate" label="下单日期" width="100">
                 <template slot-scope="{row}">
                 {{ $dongxwDict.viewDate(row.orderDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="customerIssueDate" label="客户交货日期" width="100">
+            <el-table-column prop="customerIssueDate" label="客户交货" width="100">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.customerIssueDate)}}
                 </template>
@@ -145,11 +138,18 @@
                     {{ $dongxwDict.viewDate(row.checkDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="factroyIssueDate" label="工厂交货日期" width="100">
+            <el-table-column prop="factroyIssueDate" label="工厂交货" width="100">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.factroyIssueDate)}}
                 </template>
             </el-table-column>
+
+            <el-table-column prop="moneyType" label="结算币种" width="80">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>
 
             <el-table-column prop="invoiceNoIni" label="预收发票编号" width="120"></el-table-column>
             <el-table-column prop="invoiceNo" label="正式发票编号" width="120"></el-table-column>

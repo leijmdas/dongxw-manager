@@ -74,14 +74,14 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
 
-            <el-table-column prop="outFlag" label="外发标志" width="90">
+            <el-table-column prop="outFlag" label="外发？" width="70">
                 <template slot-scope="{row}">
                     <span :style="row.outFlag==1?'color:blue':''">
                     {{$dongxwDict.getText(row.outFlag,$dongxwDict.store.OUT_FLAG)}}
                         </span>
                 </template>
             </el-table-column>
-            <el-table-column prop="outPrepareRm" label="外发备料" width="90">
+            <el-table-column prop="outPrepareRm" label="外发备料" width="80">
                 <template slot-scope="{row}">
                     <span :style="row.outPrepareRm==1?'color:blue':''">
                     {{$dongxwDict.getText(row.outPrepareRm,$dongxwDict.store.YESNO_TYPE)}}
