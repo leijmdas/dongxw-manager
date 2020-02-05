@@ -9,8 +9,8 @@
         <el-form-item label="供应商名称" prop="name">
             <el-input placeholder="供应商名称" v-model="entity.name"></el-input>
         </el-form-item>
-        <el-form-item label="供应商详细名称" prop="sname">
-            <el-input placeholder="供应商详细名称" v-model="entity.sname"></el-input>
+        <el-form-item label="详细名称" prop="sname">
+            <el-input placeholder="详细名称" v-model="entity.sname"></el-input>
         </el-form-item>
             <el-form-item label="状态" prop="moneyType">
                 <el-select v-model="entity.status" :disabled="isDisabled">
@@ -32,8 +32,8 @@
                 </el-select>
             </el-form-item>
 
-            <el-form-item label="供应商电子邮箱" prop="email">
-                <el-input placeholder="供应商电子邮箱" v-model="entity.email"></el-input>
+            <el-form-item label="电子邮箱" prop="email">
+                <el-input placeholder="电子邮箱" v-model="entity.email"></el-input>
             </el-form-item>
             <el-form-item label="联系人" prop="contact">
             <el-input placeholder="联系人" v-model="entity.contact"></el-input>

@@ -31,7 +31,7 @@
                 </el-form-item>
             </el-form>
         </div>
-        <v-toolbar title="数据列表" type="alert">
+        <v-toolbar title="供应商名单" type="alert">
             <el-button plain @click="exportRecords">导出 XLS</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
@@ -50,7 +50,7 @@
             </el-table-column>
             <el-table-column prop="name" label="供应商名称" width="120"></el-table-column>
 
-            <el-table-column prop="sname" label="供应商详细名称" width="245"></el-table-column>
+            <el-table-column prop="sname" label="详细名称" width="245"></el-table-column>
 
             <!--<el-table-column prop="country" label="国家" width="80"></el-table-column>-->
             <el-table-column prop="addr" label="地址" width="300"></el-table-column>
@@ -60,7 +60,7 @@
                     {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="email" label="供应商电子邮箱" width="150">
+            <el-table-column prop="email" label="电子邮箱" width="150">
             </el-table-column>
             <el-table-column prop="contact" label="联系人" width="150">
             </el-table-column>
