@@ -37,7 +37,7 @@
         </v-toolbar>
 
 
-        <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :dblclick="edit" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column prop="seq" label="序号" width="50">
 
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
@@ -50,10 +50,10 @@
             </el-table-column>
             <el-table-column prop="name" label="供应商名称" width="120"></el-table-column>
 
-            <el-table-column prop="sname" label="供应商详细名称" width="245">      </el-table-column>
+            <el-table-column prop="sname" label="供应商详细名称" width="245"></el-table-column>
 
-            <el-table-column prop="country" label="国家" width="80">            </el-table-column>
-            <el-table-column prop="addr" label="地址" width="300">            </el-table-column>
+            <!--<el-table-column prop="country" label="国家" width="80"></el-table-column>-->
+            <el-table-column prop="addr" label="地址" width="300"></el-table-column>
 
             <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">

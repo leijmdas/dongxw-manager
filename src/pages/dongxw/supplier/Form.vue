@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form"   label-width="120px" class="dialog-form">
+        <el-form :model="entity" :rules="rules" ref="form"  label-width="120px" class="dialog-form">
 
 
         <el-form-item label="供应商编码" prop="code">
@@ -18,9 +18,9 @@
                                :value="item[0]" :label="item[1]"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="国家" prop="country">
-                <el-input placeholder="国家" v-model="entity.country"></el-input>
-            </el-form-item>
+            <!--<el-form-item label="国家" prop="country">-->
+                <!--<el-input placeholder="国家" v-model="entity.country"></el-input>-->
+            <!--</el-form-item>-->
             <el-form-item label="地址" prop="addr">
                 <el-input placeholder="地址" v-model="entity.addr"></el-input>
             </el-form-item>

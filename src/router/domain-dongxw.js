@@ -99,6 +99,12 @@ let router0 = [
         meta: {title: '采购订单', icon: 'user', group: 'dongxw'},
         children: [
             {
+                path: 'purchasePlan/manage',
+                component: require('@/pages/dongxw/purchase/Manage.vue'),
+                name: 'purchasePlan:manage',
+                meta: {title: '采购计划表', perm: 'purchase:manage'}
+            },
+            {
                 path: 'dongxw/supplier/manage',
                 component: require('@/pages/dongxw/supplier/Manage.vue'),
                 name: 'supplier:manage',
