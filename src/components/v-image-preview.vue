@@ -48,10 +48,10 @@
         data() {
             return {
                 urls: null,
-                formData: {maxSize:500},
+                formData: {maxSize: 500},
                 action: '/api/file/upload',
                 limit: 12,
-                remarks : [],
+                remarks: [],
 
             }
         },
@@ -61,17 +61,17 @@
                 type: Boolean ,
                 default : true
             },
-            options : {
-                required : false,
-                type: Array ,
-            },
-            funRemoveUrl:{
-                required : false,
-                type: Function ,
-            },
-            funHandleChange:{
+            options: {
                 required: false,
-                type:Function
+                type: Array,
+            },
+            funRemoveUrl: {
+                required: false,
+                type: Function,
+            },
+            funHandleChange: {
+                required: false,
+                type: Function
             },
             imgRemarks: {
                 type: String,

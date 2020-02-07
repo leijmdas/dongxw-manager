@@ -75,9 +75,7 @@
             <el-form-item label="备注" prop="remark">
                 <el-input placeholder="备注" type="textarea" :rows="2" v-model="entity.remark"></el-input>
             </el-form-item>
-            <!--<el-divider></el-divider>-->
-
-            <!--<hr style="margin-right: -20px">-->
+            <!--<el-divider></el-divider>--            <!--<hr style="margin-right: -20px">-->
 
             <fieldset style="margin-top: 10px">
                 <legend>客户登录帐户信息</legend>
