@@ -15,38 +15,64 @@
                     <el-row>
                             <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
 
-                            <el-row :span="24" style="margin-top: 10px">
 
-                                <el-col :span="9">
-                                    <el-form-item label="尺寸(长）" prop="sizeL">
-                                        <el-input placeholder="尺寸(长）" v-model="entity.sizeL"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item label="X" prop="sizeX">
-                                        <el-input placeholder="X" v-model="entity.sizeX"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="9">
-                                    <el-form-item label="尺寸(长）" prop="sizeW">
-                                        <el-input placeholder="尺寸(宽）" v-model="entity.sizeW"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
                             <el-row :span="24" style="margin-top: 10px">
-                                <el-col :span="12">
+                                <el-col :span="8">
                                     <el-form-item label="宽封度" prop="width">
                                         <el-input placeholder="宽封度" v-model="entity.width"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="12">
+                                <el-col :span="16">
+                                    <el-form-item label="裁片名称" prop="cutPartName">
+                                        <el-input placeholder="裁片名称" v-model="entity.cutPartName"></el-input>
+                                    </el-form-item>
+                                </el-col>
+
+                                <el-col :span="8">
+                                    <el-form-item label="尺寸(长）" prop="sizeL">
+                                        <el-input placeholder="尺寸(长）" v-model="entity.sizeL"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item label="X" prop="sizeX">
+                                        <el-input placeholder="" v-model="entity.sizeX"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item label="尺寸(宽）" prop="sizeW">
+                                        <el-input placeholder="尺寸(宽）" v-model="entity.sizeW"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item label="件数" prop="pieces">
+                                        <el-input placeholder="件数" v-model="entity.pieces"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item label="刀数" prop="knifeQty">
+                                        <el-input placeholder="刀数" v-model="entity.knifeQty"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
                                     <el-form-item label="长封度" prop="length">
                                         <el-input placeholder="长封度" v-model="entity.length"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="刀数" prop="knifeQty">
-                                        <el-input placeholder="刀数" v-model="entity.knifeQty"></el-input>
+                                <el-col :span="8" >
+
+                                    <el-form-item  :label="entity.lossType==0?'损耗数':'损耗(%)'" prop="lossQty">
+                                        <el-input placeholder="损耗" v-model="entity.lossRate"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item label="每个用量" prop="qty">
+                                        <el-input placeholder="每个用量" v-model="entity.eachQty"></el-input>
+                                    </el-form-item>
+                                </el-col>
+
+                                <el-col :span="8">
+                                    <el-form-item  label="用量" prop="totalQty">
+                                        <el-input diabled placeholder="用量" v-model="totalQty"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
@@ -54,54 +80,21 @@
                                         <el-input placeholder="单价" v-model="entity.price"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="数量" prop="qty">
-                                        <el-input placeholder="数量" v-model="entity.qty"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="金额" prop="money">
-                                        <el-input disabled placeholder="金额" v-model="money"></el-input>
-                                    </el-form-item>
-                                </el-col>
 
+                                <el-col :span="12">
+                                    <el-form-item label="金额" prop="totalMoney">
+                                        <el-input disabled placeholder="金额" v-model="totalMoney"></el-input>
+                                    </el-form-item>
+                                </el-col>
                             </el-row>
-                            <!--<fieldset>-->
-                                <!--<legend>损耗合计</legend>-->
-
-                                <el-row :span="24">
-
-                                    <el-col :span="12" >
-
-                                        <el-form-item  label="损耗类型" prop="lossType">
-
-                                            <el-select  style="width:100%" v-model="entity.lossType"  >
-                                                <el-option v-for="item in $dongxwDict.store.LOSS_TYPE" :key="item[0]"
-                                                           :value="item[0]" :label="item[1]"></el-option>
-                                            </el-select>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12" >
-
-                                        <el-form-item  :label="entity.lossType==0?'损耗数':'损耗率(%)'" prop="lossQty">
-                                            <el-input placeholder="损耗" v-model="entity.lossQty"></el-input>
-                                        </el-form-item>
-                                    </el-col>
-
-                                </el-row>
-                                <el-row :span="24">
-                                    <el-col :span="12">
-                                        <el-form-item label="总数量" prop="totalQty">
-                                            <el-input disabled placeholder="总数量" v-model="totalQty"></el-input>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="总金额" prop="totalMoney">
-                                            <el-input disabled placeholder="总金额" v-model="totalMoney"></el-input>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-
+                            <!--<el-col :span="12" >-->
+                                <!--<el-form-item  label="损耗类型" prop="lossType">-->
+                                    <!--<el-select  style="width:100%" v-model="entity.lossType"  >-->
+                                        <!--<el-option v-for="item in $dongxwDict.store.LOSS_TYPE" :key="item[0]"-->
+                                                   <!--:value="item[0]" :label="item[1]"></el-option>-->
+                                    <!--</el-select>-->
+                                <!--</el-form-item>-->
+                            <!--</el-col> -->
                             <el-row :span="24" style="margin-top: 10px">
                                 <el-col :span="12">
 
@@ -139,7 +132,6 @@
                 display: flex;
                 align-items: center;
             }
-
             label {
                 height: 40px;
             }
@@ -166,15 +158,21 @@
     const defaultEntity = {
         depth : 1,
         source : 1,
+
         lossType :1,
+        lossRate :0 ,
+        eachQty : 0,
         lossQty : 0,
+        qty: 0,
+        pieces:0,
         customerId: 0,
         id: null,
-        qty: 0,
+
         price: 0,
         money: 0,
         parentId: 0,
         productId: null,
+        cutPartName : '',
 
         sizeL:0,
         sizeW:0,
@@ -246,26 +244,23 @@
             };
         },
         computed: {
-            money: function () {
-                this.entity.money = Math.round(100 * this.entity.qty * this.entity.price) / 100
-                return this.entity.money
-            },
 
+
+            totalQty: function () {
+                let type = this.entity.lossType
+                let q = this.entity.qty + this.entity.lossRate
+                if (type === 1) {
+                    q =  (100 + parseFloat(this.entity.lossRate)) * this.entity.eachQty / 100
+                }
+                return q.toFixed(4)
+            },
             totalMoney: function () {
-                let money = Math.round(100 * parseFloat(this.totalQty) * this.entity.price)  / 100
+                let money =   (this.totalQty * this.entity.price).toFixed(4)
                 return  money
 
             },
 
-            totalQty: function () {
-                let type = parseInt(this.entity.lossType)
-                if (type == 1) {
-                    return (100 + parseFloat(this.entity.lossQty)) * this.entity.qty / 100
-                } else {
 
-                    return parseFloat(this.entity.qty)+ parseInt(this.entity.lossQty)
-                }
-            },
         },
         watch: {
 

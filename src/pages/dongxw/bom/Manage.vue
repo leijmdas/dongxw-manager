@@ -60,69 +60,67 @@
             </el-table-column>
             <!--<el-table-column prop="parentId" label="父标识" width="80"></el-table-column>-->
 
-            <el-table-column prop="parentId" label="大类" width="80">
+            <el-table-column prop="parentId" label="大类" width="70">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.productType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="productSubType" label="小类" width="100">
+            <el-table-column prop="productSubType" label="小类" width="80">
                 <template slot-scope="{row}">
                     {{ row.childRm ? row.childRm.productSubType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="code" label="物料代码" width="90">
+            <el-table-column prop="code" label="物料代码" width="80">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.code :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="物料名称" width="160">
+            <el-table-column prop="name" label="物料名称" width="120">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="remark" label="规格型号" width="120">
+            <el-table-column prop="remark" label="规格型号" width="100">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.remark :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="color" label="颜色" width="100">
+            <el-table-column prop="color" label="颜色" width="80">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.color :'-' }}
                 </template>
             </el-table-column>
 
-            <el-table-column prop="unit" label="单位" width="80">
+
+            <el-table-column prop="width" label="宽封度" width="70"></el-table-column>
+            <el-table-column prop="cutPartName" label="裁片名称" width="120"></el-table-column>
+            <el-table-column   label="尺寸(英寸）" align="center">
+                <el-table-column prop="sizeL" label="长度" width="80"></el-table-column>
+                <el-table-column prop="sizeX" label="X" width="30"></el-table-column>
+                <el-table-column prop="sizeW" label="宽度" width="80"></el-table-column>
+            </el-table-column>
+            <el-table-column prop="pieces" label="件数" width="60"></el-table-column>
+            <el-table-column prop="knifeQty" label="刀数" width="60"></el-table-column>
+            <el-table-column prop="length" label="长封度" width="70"></el-table-column>
+
+            <el-table-column prop="lossRate" label="损耗" width="60">
+                <template slot-scope="{row}">
+                    {{row.lossRate}}%
+                </template>
+            </el-table-column>
+            <el-table-column prop="eachQty" label="每个用量" width="80"></el-table-column>
+            <el-table-column prop="qty" label="用量" width="80"></el-table-column>
+            <el-table-column prop="unit" label="单位" width="70">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.unit :'-' }}
                 </template>
             </el-table-column>
 
-            <el-table-column prop="qty" label="数量" width="100"></el-table-column>
-            <el-table-column prop="price" label="单价" width="100"></el-table-column>
-            <el-table-column prop="money" label="金额" width="120"></el-table-column>
-            <el-table-column prop="lossQty" label="损耗率(%)" width="80">
-                <template slot-scope="{row}">
-                   {{ row.lossType==1?row.lossQty:'0'}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="lossQty" label="损耗数" width="80">
-                <template slot-scope="{row}">
-                   {{ row.lossType==0?row.lossQty:'0'}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="lossMoney" label="损耗金额" width="100"></el-table-column>
-            <el-table-column prop="totalMoney" label="总金额" width="120"></el-table-column>
-
-            <el-table-column prop="width" label="宽封度" width="120"></el-table-column>
-            <el-table-column prop="length" label="长封度" width="120"></el-table-column>
-            <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
-            <el-table-column prop="sizeL" label="尺寸(长）" width="120"></el-table-column>
-            <el-table-column prop="sizeX" label="X" width="30"></el-table-column>
-            <el-table-column prop="sizeW" label="尺寸(宽）" width="120"></el-table-column>
+            <el-table-column prop="price" label="单价" width="80"></el-table-column>
+            <el-table-column prop="money" label="金额" width="100"></el-table-column>
 
             <el-table-column prop="createDate" label="建档时间" width="120">
             </el-table-column>
-
             <el-table-column prop="createByName" label="建档人" width="80">
             </el-table-column>
 
