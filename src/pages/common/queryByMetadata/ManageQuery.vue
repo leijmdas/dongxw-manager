@@ -32,8 +32,7 @@
             </el-table-column>
             <el-table-column v-for="title in titles"
                              v-if="title.fieldVisible" prop="title.fieldName" :label="title.fieldMemo"
-                             :width="title.fieldDisplaysize<30 ? title.fieldDisplaysize*30:title.fieldDisplaysize"
-                             :fixed="title.fieldName==titles[title.length-1].fieldName? 'right':''">
+                             :width="title.fieldDisplaysize<30 ? title.fieldDisplaysize*30:title.fieldDisplaysize" >
                 <template slot-scope="scope"><span>{{scope.row[title.fieldName]}}</span></template>
 
             </el-table-column>
