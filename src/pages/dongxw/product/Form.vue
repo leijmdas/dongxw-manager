@@ -433,7 +433,7 @@
                         var multi = function (a, b) {
                             return parseInt(a) * parseInt(b);
                         }
-                        return v.reduce(multi, 1)/1000000
+                        return (v.reduce(multi, 1)/1000000).toFixed(4)
                     }
                     return 0;
                 }

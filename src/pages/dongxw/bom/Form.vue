@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
+        <el-form :model="entity" :rules="rules" ref="form" label-width="90px" class="dialog-form">
             <el-tabs :stretch="isExp" v-model="activeName">
                 <el-tab-pane label="物料用量" name="productInfo">
                     <rm-view v-model="entity.childId"></rm-view>
@@ -13,10 +13,8 @@
                         </el-collapse-item>
                     </el-collapse>
                     <el-row>
-                            <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
 
-
-                            <el-row :span="24" style="margin-top: 10px">
+                            <el-row :span="24" style="margin-top: 5px">
                                 <el-col :span="8">
                                     <el-form-item label="宽封度" prop="width">
                                         <el-input placeholder="宽封度" v-model="entity.width"></el-input>
@@ -72,16 +70,18 @@
 
                                 <el-col :span="8">
                                     <el-form-item  label="用量" prop="totalQty">
-                                        <el-input diabled placeholder="用量" v-model="totalQty"></el-input>
+                                        <el-input disabled placeholder="用量" v-model="totalQty"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="12">
+                            </el-row>
+                                <el-row :span="24" style="margin-top: 5px">
+                                <el-col :span="8">
                                     <el-form-item label="单价" prop="price">
                                         <el-input placeholder="单价" v-model="entity.price"></el-input>
                                     </el-form-item>
                                 </el-col>
 
-                                <el-col :span="12">
+                                <el-col :span="8">
                                     <el-form-item label="金额" prop="totalMoney">
                                         <el-input disabled placeholder="金额" v-model="totalMoney"></el-input>
                                     </el-form-item>
@@ -95,14 +95,14 @@
                                     <!--</el-select>-->
                                 <!--</el-form-item>-->
                             <!--</el-col> -->
-                            <el-row :span="24" style="margin-top: 10px">
-                                <el-col :span="12">
+                            <el-row :span="24" style="margin-top: 5px">
+                                <el-col :span="8">
 
                                     <el-form-item label="建档时间" prop="createDate">
                                         <el-input placeholder="建档时间" disabled v-model="entity.createDate"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="12">
+                                <el-col :span="8">
                                     <el-form-item label="建档人" prop="createByName">
                                         <el-input placeholder="建档人" disabled v-model="entity.createByName"></el-input>
 
@@ -146,6 +146,11 @@
         }
 
     }
+    .el-input.is-disabled /deep/ .el-input__inner {
+        color: darkmagenta;
+        background-color: ghostwhite; /*#d0e9c6 rgba(255, 255, 255, 0.8);*/
+    }
+
 </style>
 
 <script>
