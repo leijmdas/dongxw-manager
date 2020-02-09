@@ -3,17 +3,20 @@
     <div>
 
     <v-toolbar title="采购计划表" type="alert">
-
-            <span v-if="!product.code" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
+        <el-switch slot="tip" style="margin-left:20px; margin-right: 20px" v-model="showPlan"
+                   @change="changeSwitch" active-text="显示计划列表" inactive-text="不显示"
+                   active-color="#13ce66" inactive-color="#ff4949">
+        </el-switch>
+        <span v-if="!product.code" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
                 请点左方产品后编辑
             </span>
-            <span v-else slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
+        <span v-else slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
                 {{  product.code +" : "+product.epCode +" ( "+product.remark + " )"}}
             </span>
 
-            <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
-            <!--<el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>-->
-        </v-toolbar>
+        <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
+        <!--<el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>-->
+    </v-toolbar>
 
 
         <v-table ref="table" :page="page" :dblclick="edit"  :table-minheight="450" @dataloaded="onDataloaded">
@@ -135,7 +138,7 @@
 
                 switchShow: true,
                 showQryBar: true,
-
+                showPlan : true ,
                 productId: -1,
 
                 orderDateRange: [],
@@ -169,6 +172,10 @@
             value: {
                 required: true
             },
+            handleShowPlan : {
+                type : Function ,
+                required: true,
+            }
 
         },
         computed: {
@@ -200,7 +207,11 @@
             }
         },
         methods: {
-
+            changeSwitch(){
+                if(this.handleShowPlan){
+                    this.handleShowPlan(this.showPlan)
+                }
+            },
             onDataloaded(rsp) {
 
             },

@@ -3,7 +3,7 @@
         <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
 
             <el-row :span="24">
-                <el-col :span="6">
+                <el-col :span="5">
                     <el-form-item label="产品" prop="product">
                         <el-input disabled placeholder="产品" v-model="product.code"></el-input>
                     </el-form-item>
@@ -19,12 +19,16 @@
                         <el-input disabled placeholder="损耗" v-model="entity.lossRm"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="6">
                     <el-form-item label="总费用" prop="totalFee">
                         <el-input disabled placeholder="总费用" v-model="totalFee"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="2">
+                    <el-button type="primary" style="margin-left: 10px"
+                               @click="save" v-if="product.id">保存</el-button>
+                </el-col>
+                <el-col :span="5">
                     <el-form-item label="开料" prop="cutRm">
                         <el-input placeholder="开料" v-model="entity.cutRm"></el-input>
                     </el-form-item>
@@ -40,24 +44,23 @@
                         <el-input placeholder="人工" v-model="entity.workFee"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="5">
+                <el-col :span="6">
                     <el-form-item label="运输" prop="shippingFee">
                         <el-input placeholder="运输" v-model="entity.shippingFee"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="2">
-                    <el-button type="primary" @click="save" v-if="product.id">保存</el-button>
-                </el-col>
+
             </el-row>
         </el-form>
 
     </div>
 </template>
 <style lang="less" scoped>
-    /*.el-input.is-disabled /deep/ .el-input__inner {*/
-        /*color: darkmagenta;*/
-        /*background-color:ghostwhite  ;  !*#d0e9c6 rgba(255, 255, 255, 0.8);*!*/
-    /*}*/
+
+    .el-input.is-disabled /deep/ .el-input__inner {
+        color: darkmagenta;
+        background-color: ghostwhite; /*#d0e9c6 rgba(255, 255, 255, 0.8);*/
+    }
 
 
     .productLogo .el-upload-dragger {
@@ -143,12 +146,12 @@
 
             totalFee: function () {
 
-                let total= parseFloat(this.entity.rmFee)
-                    + parseFloat(this.entity.cutRm)
-                    + parseFloat(this.entity.shippingFee)
-                    + parseFloat(this.entity.knifeModel)
+                let total = parseFloat(this.entity.rmFee)
                     + parseFloat(this.entity.lossRm)
+                    + parseFloat(this.entity.cutRm)
+                    + parseFloat(this.entity.knifeModel)
                     + parseFloat(this.entity.workFee)
+                    + parseFloat(this.entity.shippingFee)
                 return total.toFixed(2)
             },
             product: {

@@ -2,7 +2,10 @@
 <template>
     <div>
 
-    <v-toolbar title="制造清单" type="alert">
+        <v-toolbar title="制造清单" type="alert">
+            <el-switch slot="tip" v-model="showPlan" @change="changeSwitch" active-color="#13ce66" inactive-color="#ff4949"
+                       active-text="显示计划列表" inactive-text="不显示">
+            </el-switch>
 
             <span v-if="!product.code" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
                 请点左方产品后编辑
@@ -10,7 +13,6 @@
             <span v-else slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
                 {{  product.code +" : "+product.epCode +" ( "+product.remark + " )"}}
             </span>
-
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
             <!--<el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>-->
         </v-toolbar>
@@ -38,36 +40,37 @@
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.name :'-' }}
                 </template>
-            </el-table-column>  <!--{{ row.childRm? row.childRm.remark :'-' }}-->
+            </el-table-column>
 
             <el-table-column prop="color" label="颜色" width="100">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.color :'-' }}
                 </template>
             </el-table-column>
+            <el-table-column prop="width" label="宽封度" width="70"></el-table-column>
+            <el-table-column prop="cutPartName" label="裁片名称" width="120"></el-table-column>
+            <el-table-column   label="尺寸(英寸）" align="center">
+                <el-table-column prop="sizeL" label="长度" width="80"></el-table-column>
+                <el-table-column prop="sizeX" label="X" width="30"></el-table-column>
+                <el-table-column prop="sizeW" label="宽度" width="80"></el-table-column>
+            </el-table-column>
+            <el-table-column prop="pieces" label="件数" width="60"></el-table-column>
+            <el-table-column prop="knifeQty" label="刀数" width="60"></el-table-column>
+            <el-table-column prop="length" label="长封度" width="70"></el-table-column>
 
-
-            <el-table-column prop="lossQty" label="损耗" width="60">
+            <el-table-column prop="lossRate" label="损耗" width="60">
                 <template slot-scope="{row}">
-                    {{(row.lossQty/row.qty*100).toFixed(0)+'%'}}
+                    {{row.lossRate}}%
                 </template>
             </el-table-column>
-            <el-table-column prop="pQty" label="每个用量" width="90"></el-table-column>
-            <el-table-column prop="qty" label="用量" width="90"></el-table-column>
-
-            <el-table-column prop="unit" label="单位" width="60">
+            <el-table-column prop="eachQty" label="每个用量" width="80"></el-table-column>
+            <el-table-column prop="qty" label="用量" width="80"></el-table-column>
+            <el-table-column prop="unit" label="单位" width="70">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.unit :'-' }}
                 </template>
             </el-table-column>
             <el-table-column prop="totalQty" label="总用量" width="100"></el-table-column>
-
-            <el-table-column prop="width" label="宽封度" width="120"></el-table-column>
-            <el-table-column prop="length" label="长封度" width="120"></el-table-column>
-            <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
-            <el-table-column prop="sizeL" label="尺寸(长）" width="120"></el-table-column>
-            <el-table-column prop="sizeX" label="X" width="30"></el-table-column>
-            <el-table-column prop="sizeW" label="尺寸(宽）" width="120"></el-table-column>
 
 
             <el-table-column prop="parentId" label="大类" width="80">
@@ -116,6 +119,14 @@
     .status_green {
         color: red;
     }
+
+
+    .el-switch {
+        margin-left:20px;
+        margin-right: 20px;
+        active-color: #13ce66 ;
+        inactive-color:#ff4949 ;
+    }
 </style>
 
 <script>
@@ -131,7 +142,7 @@
 
                 switchShow: true,
                 showQryBar: true,
-
+                showPlan: true,
                 productId: -1,
 
                 orderDateRange: [],
@@ -165,6 +176,10 @@
             value: {
                 required: true
             },
+            handleShowPlan : {
+                type : Function ,
+                required: true,
+            }
 
         },
         computed: {
@@ -196,7 +211,11 @@
             }
         },
         methods: {
-
+            changeSwitch(){
+                if(this.handleShowPlan){
+                    this.handleShowPlan(this.showPlan)
+                }
+            },
             onDataloaded(rsp) {
 
             },

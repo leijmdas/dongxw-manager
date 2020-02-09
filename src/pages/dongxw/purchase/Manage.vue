@@ -3,10 +3,10 @@
     <div class="panel panel-default panel-search">
         <el-container>
             <el-header height="30%">
-                <order-search ref="orderSearch" :tableRowClick="orderChange" ></order-search>
+                <order-search ref="orderSearch" v-show="showOrderSearch" :tableRowClick="orderChange" ></order-search>
             </el-header>
             <el-container>
-                <el-aside width="40%">
+                <el-aside width="40%" v-show="showPlan" >
                     <v-toolbar title="计划列表" type="alert">
 
                         <span v-if="!order.epOrderCode" slot="tip"
@@ -18,7 +18,9 @@
                         <el-tooltip slot="tip"  style="color:green; margin-left: 40px" > class="item" effect="dark" content="生成采购计划单,可多次执行, 不会重复!" placement="top-start">
                             <el-button plain v-if="page.query.param.orderId>0" @click="makePp">生成采购计划单</el-button>
                         </el-tooltip>
-                        <!--<el-button plain @click="exportMail" style="color:green">发送邮件</el-button>-->
+                        <el-switch style="margin-left:20px; margin-right: 20px" v-model="showOrderSearch"
+                                   active-text="显示订单" inactive-text="不显示" active-color="#13ce66" inactive-color="#ff4949">
+                        </el-switch>
                     </v-toolbar>
                     <v-table ref="table" :page="page" :click="searchSheet" :pageSize="20" :table-minheight="450"
                              @dataloaded="onDataloaded">
@@ -144,7 +146,7 @@
                     </v-dialog>
                 </el-aside>
                 <el-main width="60%">
-                    <form-purchase v-model="makeplan" ref="formPurchase"></form-purchase>
+                    <form-purchase :handleShowPlan="handleShowPlan" v-model="makeplan" ref="formPurchase"></form-purchase>
 
                 </el-main>
             </el-container>
@@ -193,6 +195,8 @@
             return {
                 dateRangeType: 'orderDate',
                 order: {},
+                showOrderSearch: true,
+                showPlan : true,
                 makeplan : _.cloneDeep(defaultMakeplan),
 
                 formStatus: 1,
@@ -238,6 +242,10 @@
             }
         },
         methods: {
+            handleShowPlan(val){
+               this.showPlan  = val
+            },
+
             searchSheet(row) {
 
                 this.makeplan = row

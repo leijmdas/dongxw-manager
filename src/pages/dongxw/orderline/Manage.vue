@@ -29,7 +29,7 @@
                 {{ order?order.epOrderCode:'-'}}</span>
 
             <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
-            <el-switch style="color: mediumpurple;margin-left:20px; margin-right: 20px"
+            <el-switch style="color:mediumpurple;margin-left:20px; margin-right: 20px" active-color="#13ce66" inactive-color="#ff4949"
                        v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
             </el-switch>
             <el-button plain @click="exportRecords">导出XLS</el-button>
