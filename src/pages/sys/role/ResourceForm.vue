@@ -1,6 +1,6 @@
 <template>
     <div class="resource-form">
-      <el-form ref="form" label-width="80px" v-loading="showLoading">
+      <el-form ref="form" label-width="100px" v-loading="showLoading">
         <fieldset v-for="(srg, index) in srgs">
           <legend>{{srg.groupName}}</legend>
           <ul class="menu-ul">

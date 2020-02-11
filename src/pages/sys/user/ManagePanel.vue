@@ -20,7 +20,7 @@
     </div>
     <div class="main-table">
       <el-row>
-          <el-col :span="16">
+          <el-col :span="14">
               <v-table ref="table" :page="page" :actions="tableActions" :auto-select="true" @dataloaded="onDataloaded"
                        @row-click="edit"    @row-dblclick="edit" :table-minheight="400" action-width="100px">
                   <el-table-column prop="username" label="用户名" header-align="center" width="100">
@@ -34,7 +34,7 @@
             <!--</el-table-column>-->
             <el-table-column prop="sysOrg.orgName" label="所属部门" header-align="center" width="140">
             </el-table-column>
-            <el-table-column  label="角色" header-align="center" width="250">
+            <el-table-column  label="角色" header-align="center" width="200">
               <template slot-scope="scope">
                 {{formatRoles(scope.row)}}
               </template>

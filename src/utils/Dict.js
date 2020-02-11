@@ -3,9 +3,12 @@ import Vue from 'vue';
 let Dict = {
 
     store: {
+        STTATUS: [[1, '正常'], [0, '异常']],
+        STATUSS: [[1, '启用'], [0, '禁用']],
 
-        // MANAGER_LOGIN_TYPE: [[100, '分公司管理员'], [200, '商户管理员'], [300, '停车场保安']],
-        MANAGER_LOGIN_TYPE: [[200, '商户管理员'], [300, '停车场保安']],
+        ROLE_TYPE: [[1, '功能角色'], [2, '数据角色']],
+        CORP_TYPE: [[1, '有限责任公司'], [2, '个人独资'], [3, '合伙企业'], [4, '集体所有制企业'], [5, '个体工商户'], [0, '其它']], // 企业类型
+
 
     },
         getEntry: function (key, storeArr) {

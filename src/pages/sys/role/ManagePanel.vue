@@ -23,7 +23,9 @@
     <div class="main-table">
       <el-row>
         <el-col :span="16">
-          <v-table ref="table" :page="page" :actions="tableActions" :auto-select="true" @dataloaded="onDataloaded" @row-dblclick="this.edit" :table-minheight="400">
+          <v-table ref="table" :page="page" :auto-select="true"
+                   @dataloaded="onDataloaded" @row-dblclick="this.edit"
+                   :actions="tableActions"  :actionWidth="'160px'" :table-minheight="400">
 
             <el-table-column prop="roleCode" label="编码" header-align="center" width="200">
             </el-table-column>
@@ -40,7 +42,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="remark" label="备注" header-align="center" >
+            <el-table-column prop="remark" label="备注"  header-align="center" >
             </el-table-column>
           </v-table>
         </el-col>
@@ -49,7 +51,7 @@
         </el-col>
       </el-row>
     </div>
-    <el-dialog :visible.sync="showForm" title="授权资源">
+    <el-dialog :visible.sync="showForm" title="授权资源" >
       <resource-form ref="resourceForm"></resource-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm()">保存</el-button>

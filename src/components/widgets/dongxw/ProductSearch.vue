@@ -76,6 +76,7 @@
                         <el-option v-for="item in options" :key="item.id"
                                    :label="item.code+' | '+item.epCode+' | '+item.remark+' | '+item.color+' | '+item.size"
                                    :value="item.id" :disabled="item.disabled">
+                            <span style="float: left">{{ (item.customer||{}).custName }}</span>
                             <span style="float: left">{{ item.code }}</span>
                             <span style="float: left">{{ item.epCode }}</span>
                             <span style="float: left">{{ item.remark }}</span>
@@ -157,6 +158,9 @@
             }
         },
         watch: {
+            customerId :function(){
+                this.$nextTick(() => this.refresh());
+            }
 
         },
         methods: {
@@ -178,7 +182,7 @@
                     }
                     Object.assign(this.entity, options)
                 }
-                this.$nextTick(() => this.refresh());
+                //this.$nextTick(() => this.refresh());
 
             },
             cancel() {
@@ -188,29 +192,31 @@
                 this.refresh()
             },
             refresh() {
-                this.loading = true
-                this.$api.dongxw.ProductService.query({
-                    param: {
-                        prdFlag : 0,
-                        customerId:this.customerId,
-                        productTypeId: this.entity.productTypeId,
-                        parentId: this.entity.parentId,
-                        color: this.entity.color,
-                        size: this.entity.size,
-                        code:this.entity.code,
-                        epCode: this.entity.epCode,
-                        remark:this.entity.remark,
+                if(this.customerId) {
+                    this.loading = true
+                    this.$api.dongxw.ProductService.query({
+                        param: {
+                            prdFlag: 0,
+                            customerId: this.customerId,
+                            productTypeId: this.entity.productTypeId,
+                            parentId: this.entity.parentId,
+                            color: this.entity.color,
+                            size: this.entity.size,
+                            code: this.entity.code,
+                            epCode: this.entity.epCode,
+                            remark: this.entity.remark,
 
-                        isDeleted: false
-                    }
-                }).then(rsp => {
-                    this.options = rsp.data
-                    this.loading = false
-                })
+                            isDeleted: false
+                        }
+                    }).then(rsp => {
+                        this.options = rsp.data
+                        this.loading = false
+                    })
+                }
             }
         },
         created() {
-            this.refresh()
+            //this.refresh()
         },
         mounted() {
         }

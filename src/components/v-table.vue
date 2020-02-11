@@ -179,7 +179,7 @@
             },
             actionWidth: {
                 type: String,
-                default: "80px"
+                default: "100px"
             },
             pageSizeOpts: {
                 type: Array,

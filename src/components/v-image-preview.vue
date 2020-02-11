@@ -186,7 +186,7 @@
                 if(file.size>500*1024){
                     this.$message({
                         type: 'error',
-                        message: '文件大于500k!'
+                        message: '只能上传jpg/png文件，且不超过500k!'
                     });
                     return false;
                 }

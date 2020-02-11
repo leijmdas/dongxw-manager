@@ -8,19 +8,15 @@
                 </product-view>
                 <el-collapse>
 
-                    <el-collapse-item title="选择产品" style="margin-left:4%;width:96%" >
-                        <product-search v-model="entity.productId" :style="'margin-bottom: -20px'"
-                                                :customerId="entity.customerId" ref="productSelectDlg"
-                                                :clearable="true">
+                    <el-collapse-item ref="productSelectDlg" title="选择产品" style="margin-left:4%;width:96%">
+                        <product-search v-model="entity.productId"
+                                        :customerId="entity.customerId" :clearable="true"
+                                        :style="'margin-bottom: -20px'"  >
                         </product-search>
                     </el-collapse-item>
                 </el-collapse>
                 <el-row>
-                    <!--<el-col :span="24">-->
-                        <!--<el-form-item label="产品" style="width:100%" prop="productId">-->
-                            <!--<el-input disabled placeholder="产品" v-model="entity.productId"></el-input>-->
-                        <!--</el-form-item>-->
-                    <!--</el-col>-->
+
                     <el-col :span="12">
                         <el-form-item label="数量" style="width:100%" prop="qty">
                             <el-input placeholder="数量" v-model="entity.qty"></el-input>
@@ -94,9 +90,6 @@
 </style>
 
 <script>
-    // import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
-    // import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
-    // import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
 
     import ProductView from '@/components/widgets/dongxw/ProductView.vue';
     import ProductSearch from '@/components/widgets/dongxw/ProductSearch.vue';
@@ -196,21 +189,20 @@
                         this.isDisabled = r.status > 0;
                         this.entity = r;
                     });
-                } else {
-                    if (options.order) {
-
-                        this.order = options.order;
-                        this.entity.orderId = this.order.id
-                        this.entity.customerId = this.order.customerId
-                        this.entity.product = {
-                            customerId: this.order.customerId,
-                            productTypeId: null,
-                            parentId : null ,
-                            id : null ,
-                        }
-                    }
-
                 }
+                if (options.order) {
+
+                    this.order = options.order;
+                    this.entity.orderId = this.order.id
+                    this.entity.customerId = this.order.customerId
+                    this.entity.product = {
+                        customerId: this.order.customerId,
+                        productTypeId: null,
+                        parentId : null ,
+                        id : null ,
+                    }
+                }
+
 
             }
         },
