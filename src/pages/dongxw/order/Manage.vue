@@ -78,7 +78,16 @@
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
-
+            <!--<el-table-column prop="customerId" label="客户代码" width="80">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{ row.customer?row.customer.custNo:'-'}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
+            <el-table-column prop="customerId" label="客户名称" width="120">
+                <template slot-scope="{row}">
+                    {{ row.customer?row.customer.custName:'-'}}
+                </template>
+            </el-table-column>
             <el-table-column prop="orderType" label="订单类型" width="90">
                 <template slot-scope="{row}">
                     <span :style="'style:red'"> {{$dongxwDict.getText(row.orderType,$dongxwDict.store.ORDER_TYPE)}}</span>
@@ -92,16 +101,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="customerId" label="客户代码" width="80">
-                <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custNo:'-'}}
-                 </template>
-            </el-table-column>
-            <el-table-column prop="customerId" label="客户名称" width="120">
-                <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custName:'-'}}
-                </template>
-            </el-table-column>
+
 
             <el-table-column  prop="status" label="订单状态" width="80">
                 <template slot-scope="{row}">
