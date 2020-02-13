@@ -72,7 +72,7 @@
             <el-button plain @click="exportMail" style="color:green">发送邮件</el-button>
             <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
-        <v-table ref="table" :click="fatherMethod" :dblclick="edit" :page="page"
+        <v-table ref="table" :selection="true" :click="fatherMethod" :dblclick="edit" :page="page"
                  :table-minheight="250" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
