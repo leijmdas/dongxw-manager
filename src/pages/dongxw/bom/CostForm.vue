@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
+        <el-form :model="entity" :rules="rules" ref="form" label-width="80px" class="dialog-form">
 
             <el-row :span="24">
                 <el-col :span="4">
@@ -24,15 +24,17 @@
                         <el-input disabled placeholder="总费用" v-model="totalFee"></el-input>
                     </el-form-item>
                 </el-col>
+
                 <el-col :span="4">
-                    <el-form-item label="状态" prop="status">
-                        <el-select disabled style="width:100%" v-model="entity.status">
-                            <el-option v-for="item in $dongxwDict.store.AUDIT_STATUS" :key="item[0]"
-                                       :value="item[0]" :label="item[1]"></el-option>
-                        </el-select>
+                    <el-form-item label="提交人" prop="createBy">
+                        <el-input disabled placeholder="提交人" v-model="entity.createBy"></el-input>
                     </el-form-item>
                 </el-col>
-
+                <el-col :span="4">
+                    <el-form-item label="审核人" prop="auditBy">
+                        <el-input disabled placeholder="审核人" v-model="entity.auditBy"></el-input>
+                    </el-form-item>
+                </el-col>
             </el-row>
                 <el-row :span="24">
                 <el-col :span="4">
@@ -57,12 +59,22 @@
                     </el-form-item>
                 </el-col>
                     <el-col :span="4">
-                        <el-button type="primary" style="margin-left: 60px"  @click="save" v-if="product.id">保存</el-button>
-
-                        <el-button type="primary"  style="margin-left: 30px"
-                                   :disabled="entity.status!=0&&entity.status!=30" v-if="product.id">提交审核</el-button>
+                        <el-form-item label="状态" prop="status">
+                            <el-select disabled style="width:100%" v-model="entity.status">
+                                <el-option v-for="item in $dongxwDict.store.AUDIT_STATUS" :key="item[0]"
+                                           :value="item[0]" :label="item[1]"></el-option>
+                            </el-select>
+                        </el-form-item>
                     </el-col>
-            </el-row>
+                    <el-col :span="4">
+                        <el-button type="primary" style="margin-left: 10px" @click="save" v-if="product.id">保  存
+                        </el-button>
+
+                        <el-button type="primary" style="margin-left: 30px"
+                                   :disabled="entity.status!=0&&entity.status!=30" v-if="product.id">提交审核
+                        </el-button>
+                    </el-col>
+                </el-row>
         </el-form>
 
     </div>
