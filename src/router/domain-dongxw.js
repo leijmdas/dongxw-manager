@@ -206,6 +206,33 @@ let router0 = [
             },
         ]
     },
+    {
+        path: '/audit',
+        component: Layout,
+        meta: {title: '审核', icon: 'user', group: 'dongxw'},
+        children: [
+            {
+                path: 'purchasePlan/manage',
+                component: require('@/pages/dongxw/purchase/Manage.vue'),
+                name: 'purchasePlan:manage',
+                meta: {title: '审核订单', perm: 'purchaseplan:manage'}
+            },
+            {
+                path: 'dongxw/supplier/manage',
+                component: require('@/pages/dongxw/supplier/Manage.vue'),
+                name: 'supplier:manage',
+                meta: {title: '审核BOM', perm: 'supplier:manage'}
+            },
+
+            {
+                path: 'purchase/order',
+                component: require('@/pages/dongxw/supplier/Manage.vue'),
+                name: 'purchase:order',
+                meta: {title: '审核采购单', perm: 'purchase:manage'}
+            },
+
+        ]
+    },
 ];
 
 export default router0;

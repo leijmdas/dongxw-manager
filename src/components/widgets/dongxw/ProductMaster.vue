@@ -58,6 +58,7 @@
             <!--<el-button type="primary" plain @click="create">新增</el-button>-->
 
             <el-switch style="margin-left:20px; margin-right: 20px" v-model="isShowPrdPic"
+                       active-color="#13ce66" inactive-color="#ff4949"
                        active-text="显示图片" inactive-text="不显示">
             </el-switch>
 
@@ -65,7 +66,7 @@
         </v-toolbar>
 
 
-        <v-table ref="table" :page="page" :click="tableRowClick" :pageSize="10" :table-minheight="300" @dataloaded="onDataloaded">
+        <v-table ref="table" :selection="true" :page="page" :click="tableRowClick" :pageSize="10" :table-minheight="300" @dataloaded="onDataloaded">
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>

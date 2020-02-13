@@ -46,22 +46,32 @@
             </el-form>
         </div>
         <v-toolbar title="物料清单" type="alert">
-            <el-button type="primary" @click="search"  >查询</el-button>
+            <el-button type="primary" @click="search">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
-            <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button type="primary" plain @click="create">新增</el-button>
+            <el-button v-if="!onlyQuery" plain @click="exportRecords">导出XLS</el-button>
+            <el-button v-if="!onlyQuery" type="primary" plain @click="create">新增</el-button>
+            <el-button v-if="onlyQuery" type="primary" plain @click="multiSel(false)">确定多选</el-button>
+            <el-button v-if="onlyQuery" plain @click="multiSel(true)">关闭</el-button>
+            <!--<el-button v-if="onlyQuery" type="primary" plain @click="multiSel">关闭</el-button>-->
 
-            <!--<el-switch style="margin-left:20px; margin-right: 20px"-->
-            <!--v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">-->
-            <!--</el-switch>-->
+            <el-switch slot="tip" v-model="isShowPrdPic" style="margin-left:20px; margin-right: 20px"
+                       active-color="#13ce66" inactive-color="#ff4949"
+                       active-text="显示图片" inactive-text="不显示">
+            </el-switch>
 
         </v-toolbar>
 
 
-        <v-table ref="table" :page="page" :dblclick="edit"  :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :multi="true" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
+            </el-table-column>
+            <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
+                <template slot-scope="{row}">
+                    <v-image-preview v-model="row.imgUrls" :picUrl="row.picUrl"  >
+                    </v-image-preview>
+                </template>
             </el-table-column>
             <el-table-column prop="prdFlag" label="存货分类" width="100">
                 <template slot-scope="{row}">
@@ -94,12 +104,7 @@
             </el-table-column>
             <el-table-column prop="unit" label="单位" width="60"></el-table-column>
 
-            <!--<el-table-column prop="picUrl" label="原料图片" v-if="isShowPrdPic" width="90">-->
-                <!--<template slot-scope="{row}">-->
-                    <!--<v-image-preview v-model="row.imgUrls" :picUrl="row.picUrl"  >-->
-                    <!--</v-image-preview>-->
-                <!--</template>-->
-            <!--</el-table-column>-->
+
             <!--<el-table-column prop="size" label="尺寸" width="150">-->
             <!--</el-table-column>-->
 
@@ -120,7 +125,7 @@
             <el-table-column prop="memo" label="备注"  >
             </el-table-column>
 
-            <el-table-column width="100" label="操作" :fixed="'right'">
+            <el-table-column  v-if="!onlyQuery" width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
@@ -136,7 +141,7 @@
         <v-dialog ref="formDiag" :width="'750px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
-                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
+                <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
@@ -156,8 +161,20 @@
     import SubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
 
     import FormPanel from './Form';
+
     export default {
-        components: { FormPanel,RmTypeSelect, SubTypeSelect },
+        components: {FormPanel, RmTypeSelect, SubTypeSelect},
+        props: {
+            onlyQuery:
+                {
+                    type: Boolean,
+                    default: false,
+                },
+            closeDlg:{
+                type:Function ,
+                default:null
+            }
+        },
         data() {
             return {
                 isShowPrdPic : false,
@@ -192,7 +209,14 @@
         computed: {},
 
         methods: {
-
+            getSelectedRows(){
+                return this.$refs.table.getSelectedRows()
+            },
+            multiSel(onlyClose) {
+                 if (this.closeDlg) {
+                    this.closeDlg(onlyClose)
+                }
+            },
             onDataloaded(rsp) {
 
             },

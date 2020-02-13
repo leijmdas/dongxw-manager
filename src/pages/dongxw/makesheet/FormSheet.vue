@@ -30,10 +30,14 @@
                     <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
                 </template>
             </el-table-column>
-
+            <!--<el-table-column prop="com" label="组件" width="60">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{ row.parentId>0? '组件' :'-' }}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
             <el-table-column prop="code" label="物料代码" width="80">
                 <template slot-scope="{row}">
-                    {{ row.childRm? row.childRm.code :'-' }}
+                    <span :style="row.parentId>0?'color:blue':''">  {{ row.childRm? row.childRm.code :row.parentId>0? '组件' :'-' }} </span>
                 </template>
             </el-table-column>
             <el-table-column prop="name" label="物料名称" width="120">
@@ -47,16 +51,17 @@
                     {{ row.childRm? row.childRm.color :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="width" label="宽封度" width="70"></el-table-column>
-            <el-table-column prop="cutPartName" label="裁片名称" width="120"></el-table-column>
-            <el-table-column   label="尺寸(英寸）" align="center">
-                <el-table-column prop="sizeL" label="长度" width="80"></el-table-column>
-                <el-table-column prop="sizeX" label="X" width="30"></el-table-column>
-                <el-table-column prop="sizeW" label="宽度" width="80"></el-table-column>
-            </el-table-column>
             <el-table-column prop="pieces" label="件数" width="60"></el-table-column>
-            <el-table-column prop="knifeQty" label="刀数" width="60"></el-table-column>
-            <el-table-column prop="length" label="长封度" width="70"></el-table-column>
+
+            <!--<el-table-column prop="width" label="宽封度" width="70"></el-table-column>-->
+            <el-table-column prop="cutPartName" label="裁片名称" width="120"></el-table-column>
+            <!--<el-table-column   label="尺寸(英寸）" align="center">-->
+                <!--<el-table-column prop="sizeL" label="长度" width="80"></el-table-column>-->
+                <!--<el-table-column prop="sizeX" label="X" width="30"></el-table-column>-->
+                <!--<el-table-column prop="sizeW" label="宽度" width="80"></el-table-column>-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="knifeQty" label="刀数" width="60"></el-table-column>-->
+            <!--<el-table-column prop="length" label="长封度" width="70"></el-table-column>-->
 
             <el-table-column prop="lossRate" label="损耗" width="60">
                 <template slot-scope="{row}">

@@ -40,13 +40,14 @@
                 {{  product.code +" : "+product.epCode +" ( "+product.remark +" )"}}
             </span>
 
-            <el-button plain @click="exportRecords">导出 XLS</el-button>
+            <el-button plain @click="exportRecords">导出XLS</el-button>
             <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
+            <el-button type="primary" v-show="productId>0" plain @click="createMulti">新增多个</el-button>
 
         </v-toolbar>
 
 
-        <v-table ref="table" :page="page" :dblclick="edit"  :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" v-show="productId>0" :page="page" :dblclick="edit"  :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
@@ -148,8 +149,11 @@
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
-        <v-dialog ref="comManage" :width="'58%'" title="组件清单">
-            <com-manage :productId="productId" :closeDlg="closeDlg"></com-manage>
+        <v-dialog ref="comMngDlg" :width="'58%'" title="组件清单">
+            <com-panel :productId="productId" :closeDlg="closeDlg"></com-panel>
+        </v-dialog>
+        <v-dialog ref="rmManageDlg" :width="'58%'" title="搜索物料">
+            <rm-panel ref="rmPanel" :onlyQuery="true" :closeDlg="closeDlgRm"></rm-panel>
         </v-dialog>
 
     </div>
@@ -170,10 +174,11 @@
 
     import FormPanel from './Form';
     import CostPanel from './CostForm';
-    import ComManage from './ComManage';
+    import ComPanel from './ComManage';
+    import RmPanel from '../rm/Manage';
 
     export default {
-        components: {FormPanel, CostPanel, ComManage,ProductMaster, FormPanel, RmTypeSelect, SubTypeSelect},
+        components: {ComPanel, RmPanel, CostPanel, ProductMaster, FormPanel, RmTypeSelect, SubTypeSelect},
         data() {
             return {
                 switchShow: true,
@@ -216,10 +221,35 @@
 
         methods: {
             closeDlg(){
-                this.$refs.comManage.hide()
+                this.$refs.comMngDlg.hide()
                 this.$refs.costPanel.search()
                 this.search()
             },
+            closeDlgRm(onlyClose){
+                if(onlyClose){
+                    this.$refs.rmManageDlg.hide()
+                    return
+                }
+                let rms = this.$refs.rmPanel.getSelectedRows();
+                let rmIds = []
+                for (let i = 0; i < rms.length; i++) {
+                    rmIds.push(rms[i].id)
+                }
+                let params = {
+                    productId: this.productId,
+                    rmIds: rmIds.join(','),
+                }
+                console.log(JSON.stringify(rmIds))
+                this.$api.dongxw.BomService.saveByIds(params).then(rsp => {
+                    this.$refs.costPanel.search()
+                    this.search()
+                })
+                this.$refs.rmManageDlg.hide()
+
+
+
+            },
+
             onDataloaded(rsp) {
 
             },
@@ -240,6 +270,9 @@
                 }
                 return this.page.query;
             },
+            createMulti() {
+                this.$refs.rmManageDlg.show();
+            },
             create() {
                 this.$refs.formDiag.show();
             },
@@ -247,7 +280,7 @@
                 this.$refs.formDiag.show({id: row.id});
             },
             editCom(row) {
-                this.$refs.comManage.show(row)
+                this.$refs.comMngDlg.show(row)
 
             },
             toggleStatus(row) {

@@ -89,14 +89,14 @@
                                         <!--<el-input placeholder="条码" v-model="entity.barCode"></el-input>-->
                                     <!--</el-form-item>-->
                                 <!--</el-col>-->
-                            <!--<el-form-item label="原料图片" prop="">-->
+                            <el-form-item label="原料图片" prop="">
 
-                                <!--<div :span="12" >-->
-                                    <!--<v-image-uploader  :isShow="isShow" :form-data="{}" v-model="entity.picUrl"-->
-                                        <!--:imgStyle="'margin-right:10px;width:160px;height:160px'"/>-->
+                                <div :span="12" >
+                                    <v-image-uploader  :isShow="isShow" :form-data="{}" v-model="entity.picUrl"
+                                        :imgStyle="'margin-right:10px;width:160px;height:160px'"/>
 
-                                <!--</div>-->
-                            <!--</el-form-item>-->
+                                </div>
+                            </el-form-item>
 
 
                             <el-form-item label="备注" prop="memo">

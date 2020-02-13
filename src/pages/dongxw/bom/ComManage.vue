@@ -126,11 +126,11 @@
     import ComFormPanel from './ComForm';
 
     export default {
-        components: { RmView, ProductMaster, ComFormPanel, RmTypeSelect, SubTypeSelect},
-        props:{
-          closeDlg:{
-              type:Function,
-          }
+        components: {RmView, ProductMaster, ComFormPanel, RmTypeSelect, SubTypeSelect},
+        props: {
+            closeDlg: {
+                type: Function,
+            }
         },
 
         data() {

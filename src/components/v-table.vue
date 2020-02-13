@@ -71,7 +71,7 @@
   <div :class="pageSize>0?'panel panel-default':''">
     <el-table stripe ref="multipleTable" highlight-current-row :data="tableData" element-loading-text="数据加载中" v-loading="showLoading" @row-dblclick="handleRowDblclick" @select="handleSelect" @select-all="handleSelectAll" @selection-change="handleSelectionChange" @current-change="handleCurrentChange" @row-click="handleRowClick" @sort-change="handleSortChange" :border="tableBorder" :height="tableHeight" :max-height="tableMaxheight" :style="tableStyle" :span-method="spanMethod" :row-class-name="rowClassName" :show-summary="showSummary" :summary-method="getSummaries">
       <slot name="prepend"></slot>
-      <el-table-column type="selection" width="35" v-if="selection || multi" :fixed="fixed && 'left'"></el-table-column>
+      <el-table-column type="selection" width="45" v-if="selection || multi" :fixed="fixed && 'left'"></el-table-column>
       <el-table-column type="expand" v-if="expandColumns" :fixed="fixed && 'left'">
 
       </el-table-column>
@@ -363,8 +363,9 @@
             },
             load() {
                 this.selectColumns = [];
+                this.selectRows = [],
 
-                this.showLoading = true;
+                    this.showLoading = true;
                 let params = Object.assign(this.storeParams, this.page.query);
 
                 params["limit"] = this.internalPageSize;
@@ -432,18 +433,17 @@
             },
 
             handleSelect(selection, row) {
-                this.selection &&
-                !this.multi &&
+                this.selection &&!this.multi &&
                 ~selection.indexOf(row) &&
                 selection.splice(0, selection.length, row);
             },
             handleSelectAll(selection) {
-                this.selection &&
-                !this.multi &&
+                this.selection && !this.multi &&
                 this.$nextTick(() => this.$refs.multipleTable.clearSelection());
             },
             handleSelectionChange(selection) {
                 this.selectRows = selection;
+                //this.$message(JSON.stringify(this.selectRows))
                 this.$emit("selection-change", selection);
             },
             handleCurrentChange(val) {

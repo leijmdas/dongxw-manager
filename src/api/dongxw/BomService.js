@@ -15,6 +15,16 @@ export default {
         })
     },
     /**
+     * 保存
+     */
+    saveByIds(data) {
+        return request({
+            url: '/dongxw/bom/saveByIds',
+            method: 'POST',
+            data
+        })
+    },
+    /**
      * 查询
      */
     query(data) {
