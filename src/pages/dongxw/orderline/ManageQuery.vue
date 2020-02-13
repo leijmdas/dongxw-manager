@@ -64,24 +64,28 @@
             </el-form>
         </div>
         <v-toolbar title="数据列表" type="alert">
-
+            <el-switch slot="tip" style="margin-left:20px; margin-right: 20px"
+                       v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
+            </el-switch>
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出XLS</el-button>
 
-
-            <el-switch style="margin-left:20px; margin-right: 20px"
-                       v-model="isShowPrdPic" active-text="显示产品图片" inactive-text="不显示">
-            </el-switch>
-
         </v-toolbar>
         <v-table ref="table" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
 
-        <el-table-column prop="seq" label="序号" width="50">
+            <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
 
+
+            <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
+                <template slot-scope="{row}">
+                    <img v-if="row.product&&row.product.picUrl" :src="row.product.picUrl" width="60px" height="60px"
+                         alt="">
+                </template>
+            </el-table-column>
             <el-table-column prop="客户名称" label="客户名称" width="120">
                 <template slot-scope="{row}">
                     {{ row.customer?row.customer.custName:'-'}}
@@ -124,15 +128,6 @@
                     {{ row.product?row.product.epCode:'-'}}
                 </template>
 
-            </el-table-column>
-
-
-            <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
-                <template slot-scope="{row}">
-                    <img v-if="row.product&&row.product.picUrl" :src="row.product.picUrl" width="60px" height="60px"
-                         alt="">
-
-                </template>
             </el-table-column>
 
             <el-table-column prop="产品描述" label="产品描述" width="140">

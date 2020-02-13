@@ -22,6 +22,11 @@
             <!--</el-form>-->
         <!--</div>-->
         <v-toolbar title="产品列表" type="alert">
+            <el-switch slot="tip" style="color:mediumpurple;margin-left:20px; margin-right: 20px"
+                       active-color="#13ce66" inactive-color="#ff4949"
+                       v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
+            </el-switch>
+
             <span v-if="!order.id" slot="tip"  style="color: red ; padding-left: 20px"> 请点上方订单然后编辑</span>
             <span  v-if="order.id" slot="tip" style="color: red ; padding-left: 20px">
                 客户订单号: {{ order?order.customerOrderCode:'-' }}</span>
@@ -29,9 +34,7 @@
                 {{ order?order.epOrderCode:'-'}}</span>
 
             <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
-            <el-switch style="color:mediumpurple;margin-left:20px; margin-right: 20px" active-color="#13ce66" inactive-color="#ff4949"
-                       v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
-            </el-switch>
+
             <el-button plain @click="exportRecords">导出XLS</el-button>
             <el-button type="primary" v-if="order.id" plain @click="create">新增</el-button>
 
@@ -41,8 +44,16 @@
 
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
-
             </el-table-column>
+
+
+            <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
+                <template slot-scope="{row}">
+                    <img v-if="row.product&&row.product.picUrl" :src="row.product.picUrl" width="60px" height="60px" alt="">
+
+                </template>
+            </el-table-column>
+
             <el-table-column prop="customerId" label="客户名称" width="120">
                 <template slot-scope="{row}">
                     {{ row.customer?row.customer.custName:'-'}}
@@ -82,13 +93,6 @@
             </el-table-column>
 
 
-            <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
-                <template slot-scope="{row}">
-                    <img v-if="row.product&&row.product.picUrl" :src="row.product.picUrl" width="60px" height="60px" alt="">
-
-                </template>
-            </el-table-column>
-
             <el-table-column prop="remark" label="产品描述" width="140">>
                 <template slot-scope="{row}">
                     {{ row.product?row.product.remark:'-'}}
@@ -104,7 +108,6 @@
                     {{ row.product?row.product.size:'-'}}
                 </template>
             </el-table-column>
-
             <!--<el-table-column prop="barCode" label="条码" width="115">-->
                 <!--<template slot-scope="{row}">-->
                     <!--{{ row.product?row.product.barCode:'-'}}-->

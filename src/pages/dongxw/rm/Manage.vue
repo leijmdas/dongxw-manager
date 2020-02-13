@@ -138,7 +138,7 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag" :width="'750px'" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'750px'" title="物料信息">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>

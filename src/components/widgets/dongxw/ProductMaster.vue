@@ -51,16 +51,17 @@
             </el-form>
         </div>
         <v-toolbar title="产品清单" type="alert">
+            <el-switch slot="tip"style="margin-left:20px; margin-right: 20px" v-model="isShowPrdPic"
+                       active-color="#13ce66" inactive-color="#ff4949"
+                       active-text="显示图片" inactive-text="不显示">
+            </el-switch>
+
             <el-button style="margin-left: 40px" slot="tip" type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button slot="tip" @click="cancel">取消</el-button>
 
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button> -->
             <!--<el-button type="primary" plain @click="create">新增</el-button>-->
 
-            <el-switch style="margin-left:20px; margin-right: 20px" v-model="isShowPrdPic"
-                       active-color="#13ce66" inactive-color="#ff4949"
-                       active-text="显示图片" inactive-text="不显示">
-            </el-switch>
 
 
         </v-toolbar>
@@ -69,6 +70,13 @@
         <v-table ref="table" :selection="true" :page="page" :click="tableRowClick" :pageSize="10" :table-minheight="300" @dataloaded="onDataloaded">
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
+            </el-table-column>
+            <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
+                <template slot-scope="{row}">
+                    <!--<img v-if="row.picUrl" :src="row.picUrl" width="60px" height="60px" alt="">-->
+                    <v-image-preview v-model="row.imgUrls" :picUrl="row.picUrl"  >
+                    </v-image-preview>
+                </template>
             </el-table-column>
 
             <el-table-column prop="customerId" label="客户名称" width="100">
@@ -99,13 +107,7 @@
             <!--<el-table-column prop="name" label="产品名称" width="100"></el-table-column>-->
             <el-table-column prop="remark" label="产品描述" width="245"></el-table-column>
 
-            <el-table-column prop="picUrl" label="产品图片" v-if="isShowPrdPic" width="90">
-                <template slot-scope="{row}">
-                    <!--<img v-if="row.picUrl" :src="row.picUrl" width="60px" height="60px" alt="">-->
-                    <v-image-preview v-model="row.imgUrls" :picUrl="row.picUrl"  >
-                    </v-image-preview>
-                </template>
-            </el-table-column>
+
             <el-table-column prop="color" label="颜色" width="160">
             </el-table-column>
             <el-table-column prop="size" label="尺寸" width="160">
