@@ -1,6 +1,7 @@
 <template>
-    <el-dialog ref="elDialog" :title="title" :visible.sync="dialogVisible" :append-to-body="appendToBody"
-               :width="width" :height="height"
+    <!--:model="true" :modal-append-to-body="false"-->
+    <el-dialog ref="elDialog" :append-to-body="appendToBody" :close-on-click-modal="false"
+               :visible.sync="dialogVisible"  :title="title"  :width="width" :height="height"
                v-dialog-drag="dragable" @closed="closed">
         <slot></slot>
         <div slot="footer" class="dialog-footer">
@@ -43,7 +44,7 @@
     data() {
         return {
             params: {},
-            dialogVisible: false
+            dialogVisible: false,
         };
     },
     methods: {

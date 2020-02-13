@@ -1,54 +1,62 @@
 <template>
     <div>
-        <el-col :span="23">
-            <el-form :model="entity" label-width="100px" :rules="rules" ref="form" class="dialog-form">
+    <el-form :model="entity" label-width="90px" :rules="rules"
+             style="margin-right: 10px" ref="form" class="dialog-form">
 
-                <product-view v-model="entity.productId" :style="'margin-top: 20px'" ref="productView">
+        <product-view v-model="entity.productId" ref="productView"  :style="'margin-top: 5px'" >
 
-                </product-view>
-                <el-collapse>
+        </product-view>
+        <el-collapse>
 
-                    <el-collapse-item ref="productSelectDlg" title="选择产品" style="margin-left:4%;width:96%">
-                        <product-search v-model="entity.productId"
-                                        :customerId="entity.customerId" :clearable="true"
-                                        :style="'margin-bottom: -20px'"  >
-                        </product-search>
-                    </el-collapse-item>
-                </el-collapse>
-                <el-row>
+            <el-collapse-item ref="productSelectDlg" title="选择产品" style="margin-left:4%;width:96%">
+                <product-search v-model="entity.productId"
+                                :customerId="entity.customerId" :clearable="true"
+                                :style="'margin-bottom: -20px'"  >
+                </product-search>
+            </el-collapse-item>
+        </el-collapse>
+        <el-row>
 
-                    <el-col :span="12">
-                        <el-form-item label="数量" style="width:100%" prop="qty">
-                            <el-input placeholder="数量" v-model="entity.qty"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="单价" style="width:100%" prop="price">
-                            <el-input placeholder="单价" v-model="entity.price"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
+            <el-col :span="8">
+                <el-form-item label="数量" style="width:100%" prop="qty">
+                    <el-input placeholder="数量" v-model="entity.qty"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
+                <el-form-item label="单价" style="width:100%" prop="price">
+                    <el-input placeholder="单价" v-model="entity.price"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
 
-                        <el-form-item label="金额" prop="money">
-                            <el-input placeholder="金额" v-model="money" disabled></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-
-                        <el-form-item label="建档时间" prop="createDate">
-                            <el-input disabled placeholder="建档时间" v-model="entity.createDate" disabled></el-input>
-
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+                <el-form-item label="金额" prop="money">
+                    <el-input placeholder="金额" v-model="money" disabled></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="24">
                 <el-form-item label="备注" style="margin-top: 10px" prop="remark">
                     <el-input placeholder="备注" type="textarea" :rows="2" v-model="entity.remark"></el-input>
                 </el-form-item>
+            </el-col>
+            <el-col :span="12">
 
-            </el-form>
-        </el-col>
+            <el-form-item label="建档时间" prop="createDate">
+                    <el-input disabled placeholder="建档时间" v-model="entity.createDate" disabled></el-input>
+
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+
+                <el-form-item label="建档人" prop="createByName">
+                    <el-input disabled placeholder="建档人" v-model="entity.createByName" disabled></el-input>
+
+                </el-form-item>
+            </el-col>
+        </el-row>
+
+
+    </el-form>
+
 
     </div>
 </template>

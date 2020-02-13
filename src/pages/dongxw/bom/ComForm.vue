@@ -2,96 +2,94 @@
     <div>
         <el-form :model="entity" :rules="rules" ref="form" label-width="90px" class="dialog-form">
 
-                    <rm-view v-model="entity.childId"></rm-view>
-                    <el-collapse>
+                    <!--<rm-view v-model="entity.childId"></rm-view>-->
+                    <!--<el-collapse>-->
 
-                        <el-collapse-item title="选择物料" style="margin-left:4%;width:96%">
-                            <rm-search v-model="entity.childId" ref="productSelectDlg" :style="'margin-bottom: -20px'"
-                                       :customerId="entity.customerId" :clearable="true">
-                            </rm-search>
-                        </el-collapse-item>
-                    </el-collapse>
+                        <!--<el-collapse-item title="选择物料" style="margin-left:4%;width:96%">-->
+                            <!--<rm-search v-model="entity.childId" ref="productSelectDlg" :style="'margin-bottom: -20px'"-->
+                                       <!--:customerId="entity.customerId" :clearable="true">-->
+                            <!--</rm-search>-->
+                        <!--</el-collapse-item>-->
+                    <!--</el-collapse>-->
                     <el-row>
 
                             <el-row :span="24" style="margin-top: 5px">
-                                <!--<el-col :span="8">-->
-                                    <!--<el-form-item label="宽封度" prop="width">-->
-                                        <!--<el-input placeholder="宽封度" v-model="entity.width"></el-input>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="16">-->
-                                    <!--<el-form-item label="裁片名称" prop="cutPartName">-->
-                                        <!--<el-input placeholder="裁片名称" v-model="entity.cutPartName"></el-input>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
-
-                                <!--<el-col :span="8">-->
-                                    <!--<el-form-item label="尺寸(长）" prop="sizeL">-->
-                                        <!--<el-input placeholder="尺寸(长）" v-model="entity.sizeL"></el-input>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="8">-->
-                                    <!--<el-form-item label="X" prop="sizeX">-->
-                                        <!--<el-input placeholder="" v-model="entity.sizeX"></el-input>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="8">-->
-                                    <!--<el-form-item label="尺寸(宽）" prop="sizeW">-->
-                                        <!--<el-input placeholder="尺寸(宽）" v-model="entity.sizeW"></el-input>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
-
-                                <!--<el-col :span="8">-->
-                                    <!--<el-form-item label="刀数" prop="knifeQty">-->
-                                        <!--<el-input placeholder="刀数" v-model="entity.knifeQty"></el-input>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="8">-->
-                                    <!--<el-form-item label="长封度" prop="length">-->
-                                        <!--<el-input placeholder="长封度" v-model="entity.length"></el-input>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
-                                <el-col :span="8">
-                                    <el-switch style="margin-left: 90px;margin-top: 5px" v-model="entity.source"
-                                               active-color="#13ce66" inactive-color="#ff4949"
-                                               active-text="有组件" inactive-text="无组件"
-                                               :active-value=1 :inactive-value=0>
-                                    </el-switch>
+                                <el-col :span="12">
+                                    <el-form-item label="宽封度" prop="width">
+                                        <el-input placeholder="宽封度" v-model="entity.width"></el-input>
+                                    </el-form-item>
                                 </el-col>
-                                <el-col :span="8" >
+                                <el-col :span="12">
+                                    <el-form-item label="裁片名称" prop="cutPartName">
+                                        <el-input placeholder="裁片名称" v-model="entity.cutPartName"></el-input>
+                                    </el-form-item>
+                                </el-col>
+
+                                <el-col :span="10">
+                                    <el-form-item label="尺寸(长）" prop="sizeL">
+                                        <el-input placeholder="尺寸(长）" v-model="entity.sizeL"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item label="X" prop="sizeX">
+                                        <el-input placeholder="" v-model="entity.sizeX"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="10">
+                                    <el-form-item label="尺寸(宽）" prop="sizeW">
+                                        <el-input placeholder="尺寸(宽）" v-model="entity.sizeW"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="件数" prop="pieces">
+                                        <el-input placeholder="件数" v-model="entity.pieces"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="刀数" prop="knifeQty">
+                                        <el-input placeholder="刀数" v-model="entity.knifeQty"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="长封度" prop="length">
+                                        <el-input placeholder="长封度" v-model="entity.length"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <!--<el-col :span="8">-->
+                                    <!--<el-switch style="margin-left: 90px;margin-top: 5px" v-model="entity.source"-->
+                                               <!--active-color="#13ce66" inactive-color="#ff4949"-->
+                                               <!--active-text="有组件" inactive-text="无组件"-->
+                                               <!--:active-value=1 :inactive-value=0>-->
+                                    <!--</el-switch>-->
+                                <!--</el-col>-->
+                                <el-col :span="12" >
 
                                     <el-form-item :label="entity.lossType==0?'损耗数':'损耗(%)'" prop="lossQty">
                                         <el-input  :disabled="entity.source===1"  placeholder="损耗" v-model="entity.lossRate"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="8">
+                                <el-col :span="12">
                                     <el-form-item label="每个用量" prop="qty">
                                         <el-input :disabled="entity.source===1" placeholder="每个用量" v-model="entity.eachQty"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="8">
-                                    <el-form-item label="件数" prop="pieces">
-                                        <el-input :disabled="entity.source===1" placeholder="件数" v-model="entity.pieces"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="8">
+
+                                <el-col :span="12">
                                     <el-form-item  label="用量" prop="totalQty">
                                         <el-input disabled placeholder="用量" v-model="totalQty"></el-input>
                                     </el-form-item>
                                 </el-col>
-                            </el-row>
-                            <el-row :span="24" style="margin-top: 5px">
-                                <el-col :span="8">
-                                    <el-form-item label="单价" prop="price">
-                                        <el-input placeholder="单价" v-model="entity.price"></el-input>
-                                    </el-form-item>
-                                </el-col>
+                                <!--<el-col :span="8">-->
+                                    <!--<el-form-item label="单价" prop="price">-->
+                                        <!--<el-input placeholder="单价" v-model="entity.price"></el-input>-->
+                                    <!--</el-form-item>-->
+                                <!--</el-col>-->
 
-                                <el-col :span="8">
-                                    <el-form-item label="金额" prop="totalMoney">
-                                        <el-input disabled placeholder="金额" v-model="totalMoney"></el-input>
-                                    </el-form-item>
-                                </el-col>
+                                <!--<el-col :span="8">-->
+                                    <!--<el-form-item label="金额" prop="totalMoney">-->
+                                        <!--<el-input disabled placeholder="金额" v-model="totalMoney"></el-input>-->
+                                    <!--</el-form-item>-->
+                                <!--</el-col>-->
                             </el-row>
                             <!--<el-col :span="12" >-->
                                 <!--<el-form-item  label="损耗类型" prop="lossType">-->
@@ -103,13 +101,13 @@
                             <!--</el-col> -->
                         <el-row :span="24" style="margin-top: 5px">
 
-                            <el-col :span="8">
+                            <el-col :span="12">
 
                                 <el-form-item label="建档时间" prop="createDate">
                                     <el-input placeholder="建档时间" disabled v-model="entity.createDate"></el-input>
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="8">
+                            <el-col :span="12">
                                 <el-form-item label="建档人" prop="createByName">
                                     <el-input placeholder="建档人" disabled v-model="entity.createByName"></el-input>
 
@@ -117,6 +115,7 @@
                             </el-col>
                         </el-row>
                     </el-row>
+
         </el-form>
 
     </div>
@@ -165,6 +164,8 @@
 
     const defaultEntity = {
         customerId: 0,
+        bigType : 0,
+        smallType : 0,
         id: null,
         depth: 1,
         source: 0,
@@ -202,7 +203,9 @@
     export default {
         components: {RmSearch, RmView, RmTypeSelect, SubTypeSelect},
         props: {
-
+            parentRm : {
+                type: Object,
+            },
             productId: {
                 type: Number,
                 required: true
@@ -213,10 +216,13 @@
             return {
                 //switchLossRate:true,
                 options: [
+
                     {label: '', value: '0'},
                 ],
                 isShow: true,
                 multiple: true,
+                isExp: false,
+                activeName: 'productInfo',
 
                 entity: _.cloneDeep(defaultEntity),
                 dateRange: [],
@@ -255,8 +261,7 @@
                 let q = this.entity.qty + this.entity.lossRate
                 if (type === 1) {
                     q =  (100 + parseFloat(this.entity.lossRate))
-                        * this.entity.pieces
-                        * this.entity.eachQty / 100
+                        * this.entity.pieces * this.entity.eachQty / 100
                 }
                 return q.toFixed(4)
             },
@@ -298,8 +303,7 @@
             },
             submitForm() {
                 if (!this.entity.childId) {
-                    this.$message("请选择物料!")
-                    return
+                    this.entity.childId=0//this.$message("请选择物料!")                    return
                 }
                 this.$refs["form"].validate(valid => {
                     if (valid) {
@@ -307,7 +311,8 @@
                         let params = Object.assign({}, this.entity)
                         if(!params.id)
                         {
-                            params.productId = this.productId
+                            params.parentId = this.parentRm.id
+                            params.productId = this.parentRm.productId
                         }
                         this.$api.dongxw.BomService.save(params).then(rsp => {
                             this.$emit("saved", rsp);
@@ -316,7 +321,10 @@
                 });
             },
             resetForm() {
-                this.entity = _.cloneDeep(defaultEntity);
+                this.entity = _.cloneDeep(defaultEntity)
+                this.entity.parentId = this.parentRm.id
+                this.entity.productId = this.parentRm.productId
+
                 if (!this.entity.id) {
 
                     this.entity.createDate = this.$dongxwDict.formatDateZero(new Date())
@@ -333,6 +341,8 @@
                 } else {
                     this.isDisabled = false;
                 }
+
+                //this.$refs.form.blur();
             }
         },
         mounted() {

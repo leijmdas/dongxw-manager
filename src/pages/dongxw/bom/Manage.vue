@@ -3,6 +3,7 @@
     <div>
 
         <product-master v-show="switchShow" :tableRowClick="search" ref="productMaster"></product-master>
+
         <div v-show="showQryBar" class="panel panel-default panel-search">
             <el-form :inline="true">
 
@@ -25,7 +26,9 @@
 
             </el-form>
         </div>
+
         <cost-panel v-model="product" ref="costPanel" ></cost-panel>
+
         <v-toolbar title="BOM清单" type="alert">
             <el-switch slot="tip" style="margin-left:20px; margin-right: 30px" active-color="#13ce66" inactive-color="#ff4949"
                        v-model="showQryBar" active-text="显示查询框" inactive-text="不显示">
@@ -58,7 +61,6 @@
                    <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="parentId" label="父标识" width="80"></el-table-column>-->
 
             <el-table-column prop="parentId" label="大类" width="70">
                 <template slot-scope="{row}">
@@ -85,23 +87,22 @@
                     {{ row.childRm? row.childRm.remark :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="color" label="颜色" width="80">
+            <el-table-column prop="color" label="颜色" width="120">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.color :'-' }}
                 </template>
             </el-table-column>
 
 
-            <el-table-column prop="width" label="宽封度" width="70"></el-table-column>
-            <el-table-column prop="cutPartName" label="裁片名称" width="120"></el-table-column>
-            <el-table-column   label="尺寸(英寸）" align="center">
-                <el-table-column prop="sizeL" label="长度" width="80"></el-table-column>
-                <el-table-column prop="sizeX" label="X" width="30"></el-table-column>
-                <el-table-column prop="sizeW" label="宽度" width="80"></el-table-column>
-            </el-table-column>
-            <el-table-column prop="pieces" label="件数" width="60"></el-table-column>
-            <el-table-column prop="knifeQty" label="刀数" width="60"></el-table-column>
-            <el-table-column prop="length" label="长封度" width="70"></el-table-column>
+            <!--<el-table-column prop="width" label="宽封度" width="70"></el-table-column>-->
+            <!--<el-table-column prop="cutPartName" label="裁片名称" width="120"></el-table-column>-->
+            <!--<el-table-column label="尺寸(英寸）" align="center">-->
+                <!--<el-table-column prop="sizeL" label="长度" width="80"></el-table-column>-->
+                <!--<el-table-column prop="sizeX" label="X" width="30"></el-table-column>-->
+                <!--<el-table-column prop="sizeW" label="宽度" width="80"></el-table-column>-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="knifeQty" label="刀数" width="60"></el-table-column>-->
+            <!--<el-table-column prop="length" label="长封度" width="70"></el-table-column>-->
 
             <el-table-column prop="lossRate" label="损耗" width="60">
                 <template slot-scope="{row}">
@@ -109,6 +110,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="eachQty" label="每个用量" width="80"></el-table-column>
+            <el-table-column prop="pieces" label="件数" width="60"></el-table-column>
             <el-table-column prop="qty" label="用量" width="80"></el-table-column>
             <el-table-column prop="unit" label="单位" width="70">
                 <template slot-scope="{row}">
@@ -121,29 +123,35 @@
 
             <el-table-column prop="createDate" label="建档时间" width="120">
             </el-table-column>
-            <el-table-column prop="createByName" label="建档人" width="80">
+            <el-table-column prop="createByName" label="建档人" >
             </el-table-column>
 
-            <el-table-column width="100" label="操作" :fixed="'right'">
+            <el-table-column width="140" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
                     </el-button>
-
+                    <el-button :disabled="scope.row.source===0"  :style="scope.row.source===1?'color:#13ce66':'color:#ff4949'"
+                               type="default" title="组件" @click="editCom(scope.row)">       组件
+                    </el-button>
                     <el-button type="text"  style="color:red" @click="del(scope.row,scope.$index)" title="删除"  >
                         <i class="el-icon-delete red"></i>
                     </el-button>
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag"  :width="'750px'" title="信息编辑">
+        <v-dialog ref="formDiag"  :width="'750px'" title="物料用量">
             <form-panel :productId="productId" @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
-                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
+                <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
+        <v-dialog ref="comManage" :width="'58%'" title="组件清单">
+            <com-manage :productId="productId" :closeDlg="closeDlg"></com-manage>
+        </v-dialog>
+
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
@@ -160,11 +168,12 @@
     import RmTypeSelect from '@/components/widgets/dongxw/RmTypeSelect.vue';
     import SubTypeSelect from '@/components/widgets/dongxw/RmSubTypeSelect.vue';
 
-    import CostPanel from './BomCostForm';
     import FormPanel from './Form';
+    import CostPanel from './CostForm';
+    import ComManage from './ComManage';
 
     export default {
-        components: {CostPanel, ProductMaster, FormPanel, RmTypeSelect, SubTypeSelect},
+        components: {FormPanel, CostPanel, ComManage,ProductMaster, FormPanel, RmTypeSelect, SubTypeSelect},
         data() {
             return {
                 switchShow: true,
@@ -206,7 +215,11 @@
         },
 
         methods: {
-
+            closeDlg(){
+                this.$refs.comManage.hide()
+                this.$refs.costPanel.search()
+                this.search()
+            },
             onDataloaded(rsp) {
 
             },
@@ -232,6 +245,10 @@
             },
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});
+            },
+            editCom(row) {
+                this.$refs.comManage.show(row)
+
             },
             toggleStatus(row) {
 
@@ -263,9 +280,10 @@
                     this.product = row
                     this.productId = row.id
                     this.page.query.param.productId = this.productId
-
                 }
                 this.page.query.param.customerId = 0
+                this.page.query.param.parentId = 0
+
                 this.$refs.table.currentPage = 1
                 this.$refs.table.load()
             },

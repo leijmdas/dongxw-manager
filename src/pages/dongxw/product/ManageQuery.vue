@@ -236,23 +236,7 @@
                // this.$refs.formDiag.show({id: row.id});
             },
             toggleStatus(row) {
-                let status = row.status;
-                let msg = '确定上架此活动吗？</br><span style="color:red">一旦上架，部分信息不允许修改!</span>';
-                if (status == 1) {
-                    msg = '确定下架此活动吗？</br><span style="color:red">一旦下架，已派发的优惠券无法使用!</span>';
-                }
-                this.$confirm(msg, "确认", {
-                    type: "warning",
-                    dangerouslyUseHTMLString: true
-                }).then(() => {
-                    this.$api.ipark.PromotionInfoService.updateStatus(row.id, status == 1 ? 2 : 1).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "操作成功!"
-                        });
-                    });
-                });
+
             },
             del(row) {
                 this.$confirm("确定删除此条记录吗?", "提示", {

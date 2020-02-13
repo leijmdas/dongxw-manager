@@ -4,11 +4,6 @@
     <el-form  :model="entity" ref="form" :label-width="labelWidth" class="dialog-form" :rules="rules">
 
         <el-row :span="24">
-            <el-col :span="24">
-                <el-form-item label="客户" prop="customerName">
-                    <el-input disabled placeholder="客户" disabled v-model="entity.customerName"></el-input>
-                </el-form-item>
-            </el-col>
 
             <el-col :span="12">
                 <el-form-item label="大类" prop="parentId">
@@ -50,6 +45,12 @@
                     <el-input disabled placeholder="单位" disabled v-model="entity.unit"></el-input>
                 </el-form-item>
             </el-col>
+            <el-col :span="12">
+                <el-form-item label="客户" prop="customerName">
+                    <el-input disabled placeholder="客户" disabled v-model="entity.customerName"></el-input>
+                </el-form-item>
+            </el-col>
+
             <el-col :span="12">
                 <el-form-item v-if="qty>=0" label="数量" prop="qty">
                     <el-input disabled placeholder="数量" v-model="qty"></el-input>

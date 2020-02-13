@@ -76,12 +76,12 @@
                         <el-option v-for="item in options" :key="item.id"
                                    :label="item.code+' | '+item.epCode+' | '+item.remark+' | '+item.color+' | '+item.size"
                                    :value="item.id" :disabled="item.disabled">
-                            <span style="float: left">{{ (item.customer||{}).custName }}</span>
                             <span style="float: left">{{ item.code }}</span>
                             <span style="float: left">{{ item.epCode }}</span>
                             <span style="float: left">{{ item.remark }}</span>
                             <span style="float: right">{{ item.color }}</span>
                             <span style="float: right">{{ item.size }}</span>
+                            <span style="float: left">{{ (item.customer||{}).custName }}</span>
                         </el-option>
                     </el-select>
 

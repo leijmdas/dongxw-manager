@@ -194,15 +194,15 @@ let router0 = [
     },
 
     {
-        path: '/qry',
+        path: '/query',
         component: Layout,
         meta: {title: '查询', icon: 'user', group: 'dongxw'},
         children: [
             {
-                path: 'common/query',
+                path: 'sysMetadata/manage',
                 component: require('@/pages/common/queryByMetadata/Manage.vue'),
-                name: 'common:query',
-                meta: {title: '通用查询', perm: 'order:manage'}
+                name: 'sysMetadata:manage',
+                meta: {title: '通用查询', perm: 'sysMetadata:manage'}
             },
         ]
     },

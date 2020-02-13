@@ -159,7 +159,7 @@
             </el-table-column>
 
         </v-table>
-        <v-dialog ref="formDiag" width="50%" title="信息编辑">
+        <v-dialog ref="formDiag" width="50%" title="订单产品表">
 
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right: 60px">

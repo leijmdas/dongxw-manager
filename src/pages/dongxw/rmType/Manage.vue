@@ -33,7 +33,7 @@
         <!--<el-button type="primary" style="margin-left: 30px" slot="tip"  plain @click="create">新增</el-button>-->
         <!--</v-toolbar>-->
         <div width="50%">
-            <v-table ref="table" :page="page" :click="clickRow" :pageSize="12" :table-minheight="250"
+            <v-table ref="table" :page="page" :dblclick="edit"  :click="clickRow" :pageSize="12" :table-minheight="250"
                      @dataloaded="onDataloaded">
                 <el-table-column prop="seq" label="序号" width="50">
 

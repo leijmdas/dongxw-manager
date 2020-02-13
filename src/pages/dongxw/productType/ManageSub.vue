@@ -25,7 +25,7 @@
             <!--<el-button plain @click="exportRecords">导出 XLS</el-button>-->
             <!--<el-button type="primary" plain @click="create">新增</el-button>-->
         </v-toolbar>
-        <v-table ref="table" :page="page"  :pageSize="12" :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page" :dblclick="edit"  :pageSize="12" :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column prop="seq" label="序号" width="50">
 
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>

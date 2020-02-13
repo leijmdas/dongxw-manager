@@ -33,6 +33,12 @@
                                         <el-input placeholder="物料代码" v-model="entity.code"></el-input>
                                     </el-form-item>
                                 </el-col>
+
+                                <!--<el-col :span="6">-->
+                                    <!--<el-form-item label="物料代码(全)" prop="fullCode">-->
+                                        <!--<el-input disabled placeholder="物料代码" v-model="fullCode"></el-input>-->
+                                    <!--</el-form-item>-->
+                                <!--</el-col>-->
                                 <el-col :span="12">
                                     <el-form-item label="物料名称" prop="name">
                                         <el-input placeholder="物料名称" v-model="entity.name"></el-input>
