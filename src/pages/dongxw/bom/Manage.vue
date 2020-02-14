@@ -75,7 +75,7 @@
             </el-table-column>
             <el-table-column :sortable="true" prop="code" label="物料代码" width="100">
                 <template slot-scope="{row}">
-                    {{ row.childRm? row.childRm.code :'-' }}
+                    <span style="color:red">{{ row.childRm? row.childRm.code :'-' }}</span>
                 </template>
             </el-table-column>
             <el-table-column :sortable="true"  prop="name" label="物料名称" width="120">
@@ -300,12 +300,11 @@
                     type: "warning"
                 }).then(() => {
                     this.$api.dongxw.BomService.deleteById(row.id).then(rsp => {
-                        this.$message({
-                            type: "success",
-                            message: "删除成功!"
-                        });
-                        this.search();
-                        this.$refs.costPanel.search()
+                        this.$msgJsonResult(rsp)
+                        if(rsp.code==0) {
+                            this.search();
+                            this.$refs.costPanel.search()
+                        }
 
                     });
                 });
