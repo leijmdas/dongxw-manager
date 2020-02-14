@@ -81,9 +81,9 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="code" label="客款号" width="100">
+            <el-table-column :sortable="true" prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
-                    {{ row.product?row.product.code:'-'}}
+                    <span style="color: deeppink"> {{ row.product?row.product.code:'-'}} </span>
                 </template>
             </el-table-column>
             <el-table-column prop="epCode" label="EP款号" width="120">

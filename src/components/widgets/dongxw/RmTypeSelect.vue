@@ -1,9 +1,10 @@
 <!--产品类型选择-->
 
 <template>
-    <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
+    <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable"
+               :disabled="disabled" @change="handleChange">
         <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" :disabled="item.disabled">
-             <span style="float: left">{{ item.name }}</span>
+            <span style="float: left">{{ item.name }}</span>
             <span style="float: left">{{ item.code }}</span>
 
         </el-option>
@@ -68,6 +69,7 @@
             refresh() {
                 this.loading = true
                 this.$api.dongxw.ProductTypeService.query({
+                    orderBys: 'code|asc',
                     param: {
                         parentId: 0,
                         prdFlagNot : 0,

@@ -73,17 +73,17 @@
                     {{ row.childRm ? row.childRm.productSubType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="code" label="物料代码" width="80">
+            <el-table-column :sortable="true" prop="code" label="物料代码" width="100">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.code :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="物料名称" width="120">
+            <el-table-column :sortable="true"  prop="name" label="物料名称" width="120">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="remark" label="规格型号" width="100">
+            <el-table-column  prop="remark" label="规格型号" width="100">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.remark :'-' }}
                 </template>
@@ -122,9 +122,9 @@
             <el-table-column prop="price" label="单价" width="80"></el-table-column>
             <el-table-column prop="money" label="金额" width="100"></el-table-column>
 
-            <el-table-column prop="createDate" label="建档时间" width="120">
+            <el-table-column :sortable="true" prop="createDate" label="建档时间" width="120">
             </el-table-column>
-            <el-table-column prop="createByName" label="建档人" >
+            <el-table-column prop="createByName" label="建档人">
             </el-table-column>
 
             <el-table-column width="140" label="操作" :fixed="'right'">
@@ -193,7 +193,7 @@
                 currentPage: 1,
                 page: {
                     query: {
-                        orderBys: 'id|desc',
+                        orderBys: 'code|desc',
                         param: {
                             productId: undefined,
                             isDeleted: false
@@ -220,6 +220,16 @@
         },
 
         methods: {
+
+            sortByDate(obj1, obj2) {
+                let code1 =  obj1.childRm? obj1.childRm.code :'-'
+                let code2 =  obj2.childRm? obj2.childRm.code :'-'
+                //let val1 = obj1.deadline
+                //let val2 = obj2.deadline
+                return code1.localeCompare( code2 )
+            },
+
+
             closeDlg(){
                 this.$refs.comMngDlg.hide()
                 this.$refs.costPanel.search()
@@ -245,7 +255,6 @@
                     this.search()
                 })
                 this.$refs.rmManageDlg.hide()
-
 
 
             },
@@ -291,11 +300,13 @@
                     type: "warning"
                 }).then(() => {
                     this.$api.dongxw.BomService.deleteById(row.id).then(rsp => {
-                        this.search();
                         this.$message({
                             type: "success",
                             message: "删除成功!"
                         });
+                        this.search();
+                        this.$refs.costPanel.search()
+
                     });
                 });
             },

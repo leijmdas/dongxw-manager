@@ -3,17 +3,7 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-                <el-form-item label="客户" prop="customerId">
-                    <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>
 
-                </el-form-item>
-
-                <el-form-item label="产品大类">
-                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
-                </el-form-item>
-                <el-form-item label="产品小类">
-                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
-                </el-form-item>
 
                 <el-form-item label="客款号" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
@@ -38,7 +28,17 @@
                                    <!--:label="item[1]"></el-option>-->
                     <!--</el-select>-->
                 <!--</el-form-item>-->
+                <el-form-item label="客户" prop="customerId">
+                    <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>
 
+                </el-form-item>
+
+                <el-form-item label="产品大类">
+                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
+                </el-form-item>
+                <el-form-item label="产品小类">
+                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
+                </el-form-item>
                 <!--<el-form-item>-->
                     <!--&lt;!&ndash;<el-button-group></el-button-group>&ndash;&gt;-->
                     <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
@@ -54,8 +54,23 @@
                        active-color="#13ce66" inactive-color="#ff4949"
                        active-text="显示图片" inactive-text="不显示">
             </el-switch>
+            <el-dropdown @command="handleCommand"  slot="tip">
+                  <span style="margin-top: 25px"  class="el-dropdown-link">
+                    排序方式<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                <el-dropdown-menu title="排序方式" >
+                    <el-dropdown-item key="0" command="id|desc">按录入顺序
+                    </el-dropdown-item>
+                    <el-dropdown-item key="1" command="ep_code|asc">按EP款号
+                    </el-dropdown-item>
+                    <el-dropdown-item key="2" command="code|asc">按客款号
+                    </el-dropdown-item>
 
-            <el-button type="primary" @click="search" >查询</el-button>
+                </el-dropdown-menu>
+            </el-dropdown>
+
+
+            <el-button type="primary" @click="search">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
@@ -175,6 +190,13 @@
     .status_green {
         color: red;
     }
+    .el-dropdown-link {
+        cursor: pointer;
+        color: #409EFF;
+    }
+    .el-icon-arrow-down {
+        font-size: 12px;
+    }
 </style>
 
 <script>
@@ -222,6 +244,10 @@
         computed: {},
 
         methods: {
+            handleCommand(command) {
+                this.page.query.orderBys = command
+                this.search()
+            },
             calCbm(val){
                 let v = val.split('*')
 
@@ -234,15 +260,7 @@
                 return 0;
             },
             onDataloaded(rsp) {
-                // if (rsp.total < 1) return;
-                // let promotionIds = rsp.data.map(r => r.id);
-                // this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
-                //     let _rs = rs || [];
-                //     this.summaryMap = {}
-                //     _rs.forEach(r => {
-                //         this.summaryMap[r.promotionId] = r;
-                //     })
-                // })
+
             },
             /*
             导出

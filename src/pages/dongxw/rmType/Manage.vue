@@ -107,7 +107,7 @@
                 summaryMap: {},
                 page: {
                     query: {
-                        orderBys: 'id|desc',
+                        orderBys: 'code|asc',
                         param: {
                             prdFlag: null,
                             parentId: 0,

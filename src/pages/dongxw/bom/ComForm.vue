@@ -64,12 +64,12 @@
                                 <!--</el-col>-->
                                 <el-col :span="12" >
 
-                                    <el-form-item :label="entity.lossType==0?'损耗数':'损耗(%)'" prop="lossQty">
+                                    <el-form-item :label="entity.lossType==0?'损耗数':'损耗(%)'" prop="lossRate">
                                         <el-input  :disabled="entity.source===1"  placeholder="损耗" v-model="entity.lossRate"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
-                                    <el-form-item label="每个用量" prop="qty">
+                                    <el-form-item label="每个用量" prop="eachQty">
                                         <el-input :disabled="entity.source===1" placeholder="每个用量" v-model="entity.eachQty"></el-input>
                                     </el-form-item>
                                 </el-col>
@@ -171,8 +171,8 @@
         source: 0,
         lossType: 1,
         lossRate: 0,
-        eachQty: 0,
         lossQty: 0,
+        eachQty: 0,
         qty: 0,
 
         price: 0,
@@ -255,20 +255,16 @@
         },
         computed: {
 
-
             totalQty: function () {
-                let type = this.entity.lossType
-                let q = this.entity.qty + this.entity.lossRate
-                if (type === 1) {
-                    q =  (100 + parseFloat(this.entity.lossRate))
-                        * this.entity.pieces * this.entity.eachQty / 100
-                }
-                return q.toFixed(4)
-            },
-            totalMoney: function () {
-                let money =   (this.totalQty * this.entity.price).toFixed(4)
-                return  money
+                let qty = ( parseFloat(this.entity.lossRate)+ 100 ) / 100
+                    * parseFloat(this.entity.eachQty) * parseFloat(this.entity.pieces)
 
+                return parseFloat(qty).toFixed(4)
+            },
+
+            totalMoney: function () {
+                let totalMoney = (this.totalQty * this.entity.price).toFixed(4)
+                return totalMoney
             },
 
 

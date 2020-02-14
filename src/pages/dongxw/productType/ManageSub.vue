@@ -90,7 +90,8 @@
                 summaryMap: {},
                 page: {
                     query: {
-                        orderBys: 'id|desc',
+                        orderBys: 'code|asc',
+                        //orderBys: 'id|desc',
                         param: {
                             parentId : -1,
                             isDeleted: false

@@ -57,6 +57,7 @@
             refresh() {
                 this.loading = true
                 this.$api.dongxw.ProductTypeService.query({
+                    orderBys: 'code|asc',
                     param: {
                         parentId: this.parentTypeId,
                         prdFlag : 0,

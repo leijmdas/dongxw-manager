@@ -3,15 +3,6 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
-
-                <el-form-item label="大类" prop="orderType">
-
-                    <rm-type-select   @change="search"v-model="page.query.param.parentId" :clearable="true"></rm-type-select>
-                </el-form-item>
-                <el-form-item label="小类">
-                    <sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></sub-type-select>
-                </el-form-item>
-
                 <el-form-item label="物料代码" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
@@ -27,6 +18,15 @@
                 <el-form-item label="颜色" prop="color">
                     <el-input v-model="page.query.param.color" clearable></el-input>
                 </el-form-item>
+
+                <el-form-item label="大类" prop="orderType">
+
+                    <rm-type-select   @change="search"v-model="page.query.param.parentId" :clearable="true"></rm-type-select>
+                </el-form-item>
+                <el-form-item label="小类">
+                    <sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></sub-type-select>
+                </el-form-item>
+
 
                 <el-form-item label="状态" prop="status">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
@@ -46,6 +46,26 @@
             </el-form>
         </div>
         <v-toolbar title="物料清单" type="alert">
+
+            <el-switch slot="tip" v-model="isShowPrdPic" style="margin-left:20px; margin-right: 20px"
+                       active-color="#13ce66" inactive-color="#ff4949"
+                       active-text="显示图片" inactive-text="不显示">
+            </el-switch>
+            <el-dropdown @command="handleCommand"  slot="tip">
+                  <span style="margin-top: 25px"  class="el-dropdown-link">
+                    排序方式<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                <el-dropdown-menu title="排序方式">
+                    <el-dropdown-item key="0" command="code|asc">物料代码
+                    </el-dropdown-item>
+                    <el-dropdown-item key="1" command="name|asc">物料名称
+                    </el-dropdown-item>
+                    <el-dropdown-item key="2" command="id|desc">按录入顺序
+                    </el-dropdown-item>
+
+                </el-dropdown-menu>
+            </el-dropdown>
+
             <el-button type="primary" @click="search">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
@@ -53,12 +73,7 @@
             <el-button v-if="!onlyQuery" type="primary" plain @click="create">新增</el-button>
             <el-button v-if="onlyQuery" type="primary" plain @click="multiSel(false)">确定多选</el-button>
             <el-button v-if="onlyQuery" plain @click="multiSel(true)">关闭</el-button>
-            <!--<el-button v-if="onlyQuery" type="primary" plain @click="multiSel">关闭</el-button>-->
 
-            <el-switch slot="tip" v-model="isShowPrdPic" style="margin-left:20px; margin-right: 20px"
-                       active-color="#13ce66" inactive-color="#ff4949"
-                       active-text="显示图片" inactive-text="不显示">
-            </el-switch>
 
         </v-toolbar>
 
@@ -154,6 +169,13 @@
     .status_green {
         color: red;
     }
+    .el-dropdown-link {
+        cursor: pointer;
+        color: #409EFF;
+    }
+    .el-icon-arrow-down {
+        font-size: 12px;
+    }
 </style>
 
 <script>
@@ -184,7 +206,7 @@
                 currentPage : 1 ,
                 page: {
                     query: {
-                        orderBys: 'id|desc',
+                        orderBys: 'code|asc',
                         param: {
                             subjectId: undefined,
                             isDeleted: false
@@ -209,6 +231,10 @@
         computed: {},
 
         methods: {
+            handleCommand(command) {
+                this.page.query.orderBys = command
+                this.search()
+            },
             getSelectedRows(){
                 return this.$refs.table.getSelectedRows()
             },
@@ -283,8 +309,6 @@
         },
         mounted() {
             this.$on("init", this.init);
-            //let ret=this.$api.dongxw.CustomerService.findById(1);
-            //console.log(JSON.stringify(ret));
         }
     };
 </script>

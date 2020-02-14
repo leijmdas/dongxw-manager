@@ -364,10 +364,12 @@
             load() {
                 this.selectColumns = [];
                 this.selectRows = [],
-
-                    this.showLoading = true;
+                console.log(this.storeParams)
+                this.showLoading = true;
                 let params = Object.assign(this.storeParams, this.page.query);
-
+                if(params.sortBys) {
+                    params.orderBys = params.sortBys
+                }
                 params["limit"] = this.internalPageSize;
                 let start = (this.currentPage - 1) * this.internalPageSize;
                 params["start"] = start < 0 ? 0 : start;
@@ -407,7 +409,7 @@
             },
             handleSortChange(p) {
                 this.storeParams["sortBys"] = p.prop + "|" + (p.order === 'ascending' ? 'asc' : 'desc');
-                this.load();
+                this.load(this.storeParams);
             },
             changePageSize(pageSize) {
                 this.internalPageSize = pageSize;
