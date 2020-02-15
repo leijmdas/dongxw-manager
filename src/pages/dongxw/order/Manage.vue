@@ -166,7 +166,7 @@
 
             <el-table-column width="80" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
-                    <!--<el-button    @click="showLine(scope.row)"v-if="scope.row.orderType!=100"-->
+                    <!--<el-button @click="showLine(scope.row)"v-if="scope.row.orderType!=100"-->
                                   <!--style="color:green"  type="info" plain title="产品"  >    产品-->
                     <!--</el-button>-->
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
@@ -264,15 +264,7 @@
 
         methods: {
             onDataloaded(rsp) {
-                // if (rsp.total < 1) return;
-                // let promotionIds = rsp.data.map(r => r.id);
-                // this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
-                //     let _rs = rs || [];
-                //     this.summaryMap = {}
-                //     _rs.forEach(r => {
-                //         this.summaryMap[r.promotionId] = r;
-                //     })
-                // })
+
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};

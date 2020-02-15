@@ -2,7 +2,7 @@
 
 <template>
     <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
-        <el-option v-for="item in options" :key="item.subsysId" :label="item.subsysName" :value="item.subsysId" :disabled="item.disabled">
+        <el-option v-for="item in options" :key="item.metadataId" :label="item.metadataAlias" :value="item.metadataId" :disabled="item.disabled">
         </el-option>
     </el-select>
 </template>
@@ -19,6 +19,10 @@
             }
         },
         props: {
+            fnChange:{
+                required:false,
+                type:Function
+            },
             value: {
                 required: true
             },
@@ -55,10 +59,17 @@
         methods: {
             handleChange (val) {
                 this.$emit('change', val)
+                if(this.fnChange){
+                    this.fnChange();
+                }
             },
-            refresh () {
+            refresh() {
                 this.loading = true
-                this.$api.metadata.MetaData.querySubsys().then(rsp => {
+                this.$api.platform.MetaData.queryTables({
+                    param: {
+                        subsysId: this.subsysId, isDeleted: false
+                    }
+                }).then(rsp => {
                     this.options = rsp.data
                     this.loading = false
                 })

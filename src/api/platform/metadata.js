@@ -2,12 +2,7 @@
 import request from '@/utils/request'
 
 export default {
-    querySubsys() {
-        return request({
-            url: '/api/sys/metadata/subsysdict/query',
-            method: 'POST'
-        })
-    },
+
     queryTables(data) {
         return request({
             url: '/api/sys/metadata/queryTables',
@@ -41,14 +36,7 @@ export default {
         })
     },
 
-    selectTable(data) {
-        return request({
-            url: '/api/sys/metadata/public/selectTable',
-            method: 'POST',
-            data
 
-        })
-    },
 
 
 

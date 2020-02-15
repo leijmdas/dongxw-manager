@@ -1,3 +1,4 @@
+
 <style lang="less" >
 @import "../variables";
 .spin-container {
@@ -184,7 +185,7 @@
             pageSizeOpts: {
                 type: Array,
                 required: false,
-                default: () => [10, 15, 20, 30, 50, 80, 100]
+                default: () => [5, 10, 15, 20, 50, 100]
             },
             pageSize: {
                 type: Number,
@@ -361,11 +362,12 @@
                 });
                 return rs;
             },
-            load() {
-                this.selectColumns = [];
+            //load(outObj,key) {
+            load(outObj,key) {
+                    this.selectColumns = [];
                 this.selectRows = [],
-                console.log(this.storeParams)
                 this.showLoading = true;
+
                 let params = Object.assign(this.storeParams, this.page.query);
                 if(params.sortBys) {
                     params.orderBys = params.sortBys
@@ -386,9 +388,13 @@
                         let _data = this.dataWrap(data);
 
                         this.tableData.push(..._data);
-
                         this.showLoading = false;
-
+                        // if ( outObj && key) {
+                        //     //Object.assign(outTableData, this.tableData)
+                        //     outObj[key] = this.tableData
+                        //     this.$message(JSON.stringify(outObj[key]))
+                        //
+                        // }
                         this.$emit("dataloaded", rsp);
                         //this.select()
                     })
@@ -423,7 +429,7 @@
                 this.$el
                     .querySelectorAll("div.el-table__expand-icon")
                     [this.tableData.indexOf(row)].click();
-                this.$emit("row-dblclick", row);
+                //this.$emit("row-dblclick", row);
             },
             handleRowClick(row) {
                 if (this.click) {
@@ -431,7 +437,7 @@
                 }
                 this.$refs.multipleTable.clearSelection();
                 this.$refs.multipleTable.toggleRowSelection(row, true);
-                this.$emit("row-click", row);
+                //this.$emit("row-click", row);
             },
 
             handleSelect(selection, row) {

@@ -2,6 +2,52 @@
 import Layout from '../pages/layout';
 
 let router0 = [
+    {
+        path: '/query',
+        component: Layout,
+        meta: {title: '元数据管理', icon: 'user', group: 'dongxw'},
+        children: [
+            // {
+            //     path: 'platform/metadata/QueryManage',
+            //     component: require('@/pages/platform/metadata/QueryManage.vue'),
+            //     name: 'metadata:querymanage',
+            //     meta: {title: '通用查询', perm: 'metadata:querymanage'}
+            // },
+            {
+                path: 'platform/metadata/Manage',
+                component: require('@/pages/platform/metadata/Manage.vue'),
+                name: 'metadata:manage',
+                meta: {title: '元数据字典', perm: 'metadata:manage'}
+            },
+        ]
+    },
+    {
+        path: '/audit',
+        component: Layout,
+        meta: {title: '审批', icon: 'user', group: 'dongxw'},
+        children: [
+            {
+                path: 'purchasePlan/manage',
+                component: require('@/pages/dongxw/purchase/Manage.vue'),
+                name: 'purchasePlan:manage',
+                meta: {title: '审核订单', perm: 'purchaseplan:manage'}
+            },
+            {
+                path: 'dongxw/supplier/manage',
+                component: require('@/pages/dongxw/supplier/Manage.vue'),
+                name: 'supplier:manage',
+                meta: {title: '审核BOM', perm: 'supplier:manage'}
+            },
+
+            {
+                path: 'purchase/order',
+                component: require('@/pages/dongxw/supplier/Manage.vue'),
+                name: 'purchase:order',
+                meta: {title: '审核采购单', perm: 'purchase:manage'}
+            },
+
+        ]
+    },
 
     {
         path: '/bom',
@@ -193,46 +239,7 @@ let router0 = [
         ]
     },
 
-    {
-        path: '/query',
-        component: Layout,
-        meta: {title: '查询', icon: 'user', group: 'dongxw'},
-        children: [
-            {
-                path: 'sysMetadata/manage',
-                component: require('@/pages/common/queryByMetadata/Manage.vue'),
-                name: 'sysMetadata:manage',
-                meta: {title: '通用查询', perm: 'sysMetadata:manage'}
-            },
-        ]
-    },
-    {
-        path: '/audit',
-        component: Layout,
-        meta: {title: '审核', icon: 'user', group: 'dongxw'},
-        children: [
-            {
-                path: 'purchasePlan/manage',
-                component: require('@/pages/dongxw/purchase/Manage.vue'),
-                name: 'purchasePlan:manage',
-                meta: {title: '审核订单', perm: 'purchaseplan:manage'}
-            },
-            {
-                path: 'dongxw/supplier/manage',
-                component: require('@/pages/dongxw/supplier/Manage.vue'),
-                name: 'supplier:manage',
-                meta: {title: '审核BOM', perm: 'supplier:manage'}
-            },
 
-            {
-                path: 'purchase/order',
-                component: require('@/pages/dongxw/supplier/Manage.vue'),
-                name: 'purchase:order',
-                meta: {title: '审核采购单', perm: 'purchase:manage'}
-            },
-
-        ]
-    },
 ];
 
 export default router0;
