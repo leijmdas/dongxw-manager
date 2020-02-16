@@ -29,35 +29,32 @@
             <!--<el-table-column prop="seq" label="序号" width="50">-->
                 <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
             <!--</el-table-column>-->
-            <el-table-column prop="metadataOrder" label="排序" width="60"></el-table-column>
-            <el-table-column width="145" label="元数据">
+            <el-table-column prop="metadataOrder" label="排序" width="50"></el-table-column>
+            <el-table-column width="125" label="元数据">
 
                 <template slot-scope="scope">
 
-                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删表" >
-                        <span style="color:red">删表</span>
-                    </el-button>
-                    <el-button type="text" title="建表" @click="edit(scope.row)">
+                    <el-button type="text" title="建表" @click="makeDbTable(scope.row)">
                         建表
                     </el-button>
-                    <el-button type="text" title="建表" @click="edit(scope.row)">
-                        拷贝
+                    <el-button type="text" @click="dropDbTable(scope.row)" title="删表" >
+                        <span style="color:red">删表</span>
                     </el-button>
+
 
                 </template>
             </el-table-column>
 
-            <!--<el-table-column prop="subsysId" label="子系统" width="120"></el-table-column>-->
 
             <el-table-column prop="metadataAlias" label="中文名称" width="160">
                 <template slot-scope="{row}">
-                    <span style="color:mediumvioletred">{{row.metadataAlias}}</span>
+                    <span style="color:blue">{{row.metadataAlias}}</span>
                 </template>
             </el-table-column>
 
             <el-table-column prop="metadataName" label="元数据名称" width="160">
                 <template slot-scope="{row}">
-                    <span s>{{row.metadataName}}</span>
+                    <span style="color:mediumvioletred">{{row.metadataName}}</span>
                 </template>
             </el-table-column>
 
@@ -69,19 +66,19 @@
                     {{$dict.getText(row.metadataType,$dict.store.METADATA_TYPE)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="metadataAutocreate" label="创建？" width="80">
+            <el-table-column prop="metadataAutocreate" label="允许建表"  >
                 <template slot-scope="{row}">
                     {{row.metadataAutocreate}}
                 </template>
             </el-table-column>
-            <el-table-column prop="metadataCached" label="cached?"  >
-                <template slot-scope="{row}">
-                    {{row.metadataCached}}
-                </template>
-            </el-table-column>
+            <!--<el-table-column prop="metadataCached" label="cached"  >-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{row.metadataCached}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
 
 
-            <el-table-column width="100" label="操作" :fixed="'right'">
+            <el-table-column width="120" label="操作" :fixed="'right'">
 
                 <template slot-scope="scope">
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
@@ -90,13 +87,16 @@
                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" >
                         <span style="color:red"><i class="el-icon-delete red"></i></span>
                     </el-button>
+                    <el-button type="text" title="拷贝" @click="copyMaster(scope.row)">
+                        拷贝
+                    </el-button>
                 </template>
             </el-table-column>
 
         </v-table>
 
-        <v-dialog ref="formDiag" title="信息编辑" :width="'50%'">
-            <!--<form-panel @saved="onFormSaved"></form-panel>-->
+        <v-dialog ref="formDiag" title="信息编辑" :width="'650px'">
+            <dict-panel @saved="onFormSaved"></dict-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
@@ -111,9 +111,10 @@
 
 <script>
     import SubsysSelect from '@/components/widgets/platform/SubsysSelect.vue';
+    import DictPanel from './DictForm.vue'
 
     export default {
-        components: {SubsysSelect},
+        components: {DictPanel,SubsysSelect},
         props:{
             value: {
                 type: Object,
@@ -155,7 +156,7 @@
                 this.table = row
             },
 
-            onFormSaved() {
+            onFormSaved(rsp) {
                 this.$refs.formDiag.hide();
                 this.$nextTick(this.search);
             },
@@ -164,8 +165,7 @@
             },
 
             search() {
-                this.getSearchParams();
-                this.$refs.table.currentPage = 1;
+                this.getSearchParams() //this.$refs.table.currentPage = 1;
                 this.$refs.table.load();
             },
             cancel() {
@@ -178,43 +178,90 @@
                 this.search();
             },
             onDataloaded(rsp) {
+                console.log(JSON.stringify(rsp.data.length))
+                //this.$message(JSON.stringify(rsp.data.length))
+                if (rsp.data.length > 0) {
+                    this.table = rsp.data[0]
+                }
 
             },
             getSearchParams() {
-                this.page.query.dateRanges = {};
-                if (this.dateRangeType != null && this.dateRange && this.dateRange.length > 0) {
-                    this.page.query.dateRanges[this.dateRangeType] = {
-                        startDate: this.dateRange[0],
-                        endDate: this.dateRange.length > 1 ? this.dateRange[1] : null
-                    };
-                }
+
                 return this.page.query;
             },
 
 
-            create() {
-                this.$refs.formDiag.show();
+
+            dropDbTable(row) {
+                if (row) {
+                    let params = _.cloneDeep(this.page.query)
+                    params.param.metadataId = row.metadataId
+                    this.$confirm("确定要删'"+row.metadataAlias+"表'吗?", "提示", {type: "warning"}).then(() => {
+
+                        this.$api.platform.MetadataTableService.dropDbTable(params).then(rsp => {
+                            this.$msgJsonResult(rsp)
+
+                        });
+                    });
+                }
             },
 
+            makeDbTable(row) {
 
+                if (row) {
+                    let params = _.cloneDeep(this.page.query)
+                    params.param.metadataId = row.metadataId
+                    this.$confirm("确定要建'"+row.metadataAlias+"表'吗?", "提示", {type: "warning"}).then(() => {
+
+                        this.$api.platform.MetadataTableService.makeDbTable(params).then(rsp => {
+                            this.$msgJsonResult(rsp)
+
+                        });
+                    });
+                }
+            },
+
+            copyMaster(row) {
+
+                if (row) {
+                    //let params = Object.assign({}, this.page.query)
+                    let params = _.cloneDeep(this.page.query)
+                    params.param.metadataId = row.metadataId
+
+                    this.$confirm("确定要拷贝'"+row.metadataAlias+"表'吗?", "提示", {type: "warning"}).then(() => {
+                        this.$api.platform.MetadataTableService.copyMaster(params).then(rsp => {
+                            this.$msgJsonResult(rsp);
+                            if (rsp.code == 0) {
+                                //params.param.metadataId = null
+                                this.page.query.param.metadataId = rsp.data
+                                this.search();
+
+                            }
+                        });
+                    });
+                }
+            },
+
+            create() {
+                this.$refs.formDiag.show({subsysId: this.page.query.param.subsysId});
+            },
             edit(row) {
-                this.$refs.formDiag.show({id: row.id});
+                this.$refs.formDiag.show({metadataId: row.metadataId});
             },
 
             view(row) {
-                this.$refs.formDiagView.show({id: row.id});
+                this.$refs.formDiagView.show({metadataId: row.metadataId});
             },
             toggleStatus(row) {
 
 
             },
             del(row) {
-                this.$confirm("确定删除此条记录吗?", "提示", {type: "warning"}).then(() => {
-                    this.$api.platform.MetadataDictService.deleteById(row.id).then(rsp => {
+                this.$confirm("确定删除'"+row.metadataAlias+"表'此条记录吗?", "提示", {type: "warning"}).then(() => {
+                    this.$api.platform.MetadataDictService.deleteById(row.metadataId).then(rsp => {
                         this.$msgJsonResult(rsp);
                         if (rsp.code == 0) {
                             this.search();
-
                         }
                     });
                 });

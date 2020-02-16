@@ -2,12 +2,12 @@
     <div>
         <dict-manage ref="dictMng" v-model="table"></dict-manage>
 
-        <el-tabs v-model="activeName" @tab-click="handleTabClick" style="margin-left: 5px">
+        <el-tabs v-model="activeName" @tab-click="handleTabClick"  >
             <el-tab-pane label="字段信息" name="fieldForm">
                 <field-manage :enableView="enableFieldForm" ref="fieldMng" v-model="table"></field-manage>
             </el-tab-pane>
             <el-tab-pane label="元数据检查" name="checkForm">
-                <!--<field-manage ref="fieldMng" v-model="table"></field-manage>-->
+                <check-dict-form :enableView="enableCheckForm" :metadataId="table.metadataId"></check-dict-form>
             </el-tab-pane>
             <el-tab-pane label="元数据记录" name="dataForm">
                 <table-data-form :enableView="enableDataForm" :metadataId="table.metadataId"></table-data-form>
@@ -25,9 +25,10 @@
     import DictManage from './DictManage'
     import FieldManage from './FieldManage'
     import TableDataForm from './TableDataForm'
+    import CheckDictForm from './CheckDictForm'
 
     export default {
-        components: {TableDataForm,DictManage, FieldManage},
+        components: {CheckDictForm,TableDataForm,DictManage, FieldManage},
         data(){
             return {
                 enableFieldForm : true,

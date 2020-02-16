@@ -1,13 +1,13 @@
 
 import SubsysDictService from './SubsysDictService'
-import MetadataTable from './MetadataTable'
+import MetadataTableService from './MetadataTableService'
 import MetaData from './metadata'
 import MetadataFieldService from './MetadataFieldService'
 import MetadataDictService from './MetadataDictService'
 
 export default {
     MetaData,
-    MetadataTable,
+    MetadataTableService,
     SubsysDictService,
     MetadataFieldService,
     MetadataDictService

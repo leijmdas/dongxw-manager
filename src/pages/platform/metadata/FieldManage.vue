@@ -12,10 +12,13 @@
                     <el-button @click="cancel">取消</el-button>
                 </el-form-item>
 
-                <el-button style="float:right;margin-right: 20px" type="primary" plain @click="create">
+                <el-button v-if="table.metadataId" class="btn_right" type="primary" plain @click="create">
                     新增
                 </el-button>
-                <el-button style="float:right;margin-right: 20px" type="primary" plain  >
+                <el-button v-if="table.metadataId"  class="btn_left"   plain @click="delAll">
+                    删除所有
+                </el-button>
+                <el-button v-if="table.metadataId"  class="btn_left"   plain  >
                     排序
                 </el-button>
             </el-form>
@@ -25,14 +28,18 @@
             <!--<el-table-column prop="seq" label="序号" width="45">-->
                 <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
             <!--</el-table-column>-->
-            <el-table-column prop="fieldOrder" label="排序" width="60"></el-table-column>
+            <el-table-column prop="fieldOrder" label="排序" width="50"></el-table-column>
 
-            <el-table-column prop="metadataDictModel.metadataAlias" label="表名" width="145">
+            <el-table-column prop="metadataDictModel.metadataAlias" label="表名" width="125">
                 <template slot-scope="{row}">
                     <span style="color:mediumvioletred">{{row.metadataDictModel.metadataAlias}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="fieldMemo" label="中文名称" width="145"></el-table-column>
+            <el-table-column prop="fieldMemo" label="中文名称" width="145">
+                <template slot-scope="{row}">
+                    <span style="color:blue">{{row.fieldMemo}}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="fieldName" label="英文名称" width="145">
                 <template slot-scope="{row}">
                     <span style="color:mediumvioletred">{{row.fieldName}}</span>
@@ -77,7 +84,7 @@
             <el-table-column prop="fieldRemark" label="说明"></el-table-column>
 
 
-            <el-table-column width="100" label="操作" :fixed="'right'">
+            <el-table-column width="90" label="操作" :fixed="'right'">
 
                 <template slot-scope="scope">
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
@@ -101,8 +108,20 @@
 
     </div>
 </template>
-<style>
+<style lang="less" scoped>
+    .btn_left {
+            float: left;
+            margin-right: 20px;
 
+    }
+
+    .btn_right {
+
+            float: right;
+            margin-right: 20px;
+
+
+    }
 </style>
 
 <script>
@@ -213,13 +232,7 @@
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});
             },
-            clickRow(row) {
-                if (fatherMethod) {
-                    this.fatherMethod(row)
-                }
-                //this.row = row;
-                //console.log(row);
-            },
+
 
             view(row) {
                 this.$refs.formDiagView.show({id: row.id});
@@ -228,17 +241,27 @@
 
             },
             del(row) {
-                this.$confirm("确定删除此条记录吗?", "提示", {
+                this.$confirm("确定删除'"+row.fieldName+"'此条记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    this.$api.a.a.deleteById(row.id).then(rsp => {
+                    this.$api.platform.MetadataFieldService.deleteById(row.fieldId).then(rsp => {
                         this.$msgJsonResult(rsp);
                         if (rsp.code == 0) {
                             this.search();
-                            this.$message({
-                                type: "success",
-                                message: "删除成功!"
-                            });
+
+                        }
+                    });
+                });
+            },
+            delAll(row) {
+                this.$confirm("确定删除'"+this.table.metadataAlias+"'所有字段记录吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+                    this.$api.platform.MetadataFieldService.deleteAllByMetadataId(this.table.metadataId).then(rsp => {
+                        this.$msgJsonResult(rsp);
+                        if (rsp.code == 0) {
+                            this.search();
+
                         }
                     });
                 });

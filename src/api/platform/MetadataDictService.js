@@ -41,11 +41,13 @@ export default {
             method: 'POST'
         })
     },
+
     deleteById(id) {
         return request({
             url: '/api/sys/metadatadict/deleteById/'+id,
             method: 'POST'
         })
     },
+
 
 }

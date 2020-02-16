@@ -362,14 +362,14 @@
                 });
                 return rs;
             },
-            //load(outObj,key) {
-            load(outObj,key) {
-                    this.selectColumns = [];
-                this.selectRows = [],
-                this.showLoading = true;
+
+            load() {
+                this.selectColumns = []
+                this.selectRows = []
+                this.showLoading = true
 
                 let params = Object.assign(this.storeParams, this.page.query);
-                if(params.sortBys) {
+                if (params.sortBys) {
                     params.orderBys = params.sortBys
                 }
                 params["limit"] = this.internalPageSize;
@@ -389,12 +389,7 @@
 
                         this.tableData.push(..._data);
                         this.showLoading = false;
-                        // if ( outObj && key) {
-                        //     //Object.assign(outTableData, this.tableData)
-                        //     outObj[key] = this.tableData
-                        //     this.$message(JSON.stringify(outObj[key]))
-                        //
-                        // }
+
                         this.$emit("dataloaded", rsp);
                         //this.select()
                     })

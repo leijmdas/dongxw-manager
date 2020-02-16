@@ -1,23 +1,37 @@
 <template>
-    <div>
 
         <v-table ref="table" :pageSize="10" :page="page" :table-minheight="450" @dataloaded="onDataloaded">
-            <el-table-column prop="seq" label="序号" width="50" :fixed="'left'">
-                <template slot-scope="scope">
-                    <span>{{scope.$index + 1}} </span>
+            <el-table-column prop="seq" label="序号" width="50">
+                <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+            </el-table-column>
+            <el-table-column label='元数据名称' prop='metadata_name' width="200">
+                <template slot-scope="{row}">
+                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.metadata_name}}</span>
                 </template>
             </el-table-column>
-            <el-table-column v-for="(title ,index) in titles" prop="title.fieldName"
-                             v-if="title.fieldVisible" :label="title.fieldMemo"
-                             :width="checkWidth( title,index )"  >
-                <template slot-scope="scope">
-                    <span>{{scope.row[title.fieldName]}}</span>
+            <el-table-column label="字典字段" prop="dict_field_name" width="200">
+                <template slot-scope="{row}">
+                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.dict_field_name}}</span>
                 </template>
             </el-table-column>
+            <el-table-column label="字典字段类型" prop="field_type" width="200">
+                <template slot-scope="{row}">
+                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.field_type}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="表字段类型" prop="data_type" width="200">
+                <template slot-scope="{row}">
+                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.data_type}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="表字段" prop="db_field_name" width="200">
+                <template slot-scope="{row}">
+                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.db_field_name}}</span>
+                </template>
+            </el-table-column>
+
         </v-table>
 
-
-    </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
 
@@ -43,7 +57,6 @@
             getTableData: {
                 type:Function,
                 default : null,
-                //required : true
             }
         },
 
@@ -75,12 +88,12 @@
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            subsysId: 0,
+                            //subsysId: 0,
                             metadataId: this.metadataId,
                             isDeleted: false
                         }
                     },
-                    getData: this.$api.platform.MetadataTableService.selectTable,
+                    getData: this.$api.platform.MetadataTableService.checkDict,
 
                 },
 
@@ -99,23 +112,6 @@
         },
 
         methods: {
-
-            checkFix(index){
-                return index+1===this.titles.length?'right':''
-            },
-            checkWidth(title, index) {
-                if (index + 1 === this.titles.length) {
-                    //return "'80px'"
-                }
-                let w = title.fieldDisplaysize < 20 ? title.fieldDisplaysize * 30 : title.fieldDisplaysize
-                if(w<40)
-                {
-                    w=w*4
-                }
-                //console.log(w.toString())
-                //debugger;
-                return w.toString()
-            },
             onDataloaded(rsp) {
 
             },
@@ -167,10 +163,7 @@
 
 
             search() {
-                // this.titles = this.getTableData()
-                // this.titles.sort(function (a, b) {
-                //     return a.fieldOrder - b.fieldOrder;
-                // });
+
                 this.loadDictFields()
                 this.page.query.param.metadataId = this.metadataId
                 if (this.page.query.param.metadataId) {
@@ -186,8 +179,8 @@
             },
             loadDictFields() {
 
+                //this.$api.platform.MetaData.queryFields({
                 this.$api.platform.MetadataFieldService.query({
-                    limit : -1,
                     param: {
                         metadataId: this.metadataId
                     }

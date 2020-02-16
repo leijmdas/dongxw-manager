@@ -41,9 +41,9 @@ export default {
             method: 'POST'
         })
     },
-    deleteById(id) {
+    deleteAllByMetadataId(metadataId) {
         return request({
-            url: '/api/sys/metadatafield/deleteById/'+id,
+            url: '/api/sys/metadatafield/deleteAllByMetadataId/'+metadataId,
             method: 'POST'
         })
     },

@@ -30,7 +30,7 @@
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
-            <el-table-column v-for="title in titles"
+            <el-table-column v-for="(title,index) in titles"
                              v-if="title.fieldVisible" prop="title.fieldName" :label="title.fieldMemo"
                              :width="title.fieldDisplaysize<30 ? title.fieldDisplaysize*30:title.fieldDisplaysize"
                              :fixed="title.fieldName==titles[title.length-1].fieldName? 'right':''">
