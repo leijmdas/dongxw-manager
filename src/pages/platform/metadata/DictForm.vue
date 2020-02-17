@@ -50,8 +50,7 @@
             </el-row>
             <el-row :span="24">
                 <el-col :span="12">
-                    <el-form-item   label="类型" prop="metadataType">
-
+                    <el-form-item   label="元数据类型" prop="metadataType">
                         <el-select style="width:100%"  v-model="entity.metadataType">
                             <el-option v-for="item in $dict.store.METADATA_TYPE" :key="item[0]"
                                        :value="item[0]" :label="item[1]"></el-option>
@@ -60,10 +59,10 @@
                 </el-col>
 
                 <el-col :span="12">
-                    <el-form-item    label="允许建表" prop="metadataAutocreate">
-                        <el-select style="width:100%"  v-model="entity.metadataAutocreate">
-                            <el-option :key="true" :value="true" :label="'true'"></el-option>
-                            <el-option :key="false" :value="false" :label="'false'"></el-option>
+                    <el-form-item label="允许建表" prop="metadataAutocreate">
+                        <el-select style='width:100%' v-model='entity.metadataAutocreate'>
+                            <el-option :key='true' :value='true' :label='"是"'></el-option>
+                            <el-option :key='false' :value='false' :label='"否"'></el-option>
                         </el-select>
                     </el-form-item>
 

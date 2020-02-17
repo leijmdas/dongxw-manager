@@ -9,7 +9,7 @@ export default {
      */
     save(data) {
         return request({
-            url: '/dongxw/metadatafield/save',
+            url: '/api/sys/metadatafield/save',
             method: 'POST',
             data
         })
@@ -44,6 +44,12 @@ export default {
     deleteAllByMetadataId(metadataId) {
         return request({
             url: '/api/sys/metadatafield/deleteAllByMetadataId/'+metadataId,
+            method: 'POST'
+        })
+    },
+    deleteById(id) {
+        return request({
+            url: '/api/sys/metadatafield/deleteById/'+id,
             method: 'POST'
         })
     },

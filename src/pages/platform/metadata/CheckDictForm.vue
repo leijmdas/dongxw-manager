@@ -4,29 +4,29 @@
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
-            <el-table-column label='元数据名称' prop='metadata_name' width="200">
+            <el-table-column label='元数据名称' prop='metadataName' width="200">
                 <template slot-scope="{row}">
-                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.metadata_name}}</span>
+                    <span :style="!checkDbSame(row)?'color:red':''">{{row.metadataName}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="字典字段" prop="dict_field_name" width="200">
+            <el-table-column label="字典字段" prop="dictFieldName" width="200">
                 <template slot-scope="{row}">
-                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.dict_field_name}}</span>
+                    <span :style="!checkDbSame(row)?'color:red':''">{{row.dictFieldName}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="字典字段类型" prop="field_type" width="200">
+            <el-table-column label="字典字段类型" prop="fieldType" width="200">
                 <template slot-scope="{row}">
-                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.field_type}}</span>
+                    <span :style="!checkDbSame(row)?'color:red':''">{{row.fieldType}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="表字段类型" prop="data_type" width="200">
+            <el-table-column label="表字段类型" prop="dataType" width="200">
                 <template slot-scope="{row}">
-                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.data_type}}</span>
+                    <span :style="!checkDbSame(row)?'color:red':''">{{row.dataType}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="表字段" prop="db_field_name" width="200">
+            <el-table-column label="表字段" prop="dbFieldName" width="200">
                 <template slot-scope="{row}">
-                    <span :style="row.dict_field_name!=row.db_field_name?'color:red':''">{{row.db_field_name}}</span>
+                    <span :style="!checkDbSame(row)?'color:red':''">{{row.dbFieldName}}</span>
                 </template>
             </el-table-column>
 
@@ -112,6 +112,10 @@
         },
 
         methods: {
+            checkDbSame(row) {
+                return row.dictFieldName == row.dbFieldName
+                && (row.dataType == "int" ? "integer" : row.dataType) == row.fieldType.toLowerCase()
+            },
             onDataloaded(rsp) {
 
             },

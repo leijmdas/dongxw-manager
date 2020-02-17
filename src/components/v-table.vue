@@ -380,7 +380,10 @@
                 this.page
                     .getData(params)
                     .then(rsp => {
-
+                        if (rsp.msg) {
+                            this.$msgJsonResult(rsp)
+                            rsp = rsp.data
+                        }
                         this.tableData.splice(0, this.tableData.length);
                         this.total = rsp.total || 0;
                         let data = rsp.data || [];
@@ -390,8 +393,7 @@
                         this.tableData.push(..._data);
                         this.showLoading = false;
 
-                        this.$emit("dataloaded", rsp);
-                        //this.select()
+                        this.$emit("dataloaded", rsp);   //this.select()
                     })
                     .catch(err => {
                         this.showLoading = false;

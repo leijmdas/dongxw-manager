@@ -42,4 +42,15 @@ export default {
             data
         })
     },
+    /**
+     * 生成element页面代码
+     * */
+    makeWebPage(data) {
+        return request({
+            url: '/api/sys/metadata/table/makeWebPage' ,
+            method: 'POST',
+            data
+        })
+    },
+
 }

@@ -1,7 +1,9 @@
 <template>
     <div class="panel panel-default panel-search">
         <el-form :inline="true" label-width="85px" label-position="left">
-
+            <el-button   v-if="table.metadataId" class="btn_leftright" plain>
+                排序
+            </el-button>
             <el-form-item label="子系统" prop="subsysId">
                 <subsys-select @change="search" v-model="page.query.param.subsysId" :clearable="true"></subsys-select>
             </el-form-item>
@@ -30,7 +32,7 @@
                 <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
             <!--</el-table-column>-->
             <el-table-column prop="metadataOrder" label="排序" width="50"></el-table-column>
-            <el-table-column width="125" label="元数据">
+            <el-table-column width="120" label="元数据操作">
 
                 <template slot-scope="scope">
 
@@ -46,36 +48,36 @@
             </el-table-column>
 
 
-            <el-table-column prop="metadataAlias" label="中文名称" width="160">
+            <el-table-column prop="metadataAlias" label="中文名称" width="120">
                 <template slot-scope="{row}">
                     <span style="color:blue">{{row.metadataAlias}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="metadataName" label="元数据名称" width="160">
+            <el-table-column prop="metadataName" label="元数据名称" width="120">
                 <template slot-scope="{row}">
                     <span style="color:mediumvioletred">{{row.metadataName}}</span>
                 </template>
             </el-table-column>
-
-            <el-table-column prop="metadataDb" label="数据库" width="160"></el-table-column>
-            <el-table-column prop="metadataMemo" label="描述" width="320"></el-table-column>
-
-            <el-table-column prop="metadataType" label="类型" width="100">
+            <el-table-column prop="metadataType" label="元数据类型" width="100">
                 <template slot-scope="{row}">
                     {{$dict.getText(row.metadataType,$dict.store.METADATA_TYPE)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="metadataAutocreate" label="允许建表"  >
+            <el-table-column prop="metadataAutocreate" label="允许建表" width="100" >
                 <template slot-scope="{row}">
-                    {{row.metadataAutocreate}}
+                    {{row.metadataAutocreate?'是':'否'}}
                 </template>
             </el-table-column>
             <!--<el-table-column prop="metadataCached" label="cached"  >-->
-                <!--<template slot-scope="{row}">-->
-                    <!--{{row.metadataCached}}-->
-                <!--</template>-->
+            <!--<template slot-scope="{row}">-->
+            <!--{{row.metadataCached}}-->
+            <!--</template>-->
             <!--</el-table-column>-->
+            <el-table-column prop="metadataDb" label="数据库" width="160"></el-table-column>
+            <el-table-column prop="metadataMemo" label="描述" ></el-table-column>
+
+
 
 
             <el-table-column width="120" label="操作" :fixed="'right'">
