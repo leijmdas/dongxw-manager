@@ -28,6 +28,7 @@
     "raven-js": "^3.26.4",
     "sass-loader": "^7.0.1",
     "sortable": "^2.0.0",
+    "sortable.js": "^0.3.0",
     "vue": "^2.5.16",
     "vue-moment": "^4.0.0",
     "vue-quill-editor": "^3.0.6",

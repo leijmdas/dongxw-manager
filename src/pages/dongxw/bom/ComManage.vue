@@ -106,6 +106,7 @@
                 <el-button type="default" @click="()=>{$refs.formDiagNew.hide()}">取消</el-button>
             </div>
         </v-dialog>
+
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
@@ -198,7 +199,6 @@
                 return this.page.query;
             },
             create() {
-
                 this.$refs.formDiagNew.show();
             },
             edit(row) {

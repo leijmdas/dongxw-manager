@@ -52,5 +52,26 @@ export default {
             data
         })
     },
+    /**
+     * sort subsysId,ids
+     * */
+    doSortMetadataDict(data) {
+        return request({
+            url: '/api/sys/metadata/table/doSortMetadataDict' ,
+            method: 'POST',
+            data
+        })
+    },
+
+    /**
+     * sort subsysId,ids
+     * */
+    doSortMetadataField(data) {
+        return request({
+            url: '/api/sys/metadata/table/doSortMetadataField' ,
+            method: 'POST',
+            data
+        })
+    },
 
 }

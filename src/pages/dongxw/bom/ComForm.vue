@@ -15,44 +15,48 @@
 
                             <el-row :span="24" style="margin-top: 5px">
                                 <el-col :span="12">
-                                    <el-form-item label="宽封度" prop="width">
-                                        <el-input placeholder="宽封度" v-model="entity.width"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
                                     <el-form-item label="裁片名称" prop="cutPartName">
                                         <el-input placeholder="裁片名称" v-model="entity.cutPartName"></el-input>
                                     </el-form-item>
                                 </el-col>
 
-                                <el-col :span="10">
+                                <el-col :span="12">
                                     <el-form-item label="尺寸(长）" prop="sizeL">
                                         <el-input placeholder="尺寸(长）" v-model="entity.sizeL"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="4">
-                                    <el-form-item label="X" prop="sizeX">
+                                <el-col  :span="8">
+                                    <el-form-item v-if="productType.code!='20'" label="刀数" prop="knifeQty">
+                                        <el-input  placeholder="刀数" v-model="entity.knifeQty"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item  v-if="productType.code!='20'" label="X" prop="sizeX">
                                         <el-input placeholder="" v-model="entity.sizeX"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="10">
-                                    <el-form-item label="尺寸(宽）" prop="sizeW">
-                                        <el-input placeholder="尺寸(宽）" v-model="entity.sizeW"></el-input>
+                                <el-col :span="8">
+                                    <el-form-item v-if="productType.code!='20'"  label="尺寸(宽）" prop="sizeW">
+                                        <el-input placeholder="尺寸(宽）"
+                                                  v-model="entity.sizeW"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="件数" prop="pieces">
-                                        <el-input placeholder="件数" v-model="entity.pieces"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="刀数" prop="knifeQty">
-                                        <el-input placeholder="刀数" v-model="entity.knifeQty"></el-input>
-                                    </el-form-item>
-                                </el-col>
+
+                                <!--sizeL/length*-->
                                 <el-col :span="12">
                                     <el-form-item label="长封度" prop="length">
                                         <el-input placeholder="长封度" v-model="entity.length"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item  v-if="productType.code!='20'"  label="宽封度" prop="width">
+                                        <el-input placeholder="宽封度" v-model="entity.width"></el-input>
+                                    </el-form-item>
+                                </el-col>
+
+                                <el-col :span="12">
+                                    <el-form-item label="件数" prop="pieces">
+                                        <el-input placeholder="件数" v-model="entity.pieces"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <!--<el-col :span="8">-->
@@ -62,18 +66,18 @@
                                                <!--:active-value=1 :inactive-value=0>-->
                                     <!--</el-switch>-->
                                 <!--</el-col>-->
+
+                                <el-col :span="12">
+                                    <el-form-item label="每个用量" prop="eachQty">
+                                        <el-input :disabled="true||entity.source===1" placeholder="每个用量" v-model="autoEachQty"></el-input>
+                                    </el-form-item>
+                                </el-col>
                                 <el-col :span="12" >
 
                                     <el-form-item :label="entity.lossType==0?'损耗数':'损耗(%)'" prop="lossRate">
                                         <el-input  :disabled="entity.source===1"  placeholder="损耗" v-model="entity.lossRate"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="每个用量" prop="eachQty">
-                                        <el-input :disabled="entity.source===1" placeholder="每个用量" v-model="entity.eachQty"></el-input>
-                                    </el-form-item>
-                                </el-col>
-
                                 <el-col :span="12">
                                     <el-form-item  label="用量" prop="totalQty">
                                         <el-input disabled placeholder="用量" v-model="totalQty"></el-input>
@@ -206,6 +210,7 @@
             parentRm : {
                 type: Object,
             },
+
             productId: {
                 type: Number,
                 required: true
@@ -254,11 +259,24 @@
             };
         },
         computed: {
+            autoEachQty: function () {
+                let qty = 0
+                if (this.productType.code == '20' && this.entity.length > 0) {
+                    qty = parseFloat(this.entity.sizeL) / parseFloat(this.entity.length)
+                }
+                else if ((this.productType.code == '10' || this.productType.code == '11')
+                     && (this.entity.length +this.entity.width > 0) ) {
+                    qty = parseFloat(this.entity.sizeL) * this.entity.sizeW / this.entity.width
+                        / parseFloat(this.entity.length)
+                } else {
 
+                }
+                this.entity.eachQty = qty
+                return qty
+            },
             totalQty: function () {
-                let qty = ( parseFloat(this.entity.lossRate)+ 100 ) / 100
-                    * parseFloat(this.entity.eachQty) * parseFloat(this.entity.pieces)
-
+                let qty = (parseFloat(this.entity.lossRate) + 100) / 100 * parseFloat(this.entity.eachQty)
+                    * parseFloat(this.entity.pieces)
                 return parseFloat(qty).toFixed(4)
             },
 
@@ -267,10 +285,9 @@
                 return totalMoney
             },
 
-
-        },
-        watch: {
-
+            productType :function() {
+                 return this.parentRm.childRm.productType
+            }
         },
         methods: {
 

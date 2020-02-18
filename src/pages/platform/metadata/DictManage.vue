@@ -1,9 +1,15 @@
 <template>
     <div class="panel panel-default panel-search">
+        <el-row :span="24">
+            <el-col :span="8">
+                <v-sort-table :page="page" :header="header" :doSortFun="doSortFun" v-show="showSort" ref="sortTable"></v-sort-table>
+            </el-col>
+        </el-row>
         <el-form :inline="true" label-width="85px" label-position="left">
-            <el-button   v-if="table.metadataId" class="btn_leftright" plain>
+            <el-button @click="btnSort" v-if="table.metadataId" class="btn_leftright" plain>
                 排序
             </el-button>
+
             <el-form-item label="子系统" prop="subsysId">
                 <subsys-select @change="search" v-model="page.query.param.subsysId" :clearable="true"></subsys-select>
             </el-form-item>
@@ -23,10 +29,12 @@
                 <el-button @click="cancel">取消</el-button>
             </el-form-item>
 
-            <el-button type="primary" plain  @click="create" style="float: right; margin-right: 20px">新增</el-button>
+            <el-button type="primary" class="btn_right" plain @click="create">新增</el-button>
+            <el-button  plain class="btn_right"> 导入</el-button>
+            <el-button class="btn_right" plain > 导出</el-button>
         </el-form>
 
-        <v-table :pageSize="5" :selection= "false" ref="table" :page="page" :table-minheight="200"
+        <v-table :pageSize="5" :selection="false" ref="table" :page="page" :table-minheight="200"
                  :dblclick="edit" :click="clickTableRow" @dataloaded="onDataloaded">
             <!--<el-table-column prop="seq" label="序号" width="50">-->
                 <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
@@ -35,15 +43,12 @@
             <el-table-column width="120" label="元数据操作">
 
                 <template slot-scope="scope">
-
                     <el-button type="text" title="建表" @click="makeDbTable(scope.row)">
                         建表
                     </el-button>
                     <el-button type="text" @click="dropDbTable(scope.row)" title="删表" >
                         <span style="color:red">删表</span>
                     </el-button>
-
-
                 </template>
             </el-table-column>
 
@@ -78,9 +83,7 @@
             <el-table-column prop="metadataMemo" label="描述" ></el-table-column>
 
 
-
-
-            <el-table-column width="120" label="操作" :fixed="'right'">
+            <el-table-column width="240" label="操作" :fixed="'right'">
 
                 <template slot-scope="scope">
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
@@ -89,8 +92,15 @@
                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" >
                         <span style="color:red"><i class="el-icon-delete red"></i></span>
                     </el-button>
+
                     <el-button type="text" title="拷贝" @click="copyMaster(scope.row)">
                         拷贝
+                    </el-button>
+                    <el-button type="priamry" title="生成页面" plain @click="makeWebPage(scope.row)">
+                        生成页面
+                    </el-button>
+                    <el-button type="text" title="导出" @click="生成网页(scope.row)">
+                        导出
                     </el-button>
                 </template>
             </el-table-column>
@@ -107,7 +117,11 @@
 
     </div>
 </template>
-<style>
+<style lang="less" scoped>
+    .btn_right {
+        float: right;
+        margin-right: 20px
+    }
 
 </style>
 
@@ -138,6 +152,27 @@
         },
         data() {
             return {
+                doSortMetadataDict: this.$api.platform.MetadataTableService.doSortMetadataDict,
+                //doSortMetadataField: this.$api.platform.MetadataTableService.doSortMetadataField,
+                showSort: false,
+                header: [
+                    {
+                        label: 'ID',
+                        prop: 'metadataId'
+                    },
+                    {
+                        label: '排序',
+                        prop: 'metadataOrder'
+                    },
+                    {
+                        label: '英文名称',
+                        prop: 'metadataName'
+                    },
+                    {
+                        label: '中文名称',
+                        prop: 'metadataAlias'
+                    },
+                ],
 
                 page: {
                     query: {
@@ -153,6 +188,42 @@
             }
         },
         methods: {
+            makeWebPage(row) {
+                let params = {
+                    param: {
+                        metadataId: row.metadataId
+                    }
+                }
+                this.$api.platform.MetadataTableService.makeWebPage(params).then(rsp => {
+                    this.$msgJsonResult(rsp);
+
+                });
+            },
+            btnSort() {
+                this.showSort = !this.showSort
+                if (this.showSort) {
+                    this.$refs.sortTable.load()
+                }
+            },
+            doSortFun(sortedData) {
+
+                let ids = [] // debugger
+                // sortedData.forEach((item, index, array) => {
+                //     ids.push(item[this.header[0].prop])
+                // })
+                for(let item of  sortedData){
+                    ids.push(item[this.header[0].prop])
+                }
+                this.$message(JSON.stringify(ids))
+                let params = {
+                    subsysId: this.page.query.param.subsysId,
+                    ids: ids.join(",")
+                }
+                this.doSortMetadataDict(params).then(
+                    rsp => {
+                        this.$msgJsonResult(rsp)
+                    })
+            },
             clickTableRow(row) {
                 //Object.assign(this.value, row)
                 this.table = row
@@ -180,8 +251,7 @@
                 this.search();
             },
             onDataloaded(rsp) {
-                console.log(JSON.stringify(rsp.data.length))
-                //this.$message(JSON.stringify(rsp.data.length))
+
                 if (rsp.data.length > 0) {
                     this.table = rsp.data[0]
                 }

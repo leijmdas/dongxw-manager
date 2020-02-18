@@ -15,18 +15,22 @@
                 <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                 <el-button @click="cancel">取消</el-button>
             </el-form-item>
+            <el-button @click="delAll" v-if="table.metadataId" class="btn_right" plain >
+                <span style="color:red">删除所有</span>
+            </el-button>
 
+            <el-button   v-if="table.metadataId" class="btn_right" plain>
+                DB导入
+            </el-button>
             <el-button v-if="table.metadataId" class="btn_right" type="primary" plain @click="create">
                 新增
             </el-button>
             <el-button   v-if="table.metadataId" class="btn_left" plain>
                 排序
             </el-button>
-            <el-button @click="makeWebPage" v-if="table.metadataId" class="btn_left" plain>
+
+            <el-button  type="priamry" plain @click="makeWebPage" v-if="table.metadataId" class="btn_left" plain>
                 生成页面
-            </el-button>
-            <el-button @click="delAll" v-if="table.metadataId" class="btn_left" plain >
-                <span style="color:red">删除所有</span>
             </el-button>
 
         </el-form>
@@ -377,13 +381,13 @@
 
             },
 
-            makeWebPage(){
+            makeWebPage(row) {
                 let params = {
-                    param : {
-                        metadataId:this.table.metadataId
+                    param: {
+                        metadataId: row.metadataId ? row.metadataId : this.table.metadataId
                     }
                 }
-                this.$api.platform.MetadataTableService.makeWebPage( params ). then(rsp => {
+                this.$api.platform.MetadataTableService.makeWebPage(params).then(rsp => {
                     this.$msgJsonResult(rsp);
 
                 });

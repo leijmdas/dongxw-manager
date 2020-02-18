@@ -106,7 +106,7 @@
 <script>
 
 
-    import SubsysSelect from '@/components/widgets/platform/SubsysSelect.vue';
+    //import SubsysSelect from '@/components/widgets/platform/SubsysSelect.vue';
 
     const defaultEntity = {
         metadataId: null,
@@ -137,10 +137,10 @@
 
 
     export default {
-        components: {SubsysSelect},
+        components: {},
         data() {
             return {
-                ppp: '',
+                //ppp: '',
 
                 ruleTpl: {when: null, then: null},
                 entity: _.cloneDeep(defaultEntity),

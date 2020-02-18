@@ -249,10 +249,6 @@
 </style>
 
 <script>
-
-    import DictDataSelect from '@/components/widgets/platform/DictDataSelect.vue';
-
-
     const defaultEntity = {
         fieldId: null,	//  字段标识
         metadataId: 0,	//  元数据标识
@@ -285,10 +281,12 @@
         refDisplayID: '0',	//  关联显示字段
         fieldRemark: 'r',	//  说明
     };
+    import DictDataSelect from '@/components/widgets/platform/DictDataSelect.vue';
 
     export default {
         components: {DictDataSelect},
         data() {
+
             return {
                 table: {},
                 ruleTpl: {when: null, then: null},
@@ -406,6 +404,7 @@
         mounted() {
             this.$on("init", this.init);
             this.$on("submit", this.submitForm);
+
         }
     };
 </script>

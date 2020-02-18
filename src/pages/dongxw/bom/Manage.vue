@@ -33,10 +33,10 @@
             <el-switch slot="tip" style="margin-left:20px; margin-right: 30px" active-color="#13ce66" inactive-color="#ff4949"
                        v-model="showQryBar" active-text="显示查询框" inactive-text="不显示">
             </el-switch>
-            <span v-if="!product.code" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
+            <span v-if="!product.code" slot="tip" style="border: solid 1px;color:red; margin-left:40px;margin-top: 30px">
                 请点上方产品后编辑BOM
             </span>
-            <span v-else slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
+            <span v-else slot="tip" style="border: solid 1px; color:green;margin-left: 40px;margin-top: 40px">
                 {{  product.code +" : "+product.epCode +" ( "+product.remark +" )"}}
             </span>
 
