@@ -363,6 +363,11 @@
                 return rs;
             },
 
+            calQueryStartLimt(query) {
+                query.limit = this.internalPageSize;
+                let start = (this.currentPage - 1) * this.internalPageSize;
+                query.start = start < 0 ? 0 : start;
+            },
             load() {
                 this.selectColumns = []
                 this.selectRows = []
@@ -392,6 +397,10 @@
 
                         this.tableData.push(..._data);
                         this.showLoading = false;
+                        if (this.total > 0 && this.tableData.length === 0) {
+                            this.currentPage = 1
+                            this.load()
+                        }
 
                         this.$emit("dataloaded", rsp);   //this.select()
                     })

@@ -1,13 +1,17 @@
 <template>
     <div class="panel panel-default panel-search">
+
         <el-row :span="24">
             <el-col :span="8">
-                <v-sort-table :page="page" :header="header" :doSortFun="doSortFun" v-show="showSort" ref="sortTable"></v-sort-table>
+                <v-sort-table :elTableId="elTableId" ref="sortTable" :page="page" :header="header" :doSortFun="doSortFun" v-show="showSort">
+
+                </v-sort-table>
             </el-col>
         </el-row>
+
         <el-form :inline="true" label-width="85px" label-position="left">
             <el-button @click="btnSort" v-if="table.metadataId" class="btn_leftright" plain>
-                排序
+                排序开关
             </el-button>
 
             <el-form-item label="子系统" prop="subsysId">
@@ -39,7 +43,7 @@
             <!--<el-table-column prop="seq" label="序号" width="50">-->
                 <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
             <!--</el-table-column>-->
-            <el-table-column prop="metadataOrder" label="排序" width="50"></el-table-column>
+            <el-table-column :sortable="true"  prop="metadataOrder" label="排序" width="70"></el-table-column>
             <el-table-column width="120" label="元数据操作">
 
                 <template slot-scope="scope">
@@ -53,13 +57,13 @@
             </el-table-column>
 
 
-            <el-table-column prop="metadataAlias" label="中文名称" width="120">
+            <el-table-column :sortable="true" prop="metadataAlias" label="中文名称" width="120">
                 <template slot-scope="{row}">
                     <span style="color:blue">{{row.metadataAlias}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="metadataName" label="元数据名称" width="120">
+            <el-table-column :sortable="true" prop="metadataName" label="元数据名称" width="120">
                 <template slot-scope="{row}">
                     <span style="color:mediumvioletred">{{row.metadataName}}</span>
                 </template>
@@ -69,16 +73,12 @@
                     {{$dict.getText(row.metadataType,$dict.store.METADATA_TYPE)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="metadataAutocreate" label="允许建表" width="100" >
+            <el-table-column :sortable="true" prop="metadataAutocreate" label="允许建表" width="100" >
                 <template slot-scope="{row}">
                     {{row.metadataAutocreate?'是':'否'}}
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="metadataCached" label="cached"  >-->
-            <!--<template slot-scope="{row}">-->
-            <!--{{row.metadataCached}}-->
-            <!--</template>-->
-            <!--</el-table-column>-->
+
             <el-table-column prop="metadataDb" label="数据库" width="160"></el-table-column>
             <el-table-column prop="metadataMemo" label="描述" ></el-table-column>
 
@@ -89,9 +89,6 @@
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
                     </el-button>
-                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" >
-                        <span style="color:red"><i class="el-icon-delete red"></i></span>
-                    </el-button>
 
                     <el-button type="text" title="拷贝" @click="copyMaster(scope.row)">
                         拷贝
@@ -101,6 +98,9 @@
                     </el-button>
                     <el-button type="text" title="导出" @click="生成网页(scope.row)">
                         导出
+                    </el-button>
+                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" >
+                        <span style="color:red"><i class="el-icon-delete red"></i></span>
                     </el-button>
                 </template>
             </el-table-column>
@@ -130,8 +130,8 @@
     import DictPanel from './DictForm.vue'
 
     export default {
-        components: {DictPanel,SubsysSelect},
-        props:{
+        components: {DictPanel, SubsysSelect},
+        props: {
             value: {
                 type: Object,
                 required: true
@@ -147,13 +147,11 @@
                 }
             }
         },
-        watch: {
 
-        },
         data() {
             return {
+                elTableId: 'elTableIdDict',
                 doSortMetadataDict: this.$api.platform.MetadataTableService.doSortMetadataDict,
-                //doSortMetadataField: this.$api.platform.MetadataTableService.doSortMetadataField,
                 showSort: false,
                 header: [
                     {
@@ -164,13 +162,14 @@
                         label: '排序',
                         prop: 'metadataOrder'
                     },
-                    {
-                        label: '英文名称',
-                        prop: 'metadataName'
-                    },
+
                     {
                         label: '中文名称',
                         prop: 'metadataAlias'
+                    },
+                    {
+                        label: '英文名称',
+                        prop: 'metadataName'
                     },
                 ],
 
@@ -188,6 +187,32 @@
             }
         },
         methods: {
+
+            btnSort() {
+                this.showSort = !this.showSort
+                if (this.showSort) {
+                    this.$refs.table.calQueryStartLimt(this.page.query)
+                    this.$refs.sortTable.show()
+                }
+            },
+            doSortFun(sortedData) {
+
+                let ids = [] // debugger
+                for(let item of  sortedData){
+                    ids.push(item[this.header[0].prop])
+                }
+
+                console.log(JSON.stringify(ids))
+                let params = {
+                    subsysId: this.page.query.param.subsysId,
+                    ids: ids.join(",")
+                }
+                this.doSortMetadataDict(params).then(
+                    rsp => {
+                        this.$msgJsonResult(rsp)
+                    })
+            },
+
             makeWebPage(row) {
                 let params = {
                     param: {
@@ -199,31 +224,7 @@
 
                 });
             },
-            btnSort() {
-                this.showSort = !this.showSort
-                if (this.showSort) {
-                    this.$refs.sortTable.load()
-                }
-            },
-            doSortFun(sortedData) {
 
-                let ids = [] // debugger
-                // sortedData.forEach((item, index, array) => {
-                //     ids.push(item[this.header[0].prop])
-                // })
-                for(let item of  sortedData){
-                    ids.push(item[this.header[0].prop])
-                }
-                this.$message(JSON.stringify(ids))
-                let params = {
-                    subsysId: this.page.query.param.subsysId,
-                    ids: ids.join(",")
-                }
-                this.doSortMetadataDict(params).then(
-                    rsp => {
-                        this.$msgJsonResult(rsp)
-                    })
-            },
             clickTableRow(row) {
                 //Object.assign(this.value, row)
                 this.table = row
@@ -244,10 +245,14 @@
             cancel() {
                 this.dateRangeType = null;
                 this.dateRange = [];
-                this.$refs.table.currentPage = 1;
-                this.page.query.param = {
-                    subsysId: 0,
+                this.page.query = {
+                    orderBys: 'metadataOrder|asc',
+                    param: {
+                        subsysId: this.page.query.param.subsysId,
+                        metadataType: this.page.query.param.metadataType,
+                    }
                 };
+
                 this.search();
             },
             onDataloaded(rsp) {
@@ -258,7 +263,6 @@
 
             },
             getSearchParams() {
-
                 return this.page.query;
             },
 
@@ -320,14 +324,14 @@
             edit(row) {
                 this.$refs.formDiag.show({metadataId: row.metadataId});
             },
-
             view(row) {
                 this.$refs.formDiagView.show({metadataId: row.metadataId});
             },
+
             toggleStatus(row) {
 
-
             },
+
             del(row) {
                 this.$confirm("确定删除'"+row.metadataAlias+"表'此条记录吗?", "提示", {type: "warning"}).then(() => {
                     this.$api.platform.MetadataDictService.deleteById(row.metadataId).then(rsp => {

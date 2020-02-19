@@ -1,5 +1,14 @@
 <template>
     <div class="panel panel-default panel-search">
+
+        <el-row :span="24">
+            <el-col :span="8">
+                <v-sort-table  :elTableId="elTableId" ref="sortTable" :page="page" :header="header" :doSortFun="doSortFun" v-show="showSort">
+
+                </v-sort-table>
+            </el-col>
+        </el-row>
+
         <el-form :inline="true" label-width="85px" label-position="left">
 
             <el-form-item label="字段类型" prop="fieldType">
@@ -25,10 +34,10 @@
             <el-button v-if="table.metadataId" class="btn_right" type="primary" plain @click="create">
                 新增
             </el-button>
-            <el-button   v-if="table.metadataId" class="btn_left" plain>
-                排序
-            </el-button>
 
+            <el-button @click="btnSort" v-if="table.metadataId" class="btn_left" plain>
+                排序开关
+            </el-button>
             <el-button  type="priamry" plain @click="makeWebPage" v-if="table.metadataId" class="btn_left" plain>
                 生成页面
             </el-button>
@@ -37,7 +46,7 @@
 
 
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
-            <el-table-column prop='fieldOrder' label='排序' width='50'>
+            <el-table-column :sortable="true" prop='fieldOrder' label='排序' width='70'>
                 <template slot-scope='{row}'>
                     {{row.fieldOrder}}
                 </template>
@@ -47,17 +56,17 @@
 			{{row.metadataDictModel.metadataAlias}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldMemo' label='中文名称' width='120'>
+            <el-table-column :sortable="true" prop='fieldMemo' label='中文名称' width='120'>
                 <template slot-scope='{row}'><span style='color:blue'>
 			{{row.fieldMemo}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldName' label='英文名称' width='120'>
+            <el-table-column :sortable="true" prop='fieldName' label='英文名称' width='120'>
                 <template slot-scope='{row}'><span style='color:mediumvioletred'>
 			{{row.fieldName}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldType' label='字段类型' width='120'>
+            <el-table-column :sortable="true" prop='fieldType' label='字段类型' width='120'>
                 <template slot-scope='{row}'>
                     {{row.fieldType}}
                 </template>
@@ -72,7 +81,7 @@
                     {{row.fieldDecimal}}
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldIsNull' label='是否为空' width='70'>
+            <el-table-column :sortable="true" prop='fieldIsNull' label='是否为空' width='70'>
                 <template slot-scope='{row}'>
 			<span :style='row.fieldIsNull?"color:red":"color:black"'>
 				{{row.fieldIsNull?'是':'否'}}
@@ -84,33 +93,33 @@
                     {{row.fieldDefault}}
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldPk' label='是否主键' width='70'>
+            <el-table-column :sortable="true" prop='fieldPk' label='是否主键' width='70'>
                 <template slot-scope='{row}'>
 			<span :style='row.fieldPk?"color:red":"color:black"'>
 				{{row.fieldPk?'是':'否'}}
 			</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldAuto' label='自动生成' width='70'>
+            <el-table-column :sortable="true" prop='fieldAuto' label='自动生成' width='70'>
                 <template slot-scope='{row}'>
 			<span :style='row.fieldAuto?"color:red":"color:black"'>
 				{{row.fieldAuto?'是':'否'}}
 			</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldVisible' label='是否显示' width='70'>
+            <el-table-column :sortable="true" prop='fieldVisible' label='是否显示' width='70'>
                 <template slot-scope='{row}'>
 			<span :style='row.fieldVisible?"color:red":"color:black"'>
 				{{row.fieldVisible?'是':'否'}}
 			</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='displayColor' label='显示颜色' width='90'>
+            <el-table-column :sortable="true" prop='displayColor' label='显示颜色' width='90'>
                 <template slot-scope='{row}'><span style='color:blue'>
 			{{row.displayColor}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldDisplaysize' label='显示长度' width='70'>
+            <el-table-column :sortable="true" prop='fieldDisplaysize' label='显示长度' width='70'>
                 <template slot-scope='{row}'>
                     {{row.fieldDisplaysize}}
                 </template>
@@ -130,14 +139,14 @@
                     {{DICT.REFPOOL[row.refPool]}}
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldReadonly' label='是否只读' width='70'>
+            <el-table-column :sortable="true" prop='fieldReadonly' label='是否只读' width='70'>
                 <template slot-scope='{row}'>
 			<span :style='row.fieldReadonly?"color:red":"color:black"'>
 				{{row.fieldReadonly?'是':'否'}}
 			</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldIscal' label='计算字段' width='70'>
+            <el-table-column :sortable="true" prop='fieldIscal' label='计算字段' width='70'>
                 <template slot-scope='{row}'>
 			<span :style='row.fieldIscal?"color:red":"color:black"'>
 				{{row.fieldIscal?'是':'否'}}
@@ -154,12 +163,12 @@
                     {{row.fieldMax}}
                 </template>
             </el-table-column>
-            <el-table-column prop='fieldSrc' label='关联类型' width='95'>
+            <el-table-column :sortable="true" prop='fieldSrc' label='关联类型' width='95'>
                 <template slot-scope='{row}'>
                     {{DICT.FIELDSRC[row.fieldSrc]}}
                 </template>
             </el-table-column>
-            <el-table-column prop='refObject' label='关联数据' width='200'>
+            <el-table-column :sortable="true" prop='refObject' label='关联数据' width='200'>
                 <template slot-scope='{row}'>
                     {{row.refObject}}
                 </template>
@@ -174,26 +183,26 @@
                     {{row.fieldRemark}}
                 </template>
             </el-table-column>
-            <el-table-column prop='refTable' label='关联表' width='120'>
-                <template slot-scope='{row}'>
-                    {{row.refTable}}
-                </template>
-            </el-table-column>
-            <el-table-column prop='refField' label='关联字段' width='120'>
-                <template slot-scope='{row}'>
-                    {{row.refField}}
-                </template>
-            </el-table-column>
-            <el-table-column prop='refFilter' label='关联条件' width='120'>
-                <template slot-scope='{row}'>
-                    {{row.refFilter}}
-                </template>
-            </el-table-column>
-            <el-table-column prop='refDisplayID' label='关联显示字段' width='120'>
-                <template slot-scope='{row}'>
-                    {{row.refDisplayID}}
-                </template>
-            </el-table-column>
+            <!--<el-table-column prop='refTable' label='关联表' width='120'>-->
+                <!--<template slot-scope='{row}'>-->
+                    <!--{{row.refTable}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop='refField' label='关联字段' width='120'>-->
+                <!--<template slot-scope='{row}'>-->
+                    <!--{{row.refField}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop='refFilter' label='关联条件' width='120'>-->
+                <!--<template slot-scope='{row}'>-->
+                    <!--{{row.refFilter}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop='refDisplayID' label='关联显示字段' width='120'>-->
+                <!--<template slot-scope='{row}'>-->
+                    <!--{{row.refDisplayID}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
             <el-table-column width='80' label='操作' :fixed='"right"'>
                 <template slot-scope='scope'>
                     <el-button type='text' title='编辑'@click='edit(scope.row)'>
@@ -216,20 +225,18 @@
 
     </div>
 </template>
+
 <style lang="less" scoped>
     .btn_left {
-            float: left;
-            margin-right: 5px;
-            margin-right: 5px;
-
+        float: left;
+        margin-right: 5px;
+        margin-right: 5px;
     }
 
     .btn_right {
 
-            float: right;
-            margin-right: 20px;
-
-
+        float: right;
+        margin-right: 20px;
     }
 </style>
 
@@ -285,6 +292,29 @@
         },
         data() {
             return {
+                elTableId: 'elTableIdField',
+                doSortMetadataField: this.$api.platform.MetadataTableService.doSortMetadataField,
+
+                showSort:false,
+                header: [
+                    {
+                        label: 'ID',
+                        prop: 'fieldId'
+                    },
+                    {
+                        label: '排序',
+                        prop: 'fieldOrder'
+                    },
+                    {
+                        label: '中文名称',
+                        prop: 'fieldMemo'
+                    },
+                    {
+                        label: '英文名称',
+                        prop: 'fieldName'
+                    },
+
+                ],
 
                 DICT: {
                     "FIELDFORMAT": {
@@ -326,7 +356,32 @@
             }
         },
         methods: {
+            btnSort() {
+                this.showSort = !this.showSort
+                if (this.showSort) {
+                    this.$refs.table.calQueryStartLimt(this.page.query)
 
+                    this.$refs.sortTable.show()
+                }
+            },
+
+            // sortedData.forEach((item, index, array) => {
+            //     ids.push(item[this.header[0].prop])
+            // })
+            doSortFun(sortedData) {
+
+                let ids = [] // debugger
+                for(let item of  sortedData){
+                    ids.push(item[this.header[0].prop])
+                }
+                let params = {
+                    ids: ids.join(",")
+                }
+                this.doSortMetadataField(params).then(
+                    rsp => {
+                        this.$msgJsonResult(rsp)
+                    })
+            },
             onFormSaved() {
                 this.$refs.formDiag.hide();
                 this.$nextTick(this.search);
@@ -336,16 +391,18 @@
             },
             search() {
                 this.getSearchParams();
-                this.$refs.table.currentPage = 1;
                 this.$refs.table.load( );
             },
             cancel() {
                 this.dateRangeType = null;
                 this.dateRange = [];
-                this.page.query.param = {
-
+                this.page.query = {
+                    orderBys: 'fieldOrder|asc',
+                    param: {
+                        metadataId: this.table.metadataId
+                    }
                 };
-                this.page.query.param.metadataId = this.table.metadataId
+
                 this.search();
             },
             onDataloaded(rsp) {
@@ -377,8 +434,8 @@
             view(row) {
                 this.$refs.formDiagView.show({id: row.id});
             },
-            toggleStatus(row) {
 
+            toggleStatus(row) {
             },
 
             makeWebPage(row) {

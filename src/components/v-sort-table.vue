@@ -1,9 +1,8 @@
 <template>
     <div>
         <!-- row-key="code"  :default-sort="{prop: 'order', order: 'ascending'}"-->
-        <el-table ref="multipleTable" @selection-change="handleSelectionChange"
-                  :data="tableData" v-loading="loading" border align="left">
-            <!--<el-table-column type="selection" width="45" :fixed="'left'"></el-table-column>-->
+        <span style="border: solid 1px;margin-left: 220px">排序</span>
+        <el-table :id="elTableId" :data="tableData" v-loading="loading" border align="left">
 
             <el-table-column show-overflow-tooltip v-for="(item, index) in title"
                              :key="`header_${index}`" :prop="title[index].prop" :label="item.label">
@@ -11,20 +10,22 @@
                     <p>{{scope.row[item.prop]}}</p>
                 </template>
             </el-table-column>
+
         </el-table>
-        <span style="border: solid 1px;">请拖拽排序</span>
-        <span style="margin-left: 130px">
+        <span style="margin-left: 180px">
             <el-button type="primary" @click="okBtnClick">确定</el-button>
             <el-button type="default" @click="closeBtnClick">取消</el-button>
         </span>
+        <span style="border: solid 1px;">请拖拽排序</span>
+        <slot></slot>
     </div>
 </template>
 
 <style lang="less" scoped>
     span {
         margin-left: 10px;
-        height:40px;
-        color:red;
+        height: 40px;
+        color: red;
         text-align: center;
         line-height: 2px;
     }
@@ -37,6 +38,11 @@
     export default {
         components: {Sortable},
         props: {
+            /*使用控件者必须保证同页面下不重复*/
+            elTableId:{
+                type: String ,
+                default : "el-table"
+            },
             doSortFun: {
                 type: Function,
                 default: null,
@@ -69,7 +75,7 @@
         data() {
 
             return {
-                //doSortMetadataDict: this.$api.platform.MetadataTableService.doSortMetadataDict,
+
                 multipleSelection: [],
                 loading: false,
                 title: [],
@@ -85,31 +91,18 @@
                     this.doCloseFun()
                 }
             },
+
             okBtnClick() {
                 if(this.doSortFun){
                     this.doSortFun(this.sortedData)
+
                 }
                 if(this.doCloseFun){
                     this.doCloseFun()
                 }
-                // let ids = [] // debugger
-                // this.getSortedData().forEach((item, index, array) => {
-                //     ids.push(item[this.header[0].prop])
-                // })
-                //
-                // this.$message(JSON.stringify(ids))
-                // let params = {
-                //     subsysId: this.page.query.param.subsysId,
-                //     ids: ids.join(",")
-                // }
-                // this.doSortMetadataDict(params).then(
-                //     rsp => {
-                //         this.$msgJsonResult(rsp)
-                //     })
+
             },
-            handleSelectionChange(val) {
-                // this.multipleSelection = val;
-            },
+
             getSortedData() {
                 return this.sortedData
             },
@@ -122,7 +115,9 @@
                 //         _this.tableData.splice(newIndex, 0, currRow)
                 //     }
                 // })
-                const tbody = document.querySelector('.el-table__body-wrapper tbody')
+                //const tbody = document.querySelector('.el-table__body-wrapper tbody')
+                let elTable = document.querySelector('#' + this.elTableId)
+                const tbody = elTable.querySelector('.el-table__body-wrapper tbody')
                 const _this = this
                 Sortable.create(tbody, {
                     onEnd({newIndex, oldIndex}) {
@@ -133,32 +128,33 @@
                 })
             },
             load() {
+                this.tableData.splice(0, this.tableData.length);
                 let params = _.cloneDeep(this.page.query)
-                params.start=this.page.start
-                params.limit=this.page.limit
-
                 params['_openLoading'] = false;
-                this.page
-                    .getData(params)
-                    .then(rsp => {
-                        this.tableData = rsp.data
-                        //this.$emit("dataloaded", rsp);
-                    })
-                    .catch(err => {
-                        this.showLoading = false;
-                        this.tableData.splice(0, this.tableData.length);
 
-                    });
+                this.page.getData(params).then(rsp => {
+                    this.tableData = rsp.data
+                    //this.$emit("dataloaded", rsp);
+                })
+                .catch(err => {
+                    this.showLoading = false;
+                    this.tableData.splice(0, this.tableData.length);
+
+                });
             },
             init() {
                 this.rowDrop()
-                //this.sortedData = _.cloneDeep(this.tableData)
             },
+            show(){
+                this.init()
+                this.load()
+            }
         },
 
         mounted() {
             this.$on("init", this.init)
-            this.init()
+            //this.init()
+            //this.$message("load sort table")
         }
 
     }

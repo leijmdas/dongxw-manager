@@ -1,11 +1,6 @@
 <template>
     <div>
 
-        <!--<el-button @click="showSort">排序值</el-button>-->
-        <!--<el-transfer v-model="value" :data="data"-->
-        <!--:titles="['表名', '选择']" style="text-align: left; display: inline-block">-->
-        <!--<el-button class="transfer-footer" slot="right-footer" size="small">保存顺序</el-button>-->
-        <!--</el-transfer>-->
         <dict-manage ref="dictMng" v-model="table"></dict-manage>
 
         <el-tabs v-model="activeName" @tab-click="handleTabClick">
@@ -33,13 +28,13 @@
 
 <script>
     import DictManage from './DictManage'
+
     import FieldManage from './FieldManage'
     import TableDataForm from './TableDataForm'
     import CheckDictForm from './CheckDictForm'
-    import Sortable from 'sortablejs'
 
     export default {
-        components: {  Sortable, CheckDictForm, TableDataForm, DictManage, FieldManage},
+        components: {  CheckDictForm, TableDataForm, DictManage, FieldManage},
         data() {
             // const generateData = _ => {
             //     const data = [];
@@ -54,6 +49,17 @@
             // };
             return {
 
+                // page:{
+                //     getData: this.$api.platform.MetadataFieldService.query,
+                //     query:{
+                //         orderBys: "fieldOrder|asc",
+                //         param: {subsysId: 0, isDeleted: false, metadataId: 320},
+                //         dateRanges: {},
+                //         limit: 20,
+                //         start: 0,
+                //         _openLoading: false,
+                //     }
+                // },
                 //data: generateData(),
                 //value: [1, 4],
                 enableFieldForm: true,
@@ -68,7 +74,6 @@
         watch: {
             table: {
                 handler: function (newVal, oldVal) {
-                    //console.log("Manage rev from tableMng: " + this.table.metadataAlias)
                 },
                 deep: true, //immediate:true ,
             },
@@ -76,7 +81,6 @@
         methods: {
 
             init(options = {}) {
-                //this.search();
             },
             handleTabClick(tab, event) {
                 // debugger

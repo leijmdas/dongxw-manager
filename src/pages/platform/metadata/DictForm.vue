@@ -106,7 +106,7 @@
 <script>
 
 
-    //import SubsysSelect from '@/components/widgets/platform/SubsysSelect.vue';
+    import SubsysSelect from '@/components/widgets/platform/SubsysSelect.vue';
 
     const defaultEntity = {
         metadataId: null,
@@ -137,7 +137,7 @@
 
 
     export default {
-        components: {},
+        components: {SubsysSelect},
         data() {
             return {
                 //ppp: '',
