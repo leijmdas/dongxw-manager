@@ -42,7 +42,7 @@
 
             <el-button plain @click="exportRecords">导出XLS</el-button>
             <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
-            <el-button type="primary" v-show="productId>0" plain @click="createMulti">新增多个</el-button>
+            <el-button type="primary" v-show="productId>0" plain @click="createMulti">多选新增</el-button>
 
         </v-toolbar>
 
@@ -51,19 +51,14 @@
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
-            <!--<el-table-column prop="prdFlag" label="存货分类" width="100">-->
-                <!--<template slot-scope="{row}">-->
-                        <!--<span :style="'style:red'">-->
-                            <!--{{row.productType.prdFlag==null?'-':$dongxwDict.getText(row.productType.prdFlag,$dongxwDict.store.STORE_TYPE)}}</span>-->
-                <!--</template>-->
-            <!--</el-table-column>-->
+
             <el-table-column prop="productId" label="产品" width="80">
                 <template slot-scope="{row}">
                    <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="parentId" label="大类" width="70">
+            <el-table-column prop="parentId" label="大类" width="90">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.productType.name :'-' }}
                 </template>
@@ -111,9 +106,9 @@
                 </template>
             </el-table-column>
             <el-table-column prop="eachQty" label="每个用量" width="80"></el-table-column>
-            <el-table-column prop="pieces" label="件数" width="60"></el-table-column>
+            <el-table-column prop="pieces" label="件数" width="80"></el-table-column>
             <el-table-column prop="qty" label="用量" width="80"></el-table-column>
-            <el-table-column prop="unit" label="单位" width="70">
+            <el-table-column prop="unit" label="单位" width="80">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.unit :'-' }}
                 </template>
@@ -133,10 +128,11 @@
                     <el-button type="text" title="编辑" @click="edit(scope.row)">
                         <i class="el-icon-edit"></i>
                     </el-button>
-                    <el-button :disabled="scope.row.source===0"  :style="scope.row.source===1?'color:#13ce66':'color:#ff4949'"
-                               type="default" title="组件" @click="editCom(scope.row)">       组件
+                    <el-button :style="scope.row.source?'color:#13ce66':'color:#ff4949'"
+                               type="default" title="组件" :disabled="!scope.row.source"
+                               @click="editCom(scope.row)"> 组件
                     </el-button>
-                    <el-button type="text"  style="color:red" @click="del(scope.row,scope.$index)" title="删除"  >
+                    <el-button type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除">
                         <i class="el-icon-delete red"></i>
                     </el-button>
                 </template>

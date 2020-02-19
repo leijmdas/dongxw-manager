@@ -28,18 +28,11 @@
                 <span style="color:red">删除所有</span>
             </el-button>
 
-            <el-button   v-if="table.metadataId" class="btn_right" plain>
-                DB导入
-            </el-button>
-            <el-button v-if="table.metadataId" class="btn_right" type="primary" plain @click="create">
-                新增
-            </el-button>
+            <el-button v-if="table.metadataId" class="btn_right" plain> DB导入</el-button>
+            <el-button v-if="table.metadataId" class="btn_right" type="primary" plain @click="create"> 新增</el-button>
 
-            <el-button @click="btnSort" v-if="table.metadataId" class="btn_left" plain>
-                排序开关
-            </el-button>
-            <el-button  type="priamry" plain @click="makeWebPage" v-if="table.metadataId" class="btn_left" plain>
-                生成页面
+            <el-button @click="btnSort" v-if="table.metadataId" class="btn_left" plain> 排序</el-button>
+            <el-button type="priamry" plain @click="makeWebPage" v-if="table.metadataId" class="btn_left" plain> 生成页面
             </el-button>
 
         </el-form>
@@ -81,7 +74,7 @@
                     {{row.fieldDecimal}}
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop='fieldIsNull' label='是否为空' width='70'>
+            <el-table-column :sortable="true" prop='fieldIsNull' label='是否为空' width='90'>
                 <template slot-scope='{row}'>
 			<span :style='row.fieldIsNull?"color:red":"color:black"'>
 				{{row.fieldIsNull?'是':'否'}}
@@ -93,60 +86,62 @@
                     {{row.fieldDefault}}
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop='fieldPk' label='是否主键' width='70'>
+            <el-table-column :sortable="true" prop='fieldPk' label='主键' width='70'>
                 <template slot-scope='{row}'>
 			<span :style='row.fieldPk?"color:red":"color:black"'>
 				{{row.fieldPk?'是':'否'}}
 			</span>
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop='fieldAuto' label='自动生成' width='70'>
+            <el-table-column :sortable="true" prop='fieldAuto' label='自动' width='70'>
                 <template slot-scope='{row}'>
-			<span :style='row.fieldAuto?"color:red":"color:black"'>
-				{{row.fieldAuto?'是':'否'}}
-			</span>
+                    <span :style='row.fieldAuto?"color:red":"color:black"'>
+                        {{row.fieldAuto?'是':'否'}}
+                    </span>
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop='fieldVisible' label='是否显示' width='70'>
-                <template slot-scope='{row}'>
-			<span :style='row.fieldVisible?"color:red":"color:black"'>
-				{{row.fieldVisible?'是':'否'}}
-			</span>
-                </template>
-            </el-table-column>
-            <el-table-column :sortable="true" prop='displayColor' label='显示颜色' width='90'>
-                <template slot-scope='{row}'><span style='color:blue'>
-			{{row.displayColor}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column :sortable="true" prop='fieldDisplaysize' label='显示长度' width='70'>
-                <template slot-scope='{row}'>
-                    {{row.fieldDisplaysize}}
-                </template>
-            </el-table-column>
-            <el-table-column prop='fieldFormat' label='显示格式' width='80'>
-                <template slot-scope='{row}'>
-                    {{DICT.FIELDFORMAT[row.fieldFormat]}}
-                </template>
-            </el-table-column>
-            <el-table-column prop='fieldComponent' label='页面控件' width='80'>
-                <template slot-scope='{row}'>
-                    {{DICT.FIELDCOMPONENT[row.fieldComponent]}}
-                </template>
-            </el-table-column>
-            <el-table-column prop='refPool' label='页面弹出框' width='100'>
-                <template slot-scope='{row}'>
-                    {{DICT.REFPOOL[row.refPool]}}
-                </template>
-            </el-table-column>
-            <el-table-column :sortable="true" prop='fieldReadonly' label='是否只读' width='70'>
-                <template slot-scope='{row}'>
+            <el-table-column prop='displayFormat' label='显示信息' align="center">
+                        <el-table-column :sortable="true" prop='fieldVisible' label='是否显示' width='100'>
+                            <template slot-scope='{row}'>
+                                <span :style='row.fieldVisible?"color:red":"color:black"'>
+                                    {{row.fieldVisible?'是':'否'}}
+                                </span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column :sortable="true" prop='displayColor' label='颜色' width='80'>
+                            <template slot-scope='{row}'><span style='color:blue'>
+		                    	{{row.displayColor}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column :sortable="true" prop='fieldDisplaysize' label='长度' width='80'>
+                            <template slot-scope='{row}'>
+                                {{row.fieldDisplaysize}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop='fieldFormat' label='格式' width='80'>
+                            <template slot-scope='{row}'>
+                                {{DICT.FIELDFORMAT[row.fieldFormat]}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop='fieldComponent' label='控件' width='80'>
+                            <template slot-scope='{row}'>
+                                {{DICT.FIELDCOMPONENT[row.fieldComponent]}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop='refPool' label='弹出框' width='100'>
+                            <template slot-scope='{row}'>
+                                {{DICT.REFPOOL[row.refPool]}}
+                            </template>
+                        </el-table-column>
+                    </el-table-column>
+                    <el-table-column :sortable="true" prop='fieldReadonly' label='只读' width='80'>
+                        <template slot-scope='{row}'>
 			<span :style='row.fieldReadonly?"color:red":"color:black"'>
 				{{row.fieldReadonly?'是':'否'}}
 			</span>
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop='fieldIscal' label='计算字段' width='70'>
+            <el-table-column :sortable="true" prop='fieldIscal' label='计算字段' width='100'>
                 <template slot-scope='{row}'>
 			<span :style='row.fieldIscal?"color:red":"color:black"'>
 				{{row.fieldIscal?'是':'否'}}
@@ -163,20 +158,22 @@
                     {{row.fieldMax}}
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop='fieldSrc' label='关联类型' width='95'>
-                <template slot-scope='{row}'>
-                    {{DICT.FIELDSRC[row.fieldSrc]}}
-                </template>
-            </el-table-column>
-            <el-table-column :sortable="true" prop='refObject' label='关联数据' width='200'>
-                <template slot-scope='{row}'>
-                    {{row.refObject}}
-                </template>
-            </el-table-column>
-            <el-table-column prop='refParameter' label='关联参数' width='60'>
-                <template slot-scope='{row}'>
-                    {{row.refParameter}}
-                </template>
+            <el-table-column prop='displayFormat' label='关联' align="center">
+                <el-table-column :sortable="true" prop='fieldSrc' label='关联类型' width='120'>
+                    <template slot-scope='{row}'>
+                        {{DICT.FIELDSRC[row.fieldSrc]}}
+                    </template>
+                </el-table-column>
+                <el-table-column :sortable="true" prop='refObject' label='关联数据' width='240'>
+                    <template slot-scope='{row}'>
+                        {{row.refObject}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop='refParameter' label='关联参数' width='120'>
+                    <template slot-scope='{row}'>
+                        {{row.refParameter}}
+                    </template>
+                </el-table-column>
             </el-table-column>
             <el-table-column prop='fieldRemark' label='说明' width='64'>
                 <template slot-scope='{row}'>

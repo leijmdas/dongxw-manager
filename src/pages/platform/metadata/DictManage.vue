@@ -10,9 +10,7 @@
         </el-row>
 
         <el-form :inline="true" label-width="85px" label-position="left">
-            <el-button @click="btnSort" v-if="table.metadataId" class="btn_leftright" plain>
-                排序开关
-            </el-button>
+            <el-button @click="btnSort" v-if="table.metadataId" class="btn_leftright" plain> 排序</el-button>
 
             <el-form-item label="子系统" prop="subsysId">
                 <subsys-select @change="search" v-model="page.query.param.subsysId" :clearable="true"></subsys-select>

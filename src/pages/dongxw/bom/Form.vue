@@ -55,7 +55,7 @@
                                     <el-switch style="margin-left: 90px;margin-top: 5px" v-model="entity.source"
                                                active-color="#13ce66" inactive-color="#ff4949"
                                                active-text="有组件" inactive-text="无组件"
-                                               :active-value=1 :inactive-value=0>
+                                               :active-value=true :inactive-value=false>
                                     </el-switch>
                                 </el-col>
                                 <el-col :span="8" >

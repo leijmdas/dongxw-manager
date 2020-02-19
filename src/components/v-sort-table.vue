@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- row-key="code"  :default-sort="{prop: 'order', order: 'ascending'}"-->
-        <span style="border: solid 1px;margin-left: 220px">排序</span>
+        <span style="border: solid 1px;margin-left: 220px">排序功能</span>
         <el-table :id="elTableId" :data="tableData" v-loading="loading" border align="left">
 
             <el-table-column show-overflow-tooltip v-for="(item, index) in title"
@@ -13,7 +13,7 @@
 
         </el-table>
         <span style="margin-left: 180px">
-            <el-button type="primary" @click="okBtnClick">确定</el-button>
+            <el-button type="primary" @click="okBtnClick">保存</el-button>
             <el-button type="default" @click="closeBtnClick">取消</el-button>
         </span>
         <span style="border: solid 1px;">请拖拽排序</span>

@@ -71,7 +71,7 @@
 
             <el-button v-if="!onlyQuery" plain @click="exportRecords">导出XLS</el-button>
             <el-button v-if="!onlyQuery" type="primary" plain @click="create">新增</el-button>
-            <el-button v-if="onlyQuery" type="primary" plain @click="multiSel(false)">确定多选</el-button>
+            <el-button v-if="onlyQuery" type="primary" plain @click="multiSele(false)">保存</el-button>
             <el-button v-if="onlyQuery" plain @click="multiSel(true)">关闭</el-button>
 
 
@@ -238,7 +238,7 @@
             getSelectedRows(){
                 return this.$refs.table.getSelectedRows()
             },
-            multiSel(onlyClose) {
+            multiSele(onlyClose) {
                  if (this.closeDlg) {
                     this.closeDlg(onlyClose)
                 }
