@@ -28,11 +28,11 @@
                 <span style="color:red">删除所有</span>
             </el-button>
 
-            <el-button v-if="table.metadataId" class="btn_right" plain> DB导入</el-button>
-            <el-button v-if="table.metadataId" class="btn_right" type="primary" plain @click="create"> 新增</el-button>
+           <el-button v-if="table.metadataId" class="btn_right" type="primary" plain @click="create">新增</el-button>
+            <el-button  v-if="table.metadataId" @click="dbImportTableFields"  class="btn_right" plain> DB导入</el-button>
 
             <el-button @click="btnSort" v-if="table.metadataId" class="btn_left" plain> 排序</el-button>
-            <el-button type="priamry" plain @click="makeWebPage" v-if="table.metadataId" class="btn_left" plain> 生成页面
+            <el-button type="priamry" plain @click="makeWebPage" v-if="table.metadataId" class="btn_left" plain>生成页面
             </el-button>
 
         </el-form>
@@ -435,6 +435,16 @@
             toggleStatus(row) {
             },
 
+            dbImportTableFields() {
+
+                this.$api.platform.MetadataTableService.dbImportTableFields(this.table.metadataId).then(rsp => {
+                    this.$msgJsonResult(rsp);
+                    if (rsp.code == 0) {
+                        this.search();
+
+                    }
+                });
+            },
             makeWebPage(row) {
                 let params = {
                     param: {

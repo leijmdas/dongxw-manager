@@ -74,4 +74,13 @@ export default {
         })
     },
 
+
+    //@PathVariable("id")
+    dbImportTableFields(metadataId) {
+        return request({
+            url: '/api/sys/metadata/table/dbImportTableFields/' + metadataId,
+            method: 'POST'
+        })
+    },
+
 }

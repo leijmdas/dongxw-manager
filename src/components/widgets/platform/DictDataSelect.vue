@@ -74,6 +74,7 @@
                 this.loading = true
                 this.$api.platform.DictDataService.query(
                     {
+                        orderBys: "code|asc",
                         param:{
                             typeCode : this.typeCode
                         }

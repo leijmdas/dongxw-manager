@@ -52,18 +52,18 @@
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
 
-            <el-table-column prop="productId" label="产品" width="80">
+            <el-table-column :sortable="true" prop="productId" label="产品" width="80">
                 <template slot-scope="{row}">
                    <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="parentId" label="大类" width="90">
+            <el-table-column :sortable="true" prop="bigType" label="大类" width="90">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.productType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="productSubType" label="小类" width="80">
+            <el-table-column :sortable="true" prop="smallType" label="小类" width="80">
                 <template slot-scope="{row}">
                     {{ row.childRm ? row.childRm.productSubType.name :'-' }}
                 </template>
@@ -78,12 +78,12 @@
                     {{ row.childRm? row.childRm.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column  prop="remark" label="规格型号" width="100">
+            <el-table-column   :sortable="true" prop="remark" label="规格型号" width="100">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.remark :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="color" label="颜色" width="120">
+            <el-table-column  :sortable="true" prop="color" label="颜色" width="120">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.color :'-' }}
                 </template>
@@ -100,26 +100,26 @@
             <!--<el-table-column prop="knifeQty" label="刀数" width="60"></el-table-column>-->
             <!--<el-table-column prop="length" label="长封度" width="70"></el-table-column>-->
 
-            <el-table-column prop="lossRate" label="损耗" width="60">
+            <el-table-column  :sortable="true" prop="lossRate" label="损耗" width="80">
                 <template slot-scope="{row}">
                     {{row.lossRate}}%
                 </template>
             </el-table-column>
-            <el-table-column prop="eachQty" label="每个用量" width="80"></el-table-column>
-            <el-table-column prop="pieces" label="件数" width="80"></el-table-column>
-            <el-table-column prop="qty" label="用量" width="80"></el-table-column>
-            <el-table-column prop="unit" label="单位" width="80">
+            <el-table-column  :sortable="true" prop="eachQty" label="每个用量" width="100"></el-table-column>
+            <el-table-column  :sortable="true"  prop="pieces" label="件数" width="80"></el-table-column>
+            <el-table-column  :sortable="true" prop="qty" label="用量" width="80"></el-table-column>
+            <el-table-column  :sortable="true" prop="unit" label="单位" width="80">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.unit :'-' }}
                 </template>
             </el-table-column>
 
-            <el-table-column prop="price" label="单价" width="80"></el-table-column>
-            <el-table-column prop="money" label="金额" width="100"></el-table-column>
+            <el-table-column  :sortable="true" prop="price" label="单价" width="80"></el-table-column>
+            <el-table-column  :sortable="true" prop="money" label="金额" width="100"></el-table-column>
 
             <el-table-column :sortable="true" prop="createDate" label="建档时间" width="120">
             </el-table-column>
-            <el-table-column prop="createByName" label="建档人">
+            <el-table-column  :sortable="true" prop="createByName" label="建档人">
             </el-table-column>
 
             <el-table-column width="140" label="操作" :fixed="'right'">

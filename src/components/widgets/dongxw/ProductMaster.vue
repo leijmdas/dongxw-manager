@@ -86,53 +86,53 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="customerId" label="客户名称" width="100">
+            <el-table-column :sortable="true" prop="customerId" label="客户名称" width="100">
                 <template slot-scope="{row}">
                     {{ row.customer?row.customer.custName:'-'}}
                 </template>
             </el-table-column>
 
-            <el-table-column prop="code" label="客款号" width="100">
+            <el-table-column :sortable="true" prop="code" label="客款号" width="100">
                 <template slot-scope="{row}">
                    <span   style="color:green"> {{row.code }} </span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="epCode" label="EP款号" width="100"></el-table-column>
+            <el-table-column :sortable="true" prop="epCode" label="EP款号" width="100"></el-table-column>
 
-            <el-table-column prop="parentId" label="产品大类" width="120">
+            <el-table-column :sortable="true" prop="parentId" label="产品大类" width="120">
                 <template slot-scope="{row}">
                     {{ row.productType? row.productType.code :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="productSubType" label="产品小类" width="160">
+            <el-table-column :sortable="true" prop="productSubType" label="产品小类" width="160">
                 <template slot-scope="{row}">
                     {{ row.productSubType? row.productSubType.code :'-' }}
                 </template>
             </el-table-column>
 
             <!--<el-table-column prop="name" label="产品名称" width="100"></el-table-column>-->
-            <el-table-column prop="remark" label="产品描述" width="245"></el-table-column>
+            <el-table-column :sortable="true" prop="remark" label="产品描述" width="245"></el-table-column>
 
 
-            <el-table-column prop="color" label="颜色" width="160">
+            <el-table-column :sortable="true" prop="color" label="颜色" width="160">
             </el-table-column>
-            <el-table-column prop="size" label="尺寸" width="160">
+            <el-table-column :sortable="true" prop="size" label="尺寸" width="160">
             </el-table-column>
-            <el-table-column prop="unit" label="单位" width="60"></el-table-column>
+            <el-table-column :sortable="true" prop="unit" label="单位" width="60"></el-table-column>
 
             <el-table-column prop="barCode" label="条码" width="120">
             </el-table-column>
 <!--            <el-table-column prop="upcA" label="UPC-A" width="150">-->
 <!--            </el-table-column>-->
 
-            <el-table-column prop="createDate" label="建档时间" width="150">
+            <el-table-column :sortable="true" prop="createDate" label="建档时间" width="150">
             </el-table-column>
 
-            <el-table-column prop="createByName" label="建档人" width="80">
+            <el-table-column :sortable="true" prop="createByName" label="建档人" width="80">
             </el-table-column>
 
-            <el-table-column prop="status" label="状态" width="60">
+            <el-table-column :sortable="true" prop="status" label="状态" width="60">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
                 </template>
@@ -146,7 +146,7 @@
             <el-table-column prop="obGw" label="外箱毛重(kg)" width="100"></el-table-column>
             <el-table-column prop="obNw" label="外箱净重(kg)" width="100"></el-table-column>
             <el-table-column prop="obSize" label="外箱尺寸"></el-table-column>
-            <el-table-column prop="cbm" label="CBM">
+            <el-table-column :sortable="true" prop="cbm" label="CBM">
                 <template slot-scope="{row}">
                     {{calCbm(row.obSize)}}
                 </template>

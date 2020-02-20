@@ -44,7 +44,7 @@
 
 
     export default {
-        components: {    },
+        components: {},
         props: {
             enableView: {
                 type: Boolean,
@@ -113,8 +113,8 @@
 
         methods: {
             checkDbSame(row) {
-                return row.dictFieldName == row.dbFieldName
-                && (row.dataType == "int" ? "integer" : row.dataType) == row.fieldType.toLowerCase()
+                return row.dictFieldName.trim() === row.dbFieldName.trim()
+                && (row.dataType.trim().toLowerCase() === row.fieldType.trim().toLowerCase())
             },
             onDataloaded(rsp) {
 
