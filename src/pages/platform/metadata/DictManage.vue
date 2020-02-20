@@ -31,9 +31,10 @@
                 <el-button @click="cancel">取消</el-button>
             </el-form-item>
 
-            <el-button type="primary" class="btn_right" plain @click="create">新增</el-button>
-            <el-button  plain class="btn_right"> 导入</el-button>
-            <el-button class="btn_right" plain > 导出</el-button>
+            <el-button @click="create" type="primary" class="btn_right" plain >新增</el-button>
+            <el-button class="btn_right" plain> 导出</el-button>
+            <el-button class="btn_right" plain> 导入</el-button>
+            <el-button @click="dbImportTables" class="btn_right" plain> DB导入</el-button>
         </el-form>
 
         <v-table :pageSize="5" :selection="false" ref="table" :page="page" :table-minheight="200"
@@ -185,7 +186,16 @@
             }
         },
         methods: {
+            dbImportTables (){
 
+                this.$api.platform.MetadataTableService.dbImportTables(this.page.query.param.subsysId).then(rsp => {
+                    this.$msgJsonResult(rsp);
+                    if (rsp.code === 0) {
+                        this.search();
+
+                    }
+                });
+            },
             btnSort() {
                 this.showSort = !this.showSort
                 if (this.showSort) {
