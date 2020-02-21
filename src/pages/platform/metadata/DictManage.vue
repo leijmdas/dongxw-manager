@@ -33,9 +33,9 @@
             </el-form-item>
 
             <el-button @click="create" type="primary" class="btn_right" plain>新增</el-button>
-            <el-button @click="dbExportTables" class="btn_right" plain> 导出</el-button>
+            <el-button @click="dbExportTables"  class="btn_right" plain> 导出</el-button>
             <el-button @click="importDictTable" class="btn_right" plain>导入</el-button>
-            <el-button @click="dbImportTables" class="btn_right" plain>DB导入</el-button>
+            <el-button @click="dbImportTables"  class="btn_right" plain>DB导入</el-button>
         </el-form>
 
         <v-table :pageSize="5" :selection="false" :multi="true" ref="table" :page="page" :table-minheight="200"
@@ -147,15 +147,20 @@
         },
         computed: {
             table: {
-                get () {
+                get() {
                     return this.value
                 },
-                set (val) {
+                set(val) {
                     this.$emit('input', val)
                 }
-            }
+            },
+
         },
 
+        watch:{
+
+
+        },
         data() {
             return {
                 doSortMetadataDict: this.$api.platform.MetadataTableService.doSortMetadataDict,
@@ -195,8 +200,14 @@
         },
         methods: {
             dbExportTables() {
-                let f = () => {
+                let rows = this.$refs.table.getSelectedRows().map(row => row.metadataId)
+                if (rows.length == 0) {
+                    this.$message("请选择表!")
+                    return
                 }
+                let f = () => this.$api.platform.MetadataTableService.exportDictTables(rows.join()).then(rsp => {
+
+                })
                 this.$myconfirm("确定要导出吗?", f)
             },
             dbImportTables() {

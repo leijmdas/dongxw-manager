@@ -105,11 +105,11 @@ export default {
     /**
      * 导出dict
      */
-    exportDictTables(data) {
+
+    exportDictTables(metadataIds) {
         return request({
-            url: '/api/sys/metadata/table/exportDictTables',
+            url: '/api/sys/metadata/table/exportDictTables/' + metadataIds,
             method: 'POST',
-            data,
             responseType: 'blob'
         })
     },

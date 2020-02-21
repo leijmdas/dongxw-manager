@@ -227,11 +227,11 @@
                 this.page.query.orderBys = command
                 this.search()
             },
-            getSelectedRows(){
+            getSelectedRows() {
                 return this.$refs.table.getSelectedRows()
             },
             multiSele(onlyClose) {
-                 if (this.closeDlg) {
+                if (this.closeDlg) {
                     this.closeDlg(onlyClose)
                 }
             },
