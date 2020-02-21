@@ -1,112 +1,110 @@
 <template>
     <div class="panel panel-default panel-search">
-
-        <el-row :span="24">
-            <el-col :span="8">
-                <v-sort-table ref="sortTable" :page="page" :header="header" :doSortFun="doSortFun" v-show="showSort">
-
+        <el-container>
+            <el-aside width="22%" v-show="showSort">
+                <v-sort-table ref="sortTable" :page="page" :header="header" :doSortFun="doSortFun">
                 </v-sort-table>
-            </el-col>
-        </el-row>
+            </el-aside>
+            <el-main  >
+                <el-form :inline="true" label-width="85px" label-position="left">
+                    <el-button @click="btnSort" v-if="table.metadataId" class="btn_leftright" plain> 排序</el-button>
+
+                    <el-form-item label="子系统" prop="subsysId">
+                        <subsys-select @change="search" v-model="page.query.param.subsysId"
+                                       :clearable="true"></subsys-select>
+                    </el-form-item>
+
+                    <el-form-item label="元数据类型" prop="metadataType">
+                        <el-select @change="search" v-model="page.query.param.metadataType" :clearable="true">
+                            <el-option v-for="t in $dict.store.METADATA_TYPE" :key="t[0]" :value="t[0]" :label="t[1]">
+                            </el-option>
+                        </el-select>
+
+                    </el-form-item>
+                    <el-form-item label="元数据名称" prop="metadataName">
+                        <el-input placeholder="元数据名称" v-model="page.query.param.metadataName"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                        <el-button @click="cancel">取消</el-button>
+                    </el-form-item>
+
+                    <el-button @click="create" type="primary" class="btn_right" plain>新增</el-button>
+                    <el-button @click="exportDictTables" class="btn_right" plain> 导出</el-button>
+                    <el-button @click="importDictTable" class="btn_right" plain>导入</el-button>
+                    <el-button @click="dbImportTables" class="btn_right" plain>DB导入</el-button>
+                </el-form>
+
+                <v-table :pageSize="5" :selection="false" :multi="true" ref="table" :page="page" :table-minheight="200"
+                         :dblclick="edit" :click="clickTableRow" @dataloaded="onDataloaded">
+                    <!--<el-table-column prop="seq" label="序号" width="50">-->
+                    <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
+                    <!--</el-table-column>-->
+                    <el-table-column :sortable="true" prop="metadataOrder" label="排序" width="70"></el-table-column>
+                    <el-table-column width="120" label="元数据操作">
+
+                        <template slot-scope="scope">
+                            <el-button type="text" title="建表" @click="makeDbTable(scope.row)">
+                                建表
+                            </el-button>
+                            <el-button type="text" @click="dropDbTable(scope.row)" title="删表">
+                                <span style="color:red">删表</span>
+                            </el-button>
+                        </template>
+                    </el-table-column>
 
 
-        <el-form :inline="true" label-width="85px" label-position="left">
-            <el-button @click="btnSort" v-if="table.metadataId" class="btn_leftright" plain> 排序</el-button>
+                    <el-table-column :sortable="true" prop="metadataAlias" label="中文名称" width="120">
+                        <template slot-scope="{row}">
+                            <span style="color:blue">{{row.metadataAlias}}</span>
+                        </template>
+                    </el-table-column>
 
-            <el-form-item label="子系统" prop="subsysId">
-                <subsys-select @change="search" v-model="page.query.param.subsysId" :clearable="true"></subsys-select>
-            </el-form-item>
+                    <el-table-column :sortable="true" prop="metadataName" label="元数据名称" width="120">
+                        <template slot-scope="{row}">
+                            <span style="color:mediumvioletred">{{row.metadataName}}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="metadataType" label="元数据类型" width="100">
+                        <template slot-scope="{row}">
+                            {{$dict.getText(row.metadataType,$dict.store.METADATA_TYPE)}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column :sortable="true" prop="metadataAutocreate" label="允许建表" width="100">
+                        <template slot-scope="{row}">
+                            {{row.metadataAutocreate?'是':'否'}}
+                        </template>
+                    </el-table-column>
 
-            <el-form-item label="元数据类型" prop="metadataType">
-                <el-select @change="search"  v-model="page.query.param.metadataType" :clearable="true">
-                    <el-option v-for="t in $dict.store.METADATA_TYPE" :key="t[0]" :value="t[0]" :label="t[1]">
-                    </el-option>
-                </el-select>
-
-            </el-form-item>
-            <el-form-item label="元数据名称" prop="metadataName">
-                <el-input placeholder="元数据名称" v-model="page.query.param.metadataName"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                <el-button @click="cancel">取消</el-button>
-            </el-form-item>
-
-            <el-button @click="create" type="primary" class="btn_right" plain>新增</el-button>
-            <el-button @click="dbExportTables"  class="btn_right" plain> 导出</el-button>
-            <el-button @click="importDictTable" class="btn_right" plain>导入</el-button>
-            <el-button @click="dbImportTables"  class="btn_right" plain>DB导入</el-button>
-        </el-form>
-
-        <v-table :pageSize="5" :selection="false" :multi="true" ref="table" :page="page" :table-minheight="200"
-                 :dblclick="edit" :click="clickTableRow" @dataloaded="onDataloaded">
-            <!--<el-table-column prop="seq" label="序号" width="50">-->
-                <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
-            <!--</el-table-column>-->
-            <el-table-column :sortable="true"  prop="metadataOrder" label="排序" width="70"></el-table-column>
-            <el-table-column width="120" label="元数据操作">
-
-                <template slot-scope="scope">
-                    <el-button type="text" title="建表" @click="makeDbTable(scope.row)">
-                        建表
-                    </el-button>
-                    <el-button type="text" @click="dropDbTable(scope.row)" title="删表" >
-                        <span style="color:red">删表</span>
-                    </el-button>
-                </template>
-            </el-table-column>
+                    <el-table-column prop="metadataDb" label="数据库" width="160"></el-table-column>
+                    <el-table-column prop="metadataMemo" label="描述"></el-table-column>
 
 
-            <el-table-column :sortable="true" prop="metadataAlias" label="中文名称" width="120">
-                <template slot-scope="{row}">
-                    <span style="color:blue">{{row.metadataAlias}}</span>
-                </template>
-            </el-table-column>
+                    <el-table-column width="240" label="操作" :fixed="'right'">
 
-            <el-table-column :sortable="true" prop="metadataName" label="元数据名称" width="120">
-                <template slot-scope="{row}">
-                    <span style="color:mediumvioletred">{{row.metadataName}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="metadataType" label="元数据类型" width="100">
-                <template slot-scope="{row}">
-                    {{$dict.getText(row.metadataType,$dict.store.METADATA_TYPE)}}
-                </template>
-            </el-table-column>
-            <el-table-column :sortable="true" prop="metadataAutocreate" label="允许建表" width="100" >
-                <template slot-scope="{row}">
-                    {{row.metadataAutocreate?'是':'否'}}
-                </template>
-            </el-table-column>
+                        <template slot-scope="scope">
+                            <el-button type="text" title="编辑" @click="edit(scope.row)">
+                                <i class="el-icon-edit"></i>
+                            </el-button>
 
-            <el-table-column prop="metadataDb" label="数据库" width="160"></el-table-column>
-            <el-table-column prop="metadataMemo" label="描述" ></el-table-column>
+                            <el-button type="text" title="拷贝" @click="copyMaster(scope.row)">
+                                拷贝
+                            </el-button>
+                            <el-button type="priamry" title="生成页面" plain @click="makeWebPage(scope.row)">
+                                生成页面
+                            </el-button>
+                            <el-button type="text" @click="exportDictTable(scope.row)" title="导出">
+                                导出
+                            </el-button>
+                            <el-button type="text" @click="del(scope.row,scope.$index)" title="删除">
+                                <span style="color:red"><i class="el-icon-delete red"></i></span>
+                            </el-button>
+                        </template>
+                    </el-table-column>
 
-
-            <el-table-column width="240" label="操作" :fixed="'right'">
-
-                <template slot-scope="scope">
-                    <el-button type="text" title="编辑" @click="edit(scope.row)">
-                        <i class="el-icon-edit"></i>
-                    </el-button>
-
-                    <el-button type="text" title="拷贝" @click="copyMaster(scope.row)">
-                        拷贝
-                    </el-button>
-                    <el-button type="priamry" title="生成页面" plain @click="makeWebPage(scope.row)">
-                        生成页面
-                    </el-button>
-                    <el-button type="text" @click="exportDictTable(scope.row)" title="导出"  >
-                        导出
-                    </el-button>
-                    <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" >
-                        <span style="color:red"><i class="el-icon-delete red"></i></span>
-                    </el-button>
-                </template>
-            </el-table-column>
-
-        </v-table>
-
+                </v-table>
+            </el-main>
+        </el-container>
         <v-dialog ref="formDiag" title="信息编辑" :width="'650px'">
             <dict-panel @saved="onFormSaved"></dict-panel>
             <div slot="footer">
@@ -125,6 +123,7 @@
     </div>
 </template>
 <style lang="less" scoped>
+
     .btn_right {
         float: right;
         margin-right: 20px
@@ -199,8 +198,9 @@
             }
         },
         methods: {
-            dbExportTables() {
+            exportDictTables() {
                 let rows = this.$refs.table.getSelectedRows().map(row => row.metadataId)
+                let msgs = this.$refs.table.getSelectedRows().map(row => row.metadataName)
                 if (rows.length == 0) {
                     this.$message("请选择表!")
                     return
@@ -208,7 +208,7 @@
                 let f = () => this.$api.platform.MetadataTableService.exportDictTables(rows.join()).then(rsp => {
 
                 })
-                this.$myconfirm("确定要导出吗?", f)
+                this.$myconfirm(`确定要导出${msgs.join(',\n')}吗?`, f)
             },
             dbImportTables() {
                 let f = () => this.$api.platform.MetadataTableService.dbImportTables(this.page.query.param.subsysId).then(rsp => {
@@ -230,20 +230,17 @@
             },
             doSortFun(sortedData) {
 
-                let ids = [] // debugger
-                for (let item of  sortedData) {
-                    ids.push(item[this.header[0].prop])
-                }
-
-                console.log(JSON.stringify(ids))
+                let ids = sortedData.map(x => x[this.header[0].prop]).join() // debugger
                 let params = {
                     subsysId: this.page.query.param.subsysId,
-                    ids: ids.join(",")
+                    ids: ids
                 }
                 this.doSortMetadataDict(params).then(
                     rsp => {
                         this.$msgJsonResult(rsp)
+                        this.search()
                     })
+
             },
 
             makeWebPage(row) {
