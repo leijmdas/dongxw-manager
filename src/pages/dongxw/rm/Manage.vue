@@ -27,14 +27,12 @@
                     <sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></sub-type-select>
                 </el-form-item>
 
-
                 <el-form-item label="状态" prop="status">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-
                 <!--<el-form-item>-->
                     <!--&lt;!&ndash;<el-button-group></el-button-group>&ndash;&gt;-->
                     <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER1'">查询</el-button>&ndash;&gt;-->
@@ -74,7 +72,6 @@
             <el-button v-if="onlyQuery" type="primary" plain @click="multiSele(false)">保存</el-button>
             <el-button v-if="onlyQuery" plain @click="multiSel(true)">关闭</el-button>
 
-
         </v-toolbar>
 
 
@@ -112,17 +109,13 @@
             </el-table-column>
             <el-table-column :sortable="true"  prop="name" label="物料名称" width="160"></el-table-column>
 
-
-
             <el-table-column :sortable="true"  prop="remark" label="规格型号" width="200"></el-table-column>
             <el-table-column :sortable="true"  prop="color" label="颜色" width="100">
             </el-table-column>
             <el-table-column :sortable="true"  prop="unit" label="单位" width="60"></el-table-column>
 
-
             <!--<el-table-column :sortable="true"  prop="size" label="尺寸" width="150">-->
             <!--</el-table-column>-->
-
             <!--<el-table-column prop="barCode" label="条码" width="120">-->
             <!--</el-table-column> -->
             <el-table-column :sortable="true"  prop="createDate" label="建档时间" width="150">
@@ -187,14 +180,13 @@
     export default {
         components: {FormPanel, RmTypeSelect, SubTypeSelect},
         props: {
-            onlyQuery:
-                {
-                    type: Boolean,
-                    default: false,
-                },
-            closeDlg:{
-                type:Function ,
-                default:null
+            onlyQuery: {
+                type: Boolean,
+                default: false,
+            },
+            closeDlg: {
+                type: Function,
+                default: null
             }
         },
         data() {

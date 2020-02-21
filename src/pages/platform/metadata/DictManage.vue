@@ -32,13 +32,13 @@
                 <el-button @click="cancel">取消</el-button>
             </el-form-item>
 
-            <el-button @click="create" type="primary" class="btn_right" plain >新增</el-button>
-            <el-button class="btn_right" plain> 导出</el-button>
-            <el-button @click="importDictTable" class="btn_right" plain> 导入</el-button>
-            <el-button @click="dbImportTables" class="btn_right" plain> DB导入</el-button>
+            <el-button @click="create" type="primary" class="btn_right" plain>新增</el-button>
+            <el-button @click="dbExportTables" class="btn_right" plain> 导出</el-button>
+            <el-button @click="importDictTable" class="btn_right" plain>导入</el-button>
+            <el-button @click="dbImportTables" class="btn_right" plain>DB导入</el-button>
         </el-form>
 
-        <v-table :pageSize="5" :selection="false" ref="table" :page="page" :table-minheight="200"
+        <v-table :pageSize="5" :selection="false" :multi="true" ref="table" :page="page" :table-minheight="200"
                  :dblclick="edit" :click="clickTableRow" @dataloaded="onDataloaded">
             <!--<el-table-column prop="seq" label="序号" width="50">-->
                 <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
@@ -194,15 +194,21 @@
             }
         },
         methods: {
-            dbImportTables (){
-
-                this.$api.platform.MetadataTableService.dbImportTables(this.page.query.param.subsysId).then(rsp => {
+            dbExportTables() {
+                let f = () => {
+                }
+                this.$myconfirm("确定要导出吗?", f)
+            },
+            dbImportTables() {
+                let f = () => this.$api.platform.MetadataTableService.dbImportTables(this.page.query.param.subsysId).then(rsp => {
                     this.$msgJsonResult(rsp);
                     if (rsp.code === 0) {
                         this.search();
 
                     }
-                });
+                })
+
+                this.$myconfirm("确定要从DB导入多表的结构吗?", f)
             },
             btnSort() {
                 this.showSort = !this.showSort
@@ -214,7 +220,7 @@
             doSortFun(sortedData) {
 
                 let ids = [] // debugger
-                for(let item of  sortedData){
+                for (let item of  sortedData) {
                     ids.push(item[this.header[0].prop])
                 }
 
@@ -355,15 +361,16 @@
                     this.$api.platform.MetadataTableService.exportDictTable(row.metadataId)
                 })
             },
+
             del(row) {
-                this.$confirm("确定删除'"+row.metadataAlias+"表'此条记录吗?", "提示", {type: "warning"}).then(() => {
-                    this.$api.platform.MetadataDictService.deleteById(row.metadataId).then(rsp => {
-                        this.$msgJsonResult(rsp);
-                        if (rsp.code == 0) {
-                            this.search();
-                        }
-                    });
-                });
+
+                let f = () => this.$api.platform.MetadataDictService.deleteById(row.metadataId).then(rsp => {
+                    this.$msgJsonResult(rsp);
+                    if (rsp.code == 0) {
+                        this.search();
+                    }
+                })
+                this.$myconfirm("确定删除'" + row.metadataAlias + "表'此条记录吗?", f)
             },
         },
         created() {

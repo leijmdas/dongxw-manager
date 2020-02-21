@@ -437,13 +437,15 @@
 
             dbImportTableFields() {
 
-                this.$api.platform.MetadataTableService.dbImportTableFields(this.table.metadataId).then(rsp => {
+                let f = () => this.$api.platform.MetadataTableService.dbImportTableFields(this.table.metadataId).then(rsp => {
                     this.$msgJsonResult(rsp);
                     if (rsp.code == 0) {
                         this.search();
 
                     }
-                });
+                })
+
+                this.$myconfirm("确定要从DB导入表字段吗?", f)
             },
             makeWebPage(row) {
                 let params = {
@@ -457,31 +459,29 @@
                 });
             },
             delAll(row) {
-                this.$confirm("确定删除'"+this.table.metadataAlias+"'所有字段记录吗?", "提示", {
-                    type: "warning"
-                }).then(() => {
-                    this.$api.platform.MetadataFieldService.deleteAllByMetadataId(this.table.metadataId).then(rsp => {
-                        this.$msgJsonResult(rsp);
-                        if (rsp.code == 0) {
-                            this.search();
 
-                        }
-                    });
-                });
+                let f = () => this.$api.platform.MetadataFieldService.deleteAllByMetadataId(this.table.metadataId).then(rsp => {
+                    this.$msgJsonResult(rsp);
+                    if (rsp.code == 0) {
+                        this.search();
+
+                    }
+                })
+                this.$myconfirm("确定删除'" + this.table.metadataAlias + "'所有字段记录吗?", f)
             },
+
             del(row) {
-                this.$confirm("确定删除'"+row.fieldName+"'此条记录吗?", "提示", {
-                    type: "warning"
-                }).then(() => {
-                    this.$api.platform.MetadataFieldService.deleteById(row.fieldId).then(rsp => {
-                        this.$msgJsonResult(rsp);
-                        if (rsp.code == 0) {
-                            this.search();
+                let f = () => this.$api.platform.MetadataFieldService.deleteById(row.fieldId).then(rsp => {
+                    this.$msgJsonResult(rsp);
+                    if (rsp.code == 0) {
+                        this.search();
 
-                        }
-                    });
-                });
-            },
+                    }
+                })
+                this.$myconfirm("确定删除'" + row.fieldName + "'此条记录吗?", f)
+
+            }
+            ,
         },
         created() {
         },

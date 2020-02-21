@@ -71,7 +71,13 @@ Vue.prototype.$msgJsonResult = function(rsp)
         });
     }
 }
-
+Vue.prototype.$myconfirm = function (prompt, fun) {
+    this.$confirm(prompt, "提示", {type: "warning"}).then(() => {
+        if (fun) {
+            fun()
+        }
+    })
+}
 permission.init();
 const app = new Vue({
   el: '#app-wrap',
