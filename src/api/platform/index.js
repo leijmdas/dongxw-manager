@@ -8,8 +8,9 @@ import DictDataService from './DictDataService'
 export default {
     MetaData,
     MetadataTableService,
+    DictDataService,
     SubsysDictService,
     MetadataFieldService,
     MetadataDictService,
-    DictDataService,
+
 }

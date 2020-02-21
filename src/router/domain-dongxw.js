@@ -7,12 +7,18 @@ let router0 = [
         component: Layout,
         meta: {title: '元数据管理', icon: 'user', group: 'dongxw'},
         children: [
-            // {
-            //     path: 'platform/metadata/QueryManage',
-            //     component: require('@/pages/platform/metadata/QueryManage.vue'),
-            //     name: 'metadata:querymanage',
-            //     meta: {title: '通用查询', perm: 'metadata:querymanage'}
-            // },
+            {
+                path: 'platform/subsys/Manage',
+                component: require('@/pages/platform/subsys/Manage.vue'),
+                name: 'subsys:manage',
+                meta: {title: '子系统', perm: 'subsys:manage'}
+            },
+            {
+                path: 'platform/dictdata/Manage',
+                component: require('@/pages/platform/dictdata/Manage.vue'),
+                name: 'dictdata:manage',
+                meta: {title: '数据字典', perm: 'dictdata:manage'}
+            },
             {
                 path: 'platform/metadata/Manage',
                 component: require('@/pages/platform/metadata/Manage.vue'),

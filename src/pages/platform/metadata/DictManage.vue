@@ -3,11 +3,12 @@
 
         <el-row :span="24">
             <el-col :span="8">
-                <v-sort-table :elTableId="elTableId" ref="sortTable" :page="page" :header="header" :doSortFun="doSortFun" v-show="showSort">
+                <v-sort-table ref="sortTable" :page="page" :header="header" :doSortFun="doSortFun" v-show="showSort">
 
                 </v-sort-table>
             </el-col>
         </el-row>
+
 
         <el-form :inline="true" label-width="85px" label-position="left">
             <el-button @click="btnSort" v-if="table.metadataId" class="btn_leftright" plain> 排序</el-button>
@@ -33,7 +34,7 @@
 
             <el-button @click="create" type="primary" class="btn_right" plain >新增</el-button>
             <el-button class="btn_right" plain> 导出</el-button>
-            <el-button class="btn_right" plain> 导入</el-button>
+            <el-button @click="importDictTable" class="btn_right" plain> 导入</el-button>
             <el-button @click="dbImportTables" class="btn_right" plain> DB导入</el-button>
         </el-form>
 
@@ -95,7 +96,7 @@
                     <el-button type="priamry" title="生成页面" plain @click="makeWebPage(scope.row)">
                         生成页面
                     </el-button>
-                    <el-button type="text" title="导出" @click="生成网页(scope.row)">
+                    <el-button type="text" @click="exportDictTable(scope.row)" title="导出"  >
                         导出
                     </el-button>
                     <el-button type="text" @click="del(scope.row,scope.$index)" title="删除" >
@@ -113,6 +114,13 @@
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
+        <v-dialog ref="uploadFormDiag" title="上传元数据字典文件" :width="'650px'">
+            <upload-panel :postSuccess="search"> </upload-panel>
+            <div slot="footer">
+                <!--<el-button type="primary" @click="$refs.uploadFormDiag.dispatch('submit')">保存</el-button>-->
+                <el-button type="default" @click="()=>{$refs.uploadFormDiag.hide()}">关闭</el-button>
+            </div>
+        </v-dialog>
 
     </div>
 </template>
@@ -127,9 +135,10 @@
 <script>
     import SubsysSelect from '@/components/widgets/platform/SubsysSelect.vue';
     import DictPanel from './DictForm.vue'
+    import UploadPanel from './UploadForm.vue'
 
     export default {
-        components: {DictPanel, SubsysSelect},
+        components: {UploadPanel,DictPanel, SubsysSelect},
         props: {
             value: {
                 type: Object,
@@ -149,7 +158,6 @@
 
         data() {
             return {
-                elTableId: 'elTableIdDict',
                 doSortMetadataDict: this.$api.platform.MetadataTableService.doSortMetadataDict,
                 showSort: false,
                 header: [
@@ -176,7 +184,7 @@
                     query: {
                         orderBys: 'metadataOrder|asc',
                         param: {
-                            subsysId: 0,
+                            subsysId: 100,
                             metadataType: 1,
                             isDeleted: false
                         }
@@ -325,7 +333,9 @@
                     });
                 }
             },
-
+            importDictTable() {
+                this.$refs.uploadFormDiag.show({});
+            },
             create() {
                 this.$refs.formDiag.show({subsysId: this.page.query.param.subsysId});
             },
@@ -340,6 +350,11 @@
 
             },
 
+            exportDictTable(row) {
+                this.$confirm("确定导出'"+row.metadataAlias+"'此条记录吗?", "提示", {type: "warning"}).then(() => {
+                    this.$api.platform.MetadataTableService.exportDictTable(row.metadataId)
+                })
+            },
             del(row) {
                 this.$confirm("确定删除'"+row.metadataAlias+"表'此条记录吗?", "提示", {type: "warning"}).then(() => {
                     this.$api.platform.MetadataDictService.deleteById(row.metadataId).then(rsp => {

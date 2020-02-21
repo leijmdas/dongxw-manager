@@ -9,6 +9,7 @@ import vImageUploader from './v-image-uploader.vue'
 import vImagePreview from './v-image-preview.vue'
 import vImagePreviewPkg from './v-image-preview-pkg.vue'
 import VSortTable from './v-sort-table.vue'
+import vDictUploader from './v-dict-uploader.vue'
 
 Vue.component('v-table', vTable);
 Vue.component('v-toolbar', vToolbar);
@@ -18,11 +19,13 @@ Vue.component('v-image-preview', vImagePreview);
 Vue.component('v-image-preview-pkg', vImagePreviewPkg);
 Vue.component('v-sort-table', VSortTable);
 
+Vue.component('v-dict-uploader', vDictUploader);
 export {
     vTable,
     VSortTable,
     vToolbar,
     vDialog,
     vImageUploader,
-    vImagePreview
+    vImagePreview,
+    vDictUploader
 }

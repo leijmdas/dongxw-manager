@@ -3,7 +3,7 @@
 
         <el-row :span="24">
             <el-col :span="8">
-                <v-sort-table  :elTableId="elTableId" ref="sortTable" :page="page" :header="header" :doSortFun="doSortFun" v-show="showSort">
+                <v-sort-table  ref="sortTable" :page="page" :header="header" :doSortFun="doSortFun" v-show="showSort">
 
                 </v-sort-table>
             </el-col>

@@ -90,4 +90,27 @@ export default {
         })
     },
 
+    //exportDictTable
+    /**
+     * 导出dict
+     */
+    exportDictTable(metadataId) {
+        return request({
+            url: '/api/sys/metadata/table/exportDictTable/' + metadataId,
+            method: 'POST',
+            responseType: 'blob'
+        })
+    },
+    //exportDictTable
+    /**
+     * 导出dict
+     */
+    exportDictTables(data) {
+        return request({
+            url: '/api/sys/metadata/table/exportDictTables',
+            method: 'POST',
+            data,
+            responseType: 'blob'
+        })
+    },
 }

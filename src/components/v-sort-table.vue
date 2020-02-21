@@ -39,10 +39,7 @@
         components: {Sortable},
         props: {
             /*使用控件者必须保证同页面下不重复*/
-            elTableId:{
-                type: String ,
-                default : "el-table"
-            },
+
             doSortFun: {
                 type: Function,
                 default: null,
@@ -75,7 +72,7 @@
         data() {
 
             return {
-
+                elTableId: 'el-Table' + this.genID(),
                 multipleSelection: [],
                 loading: false,
                 title: [],
@@ -85,6 +82,9 @@
             }
         },
         methods: {
+            genID(length = 3) {
+                return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
+            },
             closeBtnClick(){
 
                 if(this.doCloseFun){

@@ -54,7 +54,11 @@ service.interceptors.response.use(
     response => {
         let {config} = response;
         incrLoadRequest(config, -1);
-        if (response.headers && (response.headers['content-type'] === 'application/x-msdownload' || response.headers['content-type'] === 'application/msexcel')) {
+        if (response.headers && (response.headers['content-type'] === 'application/x-msdownload'
+                || response.headers['content-type'] === 'application/msexcel'
+                || response.headers['content-type'] === 'application/msexcel;charset=utf-8'
+                || response.headers['content-type'] === 'text/plain'
+                || response.headers['content-type'] === 'text/plain;charset=utf-8'   ) ) {
 
             downloadUrl(response)
             return Promise.resolve(response.data)

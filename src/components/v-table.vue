@@ -70,7 +70,13 @@
 </style>
 <template>
   <div :class="pageSize>0?'panel panel-default':''">
-    <el-table stripe ref="multipleTable" highlight-current-row :data="tableData" element-loading-text="数据加载中" v-loading="showLoading" @row-dblclick="handleRowDblclick" @select="handleSelect" @select-all="handleSelectAll" @selection-change="handleSelectionChange" @current-change="handleCurrentChange" @row-click="handleRowClick" @sort-change="handleSortChange" :border="tableBorder" :height="tableHeight" :max-height="tableMaxheight" :style="tableStyle" :span-method="spanMethod" :row-class-name="rowClassName" :show-summary="showSummary" :summary-method="getSummaries">
+    <el-table stripe ref="multipleTable" highlight-current-row :data="tableData"
+              element-loading-text="数据加载中" v-loading="showLoading" @row-dblclick="handleRowDblclick"
+              @select="handleSelect" @select-all="handleSelectAll" @selection-change="handleSelectionChange"
+              @current-change="handleCurrentChange" @row-click="handleRowClick" @sort-change="handleSortChange"
+              :border="tableBorder" :height="tableHeight" :max-height="tableMaxheight" :style="tableStyle"
+              :span-method="spanMethod" :row-class-name="rowClassName" :show-summary="showSummary"
+              :summary-method="getSummaries" :id="elTableId">
       <slot name="prepend"></slot>
       <el-table-column type="selection" width="45" v-if="selection || multi" :fixed="fixed && 'left'"></el-table-column>
       <el-table-column type="expand" v-if="expandColumns" :fixed="fixed && 'left'">
@@ -95,6 +101,7 @@
 </template>
 <script>
     import Vue from 'vue';
+    import Sortable from 'sortablejs';
 
     Vue.component('action-column', {
         data: function () {
@@ -305,6 +312,7 @@
         },
         data() {
             return {
+                elTableId: 'elTable'+this.genID(),
                 showLoading: false,
                 internalPageSize: this.pageSize,
                 currentPage: 1,
@@ -317,6 +325,9 @@
             };
         },
         methods: {
+            genID(length = 3) {
+                return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
+            },
             reset() {
                 this.internalPageSize = this.pageSize
                 this.currentPage = 1
@@ -402,6 +413,8 @@
                             this.load()
                         }
 
+                        this.rowDrop();
+                        //this.columnDrop();
                         this.$emit("dataloaded", rsp);   //this.select()
                     })
                     .catch(err => {
@@ -476,12 +489,51 @@
                 selectedArray.forEach(item => {
                     this.$refs.multipleTable.toggleRowSelection(item, true);
                 });
+            },
+
+            // 行拖拽
+            rowDrop() {
+                // 此时找到的元素是要拖拽元素的父容器
+                let elTable = document.querySelector('#' + this.elTableId)
+                const tbody = elTable.querySelector('.el-table__body-wrapper tbody');
+                const _this = this;
+                Sortable.create(tbody, {
+                    //  指定父元素下可被拖拽的子元素
+                    draggable: ".el-table__row",
+                    onEnd({newIndex, oldIndex}) {
+                        // const currRow = _this.tableData.splice(oldIndex, 1)[0];
+                        // _this.tableData.splice(newIndex, 0, currRow);
+                    }
+                });
+            },
+            // 列拖拽
+            // col:[{label: '日期',  prop: 'date' },  { label: '姓名',  prop: 'name' },
+            //     {label: '地址', prop: 'address'}],
+            // dropCol:[label: '日期',  prop: 'date' },  {label: '姓名', prop: 'name' },
+            // { label: '地址', prop: 'address'}],
+
+            columnDrop() {
+                let elTable = document.querySelector('#' + this.elTableId)
+                const wrapperTr = elTable.querySelector('.el-table__header-wrapper tr');
+                this.sortable = Sortable.create(wrapperTr, {
+                    animation: 180,
+                    delay: 0,
+                    onEnd: evt => {
+                        // debugger
+                        // const oldItem = this.dropCol[evt.oldIndex];
+                        // this.dropCol.splice(evt.oldIndex, 1);
+                        // this.dropCol.splice(evt.newIndex, 0, oldItem);
+                    }
+                });
             }
         },
         mounted() {
+
             this.$on("reload", callback => {
                 this.load();
+
             });
+
             this.$on("toggleLoading", () => {
                 this.showLoading = !this.showLoading;
             });
