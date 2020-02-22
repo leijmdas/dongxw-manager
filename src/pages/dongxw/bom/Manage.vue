@@ -220,8 +220,7 @@
             sortByDate(obj1, obj2) {
                 let code1 =  obj1.childRm? obj1.childRm.code :'-'
                 let code2 =  obj2.childRm? obj2.childRm.code :'-'
-                //let val1 = obj1.deadline
-                //let val2 = obj2.deadline
+
                 return code1.localeCompare( code2 )
             },
 
@@ -262,8 +261,12 @@
             导出
              */
             exportRecords() {
-                let params = this.getSearchParams();
-                this.$api.dongxw.ProductService.exportRm(params);
+                let params = {
+                    param:{
+                        productId: this.productId
+                    }
+                }
+                this.$api.dongxw.BomService.export(params)
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};

@@ -61,17 +61,17 @@
                                 <el-col :span="8" >
 
                                     <el-form-item :label="entity.lossType==0?'损耗数':'损耗(%)'" prop="lossRate">
-                                        <el-input  :disabled="entity.source===1"  placeholder="损耗" v-model="entity.lossRate"></el-input>
+                                        <el-input  :disabled="entity.source"  placeholder="损耗" v-model="entity.lossRate"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="8">
                                     <el-form-item label="每个用量" prop="eachQty">
-                                        <el-input :disabled="entity.source===1" placeholder="每个用量" v-model="entity.eachQty"></el-input>
+                                        <el-input :disabled="entity.source" placeholder="每个用量" v-model="entity.eachQty"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="8">
                                     <el-form-item label="件数" prop="pieces">
-                                        <el-input :disabled="entity.source===1" placeholder="件数" v-model="entity.pieces"></el-input>
+                                        <el-input :disabled="entity.source" placeholder="件数" v-model="entity.pieces"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="8">
@@ -127,6 +127,7 @@
             width: 200px;
             height: 100px !important;
         }
+
     }
 
     .dialog-form {
@@ -250,6 +251,10 @@
         computed: {
 
             totalQty: function () {
+                if(this.entity.source){
+                    return this.entity.qty
+                }
+
                 let qty = ( parseFloat(this.entity.lossRate)+ 100 ) / 100
                     * parseFloat(this.entity.eachQty) * parseFloat(this.entity.pieces)
 
