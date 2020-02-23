@@ -413,7 +413,7 @@
                             this.load()
                         }
 
-                        this.rowDrop();
+                        //this.rowDrop();
                         //this.columnDrop();
                         this.$emit("dataloaded", rsp);   //this.select()
                     })
