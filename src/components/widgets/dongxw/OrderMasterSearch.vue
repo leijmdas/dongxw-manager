@@ -89,12 +89,6 @@
                 </template>
             </el-table-column>
 
-            <!--<el-table-column prop="parentId" label="父订单" width="80">-->
-                <!--<template slot-scope="{row}">-->
-                    <!--{{ row.orderMasterParent? row.orderMasterParent.epOrderCode:'-'}}-->
-
-                <!--</template>-->
-            <!--</el-table-column>-->
 
             <el-table-column prop="customerId" label="客户代码" width="80">
                 <template slot-scope="{row}">
@@ -108,9 +102,9 @@
             </el-table-column>
 
 
-            <el-table-column prop="customerOrderCode" label="客订单号" @clic111k="view(scope.row)"  width="120">
+            <el-table-column :sortable="true" prop="customerOrderCode" label="客订单号" @clic111k="view(scope.row)"  width="120">
             </el-table-column>
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
+            <el-table-column :sortable="true" prop="epOrderCode" label="EP订单号" width="120">
 
             </el-table-column>
 
@@ -144,20 +138,20 @@
 
             <!--<el-table-column prop="invoiceNoIni" label="预收发票编号" width="120"></el-table-column>-->
             <!--<el-table-column prop="invoiceNo" label="正式发票编号" width="120"></el-table-column>-->
-
-
-            <!--<el-table-column prop="createDate" label="建档时间" width="100">-->
-                <!--<template slot-scope="{row}">-->
-                    <!--{{ $dongxwDict.viewDate(row.createDate)}}-->
-                <!--</template>-->
-            <!--</el-table-column>-->
-            <el-table-column prop="createByName" label="建档人" width="100">
-            </el-table-column>
             <el-table-column  prop="status" label="订单状态" width="80">
                 <template slot-scope="{row}">
                     <span :style="row.status==0?'color:green':''"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
                 </template>
             </el-table-column>
+
+            <el-table-column :sortable="true" prop="createDate" label="建档时间" width="100">
+                <template slot-scope="{row}">
+                    {{ $dongxwDict.viewDate(row.createDate)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="createByName" label="建档人" width="100">
+            </el-table-column>
+
             <el-table-column prop="remark" label="备注"></el-table-column>
 
             <el-table-column v-if="showBtn" width="150" label="同步计划" :fixed="'right'">

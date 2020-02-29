@@ -6,7 +6,7 @@
                 <order-search ref="orderSearch" v-show="showOrderSearch" :tableRowClick="orderChange" ></order-search>
             </el-header>
             <el-container>
-                <el-aside width="40%" v-show="showPlan">
+                <el-aside width="35%" v-show="showPlan">
                     <v-toolbar title="计划列表" type="alert">
 
                         <span v-if="!order.epOrderCode" slot="tip"
@@ -26,12 +26,17 @@
                     </v-toolbar>
                     <v-table ref="table" :page="page" :click="searchSheet" :pageSize="20" :table-minheight="450"
                              @dataloaded="onDataloaded">
-
+                        <el-table-column width="60" label="操作" :fixed="'left'">
+                            <template slot-scope="scope">
+                                <el-button type="primary" title="导出" @click="exportXls(scope.row)">导出
+                                </el-button>
+                            </template>
+                        </el-table-column>
                         <el-table-column prop="seq" label="序号" width="50">
                             <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
                         </el-table-column>
 
-                        <el-table-column prop="outFlag" label="外发标志" width="90">
+                        <el-table-column prop="outFlag" label="外发标志" width="60">
                             <template slot-scope="{row}">
                          <span :style="row.outFlag==1?'color:blue':''">
                                  {{$dongxwDict.getText(row.outFlag,$dongxwDict.store.OUT_FLAG)}}
@@ -40,18 +45,18 @@
                         </el-table-column>
 
 
-                        <el-table-column prop="customerOrderCode" label="客订单号" width="110">
+                        <el-table-column prop="customerOrderCode" label="客订单号" width="100">
                             <template slot-scope="{row}">
                                 {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
                             </template>
                         </el-table-column>
 
-                        <el-table-column prop="code" label="客款号" width="100">
+                        <el-table-column :sortable="true" prop="code" label="客款号" width="100">
                             <template slot-scope="{row}">
                                 <span style="color:green"> {{ row.product?row.product.code:'-'}}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="epCode" label="EP款号" width="100">
+                        <el-table-column :sortable="true"  prop="epCode" label="EP款号" width="100">
                             <template slot-scope="{row}">
                                 {{ row.product?row.product.epCode:'-'}}
                             </template>
@@ -309,13 +314,17 @@
             /*
             导出
             */
-            exportRecords() {
+            exportXls(row) {
                 let self = this;
                 this.$confirm("确定要导出所有查询的记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    let params = self.getSearchParams();
-                    self.$api.dongxw.MakePlan.export(params);
+                    let params = {
+                        param:{
+                            planId:row.id
+                        }
+                    }
+                    self.$api.dongxw.MakeSheetService.export(params);
 
                 });
 
@@ -323,11 +332,13 @@
 
             makeSheet() {
                 if (this.order.id) {
-                    this.$api.dongxw.MakeSheetService.makeSheetByPlanOrder(this.order.id).then(rsp => {
+
+                    let f= ()=>this.$api.dongxw.MakeSheetService.makeSheetByPlanOrder(this.order.id).then(rsp => {
                         this.$msgJsonResult(rsp)
                         this.search();
 
                     });
+                    this.$myconfirm("确定要生成制造单吗？",f)
                 }
             },
 

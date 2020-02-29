@@ -66,7 +66,8 @@
                 <!--<el-button style="margin-left: 30px" slot="tip" type="primary" @click="search">查询</el-button>-->
                 <!--<el-button slot="tip" @click="cancel">取消</el-button>-->
                 <!--<el-button plain v-if="page.query.param.orderId>0" @click="makeSheet">生成制造单</el-button>-->
-                <el-button plain @click="exportMail" style="color:green">发送邮件</el-button>
+                <!--<el-button plain @click="exportMail" style="color:green">发送邮件</el-button>-->
+                <el-button plain v-if="page.query.param.orderId>0" @click="exportRecords" style="color:green">导出XLS</el-button>
             </v-toolbar>
         <v-table ref="table" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
 

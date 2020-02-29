@@ -22,19 +22,20 @@
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
-            <el-table-column prop="orderId" label="订单" width="110">
+            <el-table-column prop="orderId" label="订单" width="90">
                 <span style="color:green"> {{ order? order.customerOrderCode :'-' }} </span>
             </el-table-column>
-            <el-table-column prop="productId" label="产品" width="80">
+            <el-table-column prop="productId" label="产品" width="100">
                 <template slot-scope="{row}">
                     <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
                 </template>
             </el-table-column>
-            <!--<el-table-column prop="com" label="组件" width="60">-->
-                <!--<template slot-scope="{row}">-->
-                    <!--{{ row.parentId>0? '组件' :'-' }}-->
-                <!--</template>-->
-            <!--</el-table-column>-->
+            <el-table-column prop="source" label="组件" width="100">
+                <template slot-scope="{row}">
+                    <span :style="row.source?'color:green':''"> {{ row.source }} </span>
+                </template>
+            </el-table-column>
+
             <el-table-column prop="code" label="物料代码" width="80">
                 <template slot-scope="{row}">
                     <span :style="row.parentId>0?'color:blue':''">  {{ row.childRm? row.childRm.code :row.parentId>0? '组件' :'-' }} </span>
@@ -54,7 +55,7 @@
             <el-table-column prop="pieces" label="件数" width="60"></el-table-column>
 
             <!--<el-table-column prop="width" label="宽封度" width="70"></el-table-column>-->
-            <el-table-column prop="cutPartName" label="裁片名称" width="120"></el-table-column>
+            <!--<el-table-column prop="cutPartName" label="裁片名称" width="120"></el-table-column>-->
             <!--<el-table-column   label="尺寸(英寸）" align="center">-->
                 <!--<el-table-column prop="sizeL" label="长度" width="80"></el-table-column>-->
                 <!--<el-table-column prop="sizeX" label="X" width="30"></el-table-column>-->
@@ -94,7 +95,7 @@
             <el-table-column prop="createByName" label="建档人" width="80">
             </el-table-column>
 
-            <el-table-column width="100" label="操作" :fixed="'right'">
+            <el-table-column width="60" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 
                     <!--<el-button type="text" title="编辑" @click="edit(scope.row)">-->
@@ -155,7 +156,7 @@
                 currentPage: 1,
                 page: {
                     query: {
-                        orderBys: 'id|desc',
+                        orderBys: 'childId|desc',
                         param: {
                             productId: undefined,
                             isDeleted: false
