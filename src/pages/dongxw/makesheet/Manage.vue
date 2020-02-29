@@ -7,7 +7,7 @@
             </el-header>
             <el-container>
                 <el-aside width="35%" v-show="showPlan">
-                    <v-toolbar title="计划列表" type="alert">
+                    <v-toolbar title="制造计划列表" type="alert">
 
                         <span v-if="!order.epOrderCode" slot="tip"
                               style="color:red;margin-left:  40px;margin-top: 30px"> 请点上方订单后编辑计划  </span>

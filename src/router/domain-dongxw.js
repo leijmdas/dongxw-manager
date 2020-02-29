@@ -138,10 +138,10 @@ let router0 = [
                 meta: {title: '生产制造单', perm: 'makesheet:manage'}
             },
             {
-                path: 'outpurchase/manage',
-                component: require('@/pages/dongxw/makeplan/Manage.vue'),
-                name: 'outpurchase:manage',
-                meta: {title: '外发加工单', perm: 'outpurchase:manage'}
+                path: 'outorderpurchase/manage',
+                component: require('@/pages/dongxw/outorderpurchase/Manage.vue'),
+                name: 'outorderpurchase:manage',
+                meta: {title: '外发采购单', perm: 'outpurchase:manage'}
             },
         ]
     },
