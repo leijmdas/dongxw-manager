@@ -3,6 +3,7 @@ import Vue from 'vue';
 let DongxwDict = {
 
     store: {
+        SUPPLY_TYPES: [[0, '原料供应商'],[1, '产品供应商'],  [2,'产品与原料供应商']],
         STATUS: [[0, '草稿'],[1, '启用'],  [2,'禁用']],
         LANGUAGE_TYPE: [[100, '中文'], [200, '英文']],
         MONEY_TYPE: [[100, '人民币'], [200, '美元'], [300, '港币']],

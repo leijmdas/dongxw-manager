@@ -4,7 +4,7 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
 
-                <el-form-item label="供应商编码" prop="code">
+                <el-form-item  label="供应商编码" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="供应商名称" prop="name">
@@ -16,7 +16,12 @@
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-
+                <el-form-item label="类型" prop="type">
+                    <el-select :clearable="true" v-model="page.query.param.type" style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.SUPPLY_TYPES" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="结算币种" prop="moneyType">
                     <el-select :clearable="true" v-model="page.query.param.moneyType" style="width:100px">
                         <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]" :value="item[0]"
@@ -43,18 +48,23 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column prop="code" label="供应商编码" width="100">
+            <el-table-column :sortable="true"  prop="code" label="供应商编码" width="110">
                 <template slot-scope="{row}">
                     <span :style="'color: blue'">{{ row.code }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="供应商名称" width="120"></el-table-column>
+            <el-table-column :sortable="true"  prop="name" label="供应商名称" width="120"></el-table-column>
 
             <el-table-column prop="sname" label="详细名称" width="245"></el-table-column>
 
             <!--<el-table-column prop="country" label="国家" width="80"></el-table-column>-->
             <el-table-column prop="addr" label="地址" width="300"></el-table-column>
 
+            <el-table-column prop="type" label="类型" width="120">
+            <template slot-scope="{row}">
+                {{$dongxwDict.getText(row.type,$dongxwDict.store.SUPPLY_TYPES)}}
+            </template>
+            </el-table-column>
             <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
@@ -165,7 +175,7 @@
             exportRecords() {
                 let params = this.getSearchParams();
                 console.log(params);
-                this.$api.dongxw.CustomerService.export(params);
+                this.$api.dongxw.SupplierService.export(params);
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};

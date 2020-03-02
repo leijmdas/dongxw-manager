@@ -12,12 +12,24 @@
         <el-form-item label="详细名称" prop="sname">
             <el-input placeholder="详细名称" v-model="entity.sname"></el-input>
         </el-form-item>
-            <el-form-item label="状态" prop="moneyType">
-                <el-select v-model="entity.status" :disabled="isDisabled">
-                    <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
-                               :value="item[0]" :label="item[1]"></el-option>
-                </el-select>
-            </el-form-item>
+            <el-row :span="24">
+                <el-col :span="12">
+                    <el-form-item label="结算币种" prop="moneyType">
+                        <el-select v-model="entity.moneyType" :disabled="isDisabled">
+                            <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
+                                       :value="item[0]" :label="item[1]"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="状态" prop="moneyType">
+                        <el-select v-model="entity.status" :disabled="isDisabled">
+                            <el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]"
+                                       :value="item[0]" :label="item[1]"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-row>
             <!--<el-form-item label="国家" prop="country">-->
                 <!--<el-input placeholder="国家" v-model="entity.country"></el-input>-->
             <!--</el-form-item>-->
@@ -25,12 +37,6 @@
                 <el-input placeholder="地址" v-model="entity.addr"></el-input>
             </el-form-item>
 
-            <el-form-item label="结算币种" prop="moneyType">
-                <el-select v-model="entity.moneyType" :disabled="isDisabled">
-                    <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
-                               :value="item[0]" :label="item[1]"></el-option>
-                </el-select>
-            </el-form-item>
 
             <el-form-item label="电子邮箱" prop="email">
                 <el-input placeholder="电子邮箱" v-model="entity.email"></el-input>
@@ -38,12 +44,25 @@
             <el-form-item label="联系人" prop="contact">
             <el-input placeholder="联系人" v-model="entity.contact"></el-input>
         </el-form-item>
-            <el-form-item label="联系人电话" prop="tel">
+            <el-row :span="24">
+                <el-col :span="12">
+                <el-form-item label="联系人电话" prop="tel">
                 <el-input placeholder="联系人电话" v-model="entity.tel"></el-input>
             </el-form-item>
-            <el-form-item label="传真" prop="fax">
+                </el-col>
+                <el-col :span="12">
+
+                <el-form-item label="传真" prop="fax">
                 <el-input placeholder="传真" v-model="entity.fax"></el-input>
             </el-form-item>
+                </el-col>
+            </el-row>
+                <el-form-item label="类型" prop="type">
+                    <el-select v-model="entity.type" :disabled="isDisabled">
+                        <el-option v-for="item in $dongxwDict.store.SUPPLY_TYPES" :key="item[0]"
+                                   :value="item[0]" :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
             <el-form-item label="备注" prop="remark">
                 <el-input placeholder="备注" v-model="entity.remark"></el-input>
             </el-form-item>
@@ -98,7 +117,8 @@
         country: '',
         createBy: 0,
         remark : '',
-        status: 1
+        status: 1,
+        type:0,
     };
 
 
