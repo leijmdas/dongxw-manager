@@ -9,6 +9,7 @@ import BomService from './BomService'
 import BomCostService from './BomCostService'
 import MakeSheetService from './MakeSheetService'
 import PurchasePlanService from './PurchasePlanService'
+import PurchaseOrderService from './PurchaseOrderService'
 
 export default {
     CustomerService,
@@ -21,7 +22,8 @@ export default {
     SupplierService,
     BomService,
     BomCostService,
-    PurchasePlanService
+    PurchasePlanService,
+    PurchaseOrderService
 
 
 }

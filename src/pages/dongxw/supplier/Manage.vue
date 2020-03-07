@@ -53,9 +53,9 @@
                     <span :style="'color: blue'">{{ row.code }}</span>
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true"  prop="name" label="供应商名称" width="120"></el-table-column>
+            <el-table-column :sortable="true"  prop="name" label="供应商名称" width="220"></el-table-column>
 
-            <el-table-column prop="sname" label="详细名称" width="245"></el-table-column>
+            <el-table-column prop="sname" label="详细名称" width="65"></el-table-column>
 
             <!--<el-table-column prop="country" label="国家" width="80"></el-table-column>-->
             <el-table-column prop="addr" label="地址" width="300"></el-table-column>

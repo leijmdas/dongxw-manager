@@ -280,6 +280,7 @@
         refFilter: '0',	//  关联条件
         refDisplayID: '0',	//  关联显示字段
         fieldRemark: 'r',	//  说明
+        createTime : null,
     };
     import DictDataSelect from '@/components/widgets/platform/DictDataSelect.vue';
 
@@ -380,7 +381,7 @@
                 this.entity = _.cloneDeep(defaultEntity);
                 if (!this.entity.id) {
 
-                    //this.entity.createDate = this.$dongxwDict.formatDateZero(new Date())
+                     this.entity.createTime = this.$dongxwDict.formatDateZero(new Date())
                 }
             },
             init(options) {

@@ -78,9 +78,9 @@
                     </el-table-column>
                     <el-table-column :sortable="true" prop='fieldIsNull' label='是否为空' width='90'>
                         <template slot-scope='{row}'>
-			<span :style='row.fieldIsNull?"color:red":"color:black"'>
-				{{row.fieldIsNull?'是':'否'}}
-			</span>
+                    <span :style='row.fieldIsNull?"color:red":"color:black"'>
+                        {{row.fieldIsNull?'是':'否'}}
+                    </span>
                         </template>
                     </el-table-column>
                     <el-table-column prop='fieldDefault' label='默认值' width='60'>
@@ -90,9 +90,9 @@
                     </el-table-column>
                     <el-table-column :sortable="true" prop='fieldPk' label='主键' width='70'>
                         <template slot-scope='{row}'>
-			<span :style='row.fieldPk?"color:red":"color:black"'>
-				{{row.fieldPk?'是':'否'}}
-			</span>
+                            <span :style='row.fieldPk?"color:red":"color:black"'>
+                                {{row.fieldPk?'是':'否'}}
+                            </span>
                         </template>
                     </el-table-column>
                     <el-table-column :sortable="true" prop='fieldAuto' label='自动' width='70'>
@@ -119,6 +119,8 @@
                             <template slot-scope='{row}'>
                                 {{row.fieldDisplaysize}}
                             </template>
+                        </el-table-column>
+                        <el-table-column prop='createTime' label='创建时间' width='100'>
                         </el-table-column>
                         <el-table-column prop='fieldFormat' label='格式' width='80'>
                             <template slot-scope='{row}'>
