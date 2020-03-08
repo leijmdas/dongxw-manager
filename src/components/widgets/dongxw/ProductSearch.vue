@@ -161,7 +161,6 @@
             customerId :function(){
                 this.$nextTick(() => this.refresh());
             }
-
         },
         methods: {
             defaultValue()

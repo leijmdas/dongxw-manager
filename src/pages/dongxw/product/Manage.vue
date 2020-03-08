@@ -18,16 +18,13 @@
                 <el-form-item label="颜色" prop="color">
                     <el-input v-model="page.query.param.color" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="尺寸" prop="barCode">
+                <el-form-item label="尺寸" prop="size">
                     <el-input v-model="page.query.param.size" clearable></el-input>
                 </el-form-item>
+                <el-form-item label="条码" prop="barCode">
+                    <el-input v-model="page.query.param.barCode" clearable></el-input>
+                </el-form-item>
 
-                <!--<el-form-item label="状态" prop="status">-->
-                    <!--<el-select :clearable="true" v-model="page.query.param.status" style="width:100px">-->
-                        <!--<el-option v-for="item in $dongxwDict.store.STATUS" :key="item[0]" :value="item[0]"-->
-                                   <!--:label="item[1]"></el-option>-->
-                    <!--</el-select>-->
-                <!--</el-form-item>-->
                 <el-form-item label="客户" prop="customerId">
                     <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>
 
@@ -40,9 +37,7 @@
                     <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
                 </el-form-item>
                 <!--<el-form-item>-->
-                    <!--&lt;!&ndash;<el-button-group></el-button-group>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button @click="cancel">取消</el-button>&ndash;&gt;-->
+
                     <!--&lt;!&ndash;<el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>&ndash;&gt;-->
                     <!--&lt;!&ndash;<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>&ndash;&gt;-->
 
@@ -177,7 +172,6 @@
         <v-dialog ref="formDiag" :width="'800px'" title="信息编辑">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
-                <!--<el-button type="default"  @click="$refs.formDiag.clearImage()">清除图片</el-button>-->
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>

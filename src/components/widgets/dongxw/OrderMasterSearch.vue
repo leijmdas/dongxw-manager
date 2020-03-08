@@ -62,19 +62,15 @@
 
             </el-form>
         </div>
-        <v-toolbar title="订单列表" type="alert">
+        <v-toolbar title="客户订单列表" type="alert">
                 <span slot="tip" style="margin-left:60px;">
                     <el-button type="primary" @click="search"  >查询</el-button>
                     <el-button @click="cancel">取消</el-button>
                 <span style="margin-left:60px;color :red">  草稿状态不能新增计划! </span>
                 </span>
-            <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
-            <!--<el-button @click="cancel">取消</el-button>-->
 
                 <!--<el-button type="primary" plain @click="create">新增</el-button>-->
 
-                <!--<el-button plain @click="exportRecords">导出XLS</el-button>-->
-                <!--<el-button plain @click="exportMail" style="color:green" >发送邮件</el-button>-->
            </v-toolbar>
         <v-table ref="table" :page="page"  :pageSize="10" :dblclick="edit"
                  :click="tableRowClick"   :table-minheight="300" @dataloaded="onDataloaded">

@@ -65,10 +65,8 @@
             </span>
             <!--<el-button style="margin-left: 30px" slot="tip" type="primary" @click="search">查询</el-button>-->
             <!--<el-button slot="tip" @click="cancel">取消</el-button>-->
-            <!--<el-button plain v-if="page.query.param.orderId>0" @click="makeSheet">生成制造单</el-button>-->
-            <!--<el-button plain @click="exportMail" style="color:green">发送邮件</el-button>-->
-            <el-button plain v-if="page.query.param.orderId>0" @click="exportRecords" style="color:green">导出XLS
-            </el-button>
+            <!--<el-button plain v-if="page.query.param.orderId>0" @click="exportRecords" style="color:green">导出XLS-->
+            <!--</el-button>-->
         </v-toolbar>
         <el-tabs v-show="order.id" :stretch="false" v-model="activeName">
             <el-tab-pane style="margin-right: 10px" label="外发采购单" name="outPurchase">
@@ -76,7 +74,7 @@
             </el-tab-pane>
             <el-tab-pane style="margin-right: 10px" label="外发计划" name="outInfo">
 
-                <v-table ref="table" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
+                <v-table ref="table" :multi="true" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
 
                     <el-table-column prop="seq" label="序号" width="50">
                         <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
@@ -228,7 +226,7 @@
 
         </el-tabs>
 
-        <v-dialog ref="formDiag" title="信息编辑" :width="'50%'">
+        <v-dialog ref="formDiag" title="外发清单" :width="'50%'">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
@@ -428,7 +426,6 @@
             },
             clickRow(row) {
                  this.row = row;
-                //console.log(row);
             },
 
             view(row) {

@@ -1,72 +1,12 @@
 <!--订单管理-->
 <template>
     <div>
-        <!--<div class="panel panel-default panel-search">-->
-            <!--<el-form :inline="true">-->
-                <!--<el-form-item label="客户" prop="customerId">-->
-                    <!--<customer-select :fnChange="search" v-model="page.query.param.customerId"-->
-                                     <!--:clearable="true"></customer-select>-->
 
-                <!--</el-form-item>-->
-                <!--<el-form-item label="状态" prop="status">-->
-                    <!--<el-select :clearable="true" v-model="page.query.param.status" style="width:100px">-->
-                        <!--<el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"-->
-                                   <!--:label="item[1]"></el-option>-->
-                    <!--</el-select>-->
-                <!--</el-form-item>-->
-                <!--<el-form-item label="日期">-->
-
-                    <!--<div slot="label">-->
-                        <!--<el-select v-model="dateRangeType" filterable clearable style="width:120px"-->
-                                   <!--class="formitem-label">-->
-                            <!--<el-option value="orderDate" label="下单日期"></el-option>-->
-                            <!--<el-option value="customerIssueDate" label="客户交货日期"></el-option>-->
-                            <!--<el-option value="checkDate" label="验货日期"></el-option>-->
-                            <!--<el-option value="factroyIssueDate" label="工厂交货日期"></el-option>-->
-                        <!--</el-select>-->
-                    <!--</div>-->
-                    <!--<el-date-picker style="width:270px" v-model="dateRange" type="daterange" range-separator="至"-->
-                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
-                                    <!--format="yyyy年MM月dd日"-->
-                                    <!--value-format="yyyy-MM-dd HH:mm:ss">-->
-                    <!--</el-date-picker>-->
-
-                <!--</el-form-item>-->
-                <!--<el-form-item label="EP订单号" prop="epOrderCode">-->
-                    <!--<el-input v-model="page.query.param.epOrderCode" clearable></el-input>-->
-                <!--</el-form-item>-->
-
-
-                <!--<el-form-item label="客订单号" prop="customerOrderCode">-->
-                    <!--<el-input v-model="page.query.param.customerOrderCode" clearable></el-input>-->
-                <!--</el-form-item>-->
-
-
-                <!--<el-form-item label="业务员" prop="businessBy">-->
-                    <!--<el-input v-model="page.query.param.businessBy" clearable></el-input>-->
-                <!--</el-form-item>-->
-
-
-                <!--<el-form-item label="订单类型" prop="orderType">-->
-                    <!--<el-select @change="search" :clearable="true" v-model="page.query.param.orderType"-->
-                               <!--style="width:100px">-->
-                        <!--<el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"-->
-                                   <!--:label="item[1]"></el-option>-->
-                    <!--</el-select>-->
-                <!--</el-form-item>-->
-                <!--&lt;!&ndash;<el-form-item>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<el-button @click="cancel">取消</el-button>&ndash;&gt;-->
-                <!--&lt;!&ndash;</el-form-item>&ndash;&gt;-->
-
-            <!--</el-form>-->
-        <!--</div>-->
-        <v-toolbar title="订单列表" type="alert">
+        <v-toolbar title="采购订单列表" type="alert">
             <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
 
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
-
             <!--<el-button plain @click="exportRecords">导出XLS</el-button>-->
             <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
@@ -122,23 +62,27 @@
 			{{row.createByName}}</span>
                 </template>
             </el-table-column>
-            <el-table-column width='80' label='操作' :fixed='"right"'>
+            <el-table-column width='140' label='操作' :fixed='"right"'>
                 <template slot-scope='scope'>
+                    <el-button  title='导出' @click='exportRecords(scope.row)'>
+                        导出
+                    </el-button>
                     <el-button type='text' title='编辑'@click='edit(scope.row)'>
                         <i class='el-icon-edit'></i>
                     </el-button>
                     <el-button type='text' @click='del(scope.row,scope.$index)' title='删除' >
                         <span style='color: red'> <i class='el-icon-delete red'></i></span>
                     </el-button>
+
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag" title="信息编辑" :width="'50%'">
-            <form-panel @saved="onFormSaved" :customerOrder="customerOrder"></form-panel>
-            <div slot="footer">
-                <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
-                <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
-            </div>
+        <v-dialog ref="formDiag" title="采购单信息" :width="'50%'">
+            <form-panel @saved="onFormSaved" :customerOrder="customerOrder">
+                    <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
+                    <el-button type="default" @click="()=>{$refs.formDiag.hide();onFormSaved();}">关闭</el-button>
+            </form-panel>
+
         </v-dialog>
 
 
@@ -241,12 +185,16 @@
             /*
             导出
             */
-            exportRecords() {
+            exportRecords(row) {
                 let self = this;
                 this.$confirm("确定要导出所有查询的记录吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    let params = self.getSearchParams();
+                    let params = {
+                        param:{
+                            id: row.id
+                        }
+                    }
                     self.$api.dongxw.PurchaseOrderService.export(params);
 
                 });

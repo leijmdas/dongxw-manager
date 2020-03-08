@@ -244,7 +244,7 @@
                     productId: this.productId,
                     rmIds: rmIds.join(','),
                 }
-                console.log(JSON.stringify(rmIds))
+                //console.log(JSON.stringify(rmIds))
                 this.$api.dongxw.BomService.saveByIds(params).then(rsp => {
                     this.$refs.costPanel.search()
                     this.search()

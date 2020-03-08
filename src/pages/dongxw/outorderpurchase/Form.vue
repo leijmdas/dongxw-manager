@@ -7,8 +7,6 @@
                 <el-col :span="24">
                     <product-view :qty="orderLine.qty" v-model="product.id" :labelWidth="'100px'"
                                   :style="'margin-top: 5px'" ref="productView">
-
-
                     </product-view>
                 </el-col>
             </el-row>
