@@ -33,22 +33,22 @@ let router0 = [
         meta: {title: '审批', icon: 'user', group: 'dongxw'},
         children: [
             {
-                path: 'purchasePlan/manage',
+                path: 'purchasePlan/manage1',
                 component: require('@/pages/dongxw/purchase/Manage.vue'),
-                name: 'purchasePlan:manage',
+                name: 'purchasePlan:manage1',
                 meta: {title: '审核订单', perm: 'purchaseplan:manage'}
             },
             {
-                path: 'dongxw/supplier/manage',
+                path: 'dongxw/supplier/manage1',
                 component: require('@/pages/dongxw/supplier/Manage.vue'),
-                name: 'supplier:manage',
+                name: 'supplier:manage1',
                 meta: {title: '审核BOM', perm: 'supplier:manage'}
             },
 
             {
-                path: 'purchase/order',
+                path: 'purchase/order1',
                 component: require('@/pages/dongxw/supplier/Manage.vue'),
-                name: 'purchase:order',
+                name: 'purchase:order1',
                 meta: {title: '审核采购单', perm: 'purchase:manage'}
             },
 
@@ -151,16 +151,17 @@ let router0 = [
         meta: {title: '采购订单', icon: 'user', group: 'dongxw'},
         children: [
             {
-                path: 'purchasePlan/manage',
-                component: require('@/pages/dongxw/purchase/Manage.vue'),
-                name: 'purchasePlan:manage',
-                meta: {title: '采购计划表', perm: 'purchaseplan:manage'}
-            },
-            {
                 path: 'dongxw/supplier/manage',
                 component: require('@/pages/dongxw/supplier/Manage.vue'),
                 name: 'supplier:manage',
                 meta: {title: '供应商名单', perm: 'supplier:manage'}
+            },
+
+            {
+                path: 'purchasePlan/manage',
+                component: require('@/pages/dongxw/purchase/Manage.vue'),
+                name: 'purchasePlan:manage',
+                meta: {title: '采购计划表', perm: 'purchaseplan:manage'}
             },
 
             {
@@ -178,11 +179,12 @@ let router0 = [
         meta: {title: '库存管理', icon: 'user', group: 'dongxw'},
         children: [
             {
-                path: 'userInfo/manage5',
-                //  component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'userInfo:manage5',
-                meta: {title: '物料库存', perm: 'purchase:manage'}
-            }, {
+                path: 'dongxw/stock/manage',
+                component: require('@/pages/dongxw/stock/MainForm.vue'),
+                name: 'stock:manage',
+                meta: {title: '物料库存', perm: 'productType:manage'}
+            },
+            {
                 path: 'userInfo/userGrade2',
                 //   component: require('@/pages/app/userGrade/Manage.vue'),
                 name: 'userGrade:manage2',

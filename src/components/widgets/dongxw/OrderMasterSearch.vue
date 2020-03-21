@@ -8,7 +8,12 @@
                                      :clearable="true"></customer-select>
 
                 </el-form-item>
+                <el-form-item label="订单" prop="id">
+                <order-master-select :customerId="page.query.param.customerId"
+                                     :fnChange="search" v-model="page.query.param.id"
+                :clearable="true"></order-master-select>
 
+                </el-form-item>
                 <el-form-item label="日期">
 
                     <div slot="label">
@@ -184,10 +189,10 @@
 </style>
 <script>
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
-    //import FormPanel from './Form';
+    import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
 
     export default {
-        components: { CustomerSelect},
+        components: { OrderMasterSelect,CustomerSelect},
         props: {
             showBtn  :{
                 type: Boolean,
@@ -241,15 +246,7 @@
 
         methods: {
             onDataloaded(rsp) {
-                // if (rsp.total < 1) return;
-                // let promotionIds = rsp.data.map(r => r.id);
-                // this.$api.ipark.PromotionInfoService.summaryGroupByPromotionId(promotionIds).then(rs => {
-                //     let _rs = rs || [];
-                //     this.summaryMap = {}
-                //     _rs.forEach(r => {
-                //         this.summaryMap[r.promotionId] = r;
-                //     })
-                // })
+
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};

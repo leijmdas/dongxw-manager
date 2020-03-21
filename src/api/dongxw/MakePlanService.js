@@ -25,6 +25,16 @@ export default {
         })
     },
     /**
+     * 查询
+     */
+    queryOrderPlan(data) {
+        return request({
+            url: '/dongxw/makeplan/queryOrderPlan',
+            method: 'POST',
+            data
+        })
+    },
+    /**
      * 导出xlsx
      */
     export(data) {

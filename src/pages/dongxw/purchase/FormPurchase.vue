@@ -3,12 +3,12 @@
     <div>
 
     <v-toolbar title="采购计划表" type="alert">
-        <el-switch slot="tip" style="margin-left:20px; margin-right: 20px" v-model="showPlan"
-                   @change="changeSwitch" active-text="显示计划列表" inactive-text="不显示"
-                   active-color="#13ce66" inactive-color="#ff4949">
-        </el-switch>
+        <!--<el-switch slot="tip" style="margin-left:20px; margin-right: 20px" v-model="showPlan"-->
+                   <!--@change="changeSwitch" active-text="显示计划列表" inactive-text="不显示"-->
+                   <!--active-color="#13ce66" inactive-color="#ff4949">-->
+        <!--</el-switch>-->
         <span v-if="!product.code" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
-                请点左方产品后编辑
+                请点上方订单后编辑
             </span>
         <span v-else slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
                 {{  product.code +" : "+product.epCode +" ( "+product.remark + " )"}}
@@ -20,12 +20,12 @@
 
 
         <v-table ref="table" :page="page" :dblclick="edit"  :table-minheight="450" @dataloaded="onDataloaded">
-            <!--<el-table-column  prop="seq" label="序号" width="50">-->
-                <!--<template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>-->
-            <!--</el-table-column>-->
-            <el-table-column prop="orderId" label="订单" width="110">
-                <span style="color:green"> {{ order? order.customerOrderCode :'-' }} </span>
+            <el-table-column  prop="seq" label="序号" width="50">
+                <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
+            <!--<el-table-column prop="orderId" label="订单" width="110">-->
+                <!--<span style="color:green"> {{ order? order.customerOrderCode :'-' }} </span>-->
+            <!--</el-table-column>-->
             <el-table-column prop="productId" label="产品" width="80">
                 <template slot-scope="{row}">
                     <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
@@ -69,12 +69,12 @@
             </el-table-column>
             <el-table-column prop="totalQty" label="总用量" width="100"></el-table-column>
 
-            <el-table-column prop="width" label="宽封度" width="120"></el-table-column>
-            <el-table-column prop="length" label="长封度" width="120"></el-table-column>
-            <el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>
-            <el-table-column prop="sizeL" label="尺寸(长）" width="120"></el-table-column>
-            <el-table-column prop="sizeX" label="X" width="30"></el-table-column>
-            <el-table-column prop="sizeW" label="尺寸(宽）" width="120"></el-table-column>
+            <!--<el-table-column prop="width" label="宽封度" width="120"></el-table-column>-->
+            <!--<el-table-column prop="length" label="长封度" width="120"></el-table-column>-->
+            <!--<el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>-->
+            <!--<el-table-column prop="sizeL" label="尺寸(长）" width="120"></el-table-column>-->
+            <!--<el-table-column prop="sizeX" label="X" width="30"></el-table-column>-->
+            <!--<el-table-column prop="sizeW" label="尺寸(宽）" width="120"></el-table-column>-->
 
 
             <el-table-column prop="parentId" label="大类" width="80">

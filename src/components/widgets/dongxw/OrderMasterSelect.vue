@@ -88,10 +88,12 @@
                     this.fnChange();
                 }
             },
+
             refresh() {
                 this.loading = true
                 this.$api.dongxw.OrderMaster.query(
                     {
+                        orderBys: 'id|desc',
                         param: {
                             customerId: this.customerId,
                             orderType: this.orderType,
