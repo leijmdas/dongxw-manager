@@ -26,18 +26,18 @@
             <!--<el-table-column prop="orderId" label="订单" width="110">-->
                 <!--<span style="color:green"> {{ order? order.customerOrderCode :'-' }} </span>-->
             <!--</el-table-column>-->
-            <el-table-column prop="productId" label="产品" width="80">
+            <el-table-column :sortable="true" prop="productId" label="产品" width="320">
                 <template slot-scope="{row}">
-                    <span style="color:green"> {{ row.product? row.product.code :'-' }} </span>
+                    <span style="color:green"> {{ row.product? row.product.code+' '+row.product.remark :'-' }} </span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="code" label="物料代码" width="80">
+            <el-table-column :sortable="true" prop="code" label="物料代码" width="100">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.code :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="物料名称" width="120">
+            <el-table-column prop="name" label="物料名称" width="220">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.name :'-' }}
                 </template>
@@ -49,26 +49,26 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="rmDate" label="到位日期" width="95">
+            <el-table-column prop="rmDate" label="到位日期" width="100">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.rmDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="lossQty" label="损耗" width="60">
-                <template slot-scope="{row}">
-                    {{(row.lossQty/row.qty*100).toFixed(0)+'%'}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="pQty" label="每个用量" width="85"></el-table-column>
-            <el-table-column prop="qty" label="用量" width="90"></el-table-column>
+            <!--<el-table-column prop="lossQty" label="损耗" width="60">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{(row.lossQty/row.qty*100).toFixed(0)+'%'}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="pQty" label="每个用量" width="85"></el-table-column>-->
+            <!--<el-table-column prop="qty" label="用量" width="90"></el-table-column>-->
+
+            <el-table-column prop="totalQty" label="总用量" width="100"></el-table-column>
 
             <el-table-column prop="unit" label="单位" width="60">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.unit :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="totalQty" label="总用量" width="100"></el-table-column>
-
             <!--<el-table-column prop="width" label="宽封度" width="120"></el-table-column>-->
             <!--<el-table-column prop="length" label="长封度" width="120"></el-table-column>-->
             <!--<el-table-column prop="knifeQty" label="刀数" width="100"></el-table-column>-->
@@ -77,7 +77,7 @@
             <!--<el-table-column prop="sizeW" label="尺寸(宽）" width="120"></el-table-column>-->
 
 
-            <el-table-column prop="parentId" label="大类" width="80">
+            <el-table-column prop="parentId" label="大类" width="120">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.productType.name :'-' }}
                 </template>
@@ -87,10 +87,10 @@
                     {{ row.childRm ? row.childRm.productSubType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column prop="createDate" label="建档时间" width="120">
+            <el-table-column prop="createDate" label="建档时间" width="160">
             </el-table-column>
 
-            <el-table-column prop="createByName" label="建档人" width="80">
+            <el-table-column prop="createByName" label="建档人" >
             </el-table-column>
 
             <el-table-column width="100" label="操作" :fixed="'right'">

@@ -62,7 +62,7 @@
             </el-header>
             <el-container>
                 <el-main width="60%">
-                    <el-tabs :stretch="false" v-model="activeName">
+                    <el-tabs v-show="order.id" :stretch="false" v-model="activeName">
                         <el-tab-pane style="margin-right: 10px" label="生产计划表" name="mp">
 
                             <v-toolbar title="生产计划表" type="alert">
