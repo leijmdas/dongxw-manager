@@ -55,7 +55,7 @@
             </el-table-column>
             <el-table-column :sortable="true"  prop="name" label="供应商名称" width="220"></el-table-column>
 
-            <el-table-column prop="sname" label="详细名称" width="65"></el-table-column>
+            <!--<el-table-column prop="sname" label="详细名称" width="65"></el-table-column>-->
 
             <!--<el-table-column prop="country" label="国家" width="80"></el-table-column>-->
             <el-table-column prop="addr" label="地址" width="300"></el-table-column>
@@ -72,11 +72,11 @@
             </el-table-column>
             <el-table-column prop="email" label="电子邮箱" width="150">
             </el-table-column>
-            <el-table-column prop="contact" label="联系人" width="150">
+            <el-table-column :sortable="true"  prop="contact" label="联系人" width="150">
             </el-table-column>
-            <el-table-column prop="tel" label="联系人电话" width="180">
+            <el-table-column :sortable="true" prop="tel" label="联系人电话" width="180">
             </el-table-column>
-            <el-table-column prop="fax" label="传真" width="180">
+            <el-table-column :sortable="true" prop="fax" label="传真" width="180">
             </el-table-column>
             <el-table-column prop="remark" label="备注" width="180">
             </el-table-column>

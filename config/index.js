@@ -39,8 +39,8 @@ module.exports = {
                 }
             },
             '/dongxw': {
-                //target: 'http://erp.akunlong.top:10081/dongxw', // 接口的域名
-                 target: 'http://localhost:10081/dongxw', // 接口的域名
+                target: 'http://erp.akunlong.top:10081/dongxw', // 接口的域名
+                 //target: 'http://localhost:10081/dongxw', // 接口的域名
                 //target: 'http://192.168.4.162:10081/dongxw', // 接口的域名
 
                 secure: false,  // 如果是https接口，需要配置这个参数

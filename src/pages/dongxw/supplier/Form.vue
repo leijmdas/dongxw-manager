@@ -9,9 +9,10 @@
         <el-form-item label="供应商名称" prop="name">
             <el-input placeholder="供应商名称" v-model="entity.name"></el-input>
         </el-form-item>
-        <el-form-item label="详细名称" prop="sname">
-            <el-input placeholder="详细名称" v-model="entity.sname"></el-input>
-        </el-form-item>
+        <!--<el-form-item label="详细名称" prop="sname">-->
+            <!--<el-input placeholder="详细名称" v-model="entity.sname"></el-input>-->
+        <!--</el-form-item>-->
+
             <el-row :span="24">
                 <el-col :span="12">
                     <el-form-item label="结算币种" prop="moneyType">
