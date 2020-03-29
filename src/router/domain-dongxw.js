@@ -163,13 +163,13 @@ let router0 = [
                 name: 'purchasePlan:manage',
                 meta: {title: '采购计划表', perm: 'purchaseplan:manage'}
             },
-
             {
-                path: 'purchase/order',
-                component: require('@/pages/dongxw/supplier/Manage.vue'),
-                name: 'purchase:order',
+                path: 'purchaseRm/manage',
+                component: require('@/pages/dongxw/purchaseRm/Manage.vue'),
+                name: 'purchaseRm:manage',
                 meta: {title: '采购订单', perm: 'purchase:manage'}
             },
+
 
         ]
     },

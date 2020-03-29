@@ -48,12 +48,12 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column :sortable="true"  prop="code" label="供应商编码" width="110">
+            <el-table-column :sortable="true"  prop="code" label="供应商编码" width="100">
                 <template slot-scope="{row}">
                     <span :style="'color: blue'">{{ row.code }}</span>
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true"  prop="name" label="供应商名称" width="220"></el-table-column>
+            <el-table-column :sortable="true"  prop="name" label="供应商名称" width="200"></el-table-column>
 
             <!--<el-table-column prop="sname" label="详细名称" width="65"></el-table-column>-->
 
@@ -65,33 +65,34 @@
                 {{$dongxwDict.getText(row.type,$dongxwDict.store.SUPPLY_TYPES)}}
             </template>
             </el-table-column>
+
+            <el-table-column prop="email" label="电子邮箱" width="120">
+            </el-table-column>
+            <el-table-column :sortable="true"  prop="contact" label="联系人" width="120">
+            </el-table-column>
+            <el-table-column :sortable="true" prop="tel" label="联系人电话" width="120">
+            </el-table-column>
+            <el-table-column :sortable="true" prop="fax" label="传真" width="120">
+            </el-table-column>
             <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="email" label="电子邮箱" width="150">
-            </el-table-column>
-            <el-table-column :sortable="true"  prop="contact" label="联系人" width="150">
-            </el-table-column>
-            <el-table-column :sortable="true" prop="tel" label="联系人电话" width="180">
-            </el-table-column>
-            <el-table-column :sortable="true" prop="fax" label="传真" width="180">
-            </el-table-column>
-            <el-table-column prop="remark" label="备注" width="180">
-            </el-table-column>
 
+            <el-table-column prop="createDate" disable  label="建档时间" width="100">
+                <template slot-scope="{row}">
+                    {{row.createDate.substr(0,10)}}
+                </template>
+            </el-table-column>
             <el-table-column prop="status" label="状态" width="60">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
                 </template>
             </el-table-column>
-
-            <el-table-column prop="createDate"  label="建档时间" width="100">
-                <template slot-scope="{row}">
-                    {{row.createDate.substr(0,10)}}
-                </template>
+            <el-table-column prop="remark" label="备注" width="180">
             </el-table-column>
+
             <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 

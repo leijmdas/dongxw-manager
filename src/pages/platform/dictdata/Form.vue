@@ -41,13 +41,13 @@
             </el-col>
             <el-col :span='12'>
                 <el-form-item style='width:100%' label='创建时间' prop='createTime'>
-                    <el-input  placeholder='创建时间' v-model='entity.createTime'>
+                    <el-input  disabled placeholder='创建时间' v-model='entity.createTime'>
                     </el-input>
                 </el-form-item>
             </el-col>
             <el-col :span='12'>
                 <el-form-item style='width:100%' label='创建人' prop='createBy'>
-                    <el-input  placeholder='创建人' v-model='entity.createBy'>
+                    <el-input  disabled placeholder='创建人' v-model='entity.createBy'>
                     </el-input>
                 </el-form-item>
             </el-col>
