@@ -22,8 +22,8 @@
                 </el-form-item>
             </el-col>
             <el-col :span='12'>
-                <el-form-item style='width:100%' label='子系统表' prop='remark'>
-                    <el-input  placeholder='子系统表' v-model='entity.remark'>
+                <el-form-item style='width:100%' label='子系统数据库' prop='remark'>
+                    <el-input  placeholder='子系统数据库' v-model='entity.remark'>
                     </el-input>
                 </el-form-item>
             </el-col>

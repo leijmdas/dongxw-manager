@@ -40,7 +40,7 @@
                     {{row.subsysName}}
                 </template>
             </el-table-column>
-            <el-table-column prop='remark' :sortable='true' label='子系统表'>
+            <el-table-column prop='remark' :sortable='true' label='子系统数据库'>
                 <template slot-scope='{row}'>
                     {{row.remark}}
                 </template>

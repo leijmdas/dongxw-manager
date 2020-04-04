@@ -20,7 +20,7 @@
 
                 <el-col :span="12">
                     <el-form-item label="子系统" prop="subsysId">
-                        <subsys-select style="width:100%" disabled v-model="entity.subsysId" :clearable="true"></subsys-select>
+                        <subsys-select style="width:100%"   v-model="entity.subsysId" :clearable="true"></subsys-select>
                     </el-form-item>
                 </el-col>
             </el-row>
