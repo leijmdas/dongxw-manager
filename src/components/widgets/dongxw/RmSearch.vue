@@ -163,8 +163,14 @@
                 this.resetForm();
                 if (options) {
                     this.options = {
-                        prdFlagNot: options.prdFLag,
-                        customerId: options.customerId
+                        prdFlagNot: 0, //options.prdFLag,
+                        customerId: 0, //options.customerId
+                    }
+                    Object.assign(this.entity, options)
+                }else{
+                    this.options = {
+                        prdFlagNot: 0,
+                        customerId: 0
                     }
                     Object.assign(this.entity, options)
                 }
@@ -182,7 +188,7 @@
                 this.$api.dongxw.ProductService.query({
                     param: {
                         prdFlagNot : 0,
-                        customerId:this.customerId,
+                        customerId : 0,
                         productTypeId: this.entity.productTypeId,
                         parentId: this.entity.parentId,
                         color: this.entity.color,

@@ -3,16 +3,16 @@
     <el-form :model="entity" label-width="90px" :rules="rules"
              style="margin-right: 10px" ref="form" class="dialog-form">
 
-        <rm-view v-model="entity.productId" ref="productView"  :style="'margin-top: 5px'" >
+        <product-view v-model="entity.productId" ref="productView"  :style="'margin-top: 5px'" >
 
-        </rm-view>
+        </product-view>
         <el-collapse>
 
-            <el-collapse-item ref="productSelectDlg" title="选择物料" style="margin-left:4%;width:96%">
-                <rm-search v-model="entity.productId"
+            <el-collapse-item ref="productSelectDlg" title="选择产品" style="margin-left:4%;width:96%">
+                <product-search v-model="entity.productId"
                                 :customerId="entity.customerId" :clearable="true"
                                 :style="'margin-bottom: -20px'"  >
-                </rm-search>
+                </product-search>
             </el-collapse-item>
         </el-collapse>
         <el-row>
@@ -99,8 +99,8 @@
 
 <script>
 
-    import RmView from '@/components/widgets/dongxw/RmView.vue';
-    import RmSearch from '@/components/widgets/dongxw/RmSearch.vue';
+    import ProductView from '@/components/widgets/dongxw/ProductView.vue';
+    import ProductSearch from '@/components/widgets/dongxw/ProductSearch.vue';
 
     const defaultEntity = {
         id: null,
@@ -119,7 +119,7 @@
         status: 1
     };
     export default {
-        components: {RmView, RmSearch},
+        components: {ProductView, ProductSearch},
         data() {
             return {
                 isExp :false,

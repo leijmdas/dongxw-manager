@@ -61,13 +61,14 @@
             <!--</el-table-column>-->
             <!--<el-table-column prop="pQty" label="每个用量" width="85"></el-table-column>-->
             <!--<el-table-column prop="qty" label="用量" width="90"></el-table-column>-->
-
-            <el-table-column prop="totalQty" label="总用量" width="100"></el-table-column>
-
             <el-table-column prop="unit" label="单位" width="60">
                 <template slot-scope="{row}">
                     {{ row.childRm? row.childRm.unit :'-' }}
                 </template>
+            </el-table-column>
+            <el-table-column prop="totalQty" label="总用量" width="100"></el-table-column>
+
+            <el-table-column prop="price" label="单价" width="60">
             </el-table-column>
             <!--<el-table-column prop="width" label="宽封度" width="120"></el-table-column>-->
             <!--<el-table-column prop="length" label="长封度" width="120"></el-table-column>-->

@@ -13,7 +13,7 @@
         </v-toolbar>
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='350' @dataloaded='onDataloaded'>
 
-            <el-table-column prop='code' :sortable='true' label='EP货号' width='120'>
+            <el-table-column prop='code' :sortable='true' label='EP编号' width='120'>
                 <template slot-scope='{row}'><span style='color:black'>
 			    {{row.product.code}}</span>
                 </template>
@@ -81,7 +81,7 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog :appendToBody="true" ref="formDlg" width="50%" title="采购订单表">
+        <v-dialog :appendToBody="true" ref="formDlg" width="50%" title="采购计划表">
 
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right: 60px">
@@ -90,7 +90,7 @@
             </div>
         </v-dialog>
 
-        <v-dialog :appendToBody="true" ref="formDlgMultiSelect" width="60%" title="采购计划表">
+        <v-dialog :appendToBody="true" ref="formDlgMultiSelect" width="50%" title="采购计划表">
 
             <form-multi-select ref="formMultiSelect" @saved="onFormSaved"></form-multi-select>
             <div slot="footer" style="margin-right: 60px">
@@ -134,7 +134,7 @@
 </style>
 <script>
     import FormPanel from './FormItem';
-    import FormMultiSelect from '@/components/widgets/dongxw/PurchaseplanMultiSelect.vue';
+    import FormMultiSelect from '@/components/widgets/dongxw/MakeplanMultiSelect.vue';
 
     export default {
         components: {FormMultiSelect, FormPanel},
@@ -188,9 +188,9 @@
                 let selectedRows = this.$refs.formMultiSelect.getSelectedRows()
                 let params = {
                     purchaseOrderId: this.purchaseOrderId,
-                    purchasePlanIds: selectedRows.map(x => x.id).join(),
+                    makePlanIds: selectedRows.map(x => x.id).join(),
                 }
-                if(params.purchasePlanIds.trim().length>0) {
+                if(params.makePlanIds.trim().length>0) {
                     this.$api.dongxw.PurchaseOrderItemService.saveMulti(params).then(rsp => {
                         this.$msgJsonResult(rsp)
                         this.search()

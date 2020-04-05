@@ -176,12 +176,17 @@
                 this.resetForm();
                 if (options) {
                     this.options = {
-                        prdFlag: options.prdFLag,
+                        prdFlag: 0,//options.prdFLag,
                         customerId: options.customerId
                     }
                     Object.assign(this.entity, options)
+                }else{
+                    this.options = {
+                        prdFlag: 0
+                    }
+                    Object.assign(this.entity, options)
                 }
-                //this.$nextTick(() => this.refresh());
+                this.$nextTick(() => this.refresh());
 
             },
             cancel() {
