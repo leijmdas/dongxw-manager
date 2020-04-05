@@ -12,37 +12,15 @@
         </v-toolbar>
 
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
-            <el-table-column prop='epOrderCode' :sortable='true' label='客户订单' width='180'>
-                <template slot-scope='{row}'>
-                    <span style='color:black'>	 {{ row.orderMaster.epOrderCode }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop='purchaseOrderCode' :sortable='true' label='采购单号' width='160'>
+
+            <el-table-column prop='purchaseOrderCode' :sortable='true' label='订单编号' width='160'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.purchaseOrderCode}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='supplierName' :sortable='true' label='供应商' width='180'>
-                <template slot-scope='{row}'><span style='color:black'>
-			        {{row.supplierName}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop='contact' :sortable='true' label='联系人' width='120'>
-                <template slot-scope='{row}'><span style='color:black'>
-			{{row.contact}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop='tel' :sortable='true' label='电话' width='160'>
-                <template slot-scope='{row}'><span style='color:black'>
-			{{row.tel}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop='moneyType' :sortable='true' label='币种' width='120'>
-                <template slot-scope='{row}'>
-                    {{DICT.MONEYTYPE[row.moneyType]}}
-                </template>
-            </el-table-column>
-            <el-table-column prop='openDate' :sortable='true' label='开单日期' width='111'>
+
+
+            <el-table-column prop='openDate' :sortable='true' label='订货日期' width='111'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.openDate}}</span>
                 </template>
@@ -52,7 +30,31 @@
 			{{row.issueDate}}</span>
                 </template>
             </el-table-column>
-
+            <el-table-column prop='supplierName' :sortable='true' label='供应商' width='180'>
+                <template slot-scope='{row}'><span style='color:black'>
+			        {{row.supplierName}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop='addr' :sortable='true' label='地址' width='120'>
+                <template slot-scope='{row}'><span style='color:black'>
+			{{row.supplier.addr}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop='contact' :sortable='true' label='联系人' width='120'>
+                <template slot-scope='{row}'><span style='color:black'>
+			{{row.supplier.contact}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop='tel' :sortable='true' label='电话' width='160'>
+                <template slot-scope='{row}'><span style='color:black'>
+			{{row.supplier.tel}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop='fax' :sortable='true' label='传真' width='160'>
+                <template slot-scope='{row}'><span style='color:black'>
+			{{row.supplier.fax}}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop='remark' :sortable='true' label='备注' width='120'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.remark}}</span>
@@ -134,8 +136,8 @@
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            prdFlg: 0,
                             customerId: undefined,
+                            prdFlg:200,
                             isDeleted: false
                         }
                     },

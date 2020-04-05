@@ -4,40 +4,7 @@
 
             <el-row :span='24'>
                 <el-col :span='12'>
-                    <el-form-item style='width:100%' label='订单号' prop='epOrderCode'>
-                        <el-input disabled placeholder='客户订单' v-model='epOrderCode'>
-                        </el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span='12'>
-                    <el-form-item style='width:100%' label='采购单号' prop='purchaseOrderCode'>
-                        <el-input disabled placeholder='采购单号' v-model='entity.purchaseOrderCode'>
-                        </el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span='12'>
-                    <el-form-item style='width:100%' label='联系人' prop='contact'>
-                        <el-input placeholder='联系人' v-model='entity.contact'>
-                        </el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span='12'>
-                    <el-form-item style='width:100%' label='电话' prop='tel'>
-                        <el-input placeholder='电话' v-model='entity.tel'>
-                        </el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span='12'>
-                    <el-form-item style='width:100%' label='币种' prop='moneyType'>
-                        <el-select style='width:100%' v-model='entity.moneyType'>
-                            <el-option :key='100' :value='100' :label='"100--人民币"'></el-option>
-                            <el-option :key='200' :value='200' :label='"200--美元"'></el-option>
-                            <el-option :key='300' :value='300' :label='"300--港币"'></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span='12'>
-                    <el-form-item style='width:100%' label='开单日期' prop='openDate'>
+                    <el-form-item style='width:100%' label='订货日期' prop='openDate'>
                         <el-date-picker style='width:100%' v-model='entity.openDate' format='yyyy 年 MM 月 dd 日'
                                         value-format='yyyy-MM-dd HH:mm:ss' type='date'
                                         placeholder='选择日期'></el-date-picker>
@@ -55,6 +22,38 @@
                         <supplier-select :style="'width:100%'" v-model='entity.supplyId'></supplier-select>
                     </el-form-item>
                 </el-col>
+                <el-col :span='12'>
+                    <el-form-item style='width:100%' label='订单编号' prop='purchaseOrderCode'>
+                        <el-input disabled placeholder='订单编号' v-model='entity.purchaseOrderCode'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span='12'>
+                    <el-form-item style='width:100%' label='地址' prop='addr'>
+                        <el-input disabled placeholder='电话' v-model='entity.supplier.addr'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span='12'>
+                    <el-form-item style='width:100%' label='联系人' prop='contact'>
+                        <el-input disabled placeholder='联系人' v-model='entity.supplier.contact'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span='12'>
+                    <el-form-item style='width:100%' label='电话' prop='tel'>
+                        <el-input disabled placeholder='电话' v-model='entity.supplier.tel'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span='12'>
+                    <el-form-item style='width:100%' label='传真' prop='fax'>
+                        <el-input disabled placeholder='电话' v-model='entity.supplier.fax'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+
+
                 <el-col :span='12'>
                     <el-form-item style='width:100%' label='创建时间' prop='createTime'>
                         <el-input disabled placeholder='创建时间' v-model='entity.createTime'>
@@ -130,6 +129,7 @@
     const defaultEntity = {
         id: null,	//  标识
         purchaseOrderCode: '',
+        supplier: {},
         orderId: 0,	//  客户订单
         supplyId: 0,	//  供应商
         contact:  ' ' ,	//  联系人
@@ -137,7 +137,7 @@
         moneyType: 100,	//  币种
         openDate:  null,	//  开单日期
         issueDate:  null,	//  交货日期
-        prdFlg:  0,	//  存货分类
+        prdFlg:  200,	//  存货分类
         remark:  '' ,	//  备注
         createTime: null ,	//  创建时间
         createBy:  0,	//  创建人

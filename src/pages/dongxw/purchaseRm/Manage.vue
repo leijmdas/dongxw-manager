@@ -64,6 +64,7 @@
                 <el-main width="60%">
                     <el-tabs v-show="order.id" :stretch="false" v-model="activeName">
                         <el-tab-pane style="margin-right: 10px" label="物料采购订单" name="po">
+                                  <purchase-panel ref="purchasePanel" v-model="order"></purchase-panel>
 
                         </el-tab-pane>
                         <el-tab-pane label="采购计划表" name="pp">
@@ -97,12 +98,13 @@
     import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
     import FormPanel from './Form';
     import FormPurchase from './FormPurchase';
+    import PurchasePanel from '../purchaseItem/Manage.vue';
 
     const defaultMakeplan = {
         product: {},
     }
     export default {
-        components: { FormPurchase, OrderSearch, OrderMasterSelect, FormPanel, CustomerSelect},
+        components: { PurchasePanel,FormPurchase, OrderSearch, OrderMasterSelect, FormPanel, CustomerSelect},
         props: {
             fatherMethod: {
                 type: Function,
