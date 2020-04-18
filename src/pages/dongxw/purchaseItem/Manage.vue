@@ -2,7 +2,7 @@
 <template>
     <div>
 
-        <v-toolbar title="采购订单列表" type="alert">
+        <v-toolbar title="采购订单表" type="alert">
             <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
 
             <el-button type="primary" plain @click="create" style="margin-right:60px;color :green">

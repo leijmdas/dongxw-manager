@@ -63,7 +63,7 @@
             <el-container>
                 <el-main width="60%">
                     <el-tabs v-show="order.id" :stretch="false" v-model="activeName">
-                        <el-tab-pane style="margin-right: 10px" label="物料采购订单" name="po">
+                        <el-tab-pane style="margin-right: 10px" label="物料采购单" name="po">
                                   <purchase-panel ref="purchasePanel" v-model="order"></purchase-panel>
 
                         </el-tab-pane>
