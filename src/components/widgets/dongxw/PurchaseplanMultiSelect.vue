@@ -15,7 +15,7 @@
 
         <el-table-column prop="name" label="物料名称" width="120">
             <template slot-scope="{row}">
-                {{ row.childRm?row.childRm.code:'-'}}
+                {{ row.childRm?row.childRm.name:'-'}}
             </template>
         </el-table-column>
         <el-table-column prop="remark" label="规格型号" width="140">

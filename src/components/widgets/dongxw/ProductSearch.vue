@@ -145,6 +145,11 @@
             customerId: {
                 type: Number
             },
+            //外发单使用
+            productId: {
+                type: Number,
+                default:0,
+            },
 
         },
         computed: {
@@ -158,9 +163,12 @@
             }
         },
         watch: {
-            customerId :function(){
+            customerId: function () {
                 this.$nextTick(() => this.refresh());
-            }
+            },
+            productId: function () {
+                this.$nextTick(() => this.refreshByProduct());
+            },
         },
         methods: {
             defaultValue()
@@ -194,8 +202,7 @@
                 Object.assign(this.entity, this.options)
 
                 this.refresh()
-            },
-            refresh() {
+            }, refresh() {
                 if(this.customerId) {
                     this.loading = true
                     this.$api.dongxw.ProductService.query({
@@ -217,7 +224,29 @@
                         this.loading = false
                     })
                 }
-            }
+            },
+            refreshByProduct() {
+            this.loading = true
+            this.$api.dongxw.ProductService.query({
+                param: {
+                    prdFlag: 0,
+                    //customerId: this.customerId,
+                    productTypeId: this.entity.productTypeId,
+                    parentId: this.entity.parentId,
+                    color: this.entity.color,
+                    size: this.entity.size,
+                    code: this.entity.code,
+                    epCode: this.entity.epCode,
+                    remark: this.entity.remark,
+
+                    isDeleted: false
+                }
+            }).then(rsp => {
+                this.options = rsp.data
+                this.loading = false
+            })
+        }
+
         },
         created() {
             //this.refresh()

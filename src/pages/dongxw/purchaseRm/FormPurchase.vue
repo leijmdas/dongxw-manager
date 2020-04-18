@@ -108,19 +108,20 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag"  :width="'750px'" title="信息编辑">
+        <v-dialog ref="formDiag" :width="'750px'" title="信息编辑">
             <form-panel :productId="productId" @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
-                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
+                <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
-    .el-input{
+    .el-input {
         width: 160px;
     }
+
     .status_green {
         color: red;
     }

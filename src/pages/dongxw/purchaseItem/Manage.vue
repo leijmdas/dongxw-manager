@@ -6,11 +6,11 @@
             <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
 
             <el-button type="primary" plain @click="create" style="margin-right:60px;color :green">
-                新增采购单
+                新增采购单(根据客户订单)
             </el-button>
 
-            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-            <el-button @click="cancel" style="margin-right:60px;color :yellowgreen">取消</el-button>
+            <el-button type="primary" @click="search" v-keycode="'ENTER'">刷新</el-button>
+            <!--<el-button @click="cancel" style="margin-right:60px;color :yellowgreen">取消</el-button>-->
             <!--<el-button plain @click="exportRecords">导出XLS</el-button>-->
         </v-toolbar>
 

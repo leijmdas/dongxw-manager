@@ -1,31 +1,19 @@
 <template>
     <v-table ref="table" :multi="true" :page="page"  :table-minheight="250"  >
 
-        <el-table-column prop="seq" label="序号" width="50">
-            <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
-        </el-table-column>
+        <!--<el-table-column prop="seq" label="序号" width="50">-->
+            <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
+        <!--</el-table-column>-->
 
-        <el-table-column prop="outFlag" label="外发？" width="70">
+        <el-table-column prop="outFlag" label="外发" width="70">
             <template slot-scope="{row}">
                     <span :style="row.outFlag==1?'color:blue':''">
                     {{$dongxwDict.getText(row.outFlag,$dongxwDict.store.OUT_FLAG)}}
                         </span>
             </template>
         </el-table-column>
-        <el-table-column prop="outPrepareRm" label="外发备料" width="80">
-            <template slot-scope="{row}">
-                    <span :style="row.outPrepareRm==1?'color:blue':''">
-                    {{$dongxwDict.getText(row.outPrepareRm,$dongxwDict.store.YESNO_TYPE)}}
-                        </span>
-            </template>
-        </el-table-column>
-        <el-table-column prop="status" label="状态" width="100">
-            <template slot-scope="{row}">
-                    <span :style="checkColor(row)">
-                    {{$dongxwDict.getText(row.status,$dongxwDict.store.AUDIT_STATUS)}}
-                        </span>
-            </template>
-        </el-table-column>
+
+
         <el-table-column prop="customerId" label="客户名称" width="110">
             <template slot-scope="{row}">
                 {{ row.customer?row.customer.custName:'-'}}
@@ -65,7 +53,20 @@
                 {{ row.orderLine?row.orderLine.qty:'-'}}
             </template>
         </el-table-column>
-
+        <el-table-column prop="status" label="状态" width="100">
+            <template slot-scope="{row}">
+                    <span :style="checkColor(row)">
+                    {{$dongxwDict.getText(row.status,$dongxwDict.store.AUDIT_STATUS)}}
+                        </span>
+            </template>
+        </el-table-column>
+        <el-table-column prop="outPrepareRm" label="外发备料" width="80">
+            <template slot-scope="{row}">
+                    <span :style="row.outPrepareRm==1?'color:blue':''">
+                    {{$dongxwDict.getText(row.outPrepareRm,$dongxwDict.store.YESNO_TYPE)}}
+                        </span>
+            </template>
+        </el-table-column>
         <el-table-column prop="backupQty" label="备品" width="100"></el-table-column>
 
         <el-table-column prop="orderDate" label="接单日期" width="100">

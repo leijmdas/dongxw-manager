@@ -7,22 +7,25 @@
                        v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
             </el-switch>
 
-            <el-button type="primary"  plain @click="createMulti">多选新增</el-button>
-            <el-button type="primary"  plain @click="search">查询</el-button>
+            <el-button type="primary"  plain @click="createMulti" style="margin-right: 20px;color:green" >多选新增(根据外发计划)</el-button>
+            <el-button type="primary"  plain @click="search">刷新</el-button>
 
         </v-toolbar>
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='350' @dataloaded='onDataloaded'>
+            <el-table-column prop="seq" label="序号" width="50">
+            <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+            </el-table-column>
 
-            <el-table-column prop='productId' :sortable='true' label='产品款号' width='120'>
+            <el-table-column prop='productId' :sortable='true' label='产品款号' width='170'>
                 <template slot-scope='{row}'><span style='color:black'>
-			    {{row.product.epCode}}</span>
+			    {{row.product.code+' ('+row.product.epCode+")"}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='productId1' :sortable='true' label='条形码' width='120'>
-                <template slot-scope='{row}'><span style='color:black'>
-			    {{row.product.barCode}}</span>
-                </template>
-            </el-table-column>
+            <!--<el-table-column prop='productId1' :sortable='true' label='条形码' width='120'>-->
+                <!--<template slot-scope='{row}'><span style='color:black'>-->
+			    <!--{{row.product.barCode}}</span>-->
+                <!--</template>-->
+            <!--</el-table-column>-->
             <el-table-column prop='productId11' :sortable='true' label='产品描述' width='180'>
                 <template slot-scope='{row}'><span style='color:black'>
 			    {{row.product.remark}}</span>

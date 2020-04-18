@@ -56,8 +56,7 @@
             </el-form>
         </div>
         <v-toolbar title="计划列表" type="alert">
-
-               <span v-if="!order.epOrderCode" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
+            <span v-if="!order.epOrderCode" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
                 请点上方订单后编辑计划
             </span>
             <span v-else slot="tip" style="color:green;margin-left: 40px;margin-top: 40px">
@@ -72,35 +71,23 @@
             <el-tab-pane style="margin-right: 10px" label="外发采购单" name="outPurchase">
                 <purchase-panel ref="purchasePanel" v-model="order"></purchase-panel>
             </el-tab-pane>
-            <el-tab-pane style="margin-right: 10px" label="外发计划" name="outInfo">
+            <el-tab-pane style="margin-right: 10px" label="外发计划表" name="outInfo">
 
                 <v-table ref="table" :multi="true" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
 
-                    <el-table-column prop="seq" label="序号" width="50">
-                        <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
-                    </el-table-column>
+                    <!--<el-table-column prop="seq" label="序号" width="50">-->
+                        <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
+                    <!--</el-table-column>-->
 
-                    <el-table-column prop="outFlag" label="外发？" width="70">
+                    <el-table-column prop="outFlag" label="外发" width="70">
                         <template slot-scope="{row}">
                     <span :style="row.outFlag==1?'color:blue':''">
                     {{$dongxwDict.getText(row.outFlag,$dongxwDict.store.OUT_FLAG)}}
                         </span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="outPrepareRm" label="外发备料" width="80">
-                        <template slot-scope="{row}">
-                    <span :style="row.outPrepareRm==1?'color:blue':''">
-                    {{$dongxwDict.getText(row.outPrepareRm,$dongxwDict.store.YESNO_TYPE)}}
-                        </span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="status" label="状态" width="100">
-                        <template slot-scope="{row}">
-                    <span :style="checkColor(row)">
-                    {{$dongxwDict.getText(row.status,$dongxwDict.store.AUDIT_STATUS)}}
-                        </span>
-                        </template>
-                    </el-table-column>
+
+
                     <el-table-column prop="customerId" label="客户名称" width="110">
                         <template slot-scope="{row}">
                             {{ row.customer?row.customer.custName:'-'}}
@@ -108,7 +95,6 @@
                     </el-table-column>
 
                     <!--<el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>-->
-
                     <el-table-column prop="customerOrderCode" label="客订单号" width="110">
                         <template slot-scope="{row}">
                             {{ row.orderMaster?row.orderMaster.customerOrderCode:'-'}}
@@ -141,8 +127,21 @@
                         </template>
                     </el-table-column>
 
-                    <el-table-column prop="backupQty" label="备品" width="100"></el-table-column>
-
+                    <el-table-column prop="backupQty" label="备品数量" width="100"></el-table-column>
+                    <el-table-column prop="status" label="状态" width="80">
+                        <template slot-scope="{row}">
+                    <span :style="checkColor(row)">
+                    {{$dongxwDict.getText(row.status,$dongxwDict.store.AUDIT_STATUS)}}
+                        </span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="outPrepareRm" label="外发备料" width="80">
+                        <template slot-scope="{row}">
+                    <span :style="row.outPrepareRm==1?'color:blue':''">
+                    {{$dongxwDict.getText(row.outPrepareRm,$dongxwDict.store.YESNO_TYPE)}}
+                        </span>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="orderDate" label="接单日期" width="100">
                         <template slot-scope="{row}">
                             {{ $dongxwDict.viewDate(row.orderDate)}}

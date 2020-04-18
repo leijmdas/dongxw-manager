@@ -9,8 +9,8 @@
         <el-collapse>
 
             <el-collapse-item ref="productSelectDlg" title="选择产品" style="margin-left:4%;width:96%">
-                <product-search v-model="entity.productId"
-                                :customerId="entity.customerId" :clearable="true"
+                <product-search disabled v-model="entity.productId"
+                                :productId="entity.productId" :clearable="true"
                                 :style="'margin-bottom: -20px'"  >
                 </product-search>
             </el-collapse-item>
@@ -104,7 +104,7 @@
 
     const defaultEntity = {
         id: null,
-        customerId: null,
+        customerId: 0,
         orderId : null,
         productId : null,
         productTypeId : null,
@@ -123,7 +123,7 @@
         data() {
             return {
                 isExp :false,
-                customerId : null,
+                customerId : 0,
                 orderId : null,
                 activeName: 'orderInfo',
                 ruleTpl: {when: null, then: null},

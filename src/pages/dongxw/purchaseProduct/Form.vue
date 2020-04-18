@@ -3,30 +3,34 @@
         <el-form :model='entity' :rules='rules' ref='form' label-width='100px' class='dialog-form'>
 
             <el-row :span='24'>
-                <el-col :span='12'>
-                    <el-form-item style='width:100%' label='订单号' prop='epOrderCode'>
-                        <el-input disabled placeholder='客户订单' v-model='epOrderCode'>
-                        </el-input>
-                    </el-form-item>
-                </el-col>
+
+
                 <el-col :span='12'>
                     <el-form-item style='width:100%' label='采购单号' prop='purchaseOrderCode'>
                         <el-input disabled placeholder='采购单号' v-model='entity.purchaseOrderCode'>
                         </el-input>
                     </el-form-item>
                 </el-col>
+
                 <el-col :span='12'>
-                    <el-form-item style='width:100%' label='联系人' prop='contact'>
-                        <el-input placeholder='联系人' v-model='entity.contact'>
+                    <el-form-item style='width:100%' label='客户单号' prop='epOrderCode'>
+                        <el-input disabled placeholder='客户单号' v-model='epOrderCode'>
                         </el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span='12'>
-                    <el-form-item style='width:100%' label='电话' prop='tel'>
-                        <el-input placeholder='电话' v-model='entity.tel'>
-                        </el-input>
+                    <el-form-item label='供应商' prop='name'>
+                        <el-button type="primary" :style="'width:100%'" plain   @click="findSupplier" style=" color :green">
+                            {{entity.supplier.name?entity.supplier.name:"请选择供应商"}}
+                        </el-button>
                     </el-form-item>
                 </el-col>
+                <!--<el-col :span='12'>-->
+                    <!--<el-form-item label='供应商' prop='supplyId'>-->
+                        <!--<supplier-select :style="'width:100%'" v-model='entity.supplyId'></supplier-select>-->
+                    <!--</el-form-item>-->
+                <!--</el-col>-->
+
                 <el-col :span='12'>
                     <el-form-item style='width:100%' label='币种' prop='moneyType'>
                         <el-select style='width:100%' v-model='entity.moneyType'>
@@ -51,8 +55,23 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span='12'>
-                    <el-form-item label='供应商' prop='supplyId'>
-                        <supplier-select :style="'width:100%'" v-model='entity.supplyId'></supplier-select>
+                    <el-form-item style='width:100%' label='联系人' prop='contact'>
+                        <el-input placeholder='联系人' v-model='entity.contact'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span='12'>
+                    <el-form-item style='width:100%' label='电话' prop='tel'>
+                        <el-input placeholder='电话' v-model='entity.tel'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+
+
+                <el-col :span='24'>
+                    <el-form-item style='margin-top:10px;margin-bottom:10px;width:100%' label='备注' prop='remark'>
+                        <el-input type='textarea' :rows='3' placeholder='备注' v-model='entity.remark'>
+                        </el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span='12'>
@@ -61,26 +80,28 @@
                         </el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span='24'>
-                    <el-form-item style='width:100%' label='备注' prop='remark'>
-                        <el-input type='textarea' :rows='2' placeholder='备注' v-model='entity.remark'>
+                <el-col :span='12'>
+                    <el-form-item style='width:100%' label='创建人' prop='createBy'>
+                        <el-input disabled placeholder='创建人' v-model='entity.createBy'>
                         </el-input>
                     </el-form-item>
                 </el-col>
-
-                <!--<el-col :span='12'>-->
-                    <!--<el-form-item style='width:100%' label='创建人' prop='createBy'>-->
-                        <!--<el-input disabled placeholder='创建人' v-model='entity.createByName'>-->
-                        <!--</el-input>-->
-                    <!--</el-form-item>-->
-                <!--</el-col>-->
             </el-row>
         </el-form>
         <v-toolbar  type="alert">
             <slot>
             </slot>
         </v-toolbar>
+
         <manage-item ref="formPanel" v-show="entity.id">  </manage-item>
+        <v-dialog ref="formDiag" :appendToBody="true" title="查找" :width="'48%'">
+            <supplier-find  v-model="entity.supplyId" :confirmFind="confirmFind" :cancelFind="cancelFind">
+                <!--<el-button type="primary" @click="$refs.formDiag.dispatch('submit')">确定</el-button>-->
+                <!--<el-button type="default" @click="()=>{$refs.formDiag.hide();}">取消</el-button>-->
+            </supplier-find>
+
+        </v-dialog>
+
     </div>
 </template>
 <style lang="less" scoped>
@@ -126,8 +147,10 @@
     import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
     import SupplierSelect from '@/components/widgets/dongxw/SupplierSelect.vue';
     import ManageItem from './ManageItem.vue'
+    import SupplierFind from '@/components/widgets/dongxw/SupplierMultiSelect.vue';
 
     const defaultEntity = {
+
         id: null,	//  标识
         purchaseOrderCode: '',
         orderId: 0,	//  客户订单
@@ -140,10 +163,11 @@
         prdFlg:  0,	//  存货分类
         remark:  '' ,	//  备注
         createTime: null ,	//  创建时间
-        createBy:  0,	//  创建人
+        createBy:  0,	    //  创建人
+        supplier:{},
     };
     export default {
-        components: {ManageItem,OrderMasterSelect,CustomerSelect, SupplierSelect},
+        components: {SupplierFind,ManageItem,OrderMasterSelect,CustomerSelect, SupplierSelect},
         props:{
             customerOrder : {
                 type: Object,
@@ -171,38 +195,28 @@
                 limitTotal: false,
                 rules: {
 
-                    name: [
-                        {required: true, message: "名称不能为空", trigger: "blur"},
-                        {
-                            min: 1,
-                            max: 128,
-                            message: "长度在 1 到 128 个字符",
-                            trigger: "blur"
-                        }
-                    ],
-                    // epOrderCode: [
-                    //     {required: true, message: "EP订单号", trigger: "blur"},
-                    //     {
-                    //         min: 1,
-                    //         max: 128,
-                    //         message: "长度在 1 到 128 个字符",
-                    //         trigger: "blur"
-                    //     }
-                    // ],
-                    // customerOrderCode: [
-                    //     {required: true, message: "客户订单号", trigger: "blur"},
-                    //     {
-                    //         min: 1,
-                    //         max: 128,
-                    //         message: "长度在 1 到 128 个字符",
-                    //         trigger: "blur"
-                    //     }
-                    // ],
 
                 }
             };
         },
         methods: {
+            findSupplier() {
+                this.$refs.formDiag.show();
+
+            },
+            confirmFind(row) {
+                this.$refs.formDiag.hide();
+                this.entity.supplyId = row.id
+                this.$api.dongxw.SupplierService.findById(this.entity.supplyId ).then(rsp => {
+                    this.entity.supplier = rsp.data
+                    this.entity.contact=this.entity.supplier.contact
+                    this.entity.tel=this.entity.supplier.tel
+                })
+            },
+            cancelFind() {
+                this.$refs.formDiag.hide();
+            },
+
             getProps(scope) {
                 return this.entity.props.filter(p => p.propScope == scope);
             },

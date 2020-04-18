@@ -3,38 +3,35 @@
     <div>
 
         <v-toolbar title="采购订单列表" type="alert">
-            <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
+            <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入外发订单修改! </span>
+            <el-button type="primary" plain @click="create" :style="'margin-right:30px'">新增采购单（根据计划）</el-button>
 
-            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-            <el-button @click="cancel">取消</el-button>
-            <!--<el-button plain @click="exportRecords">导出XLS</el-button>-->
-            <el-button type="primary" plain @click="create">新增</el-button>
-        </v-toolbar>
+            <el-button type="primary" @click="search" v-keycode="'ENTER'">刷新</el-button>
+            <!--<el-button @click="cancel">取消</el-button>-->
+         </v-toolbar>
 
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
-            <el-table-column prop='epOrderCode' :sortable='true' label='客户订单' width='180'>
+            <el-table-column prop="seq" label="序号" width="50">
+
+                <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+
+            </el-table-column>
+            <el-table-column prop='purchaseOrderCode' :sortable='true' label='采购单号' width='160'>
+                <template slot-scope='{row}'><span style='color:black'>
+			        {{row.purchaseOrderCode}}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column prop='epOrderCode' :sortable='true' label='客户单号' width='160'>
                 <template slot-scope='{row}'>
                     <span style='color:black'>	 {{ row.orderMaster.epOrderCode }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='purchaseOrderCode' :sortable='true' label='采购单号' width='160'>
-                <template slot-scope='{row}'><span style='color:black'>
-			{{row.purchaseOrderCode}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop='supplierName' :sortable='true' label='供应商' width='180'>
+
+
+            <el-table-column prop='supplierName' :sortable='true' label='供应商' width='220'>
                 <template slot-scope='{row}'><span style='color:black'>
 			        {{row.supplierName}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop='contact' :sortable='true' label='联系人' width='120'>
-                <template slot-scope='{row}'><span style='color:black'>
-			{{row.contact}}</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop='tel' :sortable='true' label='电话' width='160'>
-                <template slot-scope='{row}'><span style='color:black'>
-			{{row.tel}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop='moneyType' :sortable='true' label='币种' width='120'>
@@ -53,11 +50,19 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop='remark' :sortable='true' label='备注' width='120'>
+            <el-table-column prop='contact' :sortable='true' label='联系人' width='120'>
                 <template slot-scope='{row}'><span style='color:black'>
-			{{row.remark}}</span>
+			        {{row.contact}}</span>
                 </template>
             </el-table-column>
+
+            <el-table-column prop='tel' :sortable='true' label='电话' width='160'>
+                <template slot-scope='{row}'><span style='color:black'>
+			{{row.tel}}</span>
+                </template>
+            </el-table-column>
+
+
             <el-table-column prop='createTime' :sortable='true' label='创建时间' width='121'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.createTime}}</span>
@@ -65,9 +70,16 @@
             </el-table-column>
             <el-table-column prop='createByName' :sortable='true' label='创建人' width='111'>
                 <template slot-scope='{row}'><span style='color:black'>
-			{{row.createByName}}</span>
+			        {{row.createByName}}</span>
                 </template>
             </el-table-column>
+
+            <el-table-column prop='remark' :sortable='true' label='备注' width='120'>
+                <template slot-scope='{row}'><span style='color:black'>
+			{{row.remark}}</span>
+                </template>
+            </el-table-column>
+
             <el-table-column width='140' label='操作' :fixed='"right"'>
                 <template slot-scope='scope'>
                     <el-button  title='导出' @click='exportRecords(scope.row)'>
