@@ -7,8 +7,10 @@
                        v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
             </el-switch>
 
-            <el-button type="primary"  plain @click="createMulti">多选新增</el-button>
-            <el-button type="primary"  plain @click="search">查询</el-button>
+            <el-button type="primary"  plain @click="createMulti">多选新增（按采购计划）</el-button>
+            <!--<el-button type="primary"  plain @click="create">多选新增（无采购计划）</el-button>-->
+            <el-button type="primary"  plain @click="create">新增（无采购计划）</el-button>
+            <el-button type="primary"  plain @click="search">刷新</el-button>
 
         </v-toolbar>
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='350' @dataloaded='onDataloaded'>
@@ -179,7 +181,10 @@
                 this.$refs.formDlgMultiSelect.show({orderId: this.orderId});
             },
             create() {
-                //this.$refs.formDlg.show({orderId: this.purchaseOrder.orderId});
+                this.$refs.formDlg.show({
+                    orderId: this.orderId,
+                    purchaseOrderId: this.purchaseOrderId
+                });
             },
             edit(row) {
                 this.$refs.formDlg.show({id: row.id});

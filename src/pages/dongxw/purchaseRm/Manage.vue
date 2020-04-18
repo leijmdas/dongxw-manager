@@ -228,7 +228,7 @@
                     type: "warning"
                 }).then(() => {
                     let params = self.getSearchParams();
-                    self.$api.dongxw.MakePlan.export(params);
+                    //self.$api.dongxw.MakePlan.export(params);
 
                 });
 

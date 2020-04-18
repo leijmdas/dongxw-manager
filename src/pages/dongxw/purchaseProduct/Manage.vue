@@ -194,7 +194,7 @@
             */
             exportRecords(row) {
                 let self = this;
-                this.$confirm("确定要导出所有查询的记录吗?", "提示", {
+                this.$confirm("确定要导出外发采购单吗?", "提示", {
                     type: "warning"
                 }).then(() => {
                     let params = {

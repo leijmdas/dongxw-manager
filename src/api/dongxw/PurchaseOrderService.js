@@ -25,7 +25,7 @@ export default {
         })
     },
     /**
-     * 导出xlsx
+     * 导出外发采购单xlsx
      */
     export(data) {
         return request({
@@ -35,6 +35,19 @@ export default {
             responseType: 'blob'
         })
     },
+
+    /**
+     * 导出物料采购单xlsx
+     */
+    exportRm(data) {
+        return request({
+            url: '/dongxw/purchaseorder/exportRm',
+            method: 'POST',
+            data,
+            responseType: 'blob'
+        })
+    },
+
     /**
      * 导出xlsxMail
      */

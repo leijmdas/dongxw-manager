@@ -7,14 +7,14 @@
             <el-menu-item index="domain_dongxw"><span class="ele-icon el-icon-ipyunyingguanli"></span>
                 <span>ERP</span>
             </el-menu-item>
-            <el-menu-item index="domain_office"><span
-                class="ele-icon el-icon-ipyunyingbaobiao"></span><span>OA</span>
-            </el-menu-item>
 
 
             <el-menu-item v-show="isadmin=='true'" index="domain_sys"><span
                 class="ele-icon el-icon-ipshezhi"></span><span>设置</span>
             </el-menu-item>
+            <!--<el-menu-item index="domain_office"><span-->
+                <!--class="ele-icon el-icon-ipyunyingbaobiao"></span><span>OA</span>-->
+            <!--</el-menu-item>-->
         </el-menu>
 
         <el-menu mode="horizontal" :default-active="activeIndex" background-color="#00438A" text-color="#fff"

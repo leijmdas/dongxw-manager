@@ -2,7 +2,10 @@
 
 <template>
     <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
-        <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" :disabled="item.disabled">
+        <el-option v-for="item in options"
+                   :key="item.id"
+                   :label="item.code + ' '+ item.name"
+                   :value="item.id" :disabled="item.disabled">
         </el-option>
     </el-select>
 </template>

@@ -4,6 +4,13 @@
 
             <el-row :span='24'>
                 <el-col :span='12'>
+                    <el-form-item label='供应商' prop='name'>
+                        <el-button type="primary" :style="'width:100%'" plain   @click="findSupplier" style=" color :green">
+                            {{entity.supplier.name?entity.supplier.name:"请选择供应商"}}
+                        </el-button>
+                    </el-form-item>
+                </el-col>
+                <el-col :span='12'>
                     <el-form-item style='width:100%' label='订单编号' prop='purchaseOrderCode'>
                         <el-input disabled placeholder='订单编号' v-model='entity.purchaseOrderCode'>
                         </el-input>
@@ -23,11 +30,9 @@
                                         placeholder='选择日期'></el-date-picker>
                     </el-form-item>
                 </el-col>
-                <el-col :span='12'>
-                    <el-form-item label='供应商' prop='supplyId'>
-                        <supplier-select :style="'width:100%'" v-model='entity.supplyId'></supplier-select>
-                    </el-form-item>
-                </el-col>
+
+            </el-row>
+            <el-row :span='24'>
 
                 <el-col :span='12'>
                     <el-form-item style='width:100%' label='地址' prop='addr'>
@@ -82,6 +87,13 @@
             </slot>
         </v-toolbar>
         <manage-item ref="formPanel" v-show="entity.id">  </manage-item>
+        <v-dialog ref="formDiag" :appendToBody="true" title="查找" :width="'48%'">
+            <supplier-find  v-model="entity.supplyId" :confirmFind="confirmFind" :cancelFind="cancelFind">
+                <!--<el-button type="primary" @click="$refs.formDiag.dispatch('submit')">确定</el-button>-->
+                <!--<el-button type="default" @click="()=>{$refs.formDiag.hide();}">取消</el-button>-->
+            </supplier-find>
+
+        </v-dialog>
     </div>
 </template>
 <style lang="less" scoped>
@@ -127,6 +139,7 @@
     import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
     import SupplierSelect from '@/components/widgets/dongxw/SupplierSelect.vue';
     import ManageItem from './ManageItem.vue'
+    import SupplierFind from '@/components/widgets/dongxw/SupplierMultiSelect.vue';
 
     const defaultEntity = {
         id: null,	//  标识
@@ -145,7 +158,7 @@
         createBy:  0,	//  创建人
     };
     export default {
-        components: {ManageItem,OrderMasterSelect,CustomerSelect, SupplierSelect},
+        components: {SupplierFind,ManageItem,OrderMasterSelect,CustomerSelect, SupplierSelect},
         props:{
             customerOrder : {
                 type: Object,
@@ -161,6 +174,7 @@
         },
         data() {
             return {
+                findSupplierId: -1 ,
                 activeName: 'orderInfo',
                 disables:false,
                 isExp: false,
@@ -173,26 +187,8 @@
                 limitTotal: false,
                 rules: {
 
-                    name: [
-                        {required: true, message: "名称不能为空", trigger: "blur"},
-                        {
-                            min: 1,
-                            max: 128,
-                            message: "长度在 1 到 128 个字符",
-                            trigger: "blur"
-                        }
-                    ],
-                    // epOrderCode: [
-                    //     {required: true, message: "EP订单号", trigger: "blur"},
-                    //     {
-                    //         min: 1,
-                    //         max: 128,
-                    //         message: "长度在 1 到 128 个字符",
-                    //         trigger: "blur"
-                    //     }
-                    // ],
-                    // customerOrderCode: [
-                    //     {required: true, message: "客户订单号", trigger: "blur"},
+                    // name: [
+                    //     {required: true, message: "名称不能为空", trigger: "blur"},
                     //     {
                     //         min: 1,
                     //         max: 128,
@@ -201,10 +197,27 @@
                     //     }
                     // ],
 
+
                 }
             };
         },
         methods: {
+            findSupplier() {
+                this.$refs.formDiag.show();
+
+            },
+            confirmFind(row) {
+                this.$refs.formDiag.hide();
+                //this.$message(JSON.stringify(row))
+                this.entity.supplyId = row.id
+                this.$api.dongxw.SupplierService.findById(this.entity.supplyId ).then(rsp => {
+                    this.entity.supplier = rsp.data
+                })
+            },
+            cancelFind() {
+                this.$refs.formDiag.hide();
+            },
+
             getProps(scope) {
                 return this.entity.props.filter(p => p.propScope == scope);
             },

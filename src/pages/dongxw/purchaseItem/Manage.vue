@@ -5,10 +5,13 @@
         <v-toolbar title="采购订单列表" type="alert">
             <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
 
+            <el-button type="primary" plain @click="create" style="margin-right:60px;color :green">
+                新增采购单
+            </el-button>
+
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-            <el-button @click="cancel">取消</el-button>
+            <el-button @click="cancel" style="margin-right:60px;color :yellowgreen">取消</el-button>
             <!--<el-button plain @click="exportRecords">导出XLS</el-button>-->
-            <el-button type="primary" plain @click="create">新增</el-button>
         </v-toolbar>
 
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
@@ -196,7 +199,7 @@
             */
             exportRecords(row) {
                 let self = this;
-                this.$confirm("确定要导出所有查询的记录吗?", "提示", {
+                this.$confirm("确定要导出采购单吗?", "提示", {
                     type: "warning"
                 }).then(() => {
                     let params = {
@@ -204,7 +207,7 @@
                             id: row.id
                         }
                     }
-                    self.$api.dongxw.PurchaseOrderService.export(params);
+                    self.$api.dongxw.PurchaseOrderService.exportRm(params);
 
                 });
 

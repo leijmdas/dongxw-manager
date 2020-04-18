@@ -36,20 +36,20 @@ let router0 = [
                 path: 'purchasePlan/manage1',
                 component: require('@/pages/dongxw/purchase/Manage.vue'),
                 name: 'purchasePlan:manage1',
-                meta: {title: '审核订单', perm: 'purchaseplan:manage'}
+                meta: {title: '审核订单', perm: 'purchaseplan:manage1'}
             },
             {
                 path: 'dongxw/supplier/manage1',
                 component: require('@/pages/dongxw/supplier/Manage.vue'),
                 name: 'supplier:manage1',
-                meta: {title: '审核BOM', perm: 'supplier:manage'}
+                meta: {title: '审核BOM', perm: 'supplier:manage1'}
             },
 
             {
                 path: 'purchase/order1',
                 component: require('@/pages/dongxw/supplier/Manage.vue'),
                 name: 'purchase:order1',
-                meta: {title: '审核采购单', perm: 'purchase:manage'}
+                meta: {title: '审核采购单', perm: 'purchase:manage1'}
             },
 
         ]
@@ -167,7 +167,7 @@ let router0 = [
                 path: 'purchaseRm/manage',
                 component: require('@/pages/dongxw/purchaseRm/Manage.vue'),
                 name: 'purchaseRm:manage',
-                meta: {title: '采购订单', perm: 'purchase:manage'}
+                meta: {title: '采购订单列表', perm: 'purchase:manage'}
             },
 
 

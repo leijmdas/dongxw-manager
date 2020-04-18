@@ -104,19 +104,19 @@
 
     const defaultEntity = {
         id: null,
-        customerId: null,
         orderId : null,
+        makePlanId:0 ,
+        orderLineId:0,
+        purchaseOrderId:null,
         productId : null,
-        productTypeId : null,
+        purchaseOrderId: null,
 
         qty : 0,
         price : 0,
-        currency :'',
         money : 0,
-
+        createDate : null,
         createBy: 0,
         remark : '',
-        status: 1
     };
     export default {
         components: {RmView, RmSearch},
@@ -125,6 +125,7 @@
                 isExp :false,
                 customerId : null,
                 orderId : null,
+                purchaseOrderId : null,
                 activeName: 'orderInfo',
                 ruleTpl: {when: null, then: null},
                 entity: _.cloneDeep(defaultEntity),
@@ -167,7 +168,7 @@
             },
             submitForm() {
                 if(!this.entity.productId){
-                    this.$message("请选择产品!")
+                    this.$message("请选择物料!")
                     return
                 }
                 this.$refs["form"].validate(valid => {
@@ -185,7 +186,17 @@
                 this.entity = _.cloneDeep(defaultEntity);
             },
             init(options) {
+                //console.log(JSON.stringify(options))
                 this.resetForm();
+                if (options.orderId) {
+                    this.orderId = options.orderId
+                    this.purchaseOrderId = options.purchaseOrderId
+                    this.entity.purchaseOrderId = this.purchaseOrderId
+                    this.entity.orderId = this.orderId
+                    this.entity.createDate = this.$dongxwDict.formatDateZero(new Date())
+
+                    //this.$message(JSON.stringify(this.entity))
+                }
                 if (options.id) {
                     this.isDisabled = true;
                     this.$api.dongxw.PurchaseOrderItemService.findById(options.id).then(rr => {
