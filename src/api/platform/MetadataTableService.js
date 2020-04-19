@@ -83,9 +83,24 @@ export default {
         })
     },
 
+    //全量刷新
     dbImportTables(subsysId) {
         return request({
             url: '/api/sys/metadata/table/dbImportTables/' + subsysId   ,
+            method: 'POST',
+        })
+    },
+    //异步刷新
+    dbImportTablesAsync(subsysId) {
+        return request({
+            url: '/api/sys/metadata/table/dbImportTablesAsync/' + subsysId   ,
+            method: 'POST',
+        })
+    },
+    //增量刷新
+    dbImportTablesInc(subsysId) {
+        return request({
+            url: '/api/sys/metadata/table/dbImportTablesInc/' + subsysId   ,
             method: 'POST',
         })
     },

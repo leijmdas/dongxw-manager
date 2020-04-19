@@ -32,7 +32,10 @@
                     <el-button @click="create" type="primary" class="btn_right" plain>新增</el-button>
                     <el-button @click="exportDictTables" class="btn_right" plain> 导出</el-button>
                     <el-button @click="importDictTable" class="btn_right" plain>导入</el-button>
-                    <el-button @click="dbImportTables" class="btn_right" plain>根据DB刷新</el-button>
+                    <el-button @click="dbImportTables" class="btn_right" plain>根据DB全量刷新</el-button>
+                    <el-button @click="dbImportTablesAsync" class="btn_right" plain>根据DB异步刷新</el-button>
+                    <el-button @click="dbImportTablesInc" class="btn_right" plain>根据DB增量刷新</el-button>
+
                 </el-form>
 
                 <v-table :pageSize="5" :selection="false" :multi="true" ref="table" :page="page" :table-minheight="200"
@@ -126,7 +129,7 @@
 
     .btn_right {
         float: right;
-        margin-right: 20px
+        margin-right: 5px
     }
 
 </style>
@@ -210,6 +213,29 @@
                 })
                 this.$myconfirm(`确定要导出${msgs.join(',\n')}吗?`, f)
             },
+
+            dbImportTablesInc() {
+                let f = () => this.$api.platform.MetadataTableService.dbImportTablesInc(this.page.query.param.subsysId).then(rsp => {
+                    this.$msgJsonResult(rsp);
+                    if (rsp.code === 0) {
+                        this.search();
+
+                    }
+                })
+
+                this.$myconfirm("确定要从DB刷新多表的结构吗?", f)
+            },
+            dbImportTablesAsync() {
+                let f = () => this.$api.platform.MetadataTableService.dbImportTablesAsync(this.page.query.param.subsysId).then(rsp => {
+                    this.$msgJsonResult(rsp);
+                    if (rsp.code === 0) {
+                        this.search();
+
+                    }
+                })
+
+                this.$myconfirm("确定要从DB刷新多表的结构吗?", f)
+            },
             dbImportTables() {
                 let f = () => this.$api.platform.MetadataTableService.dbImportTables(this.page.query.param.subsysId).then(rsp => {
                     this.$msgJsonResult(rsp);
@@ -219,7 +245,7 @@
                     }
                 })
 
-                this.$myconfirm("确定要从DB导入多表的结构吗?", f)
+                this.$myconfirm("确定要从DB刷新多表的结构吗?", f)
             },
             btnSort() {
                 this.showSort = !this.showSort
