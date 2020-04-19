@@ -54,11 +54,17 @@
                 </el-col>
                 <el-col :span='12'>
                     <el-form-item style='width:100%' label='传真' prop='fax'>
-                        <el-input disabled placeholder='电话' v-model='entity.supplier.fax'>
+                        <el-input disabled placeholder='传真' v-model='entity.supplier.fax'>
                         </el-input>
                     </el-form-item>
                 </el-col>
-
+                <!--10草稿11作废20正式-->
+                <el-col :span='12'>
+                    <el-form-item style='width:100%' label='状态' prop='status'>
+                        <el-input disabled placeholder='状态' v-model='entity.status'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
                 <el-col :span='24'>
                     <el-form-item style='width:100%' label='备注' prop='remark'>
                         <el-input type='textarea' :rows='2' placeholder='备注' v-model='entity.remark'>
@@ -187,15 +193,6 @@
                 limitTotal: false,
                 rules: {
 
-                    // name: [
-                    //     {required: true, message: "名称不能为空", trigger: "blur"},
-                    //     {
-                    //         min: 1,
-                    //         max: 128,
-                    //         message: "长度在 1 到 128 个字符",
-                    //         trigger: "blur"
-                    //     }
-                    // ],
 
 
                 }

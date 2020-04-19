@@ -29,7 +29,7 @@
 
                     <el-button v-if="table.metadataId" class="btn_right" type="primary" plain @click="create">新增
                     </el-button>
-                    <el-button v-if="table.metadataId" @click="dbImportTableFields" class="btn_right" plain> DB导入
+                    <el-button v-if="table.metadataId" @click="dbImportTableFields" type="info" class="btn_right" plain> 根据DB刷新
                     </el-button>
 
                     <el-button @click="btnSort" v-if="table.metadataId" class="btn_left" plain> 排序</el-button>

@@ -122,7 +122,7 @@
                 summaryMap: {},
                 page: {
                     query: {
-                        orderBys: 'id|desc',
+                        orderBys: 'code|asc',
                         param: {
                             subjectId: undefined,
                             isDeleted: false

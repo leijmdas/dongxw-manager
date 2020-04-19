@@ -32,7 +32,7 @@
                     <el-button @click="create" type="primary" class="btn_right" plain>新增</el-button>
                     <el-button @click="exportDictTables" class="btn_right" plain> 导出</el-button>
                     <el-button @click="importDictTable" class="btn_right" plain>导入</el-button>
-                    <el-button @click="dbImportTables" class="btn_right" plain>DB导入</el-button>
+                    <el-button @click="dbImportTables" class="btn_right" plain>根据DB刷新</el-button>
                 </el-form>
 
                 <v-table :pageSize="5" :selection="false" :multi="true" ref="table" :page="page" :table-minheight="200"

@@ -66,8 +66,12 @@
                         </el-input>
                     </el-form-item>
                 </el-col>
-
-
+                <el-col :span='12'>
+                    <el-form-item style='width:100%' label='状态' prop='status'>
+                        <el-input disabled placeholder='状态' v-model='entity.status'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
                 <el-col :span='24'>
                     <el-form-item style='margin-top:10px;margin-bottom:10px;width:100%' label='备注' prop='remark'>
                         <el-input type='textarea' :rows='3' placeholder='备注' v-model='entity.remark'>

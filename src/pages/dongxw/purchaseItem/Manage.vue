@@ -38,7 +38,7 @@
 			        {{row.supplierName}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='addr' :sortable='true' label='地址' width='120'>
+            <el-table-column prop='addr' :sortable='true' label='地址' width='180'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.supplier.addr}}</span>
                 </template>
@@ -48,21 +48,29 @@
 			{{row.supplier.contact}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='tel' :sortable='true' label='电话' width='160'>
+            <el-table-column prop='tel' :sortable='true' label='电话' width='120'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.supplier.tel}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='fax' :sortable='true' label='传真' width='160'>
+            <el-table-column prop='fax' :sortable='true' label='传真' width='120'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.supplier.fax}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='remark' :sortable='true' label='备注' width='120'>
+            <!--10草稿11作废20正式-->
+            <el-table-column prop='status' :sortable='true' label='状态' width='80'>
                 <template slot-scope='{row}'><span style='color:black'>
-			{{row.remark}}</span>
+			        {{row.status||'正式'}}</span>
                 </template>
             </el-table-column>
+
+            <el-table-column prop='remark' :sortable='true' label='备注' width='120'>
+                <template slot-scope='{row}'><span style='color:black'>
+			        {{row.remark}}</span>
+                </template>
+            </el-table-column>
+
             <el-table-column prop='createTime' :sortable='true' label='创建时间' width='121'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.createTime}}</span>

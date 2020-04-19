@@ -61,7 +61,12 @@
 			{{row.tel}}</span>
                 </template>
             </el-table-column>
-
+            <!--10草稿11作废20正式-->
+            <el-table-column prop='status' :sortable='true' label='状态' width='60'>
+                <template slot-scope='{row}'><span style='color:black'>
+			        {{row.status||'正式'}}</span>
+                </template>
+            </el-table-column>
 
             <el-table-column prop='createTime' :sortable='true' label='创建时间' width='121'>
                 <template slot-scope='{row}'><span style='color:black'>
