@@ -81,15 +81,21 @@
                     this.fnChange();
                 }
             },
-            refresh () {
+            refresh() {
                 this.loading = true
-                this.$api.dongxw.CustomerService.query({param: {isDeleted:false}}).then(rsp => {
+                this.$api.dongxw.CustomerService.query(
+                    {
+                        limit: 100,
+                        start: 0, orderBys: "custNo|asc",
+                        param: {isDeleted: false}
+                    }
+                ).then(rsp => {
                     this.options = rsp.data
                     this.loading = false
                 })
             }
         },
-        created () {
+        created() {
             this.refresh()
         }
     }
