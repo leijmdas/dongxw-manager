@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form" label-width="110px" class="dialog-form"
-                 style="margin-right: 20px">
+        <el-form :model="entity" :rules="rules" ref="form" label-width="120px" class="dialog-form"
+                 style="margin-right:25px">
 
             <el-row :span="24">
                 <el-col :span="12">
@@ -22,7 +22,7 @@
                 <el-input placeholder="客户名称" v-model="entity.custName"></el-input>
             </el-form-item>
 
-            <el-form-item label="客户详细名称" prop="custSname">
+            <el-form-item label="详细名称" prop="custSname">
                 <el-input placeholder="客户详细名称" v-model="entity.custSname"></el-input>
             </el-form-item>
 
@@ -44,10 +44,12 @@
                 </el-col>
 
             </el-row>
+            <el-row :span="24">
 
             <el-form-item label="地址" prop="addr">
                 <el-input placeholder="地址" type="textarea" :rows="2" v-model="entity.addr"></el-input>
-            </el-form-item>
+            </el-form-item></el-row>
+
             <el-row :span="24">
                 <el-col :span="12">
 
@@ -56,7 +58,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="联系人电话" prop="tel">
+                    <el-form-item label="联系电话" prop="tel">
                         <el-input placeholder="联系人电话" v-model="entity.tel"></el-input>
                     </el-form-item>
                 </el-col>
@@ -67,20 +69,23 @@
                         <el-input placeholder="公司传真" v-model="entity.fax"></el-input>
                     </el-form-item>
                 </el-col>
-
+                <el-col :span="24">
+                    <el-form-item label="电子邮箱" prop="email">
+                        <el-input placeholder="公司电子邮箱" v-model="entity.email"></el-input>
+                    </el-form-item>
+                </el-col>
             </el-row>
-            <el-form-item label="公司电子邮箱" prop="email">
-                <el-input placeholder="公司电子邮箱" v-model="entity.email"></el-input>
-            </el-form-item>
+
             <el-form-item label="备注" prop="remark">
                 <el-input placeholder="备注" type="textarea" :rows="2" v-model="entity.remark"></el-input>
             </el-form-item>
             <!--<el-divider></el-divider>--            <!--<hr style="margin-right: -20px">-->
 
             <fieldset style="margin-top: 10px">
-                <legend>客户登录帐户信息</legend>
+                <legend>客户登录帐户</legend>
 
-                <el-tooltip class="item" effect="dark" content="以上为客户提供登录帐户，查询客户自己订单的明细与进展" placement="bottom-start">
+                <el-tooltip class="item" effect="dark"
+                            content="以上为客户提供登录帐户，查询客户自己订单的明细与进展" placement="bottom-start">
 
                     <el-row :span="24">
                         <el-col :span="12">

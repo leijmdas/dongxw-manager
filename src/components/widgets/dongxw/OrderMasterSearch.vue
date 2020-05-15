@@ -68,11 +68,9 @@
             </el-form>
         </div>
         <v-toolbar title="客户订单列表" type="alert">
-                <span style="margin-left:60px;color :red">  草稿状态不能新增计划! </span>
-
-
-           </v-toolbar>
-        <v-table ref="table" :page="page"  :pageSize="10" :dblclick="edit"
+            <!--<span style="margin-left:60px;color :red">  草稿状态不能新增计划! </span>-->
+        </v-toolbar>
+        <v-table ref="table" :page="page" :pageSize="10" :dblclick="edit"
                  :click="tableRowClick"   :table-minheight="300" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">

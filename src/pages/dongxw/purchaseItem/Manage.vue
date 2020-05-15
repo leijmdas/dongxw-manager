@@ -15,7 +15,16 @@
         </v-toolbar>
 
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
-
+            <el-table-column :sortable='true'  prop='code'   label='供应商编码' width='110'>
+                <template slot-scope='{row}'><span style='color:black'>
+			        {{row.supplier.code}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop='supplierName' :sortable='true' label='供应商' width='180'>
+                <template slot-scope='{row}'><span style='color:black'>
+			        {{row.supplierName}}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop='purchaseOrderCode' :sortable='true' label='订单编号' width='160'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.purchaseOrderCode}}</span>
@@ -33,11 +42,7 @@
 			{{row.issueDate}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='supplierName' :sortable='true' label='供应商' width='180'>
-                <template slot-scope='{row}'><span style='color:black'>
-			        {{row.supplierName}}</span>
-                </template>
-            </el-table-column>
+
             <el-table-column prop='addr' :sortable='true' label='地址' width='180'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.supplier.addr}}</span>

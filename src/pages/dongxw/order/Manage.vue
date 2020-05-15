@@ -78,29 +78,27 @@
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
-            <!--<el-table-column prop="customerId" label="客户代码" width="80">-->
-                <!--<template slot-scope="{row}">-->
-                    <!--{{ row.customer?row.customer.custNo:'-'}}-->
-                <!--</template>-->
-            <!--</el-table-column>-->
-            <el-table-column prop="customerId" label="客户名称" width="120">
+            <el-table-column sortable="true" prop="customerId" label="客户代码" width="90">
+                <template slot-scope="{row}">
+                    {{ row.customer?row.customer.custNo:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column sortable="true" prop="customerId" label="客户名称" width="120">
                 <template slot-scope="{row}">
                     {{ row.customer?row.customer.custName:'-'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="orderType" label="订单类型" width="90">
+            <el-table-column sortable="true" prop="orderType" label="订单类型" width="90">
                 <template slot-scope="{row}">
                     <span :style="'style:red'"> {{$dongxwDict.getText(row.orderType,$dongxwDict.store.ORDER_TYPE)}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="parentId" label="父订单" width="80">
-                <template slot-scope="{row}">
-                    {{ row.orderMasterParent? row.orderMasterParent.epOrderCode:'-'}}
-
-                </template>
-            </el-table-column>
-
+            <!--<el-table-column prop="parentId" label="父订单" width="80">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{ row.orderMasterParent? row.orderMasterParent.epOrderCode:'-'}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
 
 
             <el-table-column  prop="status" label="订单状态" width="80">
@@ -114,30 +112,35 @@
                     <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
                     <span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>
                 </template>
+             </el-table-column>
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
+                <template slot-scope="scope">
+                    <el-button type="text" @click="edit(scope.row)" plain>{{scope.row.epOrderCode}}</el-button>
+                </template>
+
             </el-table-column>
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120"></el-table-column>
             <!--<el-table-column  prop="customerOrderImg" label="订单原件" width="78">-->
-                <!--<template slot-scope="scope">-->
-                    <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a> -->
+            <!--<template slot-scope="scope">-->
+            <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a> -->
                 <!--</template>-->
             <!--</el-table-column>-->
 
-            <el-table-column prop="orderDate" label="下单日期" width="100">
+            <el-table-column sortable="true" prop="orderDate" label="下单日期" width="100">
                 <template slot-scope="{row}">
                 {{ $dongxwDict.viewDate(row.orderDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="customerIssueDate" label="客户交货" width="100">
+            <el-table-column sortable="true" prop="customerIssueDate" label="客户交货" width="100">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.customerIssueDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="checkDate" label="验货日期" width="100">
+            <el-table-column sortable="true" prop="checkDate" label="验货日期" width="100">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.checkDate)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="factroyIssueDate" label="工厂交货" width="100">
+            <el-table-column sortable="true" prop="factroyIssueDate" label="工厂交货" width="100">
                 <template slot-scope="{row}">
                     {{ $dongxwDict.viewDate(row.factroyIssueDate)}}
                 </template>
@@ -148,7 +151,7 @@
                     {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="businessBy" label="业务员" width="100"></el-table-column>
+            <el-table-column sortable="true" prop="businessBy" label="业务员" width="100"></el-table-column>
 
             <el-table-column prop="invoiceNoIni" label="预收发票编号" width="120"></el-table-column>
             <el-table-column prop="invoiceNo" label="正式发票编号" width="120"></el-table-column>

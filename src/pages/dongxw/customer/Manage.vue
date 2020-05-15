@@ -4,10 +4,10 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
 
-                <el-form-item label="客户编码" prop="custNo">
+                <el-form-item sortable="true" label="客户编码" prop="custNo">
                     <el-input v-model="page.query.param.custNo" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="客户名称" prop="custName">
+                <el-form-item sortable="true" label="客户名称" prop="custName">
                     <el-input v-model="page.query.param.custName" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="状态" prop="moneyType">
@@ -32,13 +32,13 @@
             </el-form>
         </div>
         <v-toolbar title="客户列表" type="alert">
-            <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button type="primary" plain @click="create">新增</el-button>
-            <el-switch style="margin-left:20px; margin-right: 20px"
+            <el-switch slot="tip" style="alignment:left;margin-left:80px "
                        v-model="isShowSecurity"
                        active-text="显示敏感信息"
                        inactive-text="不显示">
             </el-switch>
+            <el-button type="primary" plain @click="create">新增</el-button>
+            <el-button plain @click="exportRecords">导出 XLS</el-button>
 
         </v-toolbar>
 
@@ -61,7 +61,7 @@
             </el-table-column>
             <el-table-column prop="contact" v-if="isShowSecurity" label="联系人" width="150">
             </el-table-column>
-            <el-table-column prop="tel" v-if="isShowSecurity" label="联系人电话" width="160">
+            <el-table-column prop="tel" v-if="isShowSecurity" label="联系电话" width="160">
             </el-table-column>
             <el-table-column prop="fax" v-if="isShowSecurity" label="传真" width="160">
             </el-table-column>
@@ -81,11 +81,18 @@
                     {{row.createDate.substr(0,10)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="createBy"  label="建档人"  >
+            <el-table-column prop="createBy"  label="建档人"   width="120">
                 <template slot-scope="{row}">
                     {{row.createByName}}
                 </template>
             </el-table-column>
+            <el-table-column v-show="isShowSecurity" prop="isShowSecurity"  label=""  >
+                <template slot-scope="{row}">
+
+                </template>
+            </el-table-column>
+
+
             <el-table-column width="100" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
 

@@ -75,6 +75,7 @@
                                 <el-col :span="12" >
 
                                     <el-form-item :label="entity.lossType==0?'损耗数':'损耗(%)'" prop="lossRate">
+                                        <!--<el-input    placeholder="损耗" v-model="entity.lossRate"></el-input>-->
                                         <el-input  :disabled="entity.source===1"  placeholder="损耗" v-model="entity.lossRate"></el-input>
                                     </el-form-item>
                                 </el-col>

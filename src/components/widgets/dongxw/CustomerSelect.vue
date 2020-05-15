@@ -1,10 +1,10 @@
 <!--模板名称选择-->
 
 <template>
-    <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
+    <el-select :width="width" :height="'250px'"v-model="currentValue" placeholder="请选择" popper-append-to-body
+               filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
         <el-option  v-for="item in options" :key="item.id" :label="item.custName" :value="item.id" :disabled="item.disabled">
-            <span style="float: left">{{ item.custNo }}</span>
-            <span style="float: left">{{ item.custName }}</span>
+            <span style="float: left">{{ item.custNo +' （'+ item.custName +')'}}</span>
             <span style="float: left">{{ item.custSname }}</span>
 
         </el-option>

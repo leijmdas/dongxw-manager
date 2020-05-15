@@ -66,13 +66,19 @@
             </template>
             </el-table-column>
 
-            <el-table-column prop="email" label="电子邮箱" width="120">
-            </el-table-column>
             <el-table-column :sortable="true"  prop="contact" label="联系人" width="120">
             </el-table-column>
             <el-table-column :sortable="true" prop="tel" label="联系人电话" width="120">
             </el-table-column>
             <el-table-column :sortable="true" prop="fax" label="传真" width="120">
+            </el-table-column>
+
+            <el-table-column prop="email" label="电子邮箱" width="120">
+            </el-table-column>
+            <el-table-column prop="status" label="状态" width="60">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
+                </template>
             </el-table-column>
             <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">
@@ -85,11 +91,7 @@
                     {{row.createDate.substr(0,10)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="status" label="状态" width="60">
-                <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
-                </template>
-            </el-table-column>
+
             <el-table-column prop="remark" label="备注" width="180">
             </el-table-column>
 
@@ -134,7 +136,7 @@
                 summaryMap: {},
                 page: {
                     query: {
-                        orderBys: 'id|desc',
+                        orderBys: 'code|asc',
                         param: {
                             subjectId: undefined,
                             isDeleted: false
