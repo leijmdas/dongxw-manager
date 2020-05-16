@@ -53,7 +53,19 @@
                     <span :style="'color: blue'">{{ row.code }}</span>
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true"  prop="name" label="供应商名称" width="200"></el-table-column>
+            <el-table-column :sortable="true"  prop="name" label="供应商名称" width="200">
+
+                <template slot-scope="scope">
+                    <a
+                        class="link-name"
+                        href="javascript:;"
+                        :title="scope.row.name"
+                        @click="edit(scope.row)"
+                    >{{ scope.row.name }}
+                    </a>
+                </template>
+
+            </el-table-column>
 
             <!--<el-table-column prop="sname" label="详细名称" width="65"></el-table-column>-->
 

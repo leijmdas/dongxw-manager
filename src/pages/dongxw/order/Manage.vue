@@ -115,7 +115,13 @@
              </el-table-column>
             <el-table-column prop="epOrderCode" label="EP订单号" width="120">
                 <template slot-scope="scope">
-                    <el-button type="text" @click="edit(scope.row)" plain>{{scope.row.epOrderCode}}</el-button>
+                    <!--<el-button type="text" @click="edit(scope.row)" plain>{{scope.row.epOrderCode}}</el-button>-->
+                    <a
+                        class="link-name"
+                        href="javascript:;"
+                        :title="scope.row.epOrderCode"
+                        @click="edit(scope.row)"
+                    >{{ scope.row.epOrderCode }}</a>
                 </template>
 
             </el-table-column>

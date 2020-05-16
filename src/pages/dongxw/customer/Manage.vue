@@ -50,7 +50,20 @@
 
             </el-table-column>
             <el-table-column prop="custNo" label="客户编码" width="100"></el-table-column>
-            <el-table-column prop="custName" label="客户名称" width="120"></el-table-column>
+            <el-table-column prop="custName" label="客户名称" width="120">
+
+                <template slot-scope="scope">
+                    <a
+                        class="link-name"
+                        href="javascript:;"
+                        :title="scope.row.custName"
+                        @click="edit(scope.row)"
+                    >{{ scope.row.custName }}
+                    </a>
+                </template>
+
+
+            </el-table-column>
 
             <el-table-column prop="custSname" v-if="isShowSecurity" label="客户详细名称" width="245"></el-table-column>
 
