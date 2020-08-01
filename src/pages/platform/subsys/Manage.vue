@@ -36,8 +36,15 @@
                 </template>
             </el-table-column>
             <el-table-column prop='subsysName' :sortable='true' label='子系统名称' width='280'>
-                <template slot-scope='{row}'>
-                    {{row.subsysName}}
+                <!--<template slot-scope='{row}'>-->
+                    <!--{{row.subsysName}}-->
+                <!--</template>-->
+                <template slot-scope="scope">
+                    <a class="link-name"
+                       href="javascript:;"
+                       :title="scope.row.subsysName"
+                       @click="edit(scope.row)" >{{ scope.row.subsysName }}
+                    </a>
                 </template>
             </el-table-column>
             <el-table-column prop='remark' :sortable='true' label='子系统数据库'>

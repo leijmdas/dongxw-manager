@@ -12,23 +12,27 @@ var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
+const time = new Date().getTime();
 
 var webpackConfig = merge(baseWebpackConfig, {
-  module: {
+
+module: {
     rules: utils.styleLoaders({
-      sourceMap: config.build.productionSourceMap,
+        sourceMap: config.build.productionSourceMap,
       extract: true
     })
-  },
-  devtool: config.build.productionSourceMap ? '#source-map' : false,
-  output: {
-    path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
-  },
-  plugins: [
-    // http://vuejs.github.io/vue-loader/en/workflow/production.html
-    new webpack.DefinePlugin({
+},
+    devtool: config.build.productionSourceMap ? '#source-map' : false,
+    output: {
+        path: config.build.assetsRoot,
+        //filename: utils.assetsPath('js/[name].[chunkhash].js'),
+        //chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
+        filename: `js/[name]-[hash].js?time=${time}`,
+        chunkFilename: `js/[name]-[hash].js?time=${time}`,
+    },
+    plugins: [
+        // http://vuejs.github.io/vue-loader/en/workflow/production.html
+        new webpack.DefinePlugin({
       'process.env': env
     }),
     new webpack.optimize.UglifyJsPlugin({

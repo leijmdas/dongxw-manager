@@ -161,7 +161,15 @@
                     <slot name="useBtn"></slot>
                 </template>
             </el-table-column>
+            <el-table-column v-if="showPurchaseBtn" width="120" label="用料汇总" :fixed="'right'">
+                <template slot-scope="scope">
 
+                    <el-button   @click="exportPurchaseSum(scope.row)" title="导出用料汇总" plain type="primary" v-if="scope.row.status>0">
+                        导出用料汇总
+                    </el-button>
+                    <!--<slot name="useBtn"></slot>-->
+                </template>
+            </el-table-column>
         </v-table>
 
         <!--<v-dialog ref="formDiag" title="信息编辑" :width="'50%'">-->
@@ -185,11 +193,15 @@
     import OrderMasterSelect from '@/components/widgets/dongxw/OrderMasterSelect.vue';
 
     export default {
-        components: { OrderMasterSelect,CustomerSelect},
+        components: {OrderMasterSelect, CustomerSelect},
         props: {
-            showBtn  :{
+            showPurchaseBtn: {
                 type: Boolean,
-                default : false ,
+                default: false,
+            },
+            showBtn: {
+                type: Boolean,
+                default: false,
             },
             fatherMethod: {
                 type: Function,
@@ -287,6 +299,18 @@
                 self.$api.dongxw.MakePlan.checkPlanByOrder(row.id).then(rsp => {
 
                     self.$msgJsonResult(rsp)
+                });
+            },
+
+            exportPurchaseSum(row) {
+                let self = this;
+
+                this.$confirm("确定要导出订单用料汇总表吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+
+                    self.$api.dongxw.PurchasePlanService.exportUseSum(row.id);
+
                 });
             },
             makePlan(row) {

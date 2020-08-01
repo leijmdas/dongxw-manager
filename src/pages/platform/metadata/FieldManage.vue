@@ -40,7 +40,7 @@
                 </el-form>
 
 
-                <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
+                <v-table ref='table'  :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
                     <el-table-column :sortable="true" prop='fieldOrder' label='排序' width='70'>
                         <template slot-scope='{row}'>
                             {{row.fieldOrder}}
@@ -52,8 +52,15 @@
                         </template>
                     </el-table-column>
                     <el-table-column :sortable="true" prop='fieldMemo' label='中文名称' width='120'>
-                        <template slot-scope='{row}'><span style='color:blue'>
-			{{row.fieldMemo}}</span>
+                        <!--<template slot-scope='{row}'>-->
+                            <!--<span style='color:blue'>{{row.fieldMemo}}</span>-->
+                        <!--</template>-->
+                        <template slot-scope="scope">
+                            <a class="link-name"
+                               href="javascript:;"
+                               :title="scope.row.fieldMemo"
+                               @click="edit(scope.row)" >{{ scope.row.fieldMemo }}
+                            </a>
                         </template>
                     </el-table-column>
                     <el-table-column :sortable="true" prop='fieldName' label='英文名称' width='120'>

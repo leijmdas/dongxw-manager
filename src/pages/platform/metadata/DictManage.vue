@@ -37,9 +37,9 @@
                     <el-button @click="dbImportTablesInc" class="btn_right" plain>根据DB增量刷新</el-button>
 
                 </el-form>
-
+                <!--:dblclick="edit"-->
                 <v-table :pageSize="5" :selection="false" :multi="true" ref="table" :page="page" :table-minheight="200"
-                         :dblclick="edit" :click="clickTableRow" @dataloaded="onDataloaded">
+                         :click="clickTableRow" @dataloaded="onDataloaded">
                     <!--<el-table-column prop="seq" label="序号" width="50">-->
                     <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
                     <!--</el-table-column>-->
@@ -58,8 +58,15 @@
 
 
                     <el-table-column :sortable="true" prop="metadataAlias" label="中文名称" width="120">
-                        <template slot-scope="{row}">
-                            <span style="color:blue">{{row.metadataAlias}}</span>
+                        <!--<template slot-scope="{row}">-->
+                            <!--<span style="color:blue">{{row.metadataAlias}}</span>-->
+                        <!--</template>-->
+                        <template slot-scope="scope">
+                            <a class="link-name"
+                               href="javascript:;"
+                               :title="scope.row.metadataAlias"
+                               @click="edit(scope.row)" >{{ scope.row.metadataAlias }}
+                            </a>
                         </template>
                     </el-table-column>
 
@@ -68,6 +75,7 @@
                             <span style="color:mediumvioletred">{{row.metadataName}}</span>
                         </template>
                     </el-table-column>
+
                     <el-table-column prop="metadataType" label="元数据类型" width="100">
                         <template slot-scope="{row}">
                             {{$dict.getText(row.metadataType,$dict.store.METADATA_TYPE)}}
@@ -211,7 +219,7 @@
                 let f = () => this.$api.platform.MetadataTableService.exportDictTables(rows.join()).then(rsp => {
 
                 })
-                this.$myconfirm(`确定要导出${msgs.join(',\n')}吗?`, f)
+                this.$myconfirm(`确定要导出选中的表字典吗?`, f)
             },
 
             dbImportTablesInc() {

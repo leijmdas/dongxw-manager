@@ -78,7 +78,7 @@
         </v-toolbar>
 
 
-        <v-table ref="table" :page="page" :dblclick="edit"  :table-minheight="450" @dataloaded="onDataloaded">
+        <v-table ref="table" :page="page"   :table-minheight="450" @dataloaded="onDataloaded">
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
@@ -117,7 +117,15 @@
             </el-table-column>
 
             <!--<el-table-column prop="name" label="产品名称" width="100"></el-table-column>-->
-            <el-table-column :sortable="true"  prop="remark" label="产品描述" width="245"></el-table-column>
+            <el-table-column :sortable="true"  prop="remark" label="产品描述" width="245">
+                <template slot-scope="scope">
+                    <a class="link-name"
+                       href="javascript:;"
+                       :title="scope.row.remark"
+                       @click="edit(scope.row)" >{{ scope.row.remark }}
+                    </a>
+                </template>
+            </el-table-column>
 
             <el-table-column :sortable="true"  prop="color" label="颜色" width="160">
             </el-table-column>

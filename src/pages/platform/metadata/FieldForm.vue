@@ -8,7 +8,9 @@
                     <el-input  placeholder='中文名称' v-model='entity.fieldMemo'>
                     </el-input>
                 </el-form-item>
+
             </el-col>
+
             <el-col :span='12'>
                 <el-form-item style='width:100%' label='字段名称' prop='fieldName'>
                     <el-input  placeholder='字段名称' v-model='entity.fieldName'>

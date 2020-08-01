@@ -32,14 +32,16 @@
             </el-table-column>
 
 
-            <el-table-column prop='openDate' :sortable='true' label='订货日期' width='111'>
-                <template slot-scope='{row}'><span style='color:black'>
-			{{row.openDate}}</span>
+            <el-table-column prop='openDate' :sortable='true' label='订货日期' width='95'>
+                <template slot-scope='{row}'>
+                    <span style='color:black'> {{ $dongxwDict.viewDate(row.openDate)}} </span>
                 </template>
             </el-table-column>
-            <el-table-column prop='issueDate' :sortable='true' label='交货日期' width='111'>
-                <template slot-scope='{row}'><span style='color:black'>
-			{{row.issueDate}}</span>
+
+
+            <el-table-column prop='issueDate' :sortable='true' label='交货日期' width='95'>
+                <template slot-scope='{row}'>
+                    <span style='color:black'>{{$dongxwDict.viewDate(row.issueDate) }}</span>
                 </template>
             </el-table-column>
 
@@ -88,16 +90,16 @@
             </el-table-column>
             <el-table-column width='140' label='操作' :fixed='"right"'>
                 <template slot-scope='scope'>
-                    <el-button  title='导出' @click='exportRecords(scope.row)'>
-                        导出
-                    </el-button>
+
                     <el-button type='text' title='编辑'@click='edit(scope.row)'>
                         <i class='el-icon-edit'></i>
                     </el-button>
                     <el-button type='text' @click='del(scope.row,scope.$index)' title='删除' >
                         <span style='color: red'> <i class='el-icon-delete red'></i></span>
                     </el-button>
-
+                    <el-button  title='导出' @click='exportRecords(scope.row)'>
+                        导出
+                    </el-button>
                 </template>
             </el-table-column>
         </v-table>

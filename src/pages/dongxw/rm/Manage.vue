@@ -107,7 +107,15 @@
                     <span style="color:green"> {{row.code }} </span>
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true"  prop="name" label="物料名称" width="160"></el-table-column>
+            <el-table-column :sortable="true"  prop="name" label="物料名称" width="160">
+                <template slot-scope="scope">
+                    <a class="link-name"
+                       href="javascript:;"
+                       :title="scope.row.name"
+                       @click="edit(scope.row)" >{{ scope.row.name }}
+                    </a>
+                </template>
+            </el-table-column>
 
             <el-table-column :sortable="true"  prop="remark" label="规格型号" width="200"></el-table-column>
             <el-table-column :sortable="true"  prop="color" label="颜色" width="100">

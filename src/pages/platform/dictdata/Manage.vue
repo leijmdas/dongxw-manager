@@ -27,7 +27,7 @@
         </v-toolbar>
 
 
-        <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
+        <v-table ref='table'  :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
             <el-table-column prop='subsysId' :sortable='true' label='子系统' width='100'>
                 <template slot-scope='{row}'><span style='color: '>
 			{{row.subsysDict.subsysName}}</span>
@@ -42,6 +42,7 @@
                 <template slot-scope='{row}'>
                     {{row.typeName}}
                 </template>
+
             </el-table-column>
             <el-table-column prop='code' :sortable='true' label='字典编号' width='100'>
                 <template slot-scope='{row}'>
@@ -49,8 +50,15 @@
                 </template>
             </el-table-column>
             <el-table-column prop='name' :sortable='true' label='字典名称' width='100'>
-                <template slot-scope='{row}'>
-                    {{row.name}}
+                <!--<template slot-scope='{row}'>-->
+                    <!--{{row.name}}-->
+                <!--</template>-->
+                <template slot-scope="scope">
+                    <a class="link-name"
+                       href="javascript:;"
+                       :title="scope.row.name"
+                       @click="edit(scope.row)" >{{ scope.row.name }}
+                    </a>
                 </template>
             </el-table-column>
             <el-table-column prop='remark' :sortable='true' label='备注' width='100'>

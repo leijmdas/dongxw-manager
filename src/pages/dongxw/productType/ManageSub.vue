@@ -38,7 +38,15 @@
             </el-table-column>
             <!--<el-table-column  prop="id" label="小类标识" width="80"></el-table-column>-->
             <el-table-column prop="code" label="小类编码" width="240"></el-table-column>
-            <el-table-column prop="name" label="小类名称" width="160"></el-table-column>
+            <el-table-column prop="name" label="小类名称" width="160">
+                <template slot-scope="scope">
+                    <a class="link-name"
+                       href="javascript:;"
+                       :title="scope.row.name"
+                       @click="edit(scope.row)" >{{ scope.row.name }}
+                    </a>
+                </template>
+            </el-table-column>
             <el-table-column prop="remark" label="描述" width="240"></el-table-column>
 
             <el-table-column width="100" label="操作">

@@ -35,6 +35,17 @@ export default {
             responseType: 'blob'
         })
     },
+    /**
+     * 导出xlsx
+     */
+    exportUseSum(orderId) {
+        return request({
+            url: '/dongxw/purchaseplan/exportUseSum/'+orderId,
+            method: 'POST',
+            responseType: 'blob'
+        })
+    },
+
     findById(id) {
         return request({
             url: '/dongxw/purchaseplan/findById/'+id,

@@ -80,7 +80,9 @@
             </el-table-column>
 
 
-            <el-table-column prop="remark" label="产品描述" width="245"></el-table-column>
+            <el-table-column prop="remark" label="产品描述" width="245">
+
+            </el-table-column>
             <el-table-column prop="unit" label="单位" width="60"></el-table-column>
 
             <el-table-column prop="picUrl" label="产品图片" v-if="isShowPrdPic" width="90">
