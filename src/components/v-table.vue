@@ -192,7 +192,7 @@
             pageSizeOpts: {
                 type: Array,
                 required: false,
-                default: () => [5, 10, 15, 20, 50, 100]
+                default: () => [5, 10, 15, 20, 50, 100, 200]
             },
             pageSize: {
                 type: Number,
