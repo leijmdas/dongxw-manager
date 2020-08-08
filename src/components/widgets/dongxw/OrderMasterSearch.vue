@@ -291,7 +291,7 @@
 
             },
             create() {
-                this.$refs.formDiag.show();
+              //  this.$refs.formDiag.show();
             },
             checkPlan(row) {
                 let self = this;
@@ -331,11 +331,10 @@
                 });
             },
             edit(row) {
-                this.$refs.formDiag.show({id: row.id});
+              //  this.$refs.formDiag.show({id: row.id});
             },
             clickRow(row) {
                 this.row = row;
-                console.log(row);
             },
 
             view(row) {

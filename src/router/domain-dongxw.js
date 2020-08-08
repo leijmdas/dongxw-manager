@@ -179,6 +179,12 @@ let router0 = [
         meta: {title: '库存管理', icon: 'user', group: 'dongxw'},
         children: [
             {
+                path: 'dongxw/stock/manage1',
+                component: require('@/pages/dongxw/stock/MainForm.vue'),
+                name: 'stock:manage1',
+                meta: {title: '月结', perm: 'productType:manage'}
+            },
+            {
                 path: 'dongxw/stock/manage',
                 component: require('@/pages/dongxw/stock/MainForm.vue'),
                 name: 'stock:manage',
@@ -196,6 +202,12 @@ let router0 = [
                 //      component: require('@/pages/app/userInfo/Manage.vue'),
                 name: 'recharge:manage',
                 meta: {title: '物料出库单', perm: 'purchase:manage'}
+            },
+            {
+                path: 'userInfo/recharge12',
+                //      component: require('@/pages/app/userInfo/Manage.vue'),
+                name: 'recharge:manage12',
+                meta: {title: '物料盘点', perm: 'purchase:manage'}
             },
             {
                 path: 'userInfo/manage6',

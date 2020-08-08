@@ -57,7 +57,7 @@
         <!--</div>-->
         <el-container>
             <el-header height="30%">
-                <order-search ref="orderSearch" v-show="showOrderSearch" :showPurchaseBtn="'true'" :tableRowClick="orderChange"></order-search>
+                <order-search ref="orderSearch" v-show="showOrderSearch" :showPurchaseBtn=true :tableRowClick="orderChange"></order-search>
 
             </el-header>
             <el-container>

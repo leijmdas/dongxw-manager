@@ -1,11 +1,12 @@
 <!--模板名称选择-->
 
 <template>
-    <el-select :width="width" v-model="currentValue" placeholder="请选择" filterable :loading="loading"
-               :clearable="clearable" :disabled="disabled" @change="handleChange">
+    <el-select :width="width" v-model="currentValue" placeholder="请选择" :loading="loading"
+               filterable  remote  :remote-method="remoteQryOrder" :clearable="clearable"
+               :disabled="disabled"  @change="handleChange">
 
-        <el-option  v-for="item in options" :key="item.id"
-                    :label="item.epOrderCode + '--'+item.customerOrderCode"  :value="item.id" :disabled="item.disabled">
+        <el-option v-for="item in options" :key="item.id"
+                   :label="item.customerOrderCode + '--'+item.epOrderCode"  :value="item.id" :disabled="item.disabled">
             <span style="float: left">{{ item.customerOrderCode }}</span>
             <span style="float: left">{{ item.epOrderCode }}</span>
 
@@ -33,6 +34,7 @@
             }
         },
         props: {
+
             fnChange:{
                 required:false,
                 type:Function
@@ -62,6 +64,7 @@
             }
         },
         computed: {
+
             currentValue: {
                 get () {
                     return this.value
@@ -82,6 +85,9 @@
             }
         },
         methods: {
+            remoteQryOrder(param) {
+                this.refresh(param)
+            },
             handleChange(val) {
                 this.$emit('change', val)
                 if (this.fnChange) {
@@ -89,7 +95,7 @@
                 }
             },
 
-            refresh() {
+            refresh(param) {
                 this.loading = true
                 this.$api.dongxw.OrderMaster.query(
                     {
@@ -97,7 +103,8 @@
                         param: {
                             customerId: this.customerId,
                             orderType: this.orderType,
-                            isDeleted: false
+                            isDeleted: false,
+                            customerOrderCode: param,
                         }
                     }
                 ).then(rsp => {

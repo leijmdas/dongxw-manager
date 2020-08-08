@@ -2,9 +2,10 @@
 
 <template>
     <el-select :width="width" :height="'250px'"v-model="currentValue" placeholder="请选择" popper-append-to-body
-               filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
+               filterable  remote  :remote-method="remoteQry"
+               :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
         <el-option  v-for="item in options" :key="item.id" :label="item.custName" :value="item.id" :disabled="item.disabled">
-            <span style="float: left">{{ item.custNo +' （'+ item.custName +')'}}</span>
+            <span style="float: left">{{ item.custName  + ' （'+ item.custNo +')'}}</span>
             <span style="float: left">{{ item.custSname }}</span>
 
         </el-option>
@@ -75,19 +76,25 @@
             }
         },
         methods: {
+            remoteQry(custName){
+                this.refresh(custName);
+            },
             handleChange (val) {
                 this.$emit('change', val)
                 if(this.fnChange){
                     this.fnChange();
                 }
             },
-            refresh() {
+            refresh(custName) {
                 this.loading = true
                 this.$api.dongxw.CustomerService.query(
                     {
                         limit: 100,
                         start: 0, orderBys: "custNo|asc",
-                        param: {isDeleted: false}
+                        param: {
+                            isDeleted: false,
+                            custName: custName,
+                        }
                     }
                 ).then(rsp => {
                     this.options = rsp.data

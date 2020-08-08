@@ -201,11 +201,10 @@
                                     <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
                                 </div>
                             </v-dialog>
-                            <purchase-panel ref="purchasePanel" v-model="order"></purchase-panel>
+                            <!--<purchase-panel ref="purchasePanel" v-model="order"></purchase-panel>-->
                         </el-tab-pane>
                         <el-tab-pane label="采购计划表" name="pp">
-                            <form-purchase :handleShowPlan="handleShowPlan" v-model="makeplan"
-                                           ref="formPurchase"></form-purchase>
+                            <form-purchase ref="formPurchase" :handleShowPlan="handleShowPlan" v-model="makeplan"/>
                         </el-tab-pane>
                     </el-tabs>
                 </el-main>

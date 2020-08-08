@@ -2,7 +2,7 @@
 <template>
     <div>
         <div class="panel panel-default panel-search">
-            <order-search :showBtn="true" :tableRowClick="searchByOrder" ref="orderSearch">
+            <order-search :showBtn=true :tableRowClick="searchByOrder" ref="orderSearch">
 
             </order-search>
             <el-form v-show="false" :inline="true">
@@ -13,7 +13,7 @@
                 </el-form-item>
                 <el-form-item label="订单" prop="orderId">
                     <order-master-select :fnChange="search" v-model="page.query.param.orderId"
-                                         :customerId="page.query.param.customerId" :clearable="true">
+                                         :clearable="true"  :customerId="page.query.param.customerId"   >
                     </order-master-select>
                 </el-form-item>
 
@@ -302,6 +302,7 @@
         },
 
         methods: {
+
             checkColor(row) {
                 if(row.status===0)
                 {
@@ -372,6 +373,7 @@
                         endDate: this.dateRange.length > 1 ? this.dateRange[1] : null
                     };
                 }
+
                 return this.page.query;
             },
             /*
