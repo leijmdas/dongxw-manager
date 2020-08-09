@@ -11,6 +11,7 @@ import MakeSheetService from './MakeSheetService'
 import PurchasePlanService from './PurchasePlanService'
 import PurchaseOrderService from './PurchaseOrderService'
 import PurchaseOrderItemService from './PurchaseOrderItemService'
+import MonthCloseService from "./MonthCloseService";
 
 export default {
     CustomerService,
@@ -25,7 +26,7 @@ export default {
     BomCostService,
     PurchasePlanService,
     PurchaseOrderService,
-    PurchaseOrderItemService
-
+    PurchaseOrderItemService,
+    MonthCloseService,
 
 }

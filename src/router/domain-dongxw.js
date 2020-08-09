@@ -174,61 +174,99 @@ let router0 = [
         ]
     },
     {
-        path: '/inv',
+        path: 'prdSelfInv',
         component: Layout,
         meta: {title: '库存管理', icon: 'user', group: 'dongxw'},
         children: [
             {
-                path: 'dongxw/stock/manage1',
-                component: require('@/pages/dongxw/stock/MainForm.vue'),
-                name: 'stock:manage1',
-                meta: {title: '月结', perm: 'productType:manage'}
+                path: 'dongxw/monthclose/manage',
+                component: require('@/pages/dongxw/monthclose/Manage.vue'),
+                name: 'monthclose:manage',
+                meta: {title: '月结', perm: 'monthclose:manage'}
             },
             {
-                path: 'dongxw/stock/manage',
-                component: require('@/pages/dongxw/stock/MainForm.vue'),
-                name: 'stock:manage',
-                meta: {title: '物料库存', perm: 'productType:manage'}
+                path: 'dongxw/monthclose/manage1',
+                component: require('@/pages/dongxw/monthclose/Manage.vue'),
+                name: 'monthclose:manage1',
+                meta: {title: '库存', perm: 'monthclose:manage'}
             },
             {
                 path: 'userInfo/userGrade2',
                 //   component: require('@/pages/app/userGrade/Manage.vue'),
                 name: 'userGrade:manage2',
-                meta: {title: '物料入库单', perm: 'purchase:manage'}
+                meta: {title: '入库单', perm: 'purchase:manage'}
             },
 
             {
                 path: 'userInfo/recharge',
                 //      component: require('@/pages/app/userInfo/Manage.vue'),
                 name: 'recharge:manage',
-                meta: {title: '物料出库单', perm: 'purchase:manage'}
+                meta: {title: '出库单', perm: 'purchase:manage'}
             },
             {
                 path: 'userInfo/recharge12',
                 //      component: require('@/pages/app/userInfo/Manage.vue'),
                 name: 'recharge:manage12',
-                meta: {title: '物料盘点', perm: 'purchase:manage'}
+                meta: {title: '盘点', perm: 'purchase:manage'}
             },
-            {
-                path: 'userInfo/manage6',
-                //    component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'userInfo:manage6',
-                meta: {title: '成品库存', perm: 'purchase:manage'}
-            }, {
-                path: 'userInfo/userGrade3',
-                //    component: require('@/pages/app/userGrade/Manage.vue'),
-                name: 'userGrade:manage3',
-                meta: {title: '成品入库单', perm: 'purchase:manage'}
-            },
-
-            {
-                path: 'userInfo/recharge1',
-                //    component: require('@/pages/app/userInfo/Manage.vue'),
-                name: 'recharge:manage1',
-                meta: {title: '成品出库单', perm: 'purchase:manage'}
-            }
+            // {
+            //     path: 'userInfo/manage6',
+            //     //    component: require('@/pages/app/userInfo/Manage.vue'),
+            //     name: 'userInfo:manage6',
+            //     meta: {title: '成品库存', perm: 'purchase:manage'}
+            // }, {
+            //     path: 'userInfo/userGrade3',
+            //     //    component: require('@/pages/app/userGrade/Manage.vue'),
+            //     name: 'userGrade:manage3',
+            //     meta: {title: '成品入库单', perm: 'purchase:manage'}
+            // },
+            //
+            // {
+            //     path: 'userInfo/recharge1',
+            //     //    component: require('@/pages/app/userInfo/Manage.vue'),
+            //     name: 'recharge:manage1',
+            //     meta: {title: '成品出库单', perm: 'purchase:manage'}
+            // }
         ]
     },
+    // {
+    //     path: 'prdPurchaseInv',
+    //     component: Layout,
+    //     meta: {title: '外购成品库存', icon: 'user', group: 'dongxw'},
+    //     children: [
+    //         {
+    //             path: 'dongxw/monthclose/manage',
+    //             component: require('@/pages/dongxw/monthclose/Manage.vue'),
+    //             name: 'monthclose:manage',
+    //             meta: {title: '月结', perm: 'monthclose:manage'}
+    //         },
+    //
+    //         {
+    //             path: 'userInfo/recharge121',
+    //             //      component: require('@/pages/app/userInfo/Manage.vue'),
+    //             name: 'recharge:manage121',
+    //             meta: {title: '成品盘点', perm: 'purchase:manage'}
+    //         },
+    //         {
+    //             path: 'userInfo/manage61',
+    //             //    component: require('@/pages/app/userInfo/Manage.vue'),
+    //             name: 'userInfo:manage61',
+    //             meta: {title: '成品库存', perm: 'purchase:manage'}
+    //         }, {
+    //             path: 'userInfo/userGrade31',
+    //             //    component: require('@/pages/app/userGrade/Manage.vue'),
+    //             name: 'userGrade:manage31',
+    //             meta: {title: '成品入库单', perm: 'purchase:manage'}
+    //         },
+    //
+    //         {
+    //             path: 'userInfo/recharge11',
+    //             //    component: require('@/pages/app/userInfo/Manage.vue'),
+    //             name: 'recharge:manage11',
+    //             meta: {title: '成品出库单', perm: 'purchase:manage'}
+    //         }
+    //     ]
+    // },
     {
         path: '/ac',
         component: Layout,

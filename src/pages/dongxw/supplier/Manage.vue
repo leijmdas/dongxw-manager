@@ -50,7 +50,7 @@
             </el-table-column>
             <el-table-column :sortable="true"  prop="code" label="供应商编码" width="100">
                 <template slot-scope="{row}">
-                    <span :style="'color: blue'">{{ row.code }}</span>
+                    <span :style="'color: green'">{{ row.code }}</span>
                 </template>
             </el-table-column>
             <el-table-column :sortable="true"  prop="name" label="供应商名称" width="200">

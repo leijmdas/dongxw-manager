@@ -256,7 +256,7 @@
         metadataId: 0,	//  元数据标识
         fieldMemo: '',	//  中文名称
         fieldName: '',	//  字段名称
-        fieldType: 'INTEGER',	//  字段类型
+        fieldType: 'INT',	//  字段类型
         fieldOrder: 0,	//  排序
         fieldPk: false,	//  是否主键
         fieldAuto: false,	//  自动生成
