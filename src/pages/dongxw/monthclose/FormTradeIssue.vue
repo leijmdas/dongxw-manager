@@ -44,7 +44,7 @@
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="已发数量" prop="qtyFinish">
-                        <el-input disabled placeholder="已发数量" v-model="entity.qty_finish"></el-input>
+                        <el-input disabled placeholder="已发数量" v-model="entity.qtyFinish"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
