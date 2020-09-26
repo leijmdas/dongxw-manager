@@ -70,7 +70,7 @@
             <el-button v-if="!onlyQuery" plain @click="exportRecords">导出XLS</el-button>
             <el-button v-if="!onlyQuery" type="primary" plain @click="create">新增</el-button>
             <el-button v-if="onlyQuery" type="primary" plain @click="multiSele(false)">保存</el-button>
-            <el-button v-if="onlyQuery" plain @click="multiSel(true)">关闭</el-button>
+            <el-button v-if="onlyQuery" plain @click="multiSele(true)">关闭</el-button>
 
         </v-toolbar>
 

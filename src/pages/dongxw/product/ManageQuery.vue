@@ -258,8 +258,8 @@
                 this.$nextTick(this.search);
             },
             init(options = {}) {
-                this.formDiag = options.formDiag
-                this.queryForm = options.queryForm
+                //this.formDiag = options.formDiag
+                //this.queryForm = options.queryForm
                 this.search();
             },
             search() {

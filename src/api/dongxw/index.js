@@ -12,6 +12,9 @@ import PurchasePlanService from './PurchasePlanService'
 import PurchaseOrderService from './PurchaseOrderService'
 import PurchaseOrderItemService from './PurchaseOrderItemService'
 import MonthCloseService from "./MonthCloseService";
+import MasterService from "./MasterService";
+import WhStockService from "./WhStockService";
+import TradeService from "./TradeService";
 
 export default {
     CustomerService,
@@ -28,5 +31,8 @@ export default {
     PurchaseOrderService,
     PurchaseOrderItemService,
     MonthCloseService,
+    MasterService,
+    TradeService,
+    WhStockService,
 
 }

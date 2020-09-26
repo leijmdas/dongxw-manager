@@ -152,7 +152,7 @@
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            productId: undefined,
+                            productId: this.productId,
                             isDeleted: false
                         }
                     },
@@ -231,16 +231,18 @@
                 this.search();
             },
             search(row) {
+                this.$refs.table.currentPage = 1
 
                 this.page.query.param.parentId = this.parentRm.id
                 this.page.query.param.customerId = 0
-                this.$refs.table.currentPage = 1
+                //console.log(JSON.stringify(this.page))
                 this.$refs.table.load()
             },
             cancel() {
                 this.dateRange = [];
+                //console.log(JSON.stringify(this.page))
                 this.page.query.param = {
-                    parentId : parentRm.childId,
+                    //productId: this.page.query.param.productId,
                     isDeleted: false,
                 };
                 this.search();

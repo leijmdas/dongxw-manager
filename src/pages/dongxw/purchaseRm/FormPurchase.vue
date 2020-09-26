@@ -100,7 +100,6 @@
                     <!--<el-button type="text" title="编辑" @click="edit(scope.row)">-->
                         <!--<i class="el-icon-edit"></i>-->
                     <!--</el-button>-->
-
                     <el-button v-if="order.id" type="text"  style="color:red"
                                @click="del(scope.row,scope.$index)" title="删除"  >
                         <i class="el-icon-delete red"></i>

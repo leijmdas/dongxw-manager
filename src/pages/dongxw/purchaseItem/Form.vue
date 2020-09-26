@@ -207,10 +207,10 @@
                 this.$refs.formDiag.hide();
                 //this.$message(JSON.stringify(row))
                 this.entity.supplyId = row.id
-                this.$api.dongxw.SupplierService.findById(this.entity.supplyId ).then(rsp => {
+                this.$api.dongxw.SupplierService.findById(this.entity.supplyId).then(rsp => {
                     this.entity.supplier = rsp.data
-                    this.entity.contact=this.entity.supplier.contact
-                    this.entity.tel=this.entity.supplier.tel
+                    this.entity.contact = this.entity.supplier.contact
+                    this.entity.tel = this.entity.supplier.tel
 
 
                 })

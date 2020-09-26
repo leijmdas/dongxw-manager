@@ -2,7 +2,7 @@
     <el-form  :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
 
         <fieldset align="top" style="margin-left:10px; margin-right: 10px">
-            <legend>产品</legend>
+            <legend>送货单</legend>
             <el-row :span="24">
                 <el-col :span="24">
                     <product-view :qty="orderLine.qty" v-model="product.id" :labelWidth="'100px'"

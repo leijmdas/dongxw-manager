@@ -42,7 +42,7 @@
 
             <el-button plain @click="exportRecords">导出XLS</el-button>
             <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
-            <el-button type="primary" v-show="productId>0" plain @click="createMulti">多选新增</el-button>
+            <el-button type="primary" v-show="productId>0" plain @click="createMulti">批量新增</el-button>
 
         </v-toolbar>
 
@@ -327,11 +327,13 @@
                 this.page.query.param.parentId = 0
 
                 this.$refs.table.currentPage = 1
+                console.log(JSON.stringify(this.page))
                 this.$refs.table.load()
             },
             cancel() {
                 this.dateRange = [];
                 this.page.query.param = {
+                    productId: this.page.query.param.productId,
                     isDeleted: false,
                 };
                 this.search();
