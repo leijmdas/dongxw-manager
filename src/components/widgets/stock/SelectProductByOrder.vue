@@ -2,10 +2,10 @@
 <template>
     <div>
         <div class="panel panel-default panel-search">
-            <el-form :inline="true"   >
-                <el-form-item label="客户"  prop="customerId">
-                    <customer-select  disabled v-model="page.query.param.customerId"
-                                     :clearable="true"></customer-select>
+            <el-form :inline="true">
+                <el-form-item label="客户" prop="customerId">
+                    <customer-select disabled v-model="page.query.param.customerId"
+                                     style="width:222px;" :clearable="true"></customer-select>
 
                 </el-form-item>
 
@@ -70,8 +70,6 @@
                     <!--<span :style="'style:red'"> {{$dongxwDict.getText(row.orderType,$dongxwDict.store.ORDER_TYPE)}}</span>-->
                 <!--</template>-->
             <!--</el-table-column>-->
-
-
 
              <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客订单号" width="120">
                 <template slot-scope="scope">

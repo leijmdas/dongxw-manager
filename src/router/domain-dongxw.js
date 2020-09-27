@@ -190,12 +190,12 @@ let router0 = [
                 name: 'monthclose:manage30',
                 meta: {title: '外购成品库', perm: 'monthclose:manage'}
             },
-            // {
-            //     path: 'dongxw/monthclose/manage1',
-            //     component: require('@/pages/dongxw/monthclose/Manage.vue'),
-            //     name: 'monthclose:manage1',
-            //     meta: {title: '库存', perm: 'monthclose:manage'}
-            // },
+            {
+                path: 'dongxw/monthclose/sheet',
+                component: require('@/pages/dongxw/monthclose/Manage.vue'),
+                name: 'monthclose:manage1',
+                meta: {title: '客户对帐单', perm: 'monthclose:manage'}
+            },
             // {
             //     path: 'userInfo/userGrade2',
             //     //   component: require('@/pages/app/userGrade/Manage.vue'),

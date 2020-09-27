@@ -17,10 +17,10 @@
                 <el-button type="primary" style="margin-left: 130px" :disabled="mc.closeFlag" plain @click="create">
                     新增送货单
                 </el-button>
+
+                <span style="font-size:14px;margin-left:30px;color:darkmagenta">国内客户使用送货单</span>
             </el-form>
           </div>
-
-
 
 
         <v-table ref="table" :page="page"   :table-minheight="450" @dataloaded="onDataloaded">
@@ -60,9 +60,12 @@
             </el-table-column>
 
             <el-table-column :sortable="true" prop="issueAddr" label="交货地址" width="280"></el-table-column>
-            <el-table-column :sortable="true" prop="tradeCount" label="计数" width="80"></el-table-column>
-            <el-table-column  prop="ym" label="周期" width="70">
-                {{mc.ym}}
+            <el-table-column :sortable="false" prop="tradeCount" label="清单行数" width="80"></el-table-column>
+            <el-table-column  prop="ym" label="周期" width="70"/>
+            <el-table-column  prop="moneyType" label="币种" width="70">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                </template>
             </el-table-column>
             <el-table-column :sortable="true" prop="issueWh" label="交货仓库" width="120"></el-table-column>
             <el-table-column :sortable="true" prop="contact" label="联系人" width="111"></el-table-column>

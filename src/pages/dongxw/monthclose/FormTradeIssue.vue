@@ -168,12 +168,13 @@
         data: function () {
             return {};
         },
-        computed:{
-          money :{
-              get () {
-                  return this.entity.price * this.entity.qty
-              }
-          }
+        computed: {
+            money: {
+                get() {
+                    let m = this.entity.price * this.entity.qty
+                    return m.toFixed(2)
+                }
+            }
         },
         data() {
             return {

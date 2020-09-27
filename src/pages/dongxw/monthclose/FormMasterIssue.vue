@@ -45,16 +45,24 @@
 
                     </el-form-item>
                 </el-col>
-                <el-col :span="24">
+                <el-col :span="12">
 
                     <el-form-item label="客户名称" prop="custName" :rules="[{ required: true}]">
                         <!--<el-input disabled placeholder="客户名称" v-model="entity.custName"></el-input>-->
-                        <el-button type="primary" :style="'width:100%'" plain   @click="findCust" style=" color :green">
+                        <el-button type="primary" :style="'width:100%'" plain   @click="findCust" style="color :green">
                             {{entity.custName?entity.custName:"请选择客户"}}
                         </el-button>
                     </el-form-item>
                 </el-col>
+                <el-col :span="12"  >
+                    <el-form-item label="结算币种" prop="moneyType">
+                        <el-select :clearable="true" v-model="entity.moneyType" style="width:100%">
+                            <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]" :value="item[0]"
+                                       :label="item[1]"></el-option>
+                        </el-select>
+                    </el-form-item>
 
+                </el-col>
                 <el-col :span="24">
                     <el-form-item label="交货地址" prop="issueAddr">
                         <el-input placeholder="交货地址" v-model="entity.issueAddr"></el-input>
@@ -157,7 +165,8 @@
         tradeTime:  new Date() ,
         issueWh: '',
         payMode:'月结30天',
-
+        ym:0,
+        moneyType:100,
         customerId: 0 ,
         orderId: 0,
         poId: 0,
@@ -214,6 +223,7 @@
                     this.entity.tel = cust.tel
                     this.entity.custName = cust.custName
                     this.entity.issueAddr = cust.addr
+                    this.entity.moneyType = cust.moneyType
 
                 })
             },
@@ -257,6 +267,7 @@
                 this.entity = _.cloneDeep(defaultEntity);
                 this.entity.tradeTime = this.$dongxwDict.formatDatetime(new Date());
                 this.entity.mcId = this.mc.id;
+                this.entity.ym = this.mc.ym;
                 this.entity.wh = this.mc.wh;
             },
 
