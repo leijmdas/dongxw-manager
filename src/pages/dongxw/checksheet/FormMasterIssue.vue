@@ -2,84 +2,105 @@
     <el-form  :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
 
         <fieldset align="top" style="margin-left:10px; margin-right: 10px">
-            <legend>送货单产品</legend>
+            <legend>送货单</legend>
 
 
             <el-row :span="24" style="margin-top: 5px ">
                 <el-col :span="12">
-                    <el-form-item label="客订单号" prop="orderCode">
-                        <el-input disabled placeholder="客订单号" v-model="entity.orderCode"></el-input>
-                    </el-form-item>
-                </el-col>
-                 <el-col :span="12">
-                    <el-form-item label="产品编码" prop="product.code">
-                        <el-input disabled placeholder="产品编码" v-model="entity.product.code"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="规格描述" prop="product.remark">
-                        <el-input disabled placeholder="规格描述" v-model="entity.product.remark"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="颜色" prop="product.color">
-                        <el-input disabled placeholder="颜色" v-model="entity.product.color"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="尺寸" prop="product.size">
-                        <el-input disabled placeholder="尺寸" v-model="entity.product.size"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="单位" prop="product.unit">
-                        <el-input disabled placeholder="单位" v-model="entity.product.unit"></el-input>
-                    </el-form-item>
+                <el-form-item label="送货单号" prop="code">
+                    <el-input disabled placeholder="送货单号" v-model="entity.code"></el-input>
+                </el-form-item>
                 </el-col>
 
                 <el-col :span="12">
-                    <el-form-item label="订单数量" prop="qtyOrder">
-                        <el-input disabled placeholder="订单数量" v-model="entity.qtyOrder"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="已发数量" prop="qtyFinish">
-                        <el-input disabled placeholder="已发数量" v-model="entity.qtyFinish"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="发货数量" prop="qty">
-                        <el-input  placeholder="发货数量" v-model="entity.qty"></el-input>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="12">
-                    <el-form-item label="单价" prop="price">
-                        <el-input disabled placeholder="单价" v-model="entity.price"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="金额" prop="money">
-                        <el-input disabled placeholder="金额" v-model="money"/>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="12">
-                    <el-form-item label="备品数量" prop="qtyBackup">
-                        <el-input   placeholder="备品数量" v-model="entity.qtyBackup"></el-input>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="24">
-                    <el-form-item label="备注" prop="code">
-                        <el-input   placeholder="备注" v-model="entity.remark"></el-input>
+                    <el-form-item label="送货日期" prop="tradeTime" :rules="[{ required: true}]">
+                        <el-date-picker style="width:100%" :disabled="disables"
+                                        v-model="entity.tradeTime"
+                                        format="yyyy 年 MM 月 dd 日"
+                                        value-format="yyyy-MM-dd HH:mm:ss"
+                                        type="date"
+                                        placeholder="选择日期">
+                        </el-date-picker>
                     </el-form-item>
                 </el-col>
 
 
             </el-row>
 
+            <el-row :span="24">
 
+                <el-col :span="12"  >
+
+                    <el-form-item label="送货单类型" prop="tradeType">
+                        <el-select style="width:100%" v-model="entity.tradeType">
+                            <el-option disabled v-for="item in $dongxwDict.store.ISSUE_PRD_TYPE" :key="item[0]"
+                                       :value="item[0]" :label="item[1]"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12"  >
+
+                    <el-form-item label="过帐标识" prop="calFlag">
+                        <el-input disabled placeholder="过帐标识" v-model="entity.calFlag"></el-input>
+
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+
+                    <el-form-item label="客户名称" prop="custName" :rules="[{ required: true}]">
+                        <!--<el-input disabled placeholder="客户名称" v-model="entity.custName"></el-input>-->
+                        <el-button disabled type="primary" :style="'width:100%'" plain   @click="findCust" style="color :green">
+                            {{entity.custName?entity.custName:"请选择客户"}}
+                        </el-button>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12"  >
+                    <el-form-item label="结算币种" prop="moneyType">
+                        <el-select :clearable="true" v-model="entity.moneyType" style="width:100%">
+                            <el-option disabled v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]" :value="item[0]"
+                                       :label="item[1]"></el-option>
+                        </el-select>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item label="交货地址" prop="issueAddr">
+                        <el-input disabled placeholder="交货地址" v-model="entity.issueAddr"></el-input>
+                    </el-form-item>
+
+
+                </el-col>
+
+                <el-col :span="12">
+
+                    <el-form-item label="交货仓库" prop="issueWh">
+                        <el-input disabled placeholder="交货仓库" v-model="entity.issueWh"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="付款方式" prop="payMode">
+                        <el-input disabled placeholder="付款方式" v-model="entity.payMode"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+
+            <el-row :span="24">
+                <el-col :span="12">
+                    <el-form-item label="联系人" prop="contact">
+                        <el-input disabled placeholder="联系人" v-model="entity.contact"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="联系电话" prop="tel">
+                        <el-input disabled placeholder="联系电话" v-model="entity.tel"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="制单人" prop="makesheet">
+                        <el-input disabled placeholder="制单人" v-model="entity.makesheet"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
         </fieldset>
         <v-dialog ref="formDiag" :appendToBody="true" title="查找" :width="'48%'">
             <cust-find  v-model="entity.customerId" :confirmFind="confirmFind" :cancelFind="cancelFind">            </cust-find>
@@ -137,7 +158,7 @@
     const defaultEntity = {
 
         id: null,
-
+        tradeCount:0,
         code:'',
         custName :'',
         issueAddr:'',
@@ -148,7 +169,8 @@
         tradeTime:  new Date() ,
         issueWh: '',
         payMode:'月结30天',
-
+        ym:0,
+        moneyType:100,
         customerId: 0 ,
         orderId: 0,
         poId: 0,
@@ -159,22 +181,22 @@
         tradeBy: "0",
         useDpt: " ",
         useExp: " ",
-        wh: 0
+        wh: 0,
+        makesheet:'石头',
+
 
     };
     export default {
         components: {CustFind,OrderMasterSelect, CustomerSelect},
-
+        props: {
+            mc: {
+                required: false,
+                type: Object,
+                default:() => {}
+            },
+        },
         data: function () {
             return {};
-        },
-        computed: {
-            money: {
-                get() {
-                    let m = this.entity.price * this.entity.qty
-                    return m.toFixed(2)
-                }
-            }
         },
         data() {
             return {
@@ -207,6 +229,7 @@
                     this.entity.tel = cust.tel
                     this.entity.custName = cust.custName
                     this.entity.issueAddr = cust.addr
+                    this.entity.moneyType = cust.moneyType
 
                 })
             },
@@ -237,24 +260,32 @@
                     if (valid) {
 
                         let params = Object.assign({}, this.entity);
-                        this.$api.dongxw.TradeService.save(params).then(rsp => {
+
+
+                        this.$api.dongxw.MasterService.save(params).then(rsp => {
                             this.$emit("saved", rsp);
                         });
                     }
                 });
             },
             resetForm() {
-                //this.$refs["form"].resetFields();
-
+                this.$refs["form"].resetFields();
+                this.entity = _.cloneDeep(defaultEntity);
+                this.entity.tradeTime = this.$dongxwDict.formatDatetime(new Date());
+                this.entity.mcId = this.mc.id;
+                this.entity.ym = this.mc.ym;
+                this.entity.wh = this.mc.wh;
             },
 
             init(options) {
                 this.resetForm();
                 if (options.id) {
                     this.isDisabled = true;
-                    this.$api.dongxw.TradeService.findById(options.id).then(rsp => {
-                        this.entity = rsp.data;
-                        this.isDisabled = this.entity.calFlag;
+                    this.$api.dongxw.MasterService.findById(options.id).then(rr => {
+                        let r = rr.data;
+                        this.isDisabled = r.calFlag;
+
+                        this.entity = r;
 
 
                     });

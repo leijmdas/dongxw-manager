@@ -95,7 +95,11 @@
                         <el-input placeholder="联系电话" v-model="entity.tel"></el-input>
                     </el-form-item>
                 </el-col>
-
+                <el-col :span="12">
+                    <el-form-item label="制单人" prop="makesheet">
+                        <el-input placeholder="制单人" v-model="entity.makesheet"></el-input>
+                    </el-form-item>
+                </el-col>
             </el-row>
         </fieldset>
         <v-dialog ref="formDiag" :appendToBody="true" title="查找" :width="'48%'">
@@ -177,7 +181,9 @@
         tradeBy: "0",
         useDpt: " ",
         useExp: " ",
-        wh: 0
+        wh: 0,
+        makesheet:'石头',
+
 
     };
     export default {

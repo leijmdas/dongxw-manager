@@ -2,11 +2,11 @@
 <template>
     <div>
         <div class="panel panel-default panel-search">
-            <el-form :inline="true">
-                <el-form-item label="客户" prop="customerId">
-                    <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>
+            <el-form :inline="true"  v-model="currentValue">
+                <!--<el-form-item label="客户" prop="customerId">-->
+                    <!--<customer-select disabled :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>-->
 
-                </el-form-item>
+                <!--</el-form-item>-->
 
 
                 <el-form-item label="送货单号" prop="code">
@@ -14,11 +14,9 @@
                 </el-form-item>
                 <el-button type="primary" @click="search">查询</el-button>
                 <el-button @click="cancel">取消</el-button>
-                <el-button type="primary" style="margin-left: 130px" :disabled="mc.closeFlag" plain @click="create">
-                    新增送货单
-                </el-button>
-
-                <span style="font-size:14px;margin-left:30px;color:darkmagenta">国内客户使用送货单</span>
+                <!--<el-button type="primary" style="margin-left: 130px" :disabled="mc.closeFlag" plain @click="create">-->
+                <!--</el-button>-->
+                <el-button @click="exportExcel()">导出客户对帐单</el-button>
             </el-form>
           </div>
 
@@ -27,15 +25,16 @@
             <el-table-column  prop="seq" label="序号" width="55">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
+            <el-table-column  prop="ym" label="周期" width="70"/>
+
+            <el-table-column :sortable="true" prop="custName" label="客户名称" width="220">
+
+            </el-table-column>
             <el-table-column  prop="wh" label="仓库" width="90">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.wh,$dongxwDict.store.WH_NAME)}}
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop="custName" label="客户名称" width="220">
-
-            </el-table-column>
-
             <el-table-column :sortable="true" prop="code" label="送货单号" width="140">
             </el-table-column>
             <el-table-column :sortable="true" prop="tradeTime" label="送货日期" width="100">
@@ -61,8 +60,7 @@
 
             <el-table-column :sortable="true" prop="issueAddr" label="交货地址" width="280"></el-table-column>
             <el-table-column :sortable="false" prop="tradeCount" label="清单行数" width="80"></el-table-column>
-            <el-table-column  prop="ym" label="周期" width="70"/>
-            <el-table-column  prop="moneyType" label="币种" width="70">
+             <el-table-column  prop="moneyType" label="币种" width="70">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
                 </template>
@@ -72,24 +70,21 @@
             <el-table-column :sortable="true" prop="tel" label="联系电话"></el-table-column>
 
 
-            <el-table-column width="245" label="操作" :fixed="'right'">
+            <el-table-column width="111" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
-                    <el-button  @click="edit(scope.row)" :disabled="scope.row.calFlag" type="text" title="编辑">
-                        <i class="el-icon-edit"></i>
-                    </el-button>
 
-                    <el-button @click="editTrade(scope.row)" :disabled="scope.row.calFlag" >产品</el-button>
-                    <el-button @click="exportExcel(scope.row)">导出送货单</el-button>
-                    <el-button :disabled="scope.row.calFlag" type="text"  style="color:red" @click="del(scope.row,scope.$index)" title="删除"  >
-                        <i class="el-icon-delete red"></i>
-                    </el-button>
+                <el-button  @click="edit(scope.row)" :disabled="scope.row.calFlag" type="text" title="编辑">
+                    <i class="el-icon-edit"></i>
+                </el-button>
+
+                <el-button @click="editTrade(scope.row)" :disabled="scope.row.calFlag" >产品</el-button>
                 </template>
             </el-table-column>
         </v-table>
         <v-dialog ref="formDiag" :width="'80%'" title="送货单编辑">
             <form-panel :mc="mc" @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
-                <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
+                <!--<el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>-->
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
@@ -98,13 +93,11 @@
             <div slot="footer" style="margin-right:40px">
                 <!--<el-button type="primary" @click="$refs.formManageTradeDiag.dispatch('submit')">保存</el-button>-->
                 <el-button type="default"
-                    @click="()=>{$refs.formManageTradeDiag.hide();search();}">
+                           @click="()=>{$refs.formManageTradeDiag.hide();search();}">
                     关闭
                 </el-button>
             </div>
         </v-dialog>
-
-
     </div>
 </template>
 <style rel="stylesheet/less" scoped lang="less">
@@ -124,23 +117,20 @@
 </style>
 
 <script>
-    import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
-
-    import ProductTypeSelect from '@/components/widgets/dongxw/ProductTypeSelect.vue';
-    import ProductSubTypeSelect from '@/components/widgets/dongxw/ProductSubTypeSelect.vue';
+    //import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
 
     import FormPanel from './FormMasterIssue';
     import ManageTradeIssue from './ManageTradeIssue';
 
-    export default {
-        components: { ManageTradeIssue,CustomerSelect,FormPanel, ProductTypeSelect,ProductSubTypeSelect },
-        props: {
-            mc : {
-                required:true,
-                type:Object,
-                deafault: {}
-            },
 
+    export default {
+        components: {FormPanel,  ManageTradeIssue},
+        props: {
+
+            value: {
+                required: true,
+                type: Object,
+            },
         },
         data() {
             return {
@@ -152,7 +142,7 @@
                     query: {
                         orderBys: 'id|desc',
                         param: {
-                            mcId: this.mc.id,
+                            //mcId: this.mc.id,
                             tradeType: 30,
                             isDeleted: false
                         }
@@ -174,7 +164,7 @@
             };
         },
         watch: {
-            enableView: {
+            currentValue: {
                 handler: function(newVal, oldVal) {
                         this.search()
                 },
@@ -182,24 +172,34 @@
             } ,
         },
 
-
-        computed: {},
-
+        computed: {
+            currentValue: {
+                get () {
+                    return this.value
+                },
+                set (val) {
+                    this.$emit('input', val)
+                }
+            }
+        },
         methods: {
             /*
         导出
         */
             exportExcel(row) {
                 let self = this;
-                this.$confirm("确定要导出送货单吗?", "提示", {
+                this.$confirm("确定要导出对帐单吗?", "提示", {
                     type: "warning"
                 }).then(() => {
-                    let params =_.cloneDeep( this.getSearchParams() )
+                    let params = _.cloneDeep(this.getSearchParams())
                     params.param = {
-                        id: row.id
+                        ym : this.currentValue.ym,
+                        customerId : this.currentValue.customerId,
+                        tradeType : 30,
+
                     }
-                    console.log(JSON.stringify(params))
-                    self.$api.dongxw.MasterService.export(params);
+                    //console.log(JSON.stringify(params))
+                    self.$api.dongxw.MasterService.exportCheckSheet(params);
 
                 });
 
@@ -246,17 +246,7 @@
 
             },
             del(row) {
-                this.$confirm("确定删除此条记录吗?", "提示", {
-                    type: "warning"
-                }).then(() => {
-                    this.$api.dongxw.MasterService.deleteById(row.id).then(rsp => {
-                        this.search();
-                        this.$message({
-                            type: "success",
-                            message: "删除成功!"
-                        });
-                    });
-                });
+
             },
             onFormSaved() {
                 this.$refs.formDiag.hide();
@@ -271,9 +261,9 @@
             },
             search() {
                 this.$refs.table.currentPage = 1;
-                this.page.query.param.mcId =   this.mc.id;
-                this.page.query.param.tradeType =   30
-
+                this.page.query.param.ym =   this.currentValue.ym;
+                this.page.query.param.customerId =   this.currentValue.customerId;
+                this.page.query.param.tradeType =  30
 
                 this.$refs.table.load();
             },
@@ -281,8 +271,6 @@
                 this.dateRange = []
                 this.$refs.table.currentPage = 1;
                 this.page.query.param = {
-                    mcId: this.mc.id,
-
                     tradeType: 30
                 };
 

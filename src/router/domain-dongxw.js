@@ -181,20 +181,20 @@ let router0 = [
             {
                 path: 'dongxw/monthclose/manage/?wh=10',
                 component: require('@/pages/dongxw/monthclose/Manage.vue'),
-                name: 'monthclose:manage10',
-                meta: {title: '原料成品库', perm: 'monthclose:manage'}
+                name: 'monthclose:RM',
+                meta: {title: '原料成品库', perm: 'mc:rm'}
             },
             {
                 path: 'dongxw/monthclose/manage/?wh=30',
                 component: require('@/pages/dongxw/monthclose/Manage.vue'),
-                name: 'monthclose:manage30',
-                meta: {title: '外购成品库', perm: 'monthclose:manage'}
+                name: 'monthclose:PO',
+                meta: {title: '外购成品库', perm: 'mc:po'}
             },
             {
-                path: 'dongxw/monthclose/sheet',
-                component: require('@/pages/dongxw/monthclose/Manage.vue'),
-                name: 'monthclose:manage1',
-                meta: {title: '客户对帐单', perm: 'monthclose:manage'}
+                path: 'dongxw/checksheet/sheet',
+                component: require('@/pages/dongxw/checksheet/Manage.vue'),
+                name: 'monthclose:manage30',
+                meta: {title: '客户对帐单', perm: 'mc:checksheet'}
             },
             // {
             //     path: 'userInfo/userGrade2',

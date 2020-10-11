@@ -34,6 +34,13 @@ export default {
             data
         })
     },
+    queryMc(data) {
+        return request({
+            url: '/dongxw/monthclose/queryMc',
+            method: 'POST',
+            data
+        })
+    },
     /**
      * 导出xlsx
      */
