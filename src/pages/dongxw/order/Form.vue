@@ -67,6 +67,11 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
+                            <el-form-item label="报价含税" prop="includeTax">
+                                <el-input placeholder="报价含税" v-model="entity.includeTax"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
                             <el-form-item label="业务员" prop="businessBy">
                                 <el-input placeholder="业务员" v-model="entity.businessBy"></el-input>
                             </el-form-item>

@@ -130,7 +130,11 @@
             <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a> -->
                 <!--</template>-->
             <!--</el-table-column>-->
-
+<!--            <el-table-column  prop="priceType" label="报价含税?" width="90">-->
+<!--                <template slot-scope="{row}">-->
+<!--                    {{ $dongxwDict.viewDate(row.orderDate)}}-->
+<!--                </template>-->
+<!--            </el-table-column>-->
             <el-table-column sortable="true" prop="orderDate" label="下单日期" width="100">
                 <template slot-scope="{row}">
                 {{ $dongxwDict.viewDate(row.orderDate)}}
