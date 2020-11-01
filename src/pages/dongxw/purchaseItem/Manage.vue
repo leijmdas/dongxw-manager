@@ -2,8 +2,8 @@
 <template>
     <div>
         <div class="panel panel-default panel-search">
-            <el-form :inline="true">
-                <el-form-item label="供方" prop="supplyId">
+            <el-form :inline="true" label-width="120px">
+                <el-form-item label="供应商" prop="supplyId">
                     <supplier-select :fnChange="search" v-model="page.query.param.supplyId"
                                      :clearable="true"></supplier-select>
 
@@ -304,7 +304,7 @@
             },
             init(options = {}) {
                 this.row = options
-
+                this.search()
 
             },
             search() {

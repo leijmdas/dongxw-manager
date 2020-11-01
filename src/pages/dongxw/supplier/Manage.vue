@@ -136,7 +136,7 @@
 </style>
 
 <script>
-    //import ProductTypeSelect from '@/components/widgets/ProductTypeSelect.vue';
+
     import FormPanel from './Form';
 
     export default {
@@ -148,7 +148,7 @@
                 summaryMap: {},
                 page: {
                     query: {
-                        orderBys: 'code|asc',
+                        orderBys: 'id|desc',
                         param: {
                             subjectId: undefined,
                             isDeleted: false

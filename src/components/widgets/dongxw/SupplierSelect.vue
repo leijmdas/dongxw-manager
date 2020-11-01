@@ -1,7 +1,9 @@
 <!--模板名称选择-->
 
 <template>
-    <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
+    <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading"
+               style="width:130%" filterable remote :remote-method="remoteQuery"
+               :clearable="clearable" :disabled="disabled" @change="handleChange">
         <el-option v-for="item in options"
                    :key="item.id"
                    :label="item.code + ' '+ item.name"
@@ -59,15 +61,30 @@
             handleChange (val) {
                 this.$emit('change', val)
             },
-            refresh() {
+            remoteQuery(code){
+              this.refresh(code)
+            },
+
+            refresh(code) {
+                let chinaReg = new RegExp("[\\u4E00-\\u9FFF]+", "g");
+                let isChina = chinaReg.test(code);
+
                 this.loading = true
-                this.$api.dongxw.SupplierService.query({}).then(rsp => {
+                this.$api.dongxw.SupplierService.query(
+                    {
+                        orderBys: 'code|asc',
+                        param: {
+                            code: isChina ? null : code,
+                            name: isChina ? code : null,
+                        }
+                    }
+                ).then(rsp => {
                     this.options = rsp.data
                     this.loading = false
                 })
             }
         },
-        created () {
+        created() {
             this.refresh()
         }
     }
