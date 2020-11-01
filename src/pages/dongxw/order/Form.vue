@@ -67,8 +67,17 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item label="报价含税" prop="includeTax">
-                                <el-input placeholder="报价含税" v-model="entity.includeTax"></el-input>
+                            <el-form-item label="" prop="includeTax">
+
+                                <el-switch
+                                    v-model="entity.includeTax"
+                                    active-color="#13ce6"
+                                    inactive-color="#13ce6"
+                                    :active-value="true"
+                                    :inactive-value="false"
+                                    active-text="含税"
+                                    inactive-text="不含税">
+                                </el-switch>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
@@ -269,7 +278,8 @@
         checkDate: null,
         factroyIssuseDate: null,
         invoiceId : 0,
-        invoiceIdIni:0
+        invoiceIdIni:0,
+        includeTax:false,
     };
     export default {
         components: {OrderMasterSelect,CustomerSelect, SupplierSelect},

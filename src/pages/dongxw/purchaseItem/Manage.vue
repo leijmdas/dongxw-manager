@@ -1,17 +1,30 @@
 <!--订单管理-->
 <template>
     <div>
+        <div class="panel panel-default panel-search">
+            <el-form :inline="true">
+                <el-form-item label="供方" prop="supplyId">
+                    <supplier-select :fnChange="search" v-model="page.query.param.supplyId"
+                                     :clearable="true"></supplier-select>
 
+                </el-form-item>
+                <el-form-item label="采购单号" prop="purchaseOrderCode">
+                    <el-input v-model="page.query.param.purchaseOrderCode" clearable></el-input>
+                </el-form-item>
+                <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
+                <el-button @click="cancel" style="margin-right:60px;color :yellowgreen">取消</el-button>
+            </el-form>
+        </div>
         <v-toolbar title="采购订单表" type="alert">
             <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
 
-            <el-button type="primary" plain @click="create" style="margin-right:60px;color :green">
+            <el-button v-show="customerOrder.id" type="primary" plain @click="create" style="margin-right:60px;color :green">
                 新增采购单(根据客户订单)
             </el-button>
 
-            <el-button type="primary" @click="search" v-keycode="'ENTER'">刷新</el-button>
-            <!--<el-button @click="cancel" style="margin-right:60px;color :yellowgreen">取消</el-button>-->
-            <!--<el-button plain @click="exportRecords">导出XLS</el-button>-->
+<!--            <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+<!--            <el-button @click="cancel" style="margin-right:60px;color :yellowgreen">取消</el-button>-->
+<!--            &lt;!&ndash;<el-button plain @click="exportRecords">导出XLS</el-button>&ndash;&gt;-->
         </v-toolbar>
 
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
@@ -25,9 +38,9 @@
 			        {{row.supplierName}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='purchaseOrderCode' :sortable='true' label='订单编号' width='160'>
+            <el-table-column prop='purchaseOrderCode' :sortable='true' label='采购单号' width='160'>
                 <template slot-scope='{row}'><span style='color:black'>
-			{{row.purchaseOrderCode}}</span>
+			        {{row.purchaseOrderCode}}</span>
                 </template>
             </el-table-column>
 
@@ -44,7 +57,16 @@
                     <span style='color:black'>{{$dongxwDict.viewDate(row.issueDate) }}</span>
                 </template>
             </el-table-column>
-
+            <el-table-column prop='customerOrderCode' :sortable='true' label='客订单号' width='136'>
+                <template slot-scope='{row}'><span style='color:black'>
+			        {{row.orderMaster.customerOrderCode}}</span>
+                </template>
+            </el-table-column>
+                <el-table-column prop='epOrderCode' :sortable='true' label='EP订单号' width='111'>
+                <template slot-scope='{row}'><span style='color:black'>
+			        {{row.orderMaster.epOrderCode}}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop='addr' :sortable='true' label='地址' width='180'>
                 <template slot-scope='{row}'><span style='color:black'>
 			{{row.supplier.addr}}</span>
@@ -94,7 +116,7 @@
                     <el-button type='text' title='编辑'@click='edit(scope.row)'>
                         <i class='el-icon-edit'></i>
                     </el-button>
-                    <el-button type='text' @click='del(scope.row,scope.$index)' title='删除' >
+                    <el-button v-if="customerOrder.id" type='text' @click='del(scope.row,scope.$index)' title='删除' >
                         <span style='color: red'> <i class='el-icon-delete red'></i></span>
                     </el-button>
                     <el-button  title='导出' @click='exportRecords(scope.row)'>
@@ -122,13 +144,15 @@
 <script>
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import FormPanel from './Form';
+    import SupplierSelect  from '@/components/widgets/dongxw/SupplierSelect.vue';
 
     export default {
-        components: {FormPanel, CustomerSelect},
+        components: {FormPanel, CustomerSelect, SupplierSelect},
         props:{
             value: {
                 type: Object,
-                required: true
+                required: false,
+                default: {}
             },
 
             fatherMethod: {

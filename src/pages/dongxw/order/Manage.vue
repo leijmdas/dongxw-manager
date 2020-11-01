@@ -78,6 +78,25 @@
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
+
+            <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客订单号" width="120">
+                <template slot-scope="scope">
+                    <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
+                    <span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
+                <template slot-scope="scope">
+                    <!--<el-button type="text" @click="edit(scope.row)" plain>{{scope.row.epOrderCode}}</el-button>-->
+                    <a
+                        class="link-name"
+                        href="javascript:;"
+                        :title="scope.row.epOrderCode"
+                        @click="edit(scope.row)"
+                    >{{ scope.row.epOrderCode }}</a>
+                </template>
+
+            </el-table-column>
             <el-table-column sortable="true" prop="customerId" label="客户代码" width="90">
                 <template slot-scope="{row}">
                     {{ row.customer?row.customer.custNo:'-'}}
@@ -107,24 +126,7 @@
                 </template>
             </el-table-column>
 
-             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客订单号" width="120">
-                <template slot-scope="scope">
-                    <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
-                    <span v-if="!scope.row.customerOrderImg"> {{scope.row.customerOrderCode}}</span>
-                </template>
-             </el-table-column>
-            <el-table-column prop="epOrderCode" label="EP订单号" width="120">
-                <template slot-scope="scope">
-                    <!--<el-button type="text" @click="edit(scope.row)" plain>{{scope.row.epOrderCode}}</el-button>-->
-                    <a
-                        class="link-name"
-                        href="javascript:;"
-                        :title="scope.row.epOrderCode"
-                        @click="edit(scope.row)"
-                    >{{ scope.row.epOrderCode }}</a>
-                </template>
 
-            </el-table-column>
             <!--<el-table-column  prop="customerOrderImg" label="订单原件" width="78">-->
             <!--<template slot-scope="scope">-->
             <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a> -->
@@ -159,6 +161,11 @@
             <el-table-column prop="moneyType" label="结算币种" width="80">
                 <template slot-scope="{row}">
                     {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                </template>
+            </el-table-column>
+            <el-table-column  prop="includeTax" label="报价含税" width="100">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.includeTax,$dongxwDict.store.TAX_INCLUDE)}}
                 </template>
             </el-table-column>
             <el-table-column sortable="true" prop="businessBy" label="业务员" width="100"></el-table-column>

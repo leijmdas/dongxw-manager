@@ -169,6 +169,12 @@ let router0 = [
                 name: 'purchaseRm:manage',
                 meta: {title: '采购单列表', perm: 'purchase:manage'}
             },
+            {
+                path: 'purchaseItem/manage',
+                component: require('@/pages/dongxw/purchaseItem/Manage.vue'),
+                name: 'purchaseItem:manage',
+                meta: {title: '供方采购单', perm: 'purchase:manage'}
+            },
 
 
         ]
