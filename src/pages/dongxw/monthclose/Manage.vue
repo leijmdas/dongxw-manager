@@ -62,7 +62,7 @@
             <el-tab-pane label="送货单" name="TradeSend">
                 <master-issue-panel ref="issuePanel" :mc="mc" v-show="mc.id>0"></master-issue-panel>
             </el-tab-pane>
-            <el-tab-pane label="发票(装箱单)" name="InvoiceBox">
+            <el-tab-pane label="装箱单" name="InvoiceBox">
                 <!--<master-issue-panel ref="issuePanel" :mc="mc" v-show="mc.id>0"></master-issue-panel>-->
             </el-tab-pane>
 

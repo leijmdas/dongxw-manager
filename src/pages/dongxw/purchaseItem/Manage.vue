@@ -16,7 +16,7 @@
             </el-form>
         </div>
         <v-toolbar title="采购订单表" type="alert">
-            <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
+            <!--<span slot="tip" style="margin-left:60px;color :red">鼠标双击进入订单修改! </span>-->
 
             <el-button v-show="customerOrder.id" type="primary" plain @click="create" style="margin-right:60px;color :green">
                 新增采购单(根据客户订单)
@@ -27,7 +27,7 @@
 <!--            &lt;!&ndash;<el-button plain @click="exportRecords">导出XLS</el-button>&ndash;&gt;-->
         </v-toolbar>
 
-        <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
+        <v-table ref='table' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
             <el-table-column :sortable='true'  prop='code'   label='供应商编码' width='110'>
                 <template slot-scope='{row}'><span style='color:black'>
 			        {{row.supplier.code}}</span>

@@ -4,16 +4,15 @@
     <el-select :width="width" :height="'250px'"v-model="currentValue" placeholder="请选择" popper-append-to-body
                filterable  remote  :remote-method="remoteQry"
                :loading="loading" :clearable="clearable" :disabled="disabled" @change="handleChange">
-        <el-option  v-for="item in options" :key="item.id" :label="item.custName" :value="item.id" :disabled="item.disabled">
-            <span style="float: left">{{ item.custName  + ' （'+ item.custNo +')'}}</span>
-            <span style="float: left">{{ item.custSname }}</span>
-
+        <el-option v-for="item in options" :key="item.id" :label="item.custName" :value="item.id"
+                   :disabled="item.disabled">
+            <span style="float: left">{{  item.custNo +':'+item.custName   }}</span>
         </el-option>
     </el-select>
 </template>
 <style rel="stylesheet/less" lang="less" scoped>
     /*.el-select {*/
-        /*width: 250px;*/
+    /*width: 250px;*/
     /*}*/
     .el-select-dropdown__item span{
         width:160px;
@@ -76,8 +75,8 @@
             }
         },
         methods: {
-            remoteQry(custName){
-                this.refresh(custName);
+            remoteQry(codeName){
+                this.refresh(codeName);
             },
             handleChange (val) {
                 this.$emit('change', val)
@@ -85,15 +84,20 @@
                     this.fnChange();
                 }
             },
-            refresh(custName) {
+            refresh(codeName) {
+                let chinaReg = new RegExp("[\\u4E00-\\u9FFF]+", "g");
+                let isChina = chinaReg.test(codeName);
                 this.loading = true
                 this.$api.dongxw.CustomerService.query(
                     {
                         limit: 100,
-                        start: 0, orderBys: "custNo|asc",
+                        start: 0,
+                        orderBys: "custNo|asc",
                         param: {
                             isDeleted: false,
-                            custName: custName,
+                            //custNo: isChina ? null : codeName,
+                            custName:   codeName
+
                         }
                     }
                 ).then(rsp => {

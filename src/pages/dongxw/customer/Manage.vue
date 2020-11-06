@@ -49,8 +49,8 @@
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
 
             </el-table-column>
-            <el-table-column prop="custNo" label="客户编码" width="100"></el-table-column>
-            <el-table-column prop="custName" label="客户名称" width="220">
+            <el-table-column :sortable="true" prop="custNo" label="客户编码" width="100"></el-table-column>
+            <el-table-column :sortable="true" prop="custName" label="客户名称" width="220">
 
                 <template slot-scope="scope">
                     <a class="link-name"
