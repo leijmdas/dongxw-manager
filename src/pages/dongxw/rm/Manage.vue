@@ -2,7 +2,15 @@
 <template>
     <div>
         <div class="panel panel-default panel-search">
-            <el-form :inline="true">
+            <el-form :inline="true"  label-width="70px">
+                <el-form-item label="大类" prop="orderType">
+
+                    <rm-type-select   @change="search"v-model="page.query.param.parentId" :clearable="true"></rm-type-select>
+                </el-form-item>
+                <el-form-item label="小类">
+                    <sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></sub-type-select>
+                </el-form-item>
+
                 <el-form-item label="物料代码" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
@@ -19,13 +27,7 @@
                     <el-input v-model="page.query.param.color" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="大类" prop="orderType">
 
-                    <rm-type-select   @change="search"v-model="page.query.param.parentId" :clearable="true"></rm-type-select>
-                </el-form-item>
-                <el-form-item label="小类">
-                    <sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></sub-type-select>
-                </el-form-item>
 
                 <el-form-item label="状态" prop="status">
                     <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
@@ -76,8 +78,8 @@
 
 
         <v-table ref="table" :multi="true" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
-            <el-table-column  prop="seq" label="序号" width="50">
-                <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
+
+            <el-table-column  prop="seq" label="序号" width="48" type="index">
             </el-table-column>
             <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
                 <template slot-scope="{row}">
@@ -85,43 +87,52 @@
                     </v-image-preview>
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true"  prop="prdFlag" label="存货分类" width="100">
-                <template slot-scope="{row}">
-                        <span :style="'style:red'">
-                            {{row.productType.prdFlag==null?'-':$dongxwDict.getText(row.productType.prdFlag,$dongxwDict.store.STORE_TYPE)}}</span>
-                </template>
-            </el-table-column>
+
             <el-table-column :sortable="true"  prop="parentId" label="大类" width="90">
 
                 <template slot-scope="{row}">
                     {{ row.productType? row.productType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop="productTypeId" label="小类" width="90">
+            <el-table-column :sortable="true" prop="productTypeId" label="小类" width="80">
                 <template slot-scope="{row}">
                     {{ row.productSubType? row.productSubType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true"  prop="code" label="物料代码" width="100">
-                <template slot-scope="{row}">
-                    <span style="color:green"> {{row.code }} </span>
-                </template>
-            </el-table-column>
-            <el-table-column :sortable="true"  prop="name" label="物料名称" width="160">
+            <el-table-column :sortable="true"  prop="code" label="物料代码" width="95">
+
                 <template slot-scope="scope">
                     <a class="link-name"
                        href="javascript:;"
-                       :title="scope.row.name"
-                       @click="edit(scope.row)" >{{ scope.row.name }}
+                       :title="scope.row.code"
+                       @click="edit(scope.row)" >{{ scope.row.code }}
                     </a>
+                </template>
+
+            </el-table-column>
+            <el-table-column :sortable="true"  prop="name" label="物料名称" width="180">
+                <template slot-scope="{row}">
+                    <span style="color:green"> {{row.name }} </span>
                 </template>
             </el-table-column>
 
-            <el-table-column :sortable="true"  prop="remark" label="规格型号" width="200"></el-table-column>
+            <el-table-column :sortable="true"  prop="remark" label="规格型号" width="95"></el-table-column>
             <el-table-column :sortable="true"  prop="color" label="颜色" width="100">
             </el-table-column>
-            <el-table-column :sortable="true"  prop="unit" label="单位" width="60"></el-table-column>
+            <el-table-column    prop="unit" label="单位" width="60"></el-table-column>
+            <el-table-column    prop="price" label="单价" width="80"></el-table-column>
+            <el-table-column prop="status" label="状态" width="60">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
+                </template>
+            </el-table-column>
 
+            <el-table-column :sortable="true"  prop="prdFlag" label="存货分类" width="100">
+                <template slot-scope="{row}">
+                        <span :style="'style:red'">
+                            {{row.productType.prdFlag==null?'-':$dongxwDict.getText(row.productType.prdFlag,$dongxwDict.store.STORE_TYPE)}}</span>
+                </template>
+            </el-table-column>
             <!--<el-table-column :sortable="true"  prop="size" label="尺寸" width="150">-->
             <!--</el-table-column>-->
             <!--<el-table-column prop="barCode" label="条码" width="120">-->
@@ -132,11 +143,6 @@
             <el-table-column :sortable="true"  prop="createByName" label="建档人" width="150">
             </el-table-column>
 
-            <el-table-column :sortable="true"  prop="status" label="状态" width="60">
-                <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.status,$dongxwDict.store.STATUS)}}
-                </template>
-            </el-table-column>
 
             <el-table-column prop="memo" label="备注"  >
             </el-table-column>
@@ -192,6 +198,7 @@
                 type: Boolean,
                 default: false,
             },
+
             closeDlg: {
                 type: Function,
                 default: null

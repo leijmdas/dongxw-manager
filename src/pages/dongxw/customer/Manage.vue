@@ -44,14 +44,11 @@
 
 
         <v-table ref="table" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
-            <el-table-column prop="seq" label="序号" width="50">
-
-                <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
-
+            <el-table-column prop="seq" type="index"  label="序号" width="50">
+                <!--<template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>-->
             </el-table-column>
-            <el-table-column :sortable="true" prop="custNo" label="客户编码" width="100"></el-table-column>
+            <el-table-column   :sortable="true" prop="custNo" label="客户编码" width="100"></el-table-column>
             <el-table-column :sortable="true" prop="custName" label="客户名称" width="220">
-
                 <template slot-scope="scope">
                     <a class="link-name"
                         href="javascript:;"
@@ -60,17 +57,16 @@
                     </a>
                 </template>
 
-
             </el-table-column>
 
-            <el-table-column prop="custSname" v-if="isShowSecurity" label="客户详细名称" width="245"></el-table-column>
+            <el-table-column prop="custSname" v-if="isShowSecurity" label="详细名称" width="245"></el-table-column>
+
+            <el-table-column prop="country" label="客户国家" width="80"></el-table-column>
             <el-table-column prop="custType" label="客户类型" width="70">
                 <template slot-scope="scope">
                     {{scope.row.custNo.substr(0,2)==='CN'?'内销':'外销'}}
                 </template>
             </el-table-column>
-
-            <el-table-column prop="country" label="客户国家" width="80"></el-table-column>
             <el-table-column prop="addr" v-if="isShowSecurity" label="地址" width="300"></el-table-column>
 
             <el-table-column prop="email" v-if="isShowSecurity" label="公司电子邮箱" width="150">

@@ -48,6 +48,8 @@
 
 
         <v-table ref="table" v-show="productId>0" :page="page" :dblclick="edit"  :table-minheight="450" @dataloaded="onDataloaded">
+            <!--<el-table-column prop="id" label="id" width="120">-->
+            <!--</el-table-column>-->
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
             </el-table-column>
@@ -70,12 +72,17 @@
             </el-table-column>
             <el-table-column :sortable="true" prop="code" label="物料代码" width="100">
                 <template slot-scope="{row}">
-                    <span style="color:red">{{ row.childRm? row.childRm.code :'-' }}</span>
+                    <span  >{{ row.childRm? row.childRm.code :'-' }}</span>
                 </template>
             </el-table-column>
             <el-table-column :sortable="true"  prop="name" label="物料名称" width="120">
-                <template slot-scope="{row}">
-                    {{ row.childRm? row.childRm.name :'-' }}
+
+                <template slot-scope='{row}'>
+                    <a class="link-name"
+                       href="javascript:;"
+                       :title="row.childRm? row.childRm.name :'-'"
+                       @click="edit(row)" >{{ row.childRm? row.childRm.name :'-'}}
+                    </a>
                 </template>
             </el-table-column>
             <el-table-column   :sortable="true" prop="remark" label="规格型号" width="100">
@@ -149,7 +156,7 @@
             <com-panel :productId="productId" :closeDlg="closeDlg"></com-panel>
         </v-dialog>
         <v-dialog ref="rmManageDlg" :width="'58%'" title="搜索物料">
-            <rm-panel ref="rmPanel" :onlyQuery="true" :closeDlg="closeDlgRm"></rm-panel>
+            <rm-panel ref="rmPanel"  :onlyQuery="true" :closeDlg="closeDlgRm"></rm-panel>
         </v-dialog>
 
     </div>
@@ -189,7 +196,7 @@
                 currentPage: 1,
                 page: {
                     query: {
-                        orderBys: 'code|desc',
+                        orderBys: 'id|asc',
                         param: {
                             productId: undefined,
                             isDeleted: false

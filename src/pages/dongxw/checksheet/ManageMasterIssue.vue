@@ -16,7 +16,7 @@
                 <el-button @click="cancel">取消</el-button>
                 <!--<el-button type="primary" style="margin-left: 130px" :disabled="mc.closeFlag" plain @click="create">-->
                 <!--</el-button>-->
-                <el-button @click="exportExcel()">导出客户对帐单</el-button>
+                <el-button round @click="exportExcel()"  style="margin-left:300px" >导出对帐单</el-button>
             </el-form>
           </div>
 

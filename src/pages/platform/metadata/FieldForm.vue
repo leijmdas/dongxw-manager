@@ -281,7 +281,7 @@
         refField: '0',	//  关联字段
         refFilter: '0',	//  关联条件
         refDisplayID: '0',	//  关联显示字段
-        fieldRemark: 'r',	//  说明
+        fieldRemark: '',	//  说明
         createTime : null,
     };
     import DictDataSelect from '@/components/widgets/platform/DictDataSelect.vue';

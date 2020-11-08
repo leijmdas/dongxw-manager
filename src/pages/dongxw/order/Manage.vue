@@ -67,18 +67,28 @@
             <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
             <el-button @click="cancel">取消</el-button>
 
-
             <el-button plain @click="exportRecords">导出XLS</el-button>
-            <el-button plain @click="exportMail" style="color:green">发送邮件</el-button>
+            <!--<el-button plain @click="exportMail" style="color:green">发送邮件</el-button>-->
             <el-button type="primary" plain @click="create">新增</el-button>
+            <el-button type="default"  @click="computeTotal">计算总金额</el-button>
+
         </v-toolbar>
-        <v-table ref="table" :selection="true" :click="fatherMethod" :dblclick="edit" :page="page"
+        <v-table ref="table" :pageSize="10" :selection="true" :click="fatherMethod" :dblclick="edit" :page="page"
                  :table-minheight="250" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
             </el-table-column>
-
+            <el-table-column sortable="true" prop="customerId" label="客户代码" width="90">
+                <template slot-scope="{row}">
+                    {{ row.customer?row.customer.custNo:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column sortable="true" prop="customerId" label="客户名称" width="120">
+                <template slot-scope="{row}">
+                    {{ row.customer?row.customer.custName:'-'}}
+                </template>
+            </el-table-column>
             <el-table-column @click="view(scope.row)" prop="customerOrderCode" label="客订单号" width="120">
                 <template slot-scope="scope">
                     <el-button type="text" @click="view(scope.row)" v-if="scope.row.customerOrderImg" plain>{{scope.row.customerOrderCode}}</el-button>
@@ -97,30 +107,28 @@
                 </template>
 
             </el-table-column>
-            <el-table-column sortable="true" prop="customerId" label="客户代码" width="90">
-                <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custNo:'-'}}
-                </template>
-            </el-table-column>
-            <el-table-column sortable="true" prop="customerId" label="客户名称" width="120">
-                <template slot-scope="{row}">
-                    {{ row.customer?row.customer.custName:'-'}}
-                </template>
-            </el-table-column>
-            <el-table-column sortable="true" prop="orderType" label="订单类型" width="90">
+
+            <el-table-column sortable="true" prop="orderType" label="类型" width="80">
                 <template slot-scope="{row}">
                     <span :style="'style:red'"> {{$dongxwDict.getText(row.orderType,$dongxwDict.store.ORDER_TYPE)}}</span>
                 </template>
             </el-table-column>
-
             <!--<el-table-column prop="parentId" label="父订单" width="80">-->
                 <!--<template slot-scope="{row}">-->
                     <!--{{ row.orderMasterParent? row.orderMasterParent.epOrderCode:'-'}}-->
                 <!--</template>-->
             <!--</el-table-column>-->
-
-
-            <el-table-column  prop="status" label="订单状态" width="80">
+            <el-table-column prop="totalMoney" label="订单总金额" width="120">
+                <template slot-scope="{row}">
+                    {{row.totalMoney+" "+$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
+                </template>
+            </el-table-column>
+            <el-table-column  prop="includeTax" label="是否含税" width="80">
+                <template slot-scope="{row}">
+                    {{$dongxwDict.getText(row.includeTax,$dongxwDict.store.TAX_INCLUDE)}}
+                </template>
+            </el-table-column>
+            <el-table-column  prop="status" label="状态" width="80">
                 <template slot-scope="{row}">
                     <span :style="row.status==0?'color:green':''"> {{$dongxwDict.getText(row.status,$dongxwDict.store.ORDER_STATUS)}}</span>
                 </template>
@@ -132,11 +140,7 @@
             <!--<a :href="scope.row.customerOrderImg" v-if="scope.row.customerOrderImg" target="_blank">预览</a> -->
                 <!--</template>-->
             <!--</el-table-column>-->
-<!--            <el-table-column  prop="priceType" label="报价含税?" width="90">-->
-<!--                <template slot-scope="{row}">-->
-<!--                    {{ $dongxwDict.viewDate(row.orderDate)}}-->
-<!--                </template>-->
-<!--            </el-table-column>-->
+
             <el-table-column sortable="true" prop="orderDate" label="下单日期" width="100">
                 <template slot-scope="{row}">
                 {{ $dongxwDict.viewDate(row.orderDate)}}
@@ -157,17 +161,14 @@
                     {{ $dongxwDict.viewDate(row.factroyIssueDate)}}
                 </template>
             </el-table-column>
+            <el-table-column prop="orderMoney" label="定金" width="90">
+            </el-table-column>
+            <!--<el-table-column prop="moneyType" label="结算币种" width="80">-->
+                <!--<template slot-scope="{row}">-->
+                    <!--{{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}-->
+                <!--</template>-->
+            <!--</el-table-column>-->
 
-            <el-table-column prop="moneyType" label="结算币种" width="80">
-                <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.moneyType,$dongxwDict.store.MONEY_TYPE)}}
-                </template>
-            </el-table-column>
-            <el-table-column  prop="includeTax" label="报价含税" width="100">
-                <template slot-scope="{row}">
-                    {{$dongxwDict.getText(row.includeTax,$dongxwDict.store.TAX_INCLUDE)}}
-                </template>
-            </el-table-column>
             <el-table-column sortable="true" prop="businessBy" label="业务员" width="100"></el-table-column>
 
             <el-table-column prop="invoiceNoIni" label="预收发票编号" width="120"></el-table-column>
@@ -184,7 +185,7 @@
 
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column width="80" label="操作" :fixed="'right'">
+            <el-table-column width="70" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
                     <!--<el-button @click="showLine(scope.row)"v-if="scope.row.orderType!=100"-->
                                   <!--style="color:green"  type="info" plain title="产品"  >    产品-->
@@ -210,7 +211,7 @@
         </v-table>
 
 
-        <v-dialog ref="formDiag" title="信息编辑" :width="'50%'">
+        <v-dialog ref="formDiag" title="信息编辑" :width="'75%'">
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
@@ -283,6 +284,21 @@
         computed: {},
 
         methods: {
+            computeTotal(){
+                let self = this;
+                this.$confirm("确定要计算订单总金额吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+                    let params = self.getSearchParams();
+                    self.$api.dongxw.OrderMaster.compute(params).then(rsp => {
+                        this.search();
+                        this.$message({
+                            type: "success",
+                            message: "计算成功!"
+                        });
+                    });
+                });
+            },
             onDataloaded(rsp) {
 
             },

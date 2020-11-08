@@ -5,14 +5,14 @@
 
                 <div align="top" style="margin-right: 10px" >
                     <el-row :span="24" style="margin-top: 10px">
-                        <el-col :span="12">
+                        <el-col :span="16">
                             <el-form-item label="客户" prop="customerId"
                                           :rules="[{ required: true}]">
                                 <customer-select style="width:100%" v-model="entity.customerId"
                                                  :clearable="true"></customer-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="状态" prop="status">
 
                                 <el-select  style="width:100%" v-model="entity.status">
@@ -23,7 +23,7 @@
                         </el-col>
                     </el-row>
                     <el-row :span="24" style="margin-top: 10px">
-                        <el-col :span="12">
+                        <el-col :span="8">
 
                             <el-form-item label="订单类型"  prop="orderType">
                                 <el-select style="width:100%"  v-model="entity.orderType">
@@ -32,44 +32,41 @@
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="8">
 
                             <el-form-item label="父订单" v-if="entity.orderType==200" prop="parentId">
                                 <order-master-select style="width:100%" :orderType="100" :customerId="entity.customerId" v-model="entity.parentId"
                                                      :clearable="true"></order-master-select>
                             </el-form-item>
                         </el-col>
-                    </el-row>
-
-                    <el-row :span="24">
-
-                        <el-col :span="12">
-                            <el-form-item label="客订单号" prop="customerOrderCode">
-                                <el-input placeholder="客订单号" v-model="entity.customerOrderCode"></el-input>
-
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-form-item label="EP订单号" prop="epOrderCode">
-                                <el-input placeholder="EP订单号" v-model="entity.epOrderCode"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-
-
-                    <el-row :span="24">
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="结算币种" prop="moneyType">
-                                <el-select style="width:100%" v-model="entity.moneyType">
+
+                               <el-select style="width:100%" v-model="entity.moneyType">
                                     <el-option v-for="item in $dongxwDict.store.MONEY_TYPE" :key="item[0]"
                                                :value="item[0]" :label="item[1]"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
-                            <el-form-item label="" prop="includeTax">
+                    </el-row>
 
-                                <el-switch
+                    <el-row :span="24">
+
+                        <el-col :span="8">
+                            <el-form-item label="客订单号" prop="customerOrderCode">
+                                <el-input placeholder="客订单号" v-model="entity.customerOrderCode"></el-input>
+
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="EP订单号" prop="epOrderCode">
+                                <el-input placeholder="EP订单号" v-model="entity.epOrderCode"></el-input>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="8">
+                            <el-form-item label="是否含税" prop="includeTax">
+                            <el-switch
                                     v-model="entity.includeTax"
                                     active-color="#13ce6"
                                     inactive-color="#13ce6"
@@ -80,15 +77,35 @@
                                 </el-switch>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
-                            <el-form-item label="业务员" prop="businessBy">
-                                <el-input placeholder="业务员" v-model="entity.businessBy"></el-input>
+                    </el-row>
+                        <el-row :span="24">
+                            <el-col :span="8">
+                                <el-form-item label="总金额" prop="totalMoney">
+                                    <el-input disabled placeholder="总金额" v-model="entity.orderMoney"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                            <el-form-item label="定金" prop="orderMoney">
+                                <el-input placeholder="定金" v-model="entity.orderMoney"></el-input>
                             </el-form-item>
                         </el-col>
-                    </el-row>
+                        <el-col :span="8">
+                            <el-form-item label="付款方式" prop="payMode">
+                                <el-input placeholder="付款方式" v-model="entity.payMode"></el-input>
+                            </el-form-item>
+                        </el-col>
+
+                                <el-col :span="24">
+                                    <el-form-item label="付款备注" prop="payMemo">
+                                        <el-input placeholder="付款备注" type="textarea" :rows="2"
+                                                  v-model="entity.payMemo"></el-input>
+                                    </el-form-item>
+                                </el-col>
+
+                            </el-row>
 
                     <el-row :span="24" style="margin-top: 5px ">
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="下单日期" prop="" :rules="[{ required: true}]">
                                 <el-date-picker style="width:100%" :disabled="disables"
                                                 v-model="entity.orderDate"
@@ -100,7 +117,7 @@
                             </el-form-item>                            <!--format="yyyy-MM-dd"-->
                         </el-col>
 
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="客户交货日期" prop="" :rules="[{ required: true}]">
                                 <el-date-picker style="width:100%" :disabled="disables"
                                                 v-model="entity.customerIssueDate"
@@ -113,7 +130,7 @@
                         </el-col>
                     </el-row>
                     <el-row :span="24" style="margin-top: 10px ">
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="验货日期" prop="">
                                 <el-date-picker style="width:100%"
                                                 :disabled="disables"
@@ -125,7 +142,7 @@
                                 </el-date-picker>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="8">
 
                             <el-form-item label="工厂交货日期" prop="">
                                 <el-date-picker style="width:100%"
@@ -140,39 +157,60 @@
                         </el-col>
                     </el-row>
                     <el-row :span="24">
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="预收发票号" prop="invoiceNoIni">
                                 <el-input placeholder="预收发票编号" v-model="entity.invoiceNoIni"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="正式发票号" prop="invoiceNo">
                                 <el-input placeholder="正式发票编号" v-model="entity.invoiceNo"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="计划时间" prop="businessBy4">
+                                <el-input disabled placeholder="计划时间" v-model="entity.businessBy4"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row :span="24">
+                        <el-col :span="8">
+                            <el-form-item label="业务员" prop="businessBy">
+                                <el-input placeholder="业务员" v-model="entity.businessBy"></el-input>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="8">
+                            <el-form-item label="建档人" prop="createByName">
+                                <el-input disabled placeholder="建档人" v-model="entity.createByName"></el-input>
+
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="建档时间" prop="createDate">
+                                <el-input disabled placeholder="建档时间" v-model="entity.createDate"></el-input>
+
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :span="24">
 
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="报关员" prop="businessBy2">
                                 <el-input placeholder="报关员" v-model="entity.businessBy2"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="采购员" prop="businessBy1">
                                 <el-input placeholder="采购员" v-model="entity.businessBy1"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="计划员" prop="businessBy3">
                                 <el-input placeholder="计划员" v-model="entity.businessBy3"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
-                            <el-form-item label="计划时间" prop="businessBy4">
-                                <el-input disabled placeholder="计划时间" v-model="entity.businessBy4"></el-input>
-                            </el-form-item>
-                        </el-col>
+
                     </el-row>
 
                     <el-row :span="24" style="margin-top: 10px ">
@@ -182,21 +220,7 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row :span="24">
 
-                        <el-col :span="12">
-                            <el-form-item label="建档时间" prop="createDate">
-                                <el-input disabled placeholder="建档时间" v-model="entity.createDate"></el-input>
-
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-form-item label="建档人" prop="createByName">
-                                <el-input disabled placeholder="建档人" v-model="entity.createByName"></el-input>
-
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
                 </div>
 
             </el-tab-pane>
@@ -278,8 +302,12 @@
         checkDate: null,
         factroyIssuseDate: null,
         invoiceId : 0,
-        invoiceIdIni:0,
-        includeTax:false,
+        invoiceIdIni: 0,
+        includeTax: false,
+        totalMoney: 0,
+        orderMoney: 0,
+        payMode: '',
+        payMemo: '',
     };
     export default {
         components: {OrderMasterSelect,CustomerSelect, SupplierSelect},

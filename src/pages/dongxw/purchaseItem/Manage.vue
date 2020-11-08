@@ -28,6 +28,9 @@
         </v-toolbar>
 
         <v-table ref='table' :page='page' :table-minheight='450' @dataloaded='onDataloaded'>
+            <el-table-column  prop="seq" label="序号" width="50">
+                <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
+            </el-table-column>
             <el-table-column :sortable='true'  prop='code'   label='供应商编码' width='110'>
                 <template slot-scope='{row}'><span style='color:black'>
 			        {{row.supplier.code}}</span>
@@ -39,8 +42,12 @@
                 </template>
             </el-table-column>
             <el-table-column prop='purchaseOrderCode' :sortable='true' label='采购单号' width='160'>
-                <template slot-scope='{row}'><span style='color:black'>
-			        {{row.purchaseOrderCode}}</span>
+                <template slot-scope='{row}'>
+                    <a class="link-name"
+                       href="javascript:;"
+                       :title="row.purchaseOrderCode"
+                       @click="edit(row)" >{{ row.purchaseOrderCode }}
+                    </a>
                 </template>
             </el-table-column>
 
@@ -125,7 +132,7 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag" title="采购单信息" :width="'50%'">
+        <v-dialog ref="formDiag" title="采购单信息" :width="'75%'">
             <form-panel @saved="onFormSaved" :customerOrder="customerOrder">
                     <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                     <el-button type="default" @click="()=>{$refs.formDiag.hide();onFormSaved();}">关闭</el-button>

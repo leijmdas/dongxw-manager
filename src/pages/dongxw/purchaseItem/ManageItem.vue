@@ -14,18 +14,20 @@
 
         </v-toolbar>
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='350' @dataloaded='onDataloaded'>
-
-            <el-table-column prop='code' :sortable='true' label='EP货号' width='120'>
+            <el-table-column  prop="seq" label="序号" width="50">
+                <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
+            </el-table-column>
+            <el-table-column prop='code' :sortable='true' label='EP货号' width='100'>
                 <template slot-scope='{row}'><span style='color:black'>
 			    {{row.product.code}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='name' :sortable='true' label='商品名称' width='120'>
+            <el-table-column prop='name' :sortable='true' label='商品名称' width='222'>
                 <template slot-scope='{row}'><span style='color:black'>
 			    {{row.product.name}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop='remark' :sortable='true' label='规格型号' width='180'>
+            <el-table-column prop='remark' :sortable='true' label='规格型号' width='98'>
                 <template slot-scope='{row}'><span style='color:black'>
 			    {{row.product.remark}}</span>
                 </template>

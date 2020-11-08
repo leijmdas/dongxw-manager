@@ -2,7 +2,7 @@
     <div>
         <el-form :model="entity" :rules="rules" ref="form" label-width="90px" class="dialog-form">
 
-                    <rm-view v-model="entity.childId"></rm-view>
+                    <rm-view ref="rm" v-model="entity.childId" :setPrice="setPrice"></rm-view>
                     <el-collapse>
 
                         <el-collapse-item title="选择物料" style="margin-left:4%;width:96%">
@@ -238,14 +238,7 @@
                         }
                     ],
 
-                    status: [
-                        {
-                            type: "number",
-                            required: true,
-                            message: "请选择状态",
-                            trigger: "change"
-                        }
-                    ],
+
                 }
             };
         },
@@ -273,7 +266,10 @@
 
         },
         methods: {
-
+            setPrice(findEntity){
+                this.entity.price=findEntity.price
+                console.log(this.entity.price)
+            },
             clearImg() {
                 this.entity.picUrl = null;
             },

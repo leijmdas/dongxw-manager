@@ -24,6 +24,14 @@ export default {
             data
         })
     },
+
+    compute(data) {
+        return request({
+            url: '/dongxw/ordermaster/compute',
+            method: 'POST',
+            data
+        })
+    },
     /**
      * 导出xlsx
      */

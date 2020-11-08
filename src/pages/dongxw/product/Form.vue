@@ -68,12 +68,17 @@
                         </el-col>
                     </el-row>
                     <el-row :span="24" style="margin-top: 5px">
-                        <el-col :span="12">
+                        <el-col :span="8">
                             <el-form-item label="单位" prop="unit">
                                 <el-input placeholder="单位" v-model="entity.unit"></el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="8">
+                            <el-form-item label="单价" prop="price">
+                                <el-input placeholder="单价" v-model="entity.price"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
 
                             <el-form-item label="状态" prop="moneyType">
                                 <el-select style="width:100%" v-model="entity.status" :disabled="isDisabled">
@@ -321,7 +326,8 @@
         pkgFront: '',
         pkgSide: '',
         pkgRemark: '',
-        imgRemark: null
+        imgRemark: null,
+        price:0,
     };
 
 

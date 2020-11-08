@@ -26,10 +26,7 @@
 
             </el-table-column>
             <el-table-column :sortable="true" prop="custName" label="客户名称" width="220">
-
             </el-table-column>
-
-
             <!--<el-table-column width="245" label="操作" :fixed="'right'">-->
             <!--&lt;!&ndash;<el-button @click="exportExcel(scope.row)">导出送货单</el-button>&ndash;&gt;-->
             <!--</el-table-column>-->

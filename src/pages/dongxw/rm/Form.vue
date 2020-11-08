@@ -39,7 +39,7 @@
                                         <!--<el-input disabled placeholder="物料代码" v-model="fullCode"></el-input>-->
                                     <!--</el-form-item>-->
                                 <!--</el-col>-->
-                                <el-col :span="12">
+                                <el-col :span="24">
                                     <el-form-item label="物料名称" prop="name">
                                         <el-input placeholder="物料名称" v-model="entity.name"></el-input>
                                     </el-form-item>
@@ -194,7 +194,8 @@
         pkgFront:'',
         pkgSide:'',
         pkgRemark:'',
-        imgRemark:null
+        imgRemark:null,
+        price:0,
     };
 
 

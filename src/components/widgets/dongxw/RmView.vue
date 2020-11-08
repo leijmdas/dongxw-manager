@@ -47,6 +47,11 @@
                     <el-input disabled placeholder="单位" disabled v-model="entity.unit"></el-input>
                 </el-form-item>
             </el-col>
+            <el-col :span="12">
+                <el-form-item label="单价" prop="price">
+                    <el-input disabled placeholder="单价" disabled v-model="entity.price"></el-input>
+                </el-form-item>
+            </el-col>
 
         </el-row>
         <slot name="selectPrd"> </slot>
@@ -104,6 +109,10 @@
             value: {
                 required: true
             },
+            setPrice: {
+                type: Function
+
+            },
             clearable: {
                 type: Boolean
             },
@@ -152,7 +161,9 @@
                             this.entity.pptCode = this.entity.productType ? this.entity.productType.name : '-'
                             this.entity.ptCode = this.entity.productSubType ? this.entity.productSubType.name : '-'
                             //this.entity.customerName = this.entity.customer ? this.entity.customer.custName : '-'
-
+                            if(this.setPrice){
+                                this.setPrice(this.entity);
+                            }
                         })
                     )
                 } else {

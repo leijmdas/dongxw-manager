@@ -4,6 +4,17 @@
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
 
+                <el-form-item label="客户" prop="customerId">
+                    <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>
+
+                </el-form-item>
+
+                <el-form-item label="产品大类">
+                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
+                </el-form-item>
+                <el-form-item label="产品小类">
+                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
+                </el-form-item>
 
                 <el-form-item label="客款号" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
@@ -25,22 +36,9 @@
                     <el-input v-model="page.query.param.barCode" clearable></el-input>
                 </el-form-item>
 
-                <el-form-item label="客户" prop="customerId">
-                    <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>
-
-                </el-form-item>
-
-                <el-form-item label="产品大类">
-                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
-                </el-form-item>
-                <el-form-item label="产品小类">
-                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
-                </el-form-item>
                 <!--<el-form-item>-->
-
                     <!--&lt;!&ndash;<el-button type="primary" plain @click="()=>{$bus.$emit('app:flush')}">刷新</el-button>&ndash;&gt;-->
                     <!--&lt;!&ndash;<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>&ndash;&gt;-->
-
                 <!--</el-form-item>-->
             </el-form>
         </div>
@@ -53,14 +51,10 @@
                   <span style="margin-top: 25px"  class="el-dropdown-link">
                     排序方式<i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
-                <el-dropdown-menu title="排序方式" >
-                    <el-dropdown-item key="0" command="id|desc">按录入顺序
-                    </el-dropdown-item>
-                    <el-dropdown-item key="1" command="ep_code|asc">按EP款号
-                    </el-dropdown-item>
-                    <el-dropdown-item key="2" command="code|asc">按客款号
-                    </el-dropdown-item>
-
+                <el-dropdown-menu title="排序方式">
+                    <el-dropdown-item key="0" command="id|desc">按录入顺序</el-dropdown-item>
+                    <el-dropdown-item key="1" command="ep_code|asc">按EP款号</el-dropdown-item>
+                    <el-dropdown-item key="2" command="code|asc">按客款号</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
 
@@ -69,8 +63,8 @@
             <el-button @click="cancel">取消</el-button>
 
             <el-button plain @click="exportRecords">导出 XLS</el-button>
-            <el-button plain @click="exportMail" style="color:green" >发送邮件
-            </el-button>
+            <!--<el-button plain @click="exportMail" style="color:green" >发送邮件-->
+            <!--</el-button>-->
             <el-button type="primary" plain @click="create">新增</el-button>
 
 
@@ -98,32 +92,33 @@
             </el-table-column>
 
             <el-table-column :sortable="true" prop="code" label="客款号" width="100">
-                <template slot-scope="{row}">
-                    <span style="color:green"> {{row.code }} </span>
+
+                <template slot-scope="scope">
+                    <a class="link-name"
+                       href="javascript:;"
+                       :title="scope.row.code"
+                       @click="edit(scope.row)" >{{ scope.row.code }}
+                    </a>
                 </template>
             </el-table-column>
 
             <el-table-column :sortable="true"  prop="epCode" label="EP款号" width="100"></el-table-column>
 
-            <el-table-column :sortable="true" prop="parentId" label="产品大类" width="120">
+            <el-table-column :sortable="true" prop="parentId" label="产品大类" width="110">
                 <template slot-scope="{row}">
                     {{ row.productType? row.productType.code :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop="productSubType" label="产品小类" width="160">
+            <el-table-column :sortable="true" prop="productSubType" label="产品小类" width="130">
                 <template slot-scope="{row}">
                     {{ row.productSubType? row.productSubType.code :'-' }}
                 </template>
             </el-table-column>
 
             <!--<el-table-column prop="name" label="产品名称" width="100"></el-table-column>-->
-            <el-table-column :sortable="true"  prop="remark" label="产品描述" width="245">
-                <template slot-scope="scope">
-                    <a class="link-name"
-                       href="javascript:;"
-                       :title="scope.row.remark"
-                       @click="edit(scope.row)" >{{ scope.row.remark }}
-                    </a>
+            <el-table-column :sortable="true"  prop="remark" label="产品描述" width="280">
+                <template slot-scope="{row}">
+                    <span style="color:green"> {{row.remark }} </span>
                 </template>
             </el-table-column>
 

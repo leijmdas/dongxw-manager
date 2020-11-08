@@ -11,19 +11,25 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span='12'>
+                    <el-form-item style='width:100%' label='地址' prop='addr'>
+                        <el-input disabled placeholder='电话' v-model='entity.supplier.addr'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span='8'>
                     <el-form-item style='width:100%' label='订单编号' prop='purchaseOrderCode'>
                         <el-input disabled placeholder='订单编号' v-model='entity.purchaseOrderCode'>
                         </el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span='12'>
+                <el-col :span='8'>
                     <el-form-item style='width:100%' label='订货日期' prop='openDate'>
                         <el-date-picker style='width:100%' v-model='entity.openDate' format='yyyy 年 MM 月 dd 日'
                                         value-format='yyyy-MM-dd HH:mm:ss' type='date'
                                         placeholder='选择日期'></el-date-picker>
                     </el-form-item>
                 </el-col>
-                <el-col :span='12'>
+                <el-col :span='8'>
                     <el-form-item style='width:100%' label='交货日期' prop='issueDate'>
                         <el-date-picker style='width:100%' v-model='entity.issueDate' format='yyyy 年 MM 月 dd 日'
                                         value-format='yyyy-MM-dd HH:mm:ss' type='date'
@@ -34,37 +40,27 @@
             </el-row>
             <el-row :span='24'>
 
-                <el-col :span='12'>
-                    <el-form-item style='width:100%' label='地址' prop='addr'>
-                        <el-input disabled placeholder='电话' v-model='entity.supplier.addr'>
-                        </el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span='12'>
+
+                <el-col :span='8'>
                     <el-form-item style='width:100%' label='联系人' prop='contact'>
                         <el-input disabled placeholder='联系人' v-model='entity.supplier.contact'>
                         </el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span='12'>
+                <el-col :span='8'>
                     <el-form-item style='width:100%' label='电话' prop='tel'>
                         <el-input disabled placeholder='电话' v-model='entity.supplier.tel'>
                         </el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span='12'>
+                <el-col :span='8'>
                     <el-form-item style='width:100%' label='传真' prop='fax'>
                         <el-input disabled placeholder='传真' v-model='entity.supplier.fax'>
                         </el-input>
                     </el-form-item>
                 </el-col>
                 <!--10草稿11作废20正式-->
-                <el-col :span='12'>
-                    <el-form-item style='width:100%' label='状态' prop='status'>
-                        <el-input disabled placeholder='状态' v-model='entity.status'>
-                        </el-input>
-                    </el-form-item>
-                </el-col>
+
                 <el-col :span='24'>
                     <el-form-item style='width:100%' label='备注' prop='remark'>
                         <el-input type='textarea' :rows='2' placeholder='备注' v-model='entity.remark'>
@@ -73,14 +69,19 @@
                 </el-col>
 
 
-
-                <el-col :span='12'>
+                <el-col :span='8'>
+                    <el-form-item style='width:100%' label='状态' prop='status'>
+                        <el-input disabled placeholder='状态' v-model='entity.status'>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span='8'>
                     <el-form-item style='width:100%' label='创建时间' prop='createTime'>
                         <el-input disabled placeholder='创建时间' v-model='entity.createTime'>
                         </el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span='12'>
+                <el-col :span='8'>
                     <el-form-item style='width:100%' label='创建人' prop='createBy'>
                         <el-input disabled placeholder='创建人' v-model='entity.createByName'>
                         </el-input>

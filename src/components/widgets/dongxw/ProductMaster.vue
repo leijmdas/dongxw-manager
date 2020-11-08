@@ -3,7 +3,17 @@
     <div>
         <div class="panel panel-default panel-search">
             <el-form :inline="true">
+                <el-form-item label="客户" prop="customerId">
+                    <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>
 
+                </el-form-item>
+
+                <el-form-item label="产品大类">
+                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
+                </el-form-item>
+                <el-form-item label="产品小类">
+                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
+                </el-form-item>
                 <el-form-item label="客款号" prop="code">
                     <el-input v-model="page.query.param.code" clearable></el-input>
                 </el-form-item>
@@ -28,17 +38,7 @@
                                    <!--:label="item[1]"></el-option>-->
                     <!--</el-select>-->
                 <!--</el-form-item>-->
-                <el-form-item label="客户" prop="customerId">
-                    <customer-select :fnChange="search" v-model="page.query.param.customerId" :clearable="true"></customer-select>
 
-                </el-form-item>
-
-                <el-form-item label="产品大类">
-                    <product-type-select v-model="page.query.param.parentId" :clearable="true"></product-type-select>
-                </el-form-item>
-                <el-form-item label="产品小类">
-                    <product-sub-type-select :parentTypeId="page.query.param.parentId" v-model="page.query.param.productTypeId" :clearable="true"></product-sub-type-select>
-                </el-form-item>
                 <!--<el-form-item>-->
                     <!--&lt;!&ndash;<el-button-group></el-button-group>&ndash;&gt;-->
                     <!--&lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
