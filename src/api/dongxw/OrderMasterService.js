@@ -24,7 +24,12 @@ export default {
             data
         })
     },
-
+    sumBySub(id) {
+        return request({
+            url: '/dongxw/ordermaster/sumBySub/'+id,
+            method: 'POST'
+        })
+    },
     compute(data) {
         return request({
             url: '/dongxw/ordermaster/compute',

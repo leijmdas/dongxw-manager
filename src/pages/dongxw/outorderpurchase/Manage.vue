@@ -72,6 +72,12 @@
                 <purchase-panel ref="purchasePanel" v-model="order"></purchase-panel>
             </el-tab-pane>
             <el-tab-pane style="margin-right: 10px" label="外发计划表" name="outInfo">
+                <v-toolbar title="外发计划表" type="alert">
+                <el-switch slot="tip"style="margin-left:20px; margin-right: 20px" v-model="isShowPrdPic"
+                           active-color="#13ce66" inactive-color="#ff4949"
+                           active-text="显示图片" inactive-text="不显示">
+                </el-switch>
+                </v-toolbar>
 
                 <v-table ref="table" :multi="true" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
 
@@ -109,6 +115,12 @@
                     <el-table-column prop="epCode" label="EP款号" width="100">
                         <template slot-scope="{row}">
                             {{ row.product?row.product.epCode:'-'}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
+                        <template slot-scope="{row}">
+                            <v-image-preview v-model="row.product.imgUrls" :picUrl="row.product.picUrl"  >
+                            </v-image-preview>
                         </template>
                     </el-table-column>
                     <el-table-column prop="remark" label="产品描述" width="120">
@@ -273,6 +285,7 @@
         },
         data() {
             return {
+                isShowPrdPic:false,
                 activeName:'outPurchase',
                 dateRangeType: 'orderDate',
                 order : {

@@ -1,8 +1,10 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form" label-width="90px" class="dialog-form">
+        <el-form :model="entity" :rules="rules" ref="form"
+                 @keyup.enter.stop.native=" nextFocus('') " label-width="90px" class="dialog-form">
+            }
 
-                    <!--<rm-view v-model="entity.childId"></rm-view>-->
+            <!--<rm-view v-model="entity.childId"></rm-view>-->
                     <!--<el-collapse>-->
 
                         <!--<el-collapse-item title="选择物料" style="margin-left:4%;width:96%">-->
@@ -16,13 +18,13 @@
                             <el-row :span="24" style="margin-top: 5px">
                                 <el-col :span="12">
                                     <el-form-item label="裁片名称" prop="cutPartName">
-                                        <el-input placeholder="裁片名称" v-model="entity.cutPartName"></el-input>
+                                        <el-input @keyup.enter.stop.native=" nextFocus('i1') " placeholder="裁片名称" ref="i1" v-model="entity.cutPartName"></el-input>
                                     </el-form-item>
                                 </el-col>
 
                                 <el-col :span="12">
                                     <el-form-item label="尺寸(长）" prop="sizeL">
-                                        <el-input placeholder="尺寸(长）" v-model="entity.sizeL"></el-input>
+                                        <el-input @keyup.enter.stop.native=" nextFocus('i2') "  ref="i2" placeholder="尺寸(长）"   v-model="entity.sizeL"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col  :span="8">
@@ -36,7 +38,7 @@
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="8">
-                                    <el-form-item v-if="productType.code!='20'"  label="尺寸(宽）" prop="sizeW">
+                                    <el-form-item @keyup.enter.stop.native=" nextFocus('i3') "  ref="i3"  v-if="productType.code!='20'"  label="尺寸(宽）" prop="sizeW">
                                         <el-input placeholder="尺寸(宽）"
                                                   v-model="entity.sizeW"></el-input>
                                     </el-form-item>
@@ -45,18 +47,18 @@
                                 <!--sizeL/length*-->
                                 <el-col :span="12">
                                     <el-form-item label="长封度" prop="length">
-                                        <el-input placeholder="长封度" v-model="entity.length"></el-input>
+                                        <el-input @keyup.enter.stop.native=" nextFocus('i4') "  ref="i4"  placeholder="长封度" v-model="entity.length"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
                                     <el-form-item  v-if="productType.code!='20'"  label="宽封度" prop="width">
-                                        <el-input placeholder="宽封度" v-model="entity.width"></el-input>
+                                        <el-input @keyup.enter.stop.native=" nextFocus('i5') "  ref="i5"  placeholder="宽封度" v-model="entity.width"></el-input>
                                     </el-form-item>
                                 </el-col>
 
                                 <el-col :span="12">
                                     <el-form-item label="件数" prop="pieces">
-                                        <el-input placeholder="件数" v-model="entity.pieces"></el-input>
+                                        <el-input @keyup.enter.stop.native=" nextFocus('i6') "  ref="i6"  placeholder="件数" v-model="entity.pieces"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <!--<el-col :span="8">-->
@@ -76,7 +78,7 @@
 
                                     <el-form-item :label="entity.lossType==0?'损耗数':'损耗(%)'" prop="lossRate">
                                         <!--<el-input    placeholder="损耗" v-model="entity.lossRate"></el-input>-->
-                                        <el-input  :disabled="entity.source===1"  placeholder="损耗" v-model="entity.lossRate"></el-input>
+                                        <el-input @keyup.enter.stop.native=" nextFocus('i7') "  ref="i7"  :disabled="entity.source===1"  placeholder="损耗" v-model="entity.lossRate"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
@@ -286,12 +288,34 @@
                 return totalMoney
             },
 
-            productType :function() {
-                 return this.parentRm.childRm.productType
+            productType: function () {
+                return this.parentRm.childRm.productType
             }
         },
         methods: {
-
+            nextFocus(p) {
+                if (p === 'i1') {
+                    this.$refs.i2.$el.querySelector('input').focus()
+                }
+                if (p === 'i2') {
+                    this.$refs.i3.$el.querySelector('input').focus()
+                }
+                if (p === 'i3') {
+                    this.$refs.i4.$el.querySelector('input').focus()
+                }
+                if (p === 'i4') {
+                    this.$refs.i5.$el.querySelector('input').focus()
+                }
+                if (p === 'i5') {
+                    this.$refs.i6.$el.querySelector('input').focus()
+                }
+                if (p === 'i6') {
+                    this.$refs.i7.$el.querySelector('input').focus()
+                }
+                if (p === 'i7') {
+                    this.$refs.i1.$el.querySelector('input').focus()
+                }
+            },
             clearImg() {
                 this.entity.picUrl = null;
             },
@@ -362,6 +386,11 @@
         mounted() {
             this.$on("init", this.init);
             this.$on("submit", this.submitForm);
-        }
+            //this.addEnterListener();
+        },
+
+        destroy() {
+            //this.removeEnterListener();
+        },
     };
 </script>

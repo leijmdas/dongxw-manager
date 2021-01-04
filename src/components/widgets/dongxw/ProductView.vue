@@ -46,6 +46,11 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
+                <el-form-item label="单价" prop="unit">
+                    <el-input disabled placeholder="单价" disabled v-model="entity.price"></el-input>
+                </el-form-item>
+            </el-col>
+           <el-col :span="12">
                 <el-form-item label="客户" prop="customerName">
                     <el-input disabled placeholder="客户" disabled v-model="entity.customerName"></el-input>
                 </el-form-item>
@@ -110,6 +115,10 @@
             }
         },
         props: {
+            setPrice: {
+                type: Function
+
+            },
             qty: {
                 required: false,
                 default : -1
@@ -165,7 +174,9 @@
                             this.entity.pptCode = this.entity.productType ? this.entity.productType.code : '-'
                             this.entity.ptCode = this.entity.productSubType ? this.entity.productSubType.code : '-'
                             this.entity.customerName = this.entity.customer ? this.entity.customer.custName : '-'
-
+                            if(this.setPrice){
+                                this.setPrice(this.entity);
+                            }
                         })
                     )
                 } else {

@@ -32,13 +32,6 @@
                     </el-date-picker>
 
                 </el-form-item>
-                <el-form-item label="订单类型" prop="orderType">
-                    <el-select @change="search" :clearable="true" v-model="page.query.param.orderType"
-                               style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
                 <el-form-item label="EP订单号" prop="epOrderCode">
                     <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
                 </el-form-item>
@@ -53,6 +46,14 @@
                     <el-input v-model="page.query.param.businessBy" clearable></el-input>
                 </el-form-item>
 
+
+                <el-form-item label="订单类型" prop="orderType">
+                    <el-select @change="search" :clearable="true" v-model="page.query.param.orderType"
+                               style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-itemn style="alignment: right;margin-left: 12%">
                     <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                     <el-button @click="cancel">取消</el-button>
@@ -60,23 +61,20 @@
 
             </el-form>
         </div>
-        <v-toolbar title="客户订单列表" type="alert">
-            <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
+<!--        <v-toolbar title="订单列表" type="alert">-->
+<!--            <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>-->
 
-            <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
-            <!--<el-button @click="cancel">取消</el-button>-->
+<!--            &lt;!&ndash;<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>&ndash;&gt;-->
+<!--            &lt;!&ndash;<el-button @click="cancel">取消</el-button>&ndash;&gt;-->
 
-            <el-button plain @click="exportRecords">导出XLS</el-button>
-            <!--<el-button plain @click="exportMail" style="color:green">发送邮件</el-button>-->
-            <el-button type="primary" plain @click="create">新增</el-button>
-            <el-button type="default"  @click="computeTotal">计算总金额</el-button>
+<!--            <el-button plain @click="exportRecords">导出XLS</el-button>-->
+<!--            &lt;!&ndash;<el-button plain @click="exportMail" style="color:green">发送邮件</el-button>&ndash;&gt;-->
+<!--            <el-button type="primary" plain @click="create">新增</el-button>-->
+<!--            <el-button type="default"  @click="computeTotal">计算总金额</el-button>-->
+<!--        </v-toolbar>-->
+        <v-table ref="table" :pageSize="5"  :click="fatherMethod"  :page="page"  :table-minheight="150" @dataloaded="onDataloaded">
 
-        </v-toolbar>
-        <v-table ref="table" :pageSize="10" :selection="true" :click="fatherMethod" :dblclick="edit" :page="page"
-                 :table-minheight="250" @dataloaded="onDataloaded">
-
-            <el-table-column prop="seq" label="序号" width="50">
-                <template slot-scope="scope"><span>{{scope.$index + 1}} </span></template>
+            <el-table-column type="index" prop="seq" label="序号" width="50">
             </el-table-column>
             <el-table-column sortable="true" prop="customerId" label="客户代码" width="90">
                 <template slot-scope="{row}">
@@ -183,27 +181,14 @@
 
             <el-table-column prop="remark" label="备注"></el-table-column>
 
-            <el-table-column width="70" label="操作" :fixed="'right'">
+            <el-table-column width="110" label="操作" :fixed="'right'">
                 <template slot-scope="scope">
-                    <!--<el-button @click="showLine(scope.row)"v-if="scope.row.orderType!=100"-->
-                                  <!--style="color:green"  type="info" plain title="产品"  >    产品-->
-                    <!--</el-button>-->
-                    <el-button type="text" title="编辑" @click="edit(scope.row)">
-                        <i class="el-icon-edit"></i>
+
+                    <el-button type="text" title="生成报关文件" @click="edit(scope.row)">
+                        <i class="el-icon-edit"></i>生成报关文件
                     </el-button>
 
-
-                    <el-tooltip class="item" effect="green" content="只有草稿状态才可以删除!" placement="top-start">
-                        <el-button type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除"
-                                   v-if="scope.row.status==0">
-                            <i style = "color:red" class="el-icon-delete"></i>
-                        </el-button>
-                    </el-tooltip>
-                    <!--<el-button  type="primary"  v-if="scope.row.status>0" title="生成计划(不会重复生成)" @click="makePlan(scope.row)">-->
-                        <!--生成计划-->
-                    <!--</el-button>-->
-
-                </template>
+                 </template>
             </el-table-column>
 
         </v-table>
@@ -217,8 +202,7 @@
             </div>
         </v-dialog>
         <v-dialog ref="formDiagView" title="订单原件">
-            <form-view-panel @saved="onFormSaved"></form-view-panel>
-            <div slot="footer">
+               <div slot="footer">
                 <!--<el-button type="primary" @click="$refs.formDiagView.dispatch('submit')">保存</el-button>-->
                 <el-button type="default" @click="()=>{$refs.formDiagView.hide()}">关闭</el-button>
             </div>
@@ -234,10 +218,9 @@
 <script>
     import CustomerSelect from '@/components/widgets/dongxw/CustomerSelect.vue';
     import FormPanel from './Form';
-    import FormViewPanel from './FormViewPic';
 
     export default {
-        components: {FormPanel, FormViewPanel, CustomerSelect},
+        components: {FormPanel,   CustomerSelect},
         props: {
             fatherMethod: {
                 type: Function,

@@ -104,13 +104,19 @@ let router0 = [
                 name: 'customer:manage',
                 meta: {title: '客户名单', perm: 'customer:manage'}
             },
-
             {
                 path: 'dongxw/order/manage',
                 component: require('@/pages/dongxw/order/Main.vue'),
                 name: 'order:manage',
                 meta: {title: '客户订单', perm: 'order:manage'}
             },
+            {
+                path: 'dongxw/order/custom',
+                component: require('@/pages/dongxw/ordercustom/Main.vue'),
+                name: 'order:custom',
+                meta: {title: '报关文件', perm: 'order:manage'}
+            },
+
             {
                 path: 'dongxw/orderline/ManageQuery',
                 component: require('@/pages/dongxw/orderline/ManageQuery.vue'),

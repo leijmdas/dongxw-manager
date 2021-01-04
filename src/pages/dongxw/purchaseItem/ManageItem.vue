@@ -7,15 +7,17 @@
                        v-model="isShowPrdPic" active-text="显示图片" inactive-text="不显示">
             </el-switch>
 
-            <el-button type="primary"  plain @click="createMulti">多选新增（按采购计划）</el-button>
-            <!--<el-button type="primary"  plain @click="create">多选新增（无采购计划）</el-button>-->
-            <el-button type="primary"  plain @click="create">新增（无采购计划）</el-button>
+            <el-button type="primary"  plain @click="createMulti">按计划批量新增</el-button>
+            <el-button type="primary"  plain @click="create">无采购计划新增</el-button>
             <el-button type="primary"  plain @click="search">刷新</el-button>
 
         </v-toolbar>
         <v-table ref='table' :dblclick='edit' :page='page' :table-minheight='350' @dataloaded='onDataloaded'>
             <el-table-column  prop="seq" label="序号" width="50">
                 <template slot-scope="scope"><span >{{scope.$index + 1}} </span></template>
+            </el-table-column>
+            <el-table-column  prop="seq" label="计划" width="70">
+                <template slot-scope="scope">  {{scope.row.orderLineId>0?'有计划':'无计划'}}</template>
             </el-table-column>
             <el-table-column prop='code' :sortable='true' label='EP货号' width='100'>
                 <template slot-scope='{row}'><span style='color:black'>
@@ -85,7 +87,7 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog :appendToBody="true" ref="formDlg" width="50%" title="采购订单表">
+        <v-dialog :appendToBody="true" ref="formDlg" width="70%" title="采购订单表">
 
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right: 60px">
@@ -94,7 +96,7 @@
             </div>
         </v-dialog>
 
-        <v-dialog :appendToBody="true" ref="formDlgMultiSelect" width="60%" title="采购计划表">
+        <v-dialog :appendToBody="true" ref="formDlgMultiSelect" width="70%" title="采购计划表">
 
             <form-multi-select ref="formMultiSelect" @saved="onFormSaved"></form-multi-select>
             <div slot="footer" style="margin-right: 60px">

@@ -13,12 +13,12 @@
         </el-table-column>
 
 
-        <el-table-column prop="name" label="物料名称" width="120">
+        <el-table-column prop="name" label="物料名称" width="160">
             <template slot-scope="{row}">
                 {{ row.childRm?row.childRm.name:'-'}}
             </template>
         </el-table-column>
-        <el-table-column prop="remark" label="规格型号" width="140">
+        <el-table-column prop="remark" label="规格型号" width="100">
             <template slot-scope="{row}">
                 {{ row.childRm?row.childRm.remark:'-'}}
             </template>
@@ -28,9 +28,10 @@
                 {{ row.childRm?row.childRm.color:'-'}}
             </template>
         </el-table-column>
-        <el-table-column prop="rmDate" label="到位日期" width="100">
+
+        <el-table-column prop="price" label="单价" width="100">
             <template slot-scope="{row}">
-                {{ row.rmDate}}
+                {{ row.price}}
             </template>
         </el-table-column>
         <el-table-column prop="unit" label="单位" width="90">
@@ -43,9 +44,9 @@
                 {{ row.totalQty}}
             </template>
         </el-table-column>
-        <el-table-column prop="price" label="单价" width="100">
+        <el-table-column prop="rmDate" label="到位日期" width="100">
             <template slot-scope="{row}">
-                {{ row.price}}
+                {{ row.rmDate}}
             </template>
         </el-table-column>
 

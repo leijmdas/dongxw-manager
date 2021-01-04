@@ -3,7 +3,7 @@
     <!--<el-tabs :stretch="isExp" tab-position="top" v-model="activeName" @tab-click="tabClick"-->
              <!--@tab-remove="removeTab">-->
         <!--<el-tab-pane id="tabOrder" label="订单管理" name="orderInfo">-->
-    <order-form ref="orderDlg" :funShowPic="funShowPic" :fatherMethod="funShowOrderLine"></order-form>
+    <order-form ref="orderDlg"  :fatherMethod="funShowCustom"></order-form>
         <!--</el-tab-pane>-->
         <!--<el-tab-pane id="tabLine" label="订单产品" name="orderLine">-->
             <!--<order-line ref="orderLine"></order-line>-->
@@ -12,32 +12,31 @@
             <!--<form-view-panel ref="viewPanel"></form-view-panel>-->
         <!--</el-tab-pane>-->
     <!--</el-tabs>-->
-    <el-tabs v-model="activeName">
-        <el-tab-pane label="产品列表" name="prdTab">
-            <order-line ref="orderLine"></order-line>
+    <el-tabs :stretch="false" v-model="activeName">
+        <el-tab-pane label="报关合同" name="contract">
         </el-tab-pane>
-        <!--<el-tab-pane label="子订单" name="subOrderTab">-->
-            <!--<sub-order-form :pid="pid" ref="subOrderForm"></sub-order-form>-->
-        <!--</el-tab-pane>-->
+        <el-tab-pane label="报关单" name="sheet">
+        </el-tab-pane>
+        <el-tab-pane label="存仓委托书" name="book">
+        </el-tab-pane>
+        <el-tab-pane label="装箱单" name="packing">
+        </el-tab-pane>
+        <el-tab-pane label="发票" name="invoice">
+        </el-tab-pane>
     </el-tabs>
 </div>
 </template>
 
 
 <script>
-    import SubOrderForm from './SubManage';
     import OrderForm from './Manage';
-    import OrderLine from '../orderline/Manage';
-    import FormViewPanel from './FormViewPic';
 
     export default {
-        components: {SubOrderForm, OrderForm, OrderLine, FormViewPanel},
+        components: {OrderForm},
         data() {
             return {
-                activeName: 'prdTab',
-                isExp : false,
+                activeName: 'contract',
                 showOrderLine: true,
-                pid : 0,
             }
         },
         computed: {},
@@ -85,11 +84,8 @@
                     }
                 })
             },
-            funShowOrderLine(row) {
+            funShowCustom(row) {
 
-                // this.activeName = 'orderLine';
-                this.pid-row.orderId;
-                this.$refs.orderLine.init(row);
 
             },
             funShowPic(row) {

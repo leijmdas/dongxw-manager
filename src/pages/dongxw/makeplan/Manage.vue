@@ -3,8 +3,10 @@
     <div>
         <div class="panel panel-default panel-search">
             <order-search :showBtn=true :tableRowClick="searchByOrder" ref="orderSearch">
-
+               <el-button style="margin-left: 10px" slot="orderTable" type="primary"  @click='exportMulti' v-keycode="'ENTER'">批量导出生产计划</el-button>
             </order-search>
+
+
             <el-form v-show="false" :inline="true">
                 <el-form-item label="客户" prop="customerId">
                     <customer-select :fnChange="search" v-model="page.query.param.customerId"
@@ -55,8 +57,11 @@
 
             </el-form>
         </div>
-            <v-toolbar title="计划列表" type="alert">
-
+            <v-toolbar title="生产计划列表" type="alert">
+                <el-switch slot="tip"style="margin-left:20px; margin-right: 20px" v-model="isShowPrdPic"
+                           active-color="#13ce66" inactive-color="#ff4949"
+                           active-text="显示图片" inactive-text="不显示">
+                </el-switch>
                <span v-if="!order.epOrderCode" slot="tip" style="color:red;margin-left:  40px;margin-top: 30px">
                 请点上方订单后编辑计划
             </span>
@@ -67,6 +72,7 @@
                 <!--<el-button slot="tip" @click="cancel">取消</el-button>-->
                 <!--<el-button plain v-if="page.query.param.orderId>0" @click="makeSheet">生成制造单</el-button>-->
                 <!--<el-button plain @click="exportMail" style="color:green">发送邮件</el-button>-->
+                <el-button plain v-if="page.query.param.orderId>0" @click="exportRecords" style="color:green">刷新计划</el-button>
                 <el-button plain v-if="page.query.param.orderId>0" @click="exportRecords" style="color:green">导出XLS</el-button>
             </v-toolbar>
         <v-table ref="table" :page="page" :dblclick="edit" :table-minheight="450" @dataloaded="onDataloaded">
@@ -118,6 +124,12 @@
             <el-table-column prop="epCode" label="EP款号" width="100">
                 <template slot-scope="{row}">
                     {{ row.product?row.product.epCode:'-'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="picUrl" label="图片" v-if="isShowPrdPic" width="90">
+                <template slot-scope="{row}">
+                    <v-image-preview v-model="row.product.imgUrls" :picUrl="row.product.picUrl"  >
+                    </v-image-preview>
                 </template>
             </el-table-column>
             <el-table-column prop="remark" label="产品描述" width="120">
@@ -265,6 +277,7 @@
         data() {
             return {
                 dateRangeType: 'orderDate',
+                isShowPrdPic:false,
                 order : {},
                 row : null,
                 formStatus: 1,
@@ -302,7 +315,33 @@
         },
 
         methods: {
+            exportMulti() {
+                let s = this.$refs.orderSearch.getSelectedRows()
+                 if (s.length==0) {
+                    this.$confirm("请选择至少一个订单！", "提示", {
+                        type: "warning"
+                    }).then()
+                    return;
+                }
+                let ss = []
+                s.forEach(item => {
+                    ss.unshift( item.id )
+                })
+                console.log(JSON.stringify(ss));
 
+                let self = this;
+
+                this.$confirm("确定要导出生产计划吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+                    let params = self.getSearchParams();
+                    this.page.query.param.orderIds=ss,
+                    self.$api.dongxw.MakePlan.exportMulti(params);
+
+
+                });
+
+            },
             checkColor(row) {
                 if(row.status===0)
                 {

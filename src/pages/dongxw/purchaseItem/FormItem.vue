@@ -1,21 +1,20 @@
 <template>
     <div>
-    <el-form :model="entity" label-width="90px" :rules="rules"
-             style="margin-right: 10px" ref="form" class="dialog-form">
+    <el-form :model="entity" label-width="100px" :rules="rules"  style="margin-right: 10px" ref="form" class="dialog-form">
 
-        <rm-view v-model="entity.productId" ref="productView"  :style="'margin-top: 5px'" >
+        <el-collapse v-model="activeNames" >
 
-        </rm-view>
-        <el-collapse>
-
-            <el-collapse-item ref="productSelectDlg" title="选择物料" style="margin-left:4%;width:96%">
+        <el-collapse-item  name="select" ref="productSelectDlg" title="选择物料" style="font-size:16px;margin-top: 5px;width:100%">
                 <rm-search v-model="entity.productId"
                                 :customerId="entity.customerId" :clearable="true"
                                 :style="'margin-bottom: -20px'"  >
+                    <rm-view :setPrice="setPrice"  v-model="entity.productId" ref="rmView"   >
+                    </rm-view>
                 </rm-search>
             </el-collapse-item>
         </el-collapse>
-        <el-row>
+
+        <el-row style="margin-top: 10px">
 
             <el-col :span="8">
                 <el-form-item label="数量" style="width:100%" prop="qty">
@@ -122,9 +121,11 @@
         components: {RmView, RmSearch},
         data() {
             return {
-                isExp :false,
-                customerId : null,
-                orderId : null,
+                isFirst: true,
+                activeNames: ["select"],
+                isExp: false,
+                customerId: null,
+                orderId: null,
                 purchaseOrderId : null,
                 activeName: 'orderInfo',
                 ruleTpl: {when: null, then: null},
@@ -148,10 +149,17 @@
 
         },
 
-
-
         methods: {
-
+            setPrice(entity) {
+                // if (this.isFirst) {
+                //     this.isFirst = false;
+                //     return;
+                //
+                // }
+                if(entity.price>0) {
+                    this.entity.price = entity.price;
+                }
+            },
             getProps(scope) {
                 return this.entity.props.filter(p => p.propScope == scope);
             },
@@ -187,6 +195,8 @@
             },
             init(options) {
                 //console.log(JSON.stringify(options))
+
+                this.isFirst=true;
                 this.resetForm();
                 if (options.orderId) {
                     this.orderId = options.orderId

@@ -69,7 +69,12 @@
 
                                 <el-tooltip slot="tip" style="color:green; margin-left: 40px"> class="item"
                                     effect="dark" content="生成采购计划单,可多次执行, 不会重复!" placement="top-start">
-                                    <el-button plain v @click="makePp">生成采购计划单</el-button>
+                                    <el-button plain   @click="makePp">生成采购计划单</el-button>
+                                </el-tooltip>
+
+                                <el-tooltip slot="tip" style="color:green; margin-left: 40px"> class="item"
+                                    effect="dark" content="生成采购计划单,可多次执行, 不会重复!" placement="top-start">
+                                    <el-button plain   @click="makePp">刷新采购计划单</el-button>
                                 </el-tooltip>
 
                             </v-toolbar>

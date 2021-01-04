@@ -1,65 +1,59 @@
 <!-- 选择产品-->
 <template>
-    <el-form :model="entity" ref="form" label-width="80px" label-position="center":rules="rules">
+    <el-form :model="entity" ref="form" label-width="100px" label-position="center":rules="rules">
         <el-row>
 
-            <el-col :span="12">
+            <el-col :span="8">
                 <el-form-item  label="大类" prop="parentId">
                     <rm-type-select style="width:100%" v-model="entity.parentId" :clearable="true">
 
                     </rm-type-select>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
                 <el-form-item label="小类" prop="productTypeId">
                     <rm-sub-type-select style="width:100%" v-model="entity.productTypeId"
                                              :parentTypeId="entity.parentId" :clearable="true">
                     </rm-sub-type-select>
                 </el-form-item>
             </el-col>
-        </el-row>
-        <el-row :span="24">
 
-            <el-col :span="12">
+            <el-col :span="8">
                 <el-form-item label="物料代码" style="color:red;width:100% " prop="code">
                     <el-input v-model="entity.code" clearable></el-input>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
                 <el-form-item label="物料名称" prop="name" :style="'color:red'">
                     <el-input style="width:100%" v-model="entity.name" clearable></el-input>
                 </el-form-item>
             </el-col>
-        </el-row>
-        <el-row :span="24">
-            <el-col :span="12">
+            <el-col :span="8">
                 <el-form-item label="规格型号" style="color:red;width:100%" prop="remark">
                     <el-input v-model="entity.remark" clearable></el-input>
                 </el-form-item>
-            </el-col>        <el-col :span="12">
+            </el-col>
+            <el-col :span="8">
                 <el-form-item label="颜色" style="color:red;width:100%" prop="color">
                     <el-input v-model="entity.color" clearable></el-input>
                 </el-form-item>
             </el-col>
 
 
-
-            <el-button @click="refresh" :style="'margin-left:2%;color:green;width:23%'"
-                       plain type="primary">搜索</el-button>
-            <el-button @click="cancel" :style="'color:red;width:23%'" plain>重置</el-button>
-
         </el-row>
         <el-row :span="24">
-            <el-col :span="24">
-                <el-form-item label="物料" prop="id" style="width:100%">
+
+            <el-col :span="20">
+                <el-form-item label="选择物料" prop="id" style=" width:100%">
 
                     <el-select v-model="currentValue" :style="'color:red;width: 100%'" placeholder="请选择"
                                filterable :loading="loading" :clearable="clearable" :disabled="disabled">
                         <el-option v-for="item in options" :key="item.id"
                                    :label="item.code+' | '+item.name+' | '+item.remark+' | '+item.color+' | '+item.size"
                                    :value="item.id" :disabled="item.disabled">
-                            <span style="float: left">{{ item.code }}</span>
-                            <span style="float: right">{{ item.name }}</span>
+                            <span style="float:left">{{ item.code }}</span>
+                            <span style="float:left">{{ item.name }}</span>
+                            <span style="float: right">{{ item.price }}</span>
                             <span style="float: right">{{ item.remark }}</span>
                             <span style="float: right">{{ item.color }}</span>
                             <span style="float: right">{{ item.size }}</span>
@@ -68,8 +62,13 @@
 
                 </el-form-item>
             </el-col>
-        </el-row>
+            <el-col :span="4">
+                <el-button @click="refresh" style="margin-left:15px;  color:green; " plain type="primary">搜索</el-button>
+                <el-button @click="cancel" style=" color:red; " plain>重置</el-button>
 
+            </el-col>
+        </el-row>
+        <slot></slot>
     </el-form>
 </template>
 <style lang="less" rel="stylesheet/less" scoped>

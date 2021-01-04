@@ -34,6 +34,14 @@ export default {
             data
         })
     },
+    exportMulti(data) {
+        return request({
+            url: '/dongxw/makeplan/exportMulti',
+            method: 'POST',
+            data,
+            responseType: 'blob'
+        })
+    },
     /**
      * 导出xlsx
      */

@@ -5,7 +5,7 @@
                :disabled="disabled" @change="handleChange">
         <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" :disabled="item.disabled">
             <span style="float: left">{{ item.name }}</span>
-            <span style="float: left">{{ item.code }}</span>
+            <span style="float: right;margin-left: 40px">{{ item.code }}</span>
 
         </el-option>
     </el-select>

@@ -5,7 +5,7 @@
     <el-select v-model="currentValue" placeholder="请选择" filterable :loading="loading"
                :clearable="clearable" :disabled="disabled" @change="handleChange">
         <el-option v-for="item in options" :key="item.id"
-                   :label="item.code+'-'+item.remark+'-'+item.color+'-'+item.size"
+                   :label="item.code+'-'+item.price+'-'+item.color+'-'+item.size+item.remark"
                    :value="item.id" :disabled="item.disabled">
         </el-option>
     </el-select>

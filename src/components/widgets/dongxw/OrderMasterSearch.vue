@@ -38,7 +38,13 @@
                                    :label="item[1]"></el-option>
                     </el-select>
                 </el-form-item>
-
+                <el-form-item label="订单类型" prop="orderType">
+                    <el-select @change="search" :clearable="true" v-model="page.query.param.orderType"
+                               style="width:100px">
+                        <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
+                                   :label="item[1]"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="客订单号" prop="customerOrderCode">
                     <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
                 </el-form-item>
@@ -53,13 +59,6 @@
                 </el-form-item>
 
 
-                <el-form-item label="订单类型" prop="orderType">
-                    <el-select @change="search" :clearable="true" v-model="page.query.param.orderType"
-                               style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
                     <el-button @click="cancel">取消</el-button>
@@ -67,10 +66,16 @@
 
             </el-form>
         </div>
+
+
         <v-toolbar title="客户订单列表" type="alert">
-            <!--<span style="margin-left:60px;color :red">  草稿状态不能新增计划! </span>-->
+            <div style="float:right">
+                <slot name="orderTable"></slot>
+            </div>
+            <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">批量导出生产计划</el-button>-->
+            <span style="margin-left:60px;color :red">  草稿状态不能新增计划, 父订单也不能新增计划! </span>
         </v-toolbar>
-        <v-table ref="table" :page="page" :pageSize="10" :dblclick="edit"
+        <v-table ref="table" :page="page" :pageSize="10" :selection="true" :multi="true" :dblclick="edit"
                  :click="tableRowClick"   :table-minheight="300" @dataloaded="onDataloaded">
 
             <el-table-column prop="seq" label="序号" width="50">
@@ -151,10 +156,10 @@
             <el-table-column v-if="showBtn" width="150" label="同步计划" :fixed="'right'">
                 <template slot-scope="scope">
 
-                    <el-button @click="makePlan(scope.row)" title="新增" plain type="primary" v-if="scope.row.status>0">
+                    <el-button @click="makePlan(scope.row)" title="新增" plain type="primary" v-if="scope.row.status>0&&scope.row.orderType!=100">
                         新增
                     </el-button>
-                    <el-button @click="checkPlan(scope.row)" title="检查" plain v-if="scope.row.status>0">
+                    <el-button @click="checkPlan(scope.row)" title="检查" plain v-if="scope.row.status>0&&scope.row.orderType!=100">
                         检查
                     </el-button>
 
@@ -252,6 +257,9 @@
         methods: {
             onDataloaded(rsp) {
 
+            },
+            getSelectedRows(){
+                return this.$refs.table.getSelectedRows()
             },
             getSearchParams() {
                 this.page.query.dateRanges = {};

@@ -53,10 +53,10 @@
 
             <el-col :span="12">
                 <el-form-item prop="s">
-                    <el-button @click="refresh" :style="'color:green;width:48%'"
+                    <el-button @click="refresh" :style="'color:green;width:30%'"
                                plain type="primary">搜索
                     </el-button>
-                    <el-button @click="cancel" :style="'color:red;width:48%'" plain>重置搜索条件</el-button>
+                    <el-button @click="cancel" :style="'color:red;width:30%'" plain>重置条件</el-button>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -74,14 +74,16 @@
                     <el-select v-model="currentValue" :style="'color:red;width: 100%'" placeholder="请选择"
                                filterable :loading="loading" :clearable="clearable" :disabled="disabled">
                         <el-option v-for="item in options" :key="item.id"
-                                   :label="item.code+' | '+item.epCode+' | '+item.remark+' | '+item.color+' | '+item.size"
+                                   :label="item.code+'| '+item.epCode+'| '+item.price+'| '+item.remark+'| '+item.color+'| '+item.size"
                                    :value="item.id" :disabled="item.disabled">
-                            <span style="float: left">{{ item.code }}</span>
-                            <span style="float: left">{{ item.epCode }}</span>
-                            <span style="float: left">{{ item.remark }}</span>
-                            <span style="float: right">{{ item.color }}</span>
-                            <span style="float: right">{{ item.size }}</span>
-                            <span style="float: left">{{ (item.customer||{}).custName }}</span>
+                            <span style="float:left;margin-right:  30px">{{ item.code  }}</span>
+                            <span style="float:right">{{  item.epCode  }}</span>
+                            <span style="float:left" >{{  item.price}}</span>
+                            <span style="float:left" >{{ item.color }}</span>
+                            <span style="float:left" >{{ item.size }}</span>
+                            <span style="float:left">{{ (item.customer||{}).custName }}  </span>
+                            <span style="float:left;margin-left: 30px" >{{ item.remark }}</span>
+
                         </el-option>
                     </el-select>
 

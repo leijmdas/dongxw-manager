@@ -137,7 +137,7 @@
     const defaultEntity = {
 
         id: null,
-
+        tradeType:30,
         code:'',
         custName :'',
         issueAddr:'',

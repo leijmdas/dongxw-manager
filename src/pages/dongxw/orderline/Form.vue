@@ -3,8 +3,8 @@
     <el-form :model="entity" label-width="90px" :rules="rules"
              style="margin-right: 10px" ref="form" class="dialog-form">
 
-        <product-view v-model="entity.productId" ref="productView"  :style="'margin-top: 5px'" >
-
+        <product-view  :setPrice="setPrice"  v-model="entity.productId"
+                        ref="productView"  :style="'margin-top: 5px'" >
         </product-view>
         <el-collapse>
 
@@ -150,7 +150,12 @@
 
 
         methods: {
-
+            setPrice(entity) {
+                // if (this.isFirst) {   this.isFirst = false;   return;  }
+                if(entity.price>0) {
+                    this.entity.price = entity.price;
+                }
+            },
             getProps(scope) {
                 return this.entity.props.filter(p => p.propScope == scope);
             },

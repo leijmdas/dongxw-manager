@@ -70,7 +70,7 @@
                         <el-button type="primary" style="margin-left: 10px" @click="save" v-if="product.id">保  存
                         </el-button>
 
-                        <el-button type="primary" style="margin-left: 30px"
+                        <el-button type="primary" style="margin-left: 10px"
                                    :disabled="entity.status!=0&&entity.status!=30" v-if="product.id">提交审核
                         </el-button>
                     </el-col>

@@ -176,7 +176,7 @@
              */
             exportRecords() {
                 let params = this.getSearchParams();
-                console.log(params);
+                //console.log(params);
                 this.$api.dongxw.SupplierService.export(params);
             },
             getSearchParams() {

@@ -41,8 +41,8 @@
             </span>
 
             <el-button plain @click="exportRecords">导出XLS</el-button>
-            <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
             <el-button type="primary" v-show="productId>0" plain @click="createMulti">批量新增</el-button>
+            <el-button type="primary" v-show="productId>0" plain @click="create">新增</el-button>
 
         </v-toolbar>
 
@@ -70,12 +70,12 @@
                     {{ row.childRm ? row.childRm.productSubType.name :'-' }}
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true" prop="code" label="物料代码" width="100">
+            <el-table-column :sortable="true" prop="code" label="物料代码" width="90">
                 <template slot-scope="{row}">
                     <span  >{{ row.childRm? row.childRm.code :'-' }}</span>
                 </template>
             </el-table-column>
-            <el-table-column :sortable="true"  prop="name" label="物料名称" width="120">
+            <el-table-column :sortable="true"  prop="name" label="物料名称" width="160">
 
                 <template slot-scope='{row}'>
                     <a class="link-name"
@@ -137,7 +137,7 @@
                     </el-button>
                     <el-button :style="scope.row.source?'color:#13ce66':'color:#ff4949'"
                                type="default" title="组件" :disabled="!scope.row.source"
-                               @click="editCom(scope.row)"> 组件
+                                v-show="scope.row.source" @click="editCom(scope.row)"> 组件
                     </el-button>
                     <el-button type="text" style="color:red" @click="del(scope.row,scope.$index)" title="删除">
                         <i class="el-icon-delete red"></i>
@@ -145,17 +145,17 @@
                 </template>
             </el-table-column>
         </v-table>
-        <v-dialog ref="formDiag"  :width="'750px'" title="物料用量">
+        <v-dialog ref="formDiag"  :width="'75%'" title="物料用量">
             <form-panel :productId="productId" @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right:40px">
                 <el-button type="primary" @click="$refs.formDiag.dispatch('submit')">保存</el-button>
                 <el-button type="default" @click="()=>{$refs.formDiag.hide()}">取消</el-button>
             </div>
         </v-dialog>
-        <v-dialog ref="comMngDlg" :width="'58%'" title="组件清单">
+        <v-dialog ref="comMngDlg" :width="'75%'" title="组件清单">
             <com-panel :productId="productId" :closeDlg="closeDlg"></com-panel>
         </v-dialog>
-        <v-dialog ref="rmManageDlg" :width="'58%'" title="搜索物料">
+        <v-dialog ref="rmManageDlg" :width="'75%'" title="搜索物料">
             <rm-panel ref="rmPanel"  :onlyQuery="true" :closeDlg="closeDlgRm"></rm-panel>
         </v-dialog>
 
@@ -333,7 +333,7 @@
                 this.page.query.param.customerId = 0
                 this.page.query.param.parentId = 0
 
-                this.$refs.table.currentPage = 1
+                //this.$refs.table.currentPage = 1
                 console.log(JSON.stringify(this.page))
                 this.$refs.table.load()
             },
@@ -349,7 +349,10 @@
         created() {
         },
         mounted() {
-            this.$on("init", this.init)
-        }
+            this.$on("init", this.init);
+
+           // this.addEnterListener();
+        },
+
     };
 </script>

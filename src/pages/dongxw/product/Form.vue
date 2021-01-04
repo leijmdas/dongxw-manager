@@ -103,11 +103,9 @@
 
                     <el-form-item label="产品图片" prop="">
 
-                        <div :span="12">
-                            <v-image-uploader :isShow="isShow" :form-data="{}" v-model="entity.picUrl"
-                                              :imgStyle="'margin-right:10px;width:160px;height:160px'"/>
+                        <v-image-uploader :isShow="isShow" :form-data="{}" v-model="entity.picUrl"
+                                          :imgStyle="'margin-right:10px;width:160px;height:160px'"/>
 
-                        </div>
                     </el-form-item>
                     <el-form-item label="备注" prop="memo">
                         <el-input placeholder="备注" type="textarea" :rows="2"

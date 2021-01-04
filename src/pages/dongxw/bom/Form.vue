@@ -1,15 +1,15 @@
 <template>
     <div>
-        <el-form :model="entity" :rules="rules" ref="form" label-width="90px" class="dialog-form">
+        <el-form :model="entity" :rules="rules" ref="form" label-width="100px" class="dialog-form">
 
-                    <rm-view ref="rm" v-model="entity.childId" :setPrice="setPrice"></rm-view>
-                    <el-collapse>
+                    <el-collapse v-model="activeNames" >
 
-                        <el-collapse-item title="选择物料" style="margin-left:4%;width:96%">
-                            <rm-search v-model="entity.childId" ref="productSelectDlg" :style="'margin-bottom: -20px'"
+                        <el-collapse-item title="选择物料" style=" width:100%" name="select">
+                            <rm-search v-model="entity.childId" ref="productSelectDlg"
                                        :customerId="entity.customerId" :clearable="true">
+                                <rm-view ref="rm" v-model="entity.childId" :setPrice="setPrice"></rm-view>
                             </rm-search>
-                        </el-collapse-item>
+                         </el-collapse-item>
                     </el-collapse>
                     <el-row>
 
@@ -213,6 +213,8 @@
         },
         data() {
             return {
+                isFirst: true,
+                activeNames:["select"],
                 //switchLossRate:true,
                 options: [
                     {label: '', value: '0'},
@@ -266,9 +268,15 @@
 
         },
         methods: {
-            setPrice(findEntity){
-                this.entity.price=findEntity.price
-                console.log(this.entity.price)
+            setPrice(findEntity) {
+                if (this.isFirst) {
+                    this.isFirst = false;
+                    return;
+                }
+                if (findEntity.price > 0) {
+                    this.entity.price = findEntity.price
+                }
+                //console.log(this.entity.price)
             },
             clearImg() {
                 this.entity.picUrl = null;
@@ -324,6 +332,7 @@
             },
             init(options) {
                 this.resetForm();
+                this.isFirst = true;
                 if (options.id) {
 
                     this.$api.dongxw.BomService.findById(options.id).then(r => {

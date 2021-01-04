@@ -226,17 +226,15 @@
                 </div>
 
             </el-tab-pane>
-            <el-tab-pane height="400px" label="订单原件" name="orderPic">
+<!--            <el-tab-pane height="400px" label="订单原件" name="orderPic">-->
 
-                <div style="margin:10px" class="orderLogo">
-                    <v-image-uploader v-model="entity.customerOrderImg" :form-data="{}" :multiple=true
-                       :imgStyle="'width:80%;height:80%'">
+<!--                <div style="margin:10px" class="orderLogo">-->
+<!--                    <v-image-uploader v-model="entity.customerOrderImg" :form-data="{}" :multiple=true-->
+<!--                       :imgStyle="'width:80%;height:80%'">-->
 
-                    </v-image-uploader>
-                </div>
-
-
-            </el-tab-pane>
+<!--                    </v-image-uploader>-->
+<!--                </div> -->
+<!--            </el-tab-pane>-->
 
         </el-tabs>
     </el-form>

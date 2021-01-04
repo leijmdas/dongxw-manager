@@ -32,10 +32,13 @@
                 客户订单号: {{ order?order.customerOrderCode:'-' }}</span>
             <span  v-if="order.id" slot="tip" style="color: red ; padding-left: 80px">
                 {{ order?order.epOrderCode:'-'}}</span>
+            <el-button type="primary" v-if="order.id" plain @click="create">新增</el-button>
+            <el-button type="primary" v-if="order.id&&order.orderType===100"   @click="sumBySub">汇总子订单</el-button>
 
             <!--<el-button @click="()=>{$bus.$emit('app:goback')}">返回</el-button>-->
-            <el-button plain @click="exportRecords">导出XLS</el-button>
-            <el-button type="primary" v-if="order.id" plain @click="create">新增</el-button>
+            <el-button plain type="primary" @click="exportRecords">导出XLS</el-button>
+            <el-button plain @click="exportRecords">导出发票</el-button>
+            <el-button plain @click="exportRecords">导出装箱单</el-button>
 
 
         </v-toolbar>
@@ -160,7 +163,7 @@
             </el-table-column>
 
         </v-table>
-        <v-dialog ref="formDiag" width="50%" title="订单产品表">
+        <v-dialog ref="formDiag" width="80%" title="订单产品表">
 
             <form-panel @saved="onFormSaved"></form-panel>
             <div slot="footer" style="margin-right: 60px">
@@ -281,6 +284,19 @@
             },
             create() {
                 this.$refs.formDiag.show({order:this.order});
+            },
+            sumBySub() {
+                this.$confirm("确定汇总子订单记录吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+                    this.$api.dongxw.OrderMaster.sumBySub(this.order.id).then(rsp => {
+                        this.$msgJsonResult(rsp);
+                        if (rsp.code == 0 ) {
+                            this.search();
+
+                        }
+                    });
+                });
             },
             edit(row) {
                 this.$refs.formDiag.show({id: row.id});

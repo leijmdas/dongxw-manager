@@ -36,18 +36,18 @@
                     <el-input disabled placeholder="颜色" disabled v-model="entity.color"></el-input>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
                 <el-form-item label="尺寸" prop="size">
                     <el-input disabled placeholder="尺寸" disabled v-model="entity.size"></el-input>
                 </el-form-item>
             </el-col>
 
-            <el-col :span="12">
+            <el-col :span="8">
                 <el-form-item label="单位" prop="unit">
                     <el-input disabled placeholder="单位" disabled v-model="entity.unit"></el-input>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
                 <el-form-item label="单价" prop="price">
                     <el-input disabled placeholder="单价" disabled v-model="entity.price"></el-input>
                 </el-form-item>

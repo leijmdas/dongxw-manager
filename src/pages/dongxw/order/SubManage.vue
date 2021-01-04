@@ -1,73 +1,70 @@
 <!--订单管理-->
 <template>
     <div>
-        <div class="panel panel-default panel-search">
-            <el-form :inline="true">
-                <el-form-item label="客户" prop="customerId">
-                    <customer-select :fnChange="search" v-model="page.query.param.customerId"
-                                     :clearable="true"></customer-select>
+        <!--<div class="panel panel-default panel-search">-->
+            <!--<el-form :inline="true">-->
+                <!--<el-form-item label="客户" prop="customerId">-->
+                    <!--<customer-select :fnChange="search" v-model="page.query.param.customerId"-->
+                                     <!--:clearable="true"></customer-select>-->
 
-                </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-select :clearable="true" v-model="page.query.param.status" style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="日期">
+                <!--</el-form-item>-->
+                <!--<el-form-item label="状态" prop="status">-->
+                    <!--<el-select :clearable="true" v-model="page.query.param.status" style="width:100px">-->
+                        <!--<el-option v-for="item in $dongxwDict.store.ORDER_STATUS" :key="item[0]" :value="item[0]"-->
+                                   <!--:label="item[1]"></el-option>-->
+                    <!--</el-select>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="日期">-->
 
-                    <div slot="label">
-                        <el-select v-model="dateRangeType" filterable clearable style="width:120px"
-                                   class="formitem-label">
-                            <el-option value="orderDate" label="下单日期"></el-option>
-                            <el-option value="customerIssueDate" label="客户交货日期"></el-option>
-                            <el-option value="checkDate" label="验货日期"></el-option>
-                            <el-option value="factroyIssueDate" label="工厂交货日期"></el-option>
-                        </el-select>
-                    </div>
-                    <el-date-picker style="width:270px" v-model="dateRange" type="daterange" range-separator="至"
-                                    start-placeholder="开始日期" end-placeholder="结束日期"
-                                    format="yyyy年MM月dd日"
-                                    value-format="yyyy-MM-dd HH:mm:ss">
-                    </el-date-picker>
+                    <!--<div slot="label">-->
+                        <!--<el-select v-model="dateRangeType" filterable clearable style="width:120px"-->
+                                   <!--class="formitem-label">-->
+                            <!--<el-option value="orderDate" label="下单日期"></el-option>-->
+                            <!--<el-option value="customerIssueDate" label="客户交货日期"></el-option>-->
+                            <!--<el-option value="checkDate" label="验货日期"></el-option>-->
+                            <!--<el-option value="factroyIssueDate" label="工厂交货日期"></el-option>-->
+                        <!--</el-select>-->
+                    <!--</div>-->
+                    <!--<el-date-picker style="width:270px" v-model="dateRange" type="daterange" range-separator="至"-->
+                                    <!--start-placeholder="开始日期" end-placeholder="结束日期"-->
+                                    <!--format="yyyy年MM月dd日"-->
+                                    <!--value-format="yyyy-MM-dd HH:mm:ss">-->
+                    <!--</el-date-picker>-->
 
-                </el-form-item>
-                <el-form-item label="订单类型" prop="orderType">
-                    <el-select @change="search" :clearable="true" v-model="page.query.param.orderType"
-                               style="width:100px">
-                        <el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"
-                                   :label="item[1]"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="EP订单号" prop="epOrderCode">
-                    <el-input v-model="page.query.param.epOrderCode" clearable></el-input>
-                </el-form-item>
-
-
-                <el-form-item label="客订单号" prop="customerOrderCode">
-                    <el-input v-model="page.query.param.customerOrderCode" clearable></el-input>
-                </el-form-item>
+                <!--</el-form-item>-->
+                <!--<el-form-item label="订单类型" prop="orderType">-->
+                    <!--<el-select @change="search" :clearable="true" v-model="page.query.param.orderType"-->
+                               <!--style="width:100px">-->
+                        <!--<el-option v-for="item in $dongxwDict.store.ORDER_TYPE" :key="item[0]" :value="item[0]"-->
+                                   <!--:label="item[1]"></el-option>-->
+                    <!--</el-select>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="EP订单号" prop="epOrderCode">-->
+                    <!--<el-input v-model="page.query.param.epOrderCode" clearable></el-input>-->
+                <!--</el-form-item>-->
 
 
-                <el-form-item label="业务员" prop="businessBy">
-                    <el-input v-model="page.query.param.businessBy" clearable></el-input>
-                </el-form-item>
+                <!--<el-form-item label="客订单号" prop="customerOrderCode">-->
+                    <!--<el-input v-model="page.query.param.customerOrderCode" clearable></el-input>-->
+                <!--</el-form-item>-->
 
-                <el-form-itemn style="alignment: right;margin-left: 12%">
-                    <el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>
-                    <el-button @click="cancel">取消</el-button>
-                </el-form-itemn>
 
-            </el-form>
-        </div>
-        <v-toolbar title="客户订单列表" type="alert">
+                <!--<el-form-item label="业务员" prop="businessBy">-->
+                    <!--<el-input v-model="page.query.param.businessBy" clearable></el-input>-->
+                <!--</el-form-item>-->
+
+                <!--<el-form-itemn style="alignment: right;margin-left: 12%">-->
+                    <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
+                    <!--<el-button @click="cancel">取消</el-button>-->
+                <!--</el-form-itemn>-->
+
+            <!--</el-form>-->
+        <!--</div>-->
+        <!---->
+        <v-toolbar title="子订单列表" type="alert">
             <span slot="tip" style="margin-left:60px;color :red">  鼠标双击进入订单修改! </span>
 
-            <!--<el-button type="primary" @click="search" v-keycode="'ENTER'">查询</el-button>-->
-            <!--<el-button @click="cancel">取消</el-button>-->
-
             <el-button plain @click="exportRecords">导出XLS</el-button>
-            <!--<el-button plain @click="exportMail" style="color:green">发送邮件</el-button>-->
             <el-button type="primary" plain @click="create">新增</el-button>
             <el-button type="default"  @click="computeTotal">计算总金额</el-button>
 
@@ -247,10 +244,15 @@
                 type: Function,
                 default: null
             },
+            pOrderId : {
+                type:Object,
+                deafault: 0
+            },
 
         },
         data() {
             return {
+
                 dateRangeType: 'orderDate',
                 row : null,
                 formStatus: 1,
